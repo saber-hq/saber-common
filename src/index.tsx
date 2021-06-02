@@ -3,9 +3,10 @@ import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import { createContainer } from "unstated-next";
 
 import { ConnectedWallet, WalletAdapter } from "./adapters";
-import { WALLET_PROVIDERS, WalletProviderInfo, WalletType } from "./providers";
+import { WALLET_PROVIDERS, WalletType } from "./providers";
 import { useLocalStorageState } from "./utils/useLocalStorageState";
 
+export * from "./adapters/types";
 export * from "./providers";
 
 export interface UseSolana<T extends boolean = boolean> {
@@ -31,24 +32,23 @@ const useSolanaInternal = ({
   cluster,
   endpoint,
 }: UseSolanaArgs): UseSolana => {
-  const [walletType, setWalletType] = useLocalStorageState<WalletType | null>(
-    "use-solana/wallet-type",
-    null
-  );
-
-  const provider: WalletProviderInfo | null = useMemo(
-    () => (walletType ? WALLET_PROVIDERS[walletType] : null),
-    [walletType]
-  );
+  const [walletTypeString, setWalletTypeString] = useLocalStorageState<
+    string | null
+  >("use-solana/wallet-type", null);
+  const walletType =
+    walletTypeString && walletTypeString in WalletType
+      ? (walletTypeString as WalletType)
+      : null;
 
   const [connected, setConnected] = useState(false);
 
   const wallet = useMemo(() => {
-    if (provider) {
+    if (walletType) {
+      const provider = WALLET_PROVIDERS[walletType];
       console.log("New wallet", provider.url, cluster);
       return new provider.makeAdapter(provider.url, endpoint);
     }
-  }, [provider, cluster, endpoint]);
+  }, [walletType, cluster, endpoint]);
 
   useEffect(() => {
     if (wallet) {
@@ -81,11 +81,9 @@ const useSolanaInternal = ({
     activate: (nextWalletType) => {
       if (walletType === nextWalletType) {
         // reconnect
-        void wallet?.connect().then(() => {
-          setConnected(true);
-        });
+        void wallet?.connect();
       }
-      setWalletType(walletType);
+      setWalletTypeString(nextWalletType);
     },
   };
 };
