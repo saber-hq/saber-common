@@ -1,30 +1,8 @@
 import { PublicKey, Transaction } from "@solana/web3.js";
 import * as EventEmitter from "eventemitter3";
 
+import { PhantomProvider } from "../../typings/window";
 import { DEFAULT_PUBLIC_KEY, WalletAdapter } from "../types";
-
-type PhantomEvent = "disconnect" | "connect";
-type PhantomRequestMethod =
-  | "connect"
-  | "disconnect"
-  | "signTransaction"
-  | "signAllTransactions";
-
-export interface PhantomProvider {
-  publicKey?: PublicKey;
-  isConnected?: boolean;
-  autoApprove?: boolean;
-  signTransaction: (transaction: Transaction) => Promise<Transaction>;
-  signAllTransactions: (transactions: Transaction[]) => Promise<Transaction[]>;
-  connect: (args?: { onlyIfTrusted: true }) => Promise<void>;
-  disconnect: () => Promise<void>;
-  on: (event: PhantomEvent, handler: (args: unknown) => void) => void;
-  request: (method: PhantomRequestMethod, params: unknown) => Promise<unknown>;
-  listeners: (event: PhantomEvent) => (() => void)[];
-
-  isPhantom: true;
-  isMathWallet: undefined;
-}
 
 export class PhantomWalletAdapter
   extends EventEmitter

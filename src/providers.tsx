@@ -1,5 +1,5 @@
 import Wallet from "@project-serum/sol-wallet-adapter";
-import * as React from "react";
+import React from "react";
 
 import {
   LedgerWalletAdapter,

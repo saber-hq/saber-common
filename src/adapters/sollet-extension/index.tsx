@@ -1,11 +1,5 @@
 import Wallet from "@project-serum/sol-wallet-adapter";
 
-declare global {
-  interface Window {
-    sollet?: string;
-  }
-}
-
 export class SolletExtensionAdapter extends Wallet {
   constructor(_providerURL: string, network: string) {
     super(

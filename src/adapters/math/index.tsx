@@ -1,26 +1,8 @@
 import { PublicKey, Transaction } from "@solana/web3.js";
 import * as EventEmitter from "eventemitter3";
 
-import { PhantomProvider } from "../phantom";
+import { MathWalletProvider } from "../../typings/window";
 import { DEFAULT_PUBLIC_KEY, WalletAdapter } from "../types";
-
-interface MathWalletProvider {
-  signTransaction: (transaction: Transaction) => Promise<Transaction>;
-  signAllTransactions: (transactions: Transaction[]) => Promise<Transaction[]>;
-  getAccount: () => Promise<string>;
-
-  isMathWallet: true;
-  isPhantom: undefined;
-}
-
-declare global {
-  interface Window {
-    solana?:
-      | MathWalletProvider
-      | PhantomProvider
-      | { isPhantom?: false; isMathWallet?: false };
-  }
-}
 
 export class MathWalletAdapter extends EventEmitter implements WalletAdapter {
   _publicKey?: PublicKey;

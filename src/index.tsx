@@ -6,6 +6,8 @@ import { ConnectedWallet, WalletAdapter } from "./adapters";
 import { WALLET_PROVIDERS, WalletProviderInfo, WalletType } from "./providers";
 import { useLocalStorageState } from "./utils/useLocalStorageState";
 
+export * from "./providers";
+
 export interface UseSolana<T extends boolean = boolean> {
   wallet?: WalletAdapter<T>;
   connected: T;

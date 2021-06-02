@@ -3,16 +3,6 @@ import * as EventEmitter from "eventemitter3";
 
 import { DEFAULT_PUBLIC_KEY, WalletAdapter } from "../types";
 
-declare global {
-  interface Window {
-    solong?: {
-      signAllTransactions?: (txs: Transaction[]) => Promise<Transaction[]>;
-      signTransaction: (tx: Transaction) => Promise<Transaction>;
-      selectAccount: () => Promise<string>;
-    };
-  }
-}
-
 export class SolongWalletAdapter extends EventEmitter implements WalletAdapter {
   _publicKey?: PublicKey;
   _onProcess: boolean;
