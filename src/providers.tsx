@@ -9,11 +9,7 @@ import {
   SolongWalletAdapter,
   WalletAdapterConstructor,
 } from "./adapters";
-import LedgerIcon from "./icons/ledger.svg";
-import MathWalletIcon from "./icons/mathwallet.svg";
-import PhantomIcon from "./icons/phantom.svg";
-import SolletIcon from "./icons/sollet.svg";
-import SolongIcon from "./icons/solong.png";
+import { LEDGER, MATHWALLET, PHANTOM, SOLLET } from "./icons";
 
 export enum WalletType {
   Sollet = "Sollet",
@@ -27,14 +23,14 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
   [WalletType.Sollet]: {
     name: "Sollet",
     url: "https://www.sollet.io",
-    icon: <SolletIcon />,
+    icon: LEDGER,
     makeAdapter: Wallet,
     isMobile: true,
   },
   [WalletType.SolletExtension]: {
     name: "Sollet Extension",
     url: "https://chrome.google.com/webstore/detail/sollet/fhmfendgdocmcbmfikdcogofphimnkno",
-    icon: <SolletIcon />,
+    icon: SOLLET,
     makeAdapter: SolletExtensionAdapter,
 
     isInstalled: () => window.sollet !== undefined,
@@ -42,13 +38,13 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
   [WalletType.Ledger]: {
     name: "Ledger",
     url: "https://www.ledger.com",
-    icon: <LedgerIcon />,
+    icon: SOLLET,
     makeAdapter: LedgerWalletAdapter,
   },
   [WalletType.Solong]: {
     name: "Solong",
     url: "https://solongwallet.com/",
-    icon: SolongIcon,
+    icon: "https://raw.githubusercontent.com/solana-labs/oyster/main/assets/wallets/solong.png",
     makeAdapter: SolongWalletAdapter,
 
     isInstalled: () => window.solong !== undefined,
@@ -56,7 +52,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
   [WalletType.Phantom]: {
     name: "Phantom",
     url: "https://www.phantom.app",
-    icon: <PhantomIcon />,
+    icon: PHANTOM,
     makeAdapter: PhantomWalletAdapter,
 
     isInstalled: () => window.solana?.isPhantom === true,
@@ -64,7 +60,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
   [WalletType.MathWallet]: {
     name: "MathWallet",
     url: "https://www.mathwallet.org",
-    icon: <MathWalletIcon />,
+    icon: MATHWALLET,
     makeAdapter: MathWalletAdapter,
     isInstalled: () => window.solana?.isMathWallet === true,
     isMobile: true,
@@ -74,7 +70,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
 export interface WalletProviderInfo {
   name: string;
   url: string;
-  icon: string | React.ReactNode;
+  icon: string | React.FC<React.SVGProps<SVGSVGElement>>;
   makeAdapter: WalletAdapterConstructor;
   isInstalled?: () => boolean;
   isMobile?: boolean;

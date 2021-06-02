@@ -1,6 +1,6 @@
 {
   "name": "@stableswap/use-solana",
-  "version": "0.1.0-alpha.6",
+  "version": "0.1.0-alpha.9",
   "repository": "git@github.com:stableswap/solana-wallets.git",
   "author": "Ian Macalinao <ian@stableswap.pro>",
   "license": "MIT",
@@ -16,7 +16,6 @@
     "analyze": "size-limit --why"
   },
   "devDependencies": {
-    "@rollup/plugin-image": "^2.0.6",
     "@size-limit/file": "^4.11.0",
     "@size-limit/webpack": "^4.11.0",
     "@solana/web3.js": "^1.15.0",
