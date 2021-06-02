@@ -16,6 +16,8 @@
   },
   "devDependencies": {
     "@rollup/plugin-image": "^2.0.6",
+    "@size-limit/file": "^4.11.0",
+    "@size-limit/webpack": "^4.11.0",
     "@solana/web3.js": "^1.15.0",
     "@types/react": "^17.0.8",
     "@types/react-dom": "^17.0.5",
@@ -57,11 +59,11 @@
   "size-limit": [
     {
       "path": "dist/use-solana.cjs.production.min.js",
-      "limit": "10 KB"
+      "limit": "50 KB"
     },
     {
       "path": "dist/use-solana.esm.js",
-      "limit": "10 KB"
+      "limit": "50 KB"
     }
   ],
   "lint-staged": {
