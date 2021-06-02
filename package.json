@@ -1,0 +1,71 @@
+{
+  "name": "@stableswap/use-solana",
+  "version": "0.1.0-alpha.0",
+  "repository": "git@github.com:stableswap/solana-wallets.git",
+  "author": "Ian Macalinao <ian@stableswap.pro>",
+  "license": "MIT",
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "eslint .",
+    "lint:ci": "eslint . --max-warnings=0",
+    "prepare": "tsdx build && husky install",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "devDependencies": {
+    "@rollup/plugin-image": "^2.0.6",
+    "@solana/web3.js": "^1.15.0",
+    "@types/react": "^17.0.8",
+    "@types/react-dom": "^17.0.5",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-unused-imports": "^1.1.1",
+    "husky": ">=6",
+    "lint-staged": ">=10",
+    "prettier": "^2.3.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "size-limit": "^4.11.0",
+    "tsdx": "^0.14.1",
+    "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "@ledgerhq/hw-transport": "^5.51.1",
+    "@ledgerhq/hw-transport-webusb": "^5.51.1",
+    "@project-serum/sol-wallet-adapter": "^0.2.0",
+    "@types/ledgerhq__hw-transport": "^4.21.3",
+    "@types/ledgerhq__hw-transport-webusb": "^4.70.1",
+    "eventemitter3": "^4.0.7"
+  },
+  "peerDependencies": {
+    "@solana/web3.js": "^1.15.0",
+    "@types/react": "^17.0.8",
+    "react": ">=16"
+  },
+  "main": "dist/use-solana.cjs.production.min.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/use-solana.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/use-solana.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/use-solana.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --cache --fix",
+    "*.{md,js,json,yml,yaml}": "prettier --write"
+  }
+}
