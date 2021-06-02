@@ -1,6 +1,6 @@
 {
   "name": "@stableswap/use-solana",
-  "version": "0.1.0-alpha.7",
+  "version": "0.1.0-alpha.8",
   "repository": "git@github.com:stableswap/solana-wallets.git",
   "author": "Ian Macalinao <ian@stableswap.pro>",
   "license": "MIT",
