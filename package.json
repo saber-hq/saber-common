@@ -16,7 +16,6 @@
     "analyze": "size-limit --why"
   },
   "devDependencies": {
-    "@rollup/plugin-image": "^2.0.6",
     "@size-limit/file": "^4.11.0",
     "@size-limit/webpack": "^4.11.0",
     "@solana/web3.js": "^1.15.0",
