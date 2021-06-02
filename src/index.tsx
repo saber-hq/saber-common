@@ -1,34 +1,34 @@
 import { Cluster } from "@solana/web3.js";
-import * as React from "react";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { createContainer } from "unstated-next";
 
 import { ConnectedWallet, WalletAdapter } from "./adapters";
 import { WALLET_PROVIDERS, WalletProviderInfo, WalletType } from "./providers";
 import { useLocalStorageState } from "./utils/useLocalStorageState";
 
-export interface IWalletContext<T extends boolean = boolean> {
+export interface UseSolana<T extends boolean = boolean> {
   wallet?: WalletAdapter<T>;
   connected: T;
   activate: (walletType: WalletType) => void;
 }
 
-const WalletContext = React.createContext<IWalletContext | null>(null);
-
-interface Props {
+export interface UseSolanaArgs {
   cluster: Cluster;
   endpoint: string;
   onConnect: (wallet: WalletAdapter<true>) => void;
   onDisconnect: (wallet: WalletAdapter<false>) => void;
-  children: React.ReactNode;
 }
 
-export const WalletProvider: React.FC<Props> = ({
-  children,
+/**
+ * Provides Solana.
+ * @returns
+ */
+const useSolanaInternal = ({
   onConnect,
   onDisconnect,
   cluster,
   endpoint,
-}: Props) => {
+}: UseSolanaArgs): UseSolana => {
   const [walletType, setWalletType] = useLocalStorageState<WalletType | null>(
     "use-solana/wallet-type",
     null
@@ -73,29 +73,31 @@ export const WalletProvider: React.FC<Props> = ({
     };
   }, [onConnect, onDisconnect, wallet]);
 
-  return (
-    <WalletContext.Provider
-      value={{
-        wallet,
-        connected,
-        activate: (nextWalletType) => {
-          if (walletType === nextWalletType) {
-            // reconnect
-            void wallet?.connect().then(() => {
-              setConnected(true);
-            });
-          }
-          setWalletType(walletType);
-        },
-      }}
-    >
-      {children}
-    </WalletContext.Provider>
-  );
+  return {
+    wallet,
+    connected,
+    activate: (nextWalletType) => {
+      if (walletType === nextWalletType) {
+        // reconnect
+        void wallet?.connect().then(() => {
+          setConnected(true);
+        });
+      }
+      setWalletType(walletType);
+    },
+  };
 };
 
-export function useWallet(): IWalletContext {
-  const context = useContext(WalletContext);
+const Solana = createContainer(useSolanaInternal);
+
+export const SolanaProvider = Solana.Provider;
+export const useSolana = Solana.useContainer;
+
+/**
+ * Gets the current Solana wallet.
+ */
+export function useWallet(): UseSolana {
+  const context = useSolana();
   if (!context) {
     throw new Error("wallet not loaded");
   }
@@ -103,7 +105,7 @@ export function useWallet(): IWalletContext {
 }
 
 /**
- * Uses the wallet if it is connected.
+ * Gets the current Solana wallet, returning null if it is not connected.
  */
 export const useConnectedWallet = (): ConnectedWallet | null => {
   const { wallet, connected } = useWallet();
