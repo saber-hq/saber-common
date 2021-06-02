@@ -70,7 +70,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
 export interface WalletProviderInfo {
   name: string;
   url: string;
-  icon: string | React.ReactNode;
+  icon: string | React.FC<React.SVGProps<SVGSVGElement>>;
   makeAdapter: WalletAdapterConstructor;
   isInstalled?: () => boolean;
   isMobile?: boolean;
