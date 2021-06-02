@@ -1,5 +1,5 @@
 import { Cluster } from "@solana/web3.js";
-import { useEffect, useMemo, useState } from "react";
+import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import { createContainer } from "unstated-next";
 
 import { ConnectedWallet, WalletAdapter } from "./adapters";
@@ -90,7 +90,14 @@ const useSolanaInternal = ({
 
 const Solana = createContainer(useSolanaInternal);
 
-export const SolanaProvider = Solana.Provider;
+type ProviderProps = UseSolanaArgs & { children: ReactNode };
+
+export const SolanaProvider: React.FC<ProviderProps> = ({
+  children,
+  ...args
+}: ProviderProps) => (
+  <Solana.Provider initialState={args}>{children}</Solana.Provider>
+);
 export const useSolana = Solana.useContainer;
 
 /**
