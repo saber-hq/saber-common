@@ -7,6 +7,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
+    "clean": "rm -fr dist/",
     "test": "tsdx test --passWithNoTests",
     "lint": "eslint .",
     "lint:ci": "eslint . --max-warnings=0",
