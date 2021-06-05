@@ -23,7 +23,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
   [WalletType.Sollet]: {
     name: "Sollet",
     url: "https://www.sollet.io",
-    icon: LEDGER,
+    icon: SOLLET,
     makeAdapter: Wallet,
     isMobile: true,
   },
@@ -38,7 +38,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
   [WalletType.Ledger]: {
     name: "Ledger",
     url: "https://www.ledger.com",
-    icon: SOLLET,
+    icon: LEDGER,
     makeAdapter: LedgerWalletAdapter,
   },
   [WalletType.Solong]: {
