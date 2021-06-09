@@ -44,8 +44,10 @@
     "@ledgerhq/hw-transport": "^5.51.1",
     "@ledgerhq/hw-transport-webusb": "^5.53.1",
     "@project-serum/sol-wallet-adapter": "^0.2.0",
+    "@types/bs58": "^4.0.1",
     "@types/ledgerhq__hw-transport": "^4.21.3",
     "@types/ledgerhq__hw-transport-webusb": "^4.70.1",
+    "bs58": "^4.0.1",
     "eventemitter3": "^4.0.7",
     "unstated-next": "^1.1.0"
   },

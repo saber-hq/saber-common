@@ -1,4 +1,5 @@
 import { PublicKey, Transaction } from "@solana/web3.js";
+import * as bs58 from "bs58";
 import * as EventEmitter from "eventemitter3";
 
 import { DEFAULT_PUBLIC_KEY, WalletAdapter } from "../types";
@@ -48,7 +49,7 @@ export class Coin98Adapter extends EventEmitter implements WalletAdapter {
       method: "sol_sign",
       params: [transaction],
     })) as { publicKey: string; signature: string };
-    transaction.addSignature(new PublicKey(publicKey), Buffer.from(signature));
+    transaction.addSignature(new PublicKey(publicKey), bs58.decode(signature));
     return transaction;
   }
 
