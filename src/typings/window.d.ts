@@ -43,5 +43,14 @@ declare global {
       signTransaction: (tx: Transaction) => Promise<Transaction>;
       selectAccount: () => Promise<string>;
     };
+    coin98?: {
+      sol: {
+        request: (args: {
+          method: string;
+          params?: unknown[];
+        }) => Promise<unknown>;
+        disconnect: () => void;
+      };
+    };
   }
 }
