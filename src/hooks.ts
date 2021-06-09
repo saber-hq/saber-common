@@ -1,0 +1,55 @@
+import { Connection } from "@solana/web3.js";
+
+import { ConnectedWallet } from "./adapters/types";
+import { UseSolana, useSolana } from "./context";
+import { ConnectionContext } from "./utils/useConnectionInternal";
+
+/**
+ * Gets the current Solana wallet.
+ */
+export function useWallet(): UseSolana {
+  const context = useSolana();
+  if (!context) {
+    throw new Error("wallet not loaded");
+  }
+  return context;
+}
+
+/**
+ * Gets the current Solana wallet, returning null if it is not connected.
+ */
+export const useConnectedWallet = (): ConnectedWallet | null => {
+  const { wallet, connected } = useWallet();
+  if (!wallet?.connected || !connected || !wallet.publicKey) {
+    return null;
+  }
+  return wallet as ConnectedWallet;
+};
+
+/**
+ * Loads the connection context
+ * @returns
+ */
+export function useConnectionContext(): ConnectionContext {
+  const context = useSolana();
+  if (!context) {
+    throw new Error("Not in context");
+  }
+  return context;
+}
+
+/**
+ * Gets the read connection
+ * @returns
+ */
+export function useConnection(): Connection {
+  return useConnectionContext().connection;
+}
+
+/**
+ * Gets the send connection
+ * @returns
+ */
+export function useSendConnection(): Connection {
+  return useConnectionContext().sendConnection;
+}
