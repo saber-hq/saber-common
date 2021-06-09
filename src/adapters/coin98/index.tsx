@@ -70,6 +70,7 @@ export class Coin98Adapter extends EventEmitter implements WalletAdapter {
         }
         this._publicKey = new PublicKey(accounts[0]);
         this._connected = true;
+        this.emit("connect", this._publicKey);
       })
       .catch(() => {
         this.disconnect();
