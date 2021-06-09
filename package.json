@@ -1,8 +1,8 @@
 {
-  "name": "@stableswap/use-solana",
-  "version": "0.1.0-alpha.10",
-  "repository": "git@github.com:stableswap/solana-wallets.git",
-  "author": "Ian Macalinao <ian@stableswap.pro>",
+  "name": "@saberhq/use-solana",
+  "version": "0.1.0-alpha.11",
+  "repository": "git@github.com:saber-hq/use-solana.git",
+  "author": "Ian Macalinao <ian@saber.so>",
   "license": "MIT",
   "scripts": {
     "start": "tsdx watch",
