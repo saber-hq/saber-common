@@ -1,0 +1,13 @@
+{
+  "folders": [
+	{
+		"path": "."
+	},
+	{
+		"path": "demo"
+	}
+],
+  "settings": {
+    "typescript.tsdk": "demo/node_modules/typescript/lib"
+  }
+}
