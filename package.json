@@ -21,7 +21,7 @@
     "@solana/web3.js": "^1.17.0",
     "@types/react": "^17.0.9",
     "@types/react-dom": "^17.0.7",
-    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.1",
     "@typescript-eslint/parser": "^4.26.1",
     "eslint": "^7.28.0",
     "eslint-config-prettier": "^8.3.0",
