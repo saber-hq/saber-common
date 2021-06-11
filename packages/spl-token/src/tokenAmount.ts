@@ -6,6 +6,7 @@ import {
   Percent,
   Rounding,
 } from "@ubeswap/token-math";
+import Decimal from "decimal.js";
 import JSBI from "jsbi";
 import invariant from "tiny-invariant";
 
@@ -34,6 +35,24 @@ export class TokenAmount extends Fraction {
 
     super(parsedAmount, makeDecimalMultiplier(token.decimals));
     this.token = token;
+  }
+
+  /**
+   * Parses a token amount from a decimal representation.
+   * @param token
+   * @param uiAmount
+   * @returns
+   */
+  public static parse(token: Token, uiAmount: string): TokenAmount {
+    return new TokenAmount(
+      token,
+      JSBI.BigInt(
+        new Decimal(uiAmount)
+          .times(new Decimal(10).pow(token.decimals))
+          .floor()
+          .toString()
+      )
+    );
   }
 
   public get raw(): JSBI {
