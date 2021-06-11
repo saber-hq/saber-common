@@ -9,21 +9,15 @@
     "build": "tsdx build",
     "clean": "rm -fr dist/",
     "test": "tsdx test --passWithNoTests",
-    "prepare": "tsdx build && husky install",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "prepare": "tsdx build && husky install"
   },
   "devDependencies": {
-    "@size-limit/file": "^4.12.0",
-    "@size-limit/webpack": "^4.12.0",
     "@solana/web3.js": "^1.18.0",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "size-limit": "^4.12.0",
-    "tsdx": "^0.14.1",
-    "typescript": "^4.3.2"
+    "tsdx": "^0.14.1"
   },
   "dependencies": {
     "@ledgerhq/hw-transport": "^5.51.1",
@@ -44,16 +38,6 @@
   "main": "dist/use-solana.cjs.production.min.js",
   "types": "dist/index.d.ts",
   "module": "dist/use-solana.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/use-solana.cjs.production.min.js",
-      "limit": "50 KB"
-    },
-    {
-      "path": "dist/use-solana.esm.js",
-      "limit": "50 KB"
-    }
-  ],
   "files": [
     "dist/"
   ]
