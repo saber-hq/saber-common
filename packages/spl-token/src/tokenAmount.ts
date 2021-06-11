@@ -1,3 +1,4 @@
+import { u64 } from "@solana/spl-token";
 import {
   Big,
   Fraction,
@@ -94,5 +95,13 @@ export class TokenAmount extends Fraction {
   public divideBy(other: Fraction): Percent {
     const frac = this.divide(other);
     return new Percent(frac.numerator, frac.denominator);
+  }
+
+  /**
+   * Converts this to the raw u64 used by the SPL library
+   * @returns
+   */
+  public toU64(): u64 {
+    return new u64(this.raw.toString());
   }
 }
