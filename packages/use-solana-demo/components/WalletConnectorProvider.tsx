@@ -1,6 +1,6 @@
+import { ConnectedWallet, SolanaProvider } from "@saberhq/use-solana";
 import React, { useCallback, useContext, useState } from "react";
 
-import { ConnectedWallet, SolanaProvider } from "../../dist";
 import { notify } from "../utils/notify";
 import { WalletSelectorModal } from "./WalletSelectorModal";
 

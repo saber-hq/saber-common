@@ -11,9 +11,10 @@
     "removeComments": true,
     "strictNullChecks": true,
     "preserveConstEnums": true,
+    "sourceMap": true,
     "lib": ["es2015", "es2016", "dom"],
     "rootDir": "src/",
-    "types": ["node"],
-    "noEmit": true
-  }
+    "types": ["node"]
+  },
+  "include": ["src/"]
 }
