@@ -1,14 +1,9 @@
-import {
-  BigintIsh,
-  Fraction,
-  NumberFormat,
-  Rounding,
-} from "@ubeswap/token-math";
+import { Fraction, NumberFormat, Rounding } from "@ubeswap/token-math";
 import invariant from "tiny-invariant";
 
 import { Token, tokensEqual } from "./token";
 import { TokenAmount } from "./tokenAmount";
-import { makeDecimalMultiplier } from "./utils";
+import { BigintIsh, makeDecimalMultiplier, parseBigintIsh } from "./utils";
 
 export class Price extends Fraction {
   public readonly baseCurrency: Token; // input i.e. denominator
@@ -22,7 +17,7 @@ export class Price extends Fraction {
     denominator: BigintIsh,
     numerator: BigintIsh
   ) {
-    super(numerator, denominator);
+    super(parseBigintIsh(numerator), parseBigintIsh(denominator));
 
     this.baseCurrency = baseCurrency;
     this.quoteCurrency = quoteCurrency;

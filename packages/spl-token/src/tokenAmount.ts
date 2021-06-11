@@ -1,6 +1,5 @@
 import {
   Big,
-  BigintIsh,
   Fraction,
   NumberFormat,
   Percent,
@@ -11,7 +10,7 @@ import invariant from "tiny-invariant";
 
 import { MAX_U64, ZERO } from "./constants";
 import { Token, tokensEqual } from "./token";
-import { makeDecimalMultiplier, parseBigintIsh } from "./utils";
+import { BigintIsh, makeDecimalMultiplier, parseBigintIsh } from "./utils";
 
 export function validateU64(value: JSBI): void {
   invariant(
