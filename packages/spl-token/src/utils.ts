@@ -2,6 +2,11 @@ import { u64 } from "@solana/spl-token";
 import BN from "bn.js";
 import JSBI from "jsbi";
 
+import { TEN } from "./constants";
+
+/**
+ * Bigint-like number.
+ */
 export declare type BigintIsh = JSBI | string | number | bigint | u64 | BN;
 
 export function parseBigintIsh(bigintIsh: BigintIsh): JSBI {
@@ -13,3 +18,12 @@ export function parseBigintIsh(bigintIsh: BigintIsh): JSBI {
     ? JSBI.BigInt(bigintIsh.toString())
     : JSBI.BigInt(bigintIsh);
 }
+
+/**
+ * Creates the multipler for an amount of decimals.
+ * @param decimals
+ * @returns
+ */
+export const makeDecimalMultiplier = (decimals: number): JSBI => {
+  return JSBI.exponentiate(TEN, JSBI.BigInt(decimals));
+};

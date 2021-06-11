@@ -8,6 +8,7 @@ import invariant from "tiny-invariant";
 
 import { Token, tokensEqual } from "./token";
 import { TokenAmount } from "./tokenAmount";
+import { makeDecimalMultiplier } from "./utils";
 
 export class Price extends Fraction {
   public readonly baseCurrency: Token; // input i.e. denominator
@@ -26,8 +27,8 @@ export class Price extends Fraction {
     this.baseCurrency = baseCurrency;
     this.quoteCurrency = quoteCurrency;
     this.scalar = new Fraction(
-      10 ** baseCurrency.decimals,
-      10 ** quoteCurrency.decimals
+      makeDecimalMultiplier(baseCurrency.decimals),
+      makeDecimalMultiplier(quoteCurrency.decimals)
     );
   }
 

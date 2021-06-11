@@ -9,13 +9,9 @@ import {
 import JSBI from "jsbi";
 import invariant from "tiny-invariant";
 
+import { MAX_U64, ZERO } from "./constants";
 import { Token, tokensEqual } from "./token";
-import { parseBigintIsh } from "./utils";
-
-export const MAX_U64 = JSBI.BigInt("0xffffffffffffffff");
-export const ZERO = JSBI.BigInt(0);
-export const ONE = JSBI.BigInt(1);
-export const TEN = JSBI.BigInt(10);
+import { makeDecimalMultiplier, parseBigintIsh } from "./utils";
 
 export function validateU64(value: JSBI): void {
   invariant(
@@ -36,7 +32,7 @@ export class TokenAmount extends Fraction {
     const parsedAmount = parseBigintIsh(amount);
     validateU64(parsedAmount);
 
-    super(parsedAmount, JSBI.exponentiate(TEN, JSBI.BigInt(token.decimals)));
+    super(parsedAmount, makeDecimalMultiplier(token.decimals));
     this.token = token;
   }
 
@@ -105,6 +101,6 @@ export class TokenAmount extends Fraction {
    * Gets this token amount as a fraction divided by the given decimal places.
    */
   public asDecimalFraction(): Fraction {
-    return new Fraction(this.raw, 10 ** this.token.decimals);
+    return new Fraction(this.raw, makeDecimalMultiplier(this.token.decimals));
   }
 }
