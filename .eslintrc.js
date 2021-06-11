@@ -5,7 +5,7 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ["*.js", "dist/", "demo/"],
+  ignorePatterns: ["*.js", "packages/*/dist/**/*"],
   root: true,
   parser: "@typescript-eslint/parser",
   plugins: ["simple-import-sort", "import", "unused-imports"],
@@ -24,7 +24,7 @@ module.exports = {
     },
     ecmaVersion: 12,
     sourceType: "module",
-    project: "./tsconfig.json",
+    project: __dirname + "/tsconfig.json",
   },
   rules: {
     "import/order": "off",

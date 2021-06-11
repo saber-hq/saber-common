@@ -1,26 +1,14 @@
 {
-  "name": "@saberhq/use-solana",
-  "version": "0.1.0-alpha.16",
-  "repository": "git@github.com:saber-hq/use-solana.git",
-  "author": "Ian Macalinao <ian@saber.so>",
-  "license": "MIT",
-  "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "clean": "rm -fr dist/",
-    "test": "tsdx test --passWithNoTests",
-    "lint": "eslint .",
-    "lint:ci": "eslint . --max-warnings=0",
-    "prepare": "tsdx build && husky install",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+  "private": true,
+  "name": "use-solana",
+  "workspaces": [
+    "packages/*"
+  ],
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --cache --fix",
+    "*.{md,js,json,yml,yaml,css,md}": "prettier --write"
   },
   "devDependencies": {
-    "@size-limit/file": "^4.12.0",
-    "@size-limit/webpack": "^4.12.0",
-    "@solana/web3.js": "^1.18.0",
-    "@types/react": "^17.0.11",
-    "@types/react-dom": "^17.0.7",
     "@typescript-eslint/eslint-plugin": "^4.26.1",
     "@typescript-eslint/parser": "^4.26.1",
     "eslint": "^7.28.0",
@@ -32,48 +20,16 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unused-imports": "^1.1.1",
     "husky": ">=6",
+    "lerna": "^4.0.0",
     "lint-staged": ">=10",
     "prettier": "^2.3.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "size-limit": "^4.12.0",
-    "tsdx": "^0.14.1",
     "typescript": "^4.3.2"
   },
-  "dependencies": {
-    "@ledgerhq/hw-transport": "^5.51.1",
-    "@ledgerhq/hw-transport-webusb": "^5.53.1",
-    "@project-serum/sol-wallet-adapter": "^0.2.0",
-    "@types/bs58": "^4.0.1",
-    "@types/ledgerhq__hw-transport": "^4.21.3",
-    "@types/ledgerhq__hw-transport-webusb": "^4.70.1",
-    "bs58": "^4.0.1",
-    "eventemitter3": "^4.0.7",
-    "unstated-next": "^1.1.0"
-  },
-  "peerDependencies": {
-    "@solana/web3.js": "^1.15.0",
-    "@types/react": "^17.0.8",
-    "react": ">=16"
-  },
-  "main": "dist/use-solana.cjs.production.min.js",
-  "types": "dist/index.d.ts",
-  "module": "dist/use-solana.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/use-solana.cjs.production.min.js",
-      "limit": "50 KB"
-    },
-    {
-      "path": "dist/use-solana.esm.js",
-      "limit": "50 KB"
-    }
-  ],
-  "lint-staged": {
-    "*.{ts,tsx}": "eslint --cache --fix",
-    "*.{md,js,json,yml,yaml}": "prettier --write"
-  },
-  "files": [
-    "dist/"
-  ]
+  "scripts": {
+    "build": "lerna run build",
+    "lint": "eslint . --cache",
+    "lint:fix": "eslint . --cache --fix",
+    "lint:ci": "eslint . --max-warnings=0",
+    "prepare": "husky install"
+  }
 }

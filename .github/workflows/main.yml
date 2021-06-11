@@ -19,10 +19,10 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: Lint
-        run: yarn lint
+        run: yarn lerna run lint:ci
 
       - name: Test
-        run: yarn test --ci --coverage --maxWorkers=2
+        run: yarn lerna run test --ci --coverage --maxWorkers=2
 
       - name: Build
-        run: yarn build
+        run: yarn lerna --scope @saberhq/use-solana run build
