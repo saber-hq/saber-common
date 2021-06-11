@@ -37,5 +37,8 @@
     "prepare": "husky install",
     "size": "size-limit",
     "analyze": "size-limit --why"
+  },
+  "resolutions": {
+    "typescript": "4.3.2"
   }
 }

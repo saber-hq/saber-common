@@ -15,7 +15,7 @@
     "@saberhq/use-solana": "^0.1.0-beta.1",
     "antd": "^4.16.2",
     "react": "^17.0.2",
-    "react-app-polyfill": "^1.0.0",
+    "react-app-polyfill": "^2.0.0",
     "react-device-detect": "^1.17.0",
     "react-dom": "^17.0.2",
     "react-spring": "^9.2.3",
