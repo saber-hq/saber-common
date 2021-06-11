@@ -36,5 +36,5 @@
     "@solana/web3.js": "^1.18.0",
     "bn.js": "*"
   },
-  "gitHead": "6ac84e2fbd1bbdc1557fe2bd5a2ca7fa70a59626"
+  "gitHead": "ad4ac22b534b5068d3bd95c8503313a4a03673f6"
 }
