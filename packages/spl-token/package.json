@@ -35,5 +35,6 @@
     "@solana/spl-token": "^0.1.5",
     "@solana/web3.js": "^1.18.0",
     "bn.js": "*"
-  }
+  },
+  "gitHead": "b8a6175e3ae2c388bf9b8af8312614762e2a6e1d"
 }

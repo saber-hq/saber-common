@@ -10,7 +10,7 @@
     "clean": "rm -fr dist/",
     "test": "tsdx test --passWithNoTests",
     "test:ci": "tsdx test --passWithNoTests --ci --coverage --maxWorkers=2",
-    "prepare": "tsdx build && husky install"
+    "prepare": "tsdx build"
   },
   "devDependencies": {
     "@solana/web3.js": "^1.18.0",
@@ -41,5 +41,6 @@
   "module": "dist/use-solana.esm.js",
   "files": [
     "dist/"
-  ]
+  ],
+  "gitHead": "b8a6175e3ae2c388bf9b8af8312614762e2a6e1d"
 }
