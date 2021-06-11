@@ -4,15 +4,12 @@
     "module": "ESNext",
     "jsx": "react",
     "moduleResolution": "node",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "removeComments": true,
-    "strictNullChecks": true,
+    "skipLibCheck": true,
     "preserveConstEnums": true,
     "lib": ["es2015", "es2016", "dom"],
-    "rootDir": "src/",
     "types": ["node"],
     "noEmit": true
   }

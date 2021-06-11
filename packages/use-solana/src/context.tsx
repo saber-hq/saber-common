@@ -28,7 +28,7 @@ const useSolanaInternal = ({
   onConnect,
   onDisconnect,
   ...connectionArgs
-}: UseSolanaArgs): UseSolana => {
+}: UseSolanaArgs = {}): UseSolana => {
   const connectionCtx = useConnectionInternal(connectionArgs);
   const { cluster, endpoint } = connectionCtx;
   const walletCtx = useWalletInternal({
@@ -48,10 +48,20 @@ const Solana = createContainer(useSolanaInternal);
 
 type ProviderProps = UseSolanaArgs & { children: ReactNode };
 
+/**
+ * Provides a Solana SDK.
+ * Note: ensure that `onConnect` and `onDisconnect` are wrapped in useCallback or are
+ * statically defined, otherwise the wallet will keep re-rendering.
+ * @returns
+ */
 export const SolanaProvider: React.FC<ProviderProps> = ({
   children,
   ...args
 }: ProviderProps) => (
   <Solana.Provider initialState={args}>{children}</Solana.Provider>
 );
+
+/**
+ * Fetches the loaded Solana SDK.
+ */
 export const useSolana = Solana.useContainer;

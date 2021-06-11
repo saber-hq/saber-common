@@ -70,7 +70,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
   },
   [WalletType.Coin98]: {
     name: "Coin98",
-    url: "https://coin98.com/",
+    url: "https://chrome.google.com/webstore/detail/coin98-wallet/aeachknmefphepccionboohckonoeemg",
     icon: COIN98,
     makeAdapter: Coin98Adapter,
     isInstalled: () => window.coin98 !== undefined,

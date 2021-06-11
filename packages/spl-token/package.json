@@ -1,5 +1,5 @@
 {
-  "name": "@saberhq/use-solana",
+  "name": "@saberhq/spl-token",
   "version": "0.1.0-beta.3",
   "repository": "git@github.com:saber-hq/use-solana.git",
   "author": "Ian Macalinao <ian@saber.so>",
@@ -13,34 +13,28 @@
     "prepare": "tsdx build"
   },
   "devDependencies": {
+    "@solana/spl-token": "^0.1.5",
     "@solana/web3.js": "^1.18.0",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.7",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "tsdx": "^0.14.1"
+    "react-dom": "^17.0.2"
   },
   "dependencies": {
-    "@ledgerhq/hw-transport": "^5.51.1",
-    "@ledgerhq/hw-transport-webusb": "^5.53.1",
-    "@project-serum/sol-wallet-adapter": "^0.2.0",
-    "@types/bs58": "^4.0.1",
-    "@types/ledgerhq__hw-transport": "^4.21.3",
-    "@types/ledgerhq__hw-transport-webusb": "^4.70.1",
-    "bs58": "^4.0.1",
-    "eventemitter3": "^4.0.7",
-    "unstated-next": "^1.1.0"
+    "@ubeswap/token-math": "^0.1.3",
+    "jsbi": "^3.1.4",
+    "tiny-invariant": "^1.1.0"
   },
-  "peerDependencies": {
-    "@solana/web3.js": "^1.15.0",
-    "@types/react": "^17.0.8",
-    "react": ">=16"
-  },
-  "main": "dist/use-solana.cjs.production.min.js",
+  "main": "dist/spl-token.cjs.production.min.js",
   "types": "dist/index.d.ts",
-  "module": "dist/use-solana.esm.js",
+  "module": "dist/spl-token.esm.js",
   "files": [
     "dist/"
   ],
+  "peerDependencies": {
+    "@solana/spl-token": "^0.1.5",
+    "@solana/web3.js": "^1.18.0",
+    "bn.js": "*"
+  },
   "gitHead": "ad4ac22b534b5068d3bd95c8503313a4a03673f6"
 }

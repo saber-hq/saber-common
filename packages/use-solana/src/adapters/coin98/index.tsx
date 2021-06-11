@@ -65,7 +65,8 @@ export class Coin98Adapter extends EventEmitter implements WalletAdapter {
     this._onProcess = true;
     await window.coin98.sol
       .request({ method: "sol_accounts" })
-      .then((accounts: string[]) => {
+      .then((rawAccounts) => {
+        const accounts = rawAccounts as string[];
         if (!accounts[0]) {
           throw new Error("No accounts found.");
         }

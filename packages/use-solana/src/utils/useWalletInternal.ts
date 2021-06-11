@@ -12,8 +12,8 @@ export interface UseWallet<T extends boolean = boolean> {
 }
 
 export interface UseWalletArgs {
-  onConnect: (wallet: WalletAdapter<true>) => void;
-  onDisconnect: (wallet: WalletAdapter<false>) => void;
+  onConnect?: (wallet: WalletAdapter<true>) => void;
+  onDisconnect?: (wallet: WalletAdapter<false>) => void;
   cluster: Cluster;
   endpoint: string;
 }
