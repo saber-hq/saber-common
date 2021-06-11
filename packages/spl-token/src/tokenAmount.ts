@@ -95,11 +95,4 @@ export class TokenAmount extends Fraction {
     const frac = this.divide(other);
     return new Percent(frac.numerator, frac.denominator);
   }
-
-  /**
-   * Gets this token amount as a fraction divided by the given decimal places.
-   */
-  public asDecimalFraction(): Fraction {
-    return new Fraction(this.raw, makeDecimalMultiplier(this.token.decimals));
-  }
 }
