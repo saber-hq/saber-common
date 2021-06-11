@@ -22,7 +22,7 @@ jobs:
         run: yarn lerna run lint:ci
 
       - name: Test
-        run: yarn lerna run test --ci --coverage --maxWorkers=2
+        run: yarn lerna run test:ci
 
       - name: Build
         run: yarn lerna --scope @saberhq/use-solana run build

@@ -9,6 +9,7 @@
     "build": "tsdx build",
     "clean": "rm -fr dist/",
     "test": "tsdx test --passWithNoTests",
+    "test:ci": "tsdx test --passWithNoTests --ci --coverage --maxWorkers=2",
     "prepare": "tsdx build && husky install"
   },
   "devDependencies": {
