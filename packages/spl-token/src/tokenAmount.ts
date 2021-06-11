@@ -104,4 +104,27 @@ export class TokenAmount extends Fraction {
   public toU64(): u64 {
     return new u64(this.raw.toString());
   }
+
+  /**
+   * Multiplies this token amount by a percent.
+   * WARNING: this loses precision
+   * @param percent
+   * @returns
+   */
+  public multiplyBy(percent: Percent): TokenAmount {
+    return new TokenAmount(
+      this.token,
+      percent.asFraction.multiply(this.raw).toFixed(0)
+    );
+  }
+
+  /**
+   * Reduces this token amount by a percent.
+   * WARNING: this loses precision
+   * @param percent
+   * @returns
+   */
+  public reduceBy(percent: Percent): TokenAmount {
+    return this.multiplyBy(new Percent(1, 1).subtract(percent));
+  }
 }
