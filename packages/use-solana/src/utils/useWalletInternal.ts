@@ -7,6 +7,7 @@ import { useLocalStorageState } from "./useLocalStorageState";
 
 export interface UseWallet<T extends boolean = boolean> {
   wallet?: WalletAdapter<T>;
+  provider?: WalletProviderInfo;
   connected: T;
   activate: (walletType: WalletType) => void;
 }
@@ -76,6 +77,7 @@ export const useWalletInternal = ({
 
   return {
     wallet,
+    provider,
     connected,
     activate: (nextWalletType) => {
       if (walletType === nextWalletType) {
