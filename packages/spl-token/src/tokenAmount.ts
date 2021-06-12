@@ -1,17 +1,18 @@
+import { u64 } from "@solana/spl-token";
 import {
   Big,
-  BigintIsh,
   Fraction,
   NumberFormat,
   Percent,
   Rounding,
 } from "@ubeswap/token-math";
+import Decimal from "decimal.js";
 import JSBI from "jsbi";
 import invariant from "tiny-invariant";
 
 import { MAX_U64, ZERO } from "./constants";
 import { Token, tokensEqual } from "./token";
-import { makeDecimalMultiplier, parseBigintIsh } from "./utils";
+import { BigintIsh, makeDecimalMultiplier, parseBigintIsh } from "./utils";
 
 export function validateU64(value: JSBI): void {
   invariant(
@@ -24,6 +25,29 @@ export function validateU64(value: JSBI): void {
   );
 }
 
+export interface IFormatUint {
+  /**
+   * If specified, format this according to `toLocaleString`
+   */
+  numberFormatOptions?: Intl.NumberFormatOptions;
+  /**
+   * Locale of the number
+   */
+  locale?: string;
+}
+
+const stripTrailingZeroes = (num: string): string => {
+  const [head, tail, ...rest] = num.split(".");
+  if (rest.length > 0 || !head) {
+    console.warn(`Invalid number passed to stripTrailingZeroes: ${num}`);
+    return num;
+  }
+  if (!tail) {
+    return num;
+  }
+  return `${head}.${tail.replace(/\.0+$/, "")}`;
+};
+
 export class TokenAmount extends Fraction {
   public readonly token: Token;
 
@@ -34,6 +58,24 @@ export class TokenAmount extends Fraction {
 
     super(parsedAmount, makeDecimalMultiplier(token.decimals));
     this.token = token;
+  }
+
+  /**
+   * Parses a token amount from a decimal representation.
+   * @param token
+   * @param uiAmount
+   * @returns
+   */
+  public static parse(token: Token, uiAmount: string): TokenAmount {
+    return new TokenAmount(
+      token,
+      JSBI.BigInt(
+        new Decimal(uiAmount)
+          .times(new Decimal(10).pow(token.decimals))
+          .floor()
+          .toString()
+      )
+    );
   }
 
   public get raw(): JSBI {
@@ -98,9 +140,48 @@ export class TokenAmount extends Fraction {
   }
 
   /**
-   * Gets this token amount as a fraction divided by the given decimal places.
+   * Converts this to the raw u64 used by the SPL library
+   * @returns
    */
-  public asDecimalFraction(): Fraction {
-    return new Fraction(this.raw, makeDecimalMultiplier(this.token.decimals));
+  public toU64(): u64 {
+    return new u64(this.raw.toString());
+  }
+
+  /**
+   * Multiplies this token amount by a percent.
+   * WARNING: this loses precision
+   * @param percent
+   * @returns
+   */
+  public multiplyBy(percent: Percent): TokenAmount {
+    return new TokenAmount(
+      this.token,
+      percent.asFraction.multiply(this.raw).toFixed(0)
+    );
+  }
+
+  /**
+   * Reduces this token amount by a percent.
+   * WARNING: this loses precision
+   * @param percent
+   * @returns
+   */
+  public reduceBy(percent: Percent): TokenAmount {
+    return this.multiplyBy(new Percent(1, 1).subtract(percent));
+  }
+
+  /**
+   * Formats this number using Intl.NumberFormatOptions
+   * @param param0
+   * @returns
+   */
+  public format({ numberFormatOptions, locale }: IFormatUint = {}): string {
+    const asExactString = this.toFixed(this.token.decimals);
+    const asNumber = parseFloat(asExactString);
+    return `${
+      numberFormatOptions !== undefined
+        ? asNumber.toLocaleString(locale, numberFormatOptions)
+        : stripTrailingZeroes(asExactString)
+    }`;
   }
 }
