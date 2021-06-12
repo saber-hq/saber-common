@@ -25,6 +25,29 @@ export function validateU64(value: JSBI): void {
   );
 }
 
+export interface IFormatUint {
+  /**
+   * If specified, format this according to `toLocaleString`
+   */
+  numberFormatOptions?: Intl.NumberFormatOptions;
+  /**
+   * Locale of the number
+   */
+  locale?: string;
+}
+
+const stripTrailingZeroes = (num: string): string => {
+  const [head, tail, ...rest] = num.split(".");
+  if (rest.length > 0 || !head) {
+    console.warn(`Invalid number passed to stripTrailingZeroes: ${num}`);
+    return num;
+  }
+  if (!tail) {
+    return num;
+  }
+  return `${head}.${tail.replace(/\.0+$/, "")}`;
+};
+
 export class TokenAmount extends Fraction {
   public readonly token: Token;
 
@@ -145,5 +168,20 @@ export class TokenAmount extends Fraction {
    */
   public reduceBy(percent: Percent): TokenAmount {
     return this.multiplyBy(new Percent(1, 1).subtract(percent));
+  }
+
+  /**
+   * Formats this number using Intl.NumberFormatOptions
+   * @param param0
+   * @returns
+   */
+  public format({ numberFormatOptions, locale }: IFormatUint = {}): string {
+    const asExactString = this.toFixed(this.token.decimals);
+    const asNumber = parseFloat(asExactString);
+    return `${
+      numberFormatOptions !== undefined
+        ? asNumber.toLocaleString(locale, numberFormatOptions)
+        : stripTrailingZeroes(asExactString)
+    }`;
   }
 }
