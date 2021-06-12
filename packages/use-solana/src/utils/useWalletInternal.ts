@@ -2,18 +2,25 @@ import { Cluster } from "@solana/web3.js";
 import { useEffect, useMemo, useState } from "react";
 
 import { ConnectedWallet, WalletAdapter } from "../adapters/types";
-import { WALLET_PROVIDERS, WalletType } from "../providers";
+import { WALLET_PROVIDERS, WalletProviderInfo, WalletType } from "../providers";
 import { useLocalStorageState } from "./useLocalStorageState";
 
 export interface UseWallet<T extends boolean = boolean> {
   wallet?: WalletAdapter<T>;
+  provider?: WalletProviderInfo;
   connected: T;
   activate: (walletType: WalletType) => void;
 }
 
 export interface UseWalletArgs {
-  onConnect?: (wallet: WalletAdapter<true>) => void;
-  onDisconnect?: (wallet: WalletAdapter<false>) => void;
+  onConnect?: (
+    wallet: WalletAdapter<true>,
+    provider: WalletProviderInfo
+  ) => void;
+  onDisconnect?: (
+    wallet: WalletAdapter<false>,
+    provider: WalletProviderInfo
+  ) => void;
   cluster: Cluster;
   endpoint: string;
 }
@@ -34,29 +41,32 @@ export const useWalletInternal = ({
 
   const [connected, setConnected] = useState(false);
 
-  const wallet = useMemo(() => {
+  const [provider, wallet]:
+    | readonly [WalletProviderInfo, WalletAdapter]
+    | readonly [undefined, undefined] = useMemo(() => {
     if (walletType) {
       const provider = WALLET_PROVIDERS[walletType];
       console.log("New wallet", provider.url, cluster);
-      return new provider.makeAdapter(provider.url, endpoint);
+      return [provider, new provider.makeAdapter(provider.url, endpoint)];
     }
+    return [undefined, undefined];
   }, [walletType, cluster, endpoint]);
 
   useEffect(() => {
-    if (wallet) {
+    if (wallet && provider) {
       setTimeout(() => {
         void wallet.connect();
       }, 500);
       wallet.on("connect", () => {
         if (wallet?.publicKey) {
           setConnected(true);
-          onConnect?.(wallet as ConnectedWallet);
+          onConnect?.(wallet as ConnectedWallet, provider);
         }
       });
 
       wallet.on("disconnect", () => {
         setConnected(false);
-        onDisconnect?.(wallet as WalletAdapter<false>);
+        onDisconnect?.(wallet as WalletAdapter<false>, provider);
       });
     }
 
@@ -65,10 +75,11 @@ export const useWalletInternal = ({
         void wallet.disconnect();
       }
     };
-  }, [onConnect, onDisconnect, wallet]);
+  }, [onConnect, onDisconnect, provider, wallet]);
 
   return {
     wallet,
+    provider,
     connected,
     activate: (nextWalletType) => {
       if (walletType === nextWalletType) {
