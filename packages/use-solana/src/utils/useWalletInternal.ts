@@ -41,13 +41,15 @@ export const useWalletInternal = ({
 
   const [connected, setConnected] = useState(false);
 
-  const [provider, wallet] = useMemo(() => {
+  const [provider, wallet]:
+    | readonly [WalletProviderInfo, WalletAdapter]
+    | readonly [undefined, undefined] = useMemo(() => {
     if (walletType) {
       const provider = WALLET_PROVIDERS[walletType];
       console.log("New wallet", provider.url, cluster);
       return [provider, new provider.makeAdapter(provider.url, endpoint)];
     }
-    return [undefined, undefined] as const;
+    return [undefined, undefined];
   }, [walletType, cluster, endpoint]);
 
   useEffect(() => {
