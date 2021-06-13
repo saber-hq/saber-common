@@ -12,15 +12,9 @@
     "test:ci": "tsdx test --passWithNoTests --ci --coverage --maxWorkers=2",
     "prepare": "tsdx build"
   },
-  "devDependencies": {
+  "dependencies": {
     "@solana/spl-token": "^0.1.5",
     "@solana/web3.js": "^1.18.0",
-    "@types/react": "^17.0.11",
-    "@types/react-dom": "^17.0.7",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
-  },
-  "dependencies": {
     "@saberhq/solana": "0.1.0-beta.9",
     "@ubeswap/token-math": "^0.1.3",
     "decimal.js": "^10.2.1",
@@ -34,8 +28,6 @@
     "dist/"
   ],
   "peerDependencies": {
-    "@solana/spl-token": "^0.1.5",
-    "@solana/web3.js": "^1.18.0",
     "bn.js": "*"
   },
   "gitHead": "ad4ac22b534b5068d3bd95c8503313a4a03673f6",
