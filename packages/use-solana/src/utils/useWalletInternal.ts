@@ -1,4 +1,4 @@
-import { Cluster } from "@solana/web3.js";
+import { Network } from "@saberhq/spl-token";
 import { useEffect, useMemo, useState } from "react";
 
 import { ConnectedWallet, WalletAdapter } from "../adapters/types";
@@ -21,14 +21,14 @@ export interface UseWalletArgs {
     wallet: WalletAdapter<false>,
     provider: WalletProviderInfo
   ) => void;
-  cluster: Cluster;
+  network: Network;
   endpoint: string;
 }
 
 export const useWalletInternal = ({
   onConnect,
   onDisconnect,
-  cluster,
+  network,
   endpoint,
 }: UseWalletArgs): UseWallet<boolean> => {
   const [walletTypeString, setWalletTypeString] = useLocalStorageState<
@@ -46,11 +46,11 @@ export const useWalletInternal = ({
     | readonly [undefined, undefined] = useMemo(() => {
     if (walletType) {
       const provider = WALLET_PROVIDERS[walletType];
-      console.log("New wallet", provider.url, cluster);
+      console.log("New wallet", provider.url, network);
       return [provider, new provider.makeAdapter(provider.url, endpoint)];
     }
     return [undefined, undefined];
-  }, [walletType, cluster, endpoint]);
+  }, [walletType, network, endpoint]);
 
   useEffect(() => {
     if (wallet && provider) {

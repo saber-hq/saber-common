@@ -1,38 +1,39 @@
-import { Cluster, Connection, Keypair } from "@solana/web3.js";
+import { Network } from "@saberhq/spl-token";
+import { Connection, Keypair } from "@solana/web3.js";
 import { useEffect, useMemo } from "react";
 
 import {
-  ClusterConfigMap,
-  DEFAULT_CLUSTER_CONFIG_MAP,
-  PartialClusterConfigMap,
-} from "../types";
+  DEFAULT_NETWORK_CONFIG_MAP,
+  NetworkConfigMap,
+  PartialNetworkConfigMap,
+} from "../constants";
 import { useLocalStorageState } from "./useLocalStorageState";
 
 export interface ConnectionContext {
   connection: Connection;
   sendConnection: Connection;
-  cluster: Cluster;
-  setCluster: (val: Cluster) => void;
+  network: Network;
+  setNetwork: (val: Network) => void;
   endpoint: string;
 }
 
-const makeClusterConfigMap = (
-  partial: PartialClusterConfigMap
-): ClusterConfigMap =>
-  Object.entries(DEFAULT_CLUSTER_CONFIG_MAP).reduce(
+const makeNetworkConfigMap = (
+  partial: PartialNetworkConfigMap
+): NetworkConfigMap =>
+  Object.entries(DEFAULT_NETWORK_CONFIG_MAP).reduce(
     (acc, [k, v]) => ({
       ...acc,
-      [k as Cluster]: {
-        ...partial[k as Cluster],
+      [k as Network]: {
+        ...partial[k as Network],
         ...v,
       },
     }),
-    DEFAULT_CLUSTER_CONFIG_MAP
+    DEFAULT_NETWORK_CONFIG_MAP
   );
 
 export interface ConnectionArgs {
-  defaultCluster?: Cluster;
-  clusterConfigs?: PartialClusterConfigMap;
+  defaultNetwork?: Network;
+  networkConfigs?: PartialNetworkConfigMap;
 }
 
 /**
@@ -41,15 +42,15 @@ export interface ConnectionArgs {
  */
 export const useConnectionInternal = ({
   // default to mainnet-beta
-  defaultCluster = "mainnet-beta",
-  clusterConfigs = DEFAULT_CLUSTER_CONFIG_MAP,
+  defaultNetwork = "mainnet-beta",
+  networkConfigs = DEFAULT_NETWORK_CONFIG_MAP,
 }: ConnectionArgs): ConnectionContext => {
-  const [cluster, setCluster] = useLocalStorageState<Cluster>(
-    "use-solana/cluster",
-    defaultCluster
+  const [network, setNetwork] = useLocalStorageState<Network>(
+    "use-solana/network",
+    defaultNetwork
   );
-  const configMap = makeClusterConfigMap(clusterConfigs);
-  const { endpoint } = configMap[cluster];
+  const configMap = makeNetworkConfigMap(networkConfigs);
+  const { endpoint } = configMap[network];
 
   const connection = useMemo(
     () => new Connection(endpoint, "recent"),
@@ -100,8 +101,8 @@ export const useConnectionInternal = ({
   return {
     connection,
     sendConnection,
-    cluster,
-    setCluster,
+    network,
+    setNetwork,
     endpoint,
   };
 };
