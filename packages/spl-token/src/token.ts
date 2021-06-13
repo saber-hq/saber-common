@@ -1,7 +1,6 @@
+import { Network } from "@saberhq/solana";
 import { NATIVE_MINT } from "@solana/spl-token";
 import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
-
-import { Network } from "./constants";
 
 /**
  * Token information.

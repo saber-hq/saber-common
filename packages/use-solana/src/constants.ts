@@ -1,4 +1,4 @@
-import { Network } from "@saberhq/spl-token";
+import { Network } from "@saberhq/solana";
 
 export type NetworkConfig = Readonly<{
   name: string;
@@ -8,6 +8,9 @@ export type NetworkConfig = Readonly<{
   endpoint: string;
 }>;
 
+/**
+ * Default configuration for all networks.
+ */
 export const DEFAULT_NETWORK_CONFIG_MAP = {
   "mainnet-beta": {
     name: "Mainnet Beta",
