@@ -1,5 +1,15 @@
 [
   {
+    "path": "packages/solana/dist/solana.cjs.production.min.js",
+    "limit": "10 KB",
+    "ignore": ["@solana/spl-token", "@solana/web3.js"]
+  },
+  {
+    "path": "packages/solana/dist/solana.esm.js",
+    "limit": "10 KB",
+    "ignore": ["@solana/spl-token", "@solana/web3.js"]
+  },
+  {
     "path": "packages/spl-token/dist/spl-token.cjs.production.min.js",
     "limit": "50 KB",
     "ignore": ["@solana/spl-token", "@solana/web3.js", "bn.js"]

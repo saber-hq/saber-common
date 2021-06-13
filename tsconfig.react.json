@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["es2015", "DOM"],
+    "noEmit": false,
+    "sourceMap": true,
+    "declaration": true,
+    "target": "ES2015",
+    "importHelpers": true
+  }
+}

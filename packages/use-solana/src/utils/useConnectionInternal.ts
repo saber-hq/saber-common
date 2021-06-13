@@ -1,4 +1,4 @@
-import { Network } from "@saberhq/spl-token";
+import { Network } from "@saberhq/solana";
 import { Connection, Keypair } from "@solana/web3.js";
 import { useEffect, useMemo } from "react";
 

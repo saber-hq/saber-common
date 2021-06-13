@@ -5,21 +5,19 @@
   "author": "Ian Macalinao <ian@saber.so>",
   "license": "MIT",
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
+    "build": "tsc",
     "clean": "rm -fr dist/",
-    "test": "tsdx test --passWithNoTests",
-    "test:ci": "tsdx test --passWithNoTests --ci --coverage --maxWorkers=2",
-    "prepare": "tsdx build"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "@saberhq/solana": "0.1.0-beta.9",
     "@solana/spl-token": "^0.1.5",
     "@solana/web3.js": "^1.18.0",
-    "@saberhq/solana": "0.1.0-beta.9",
     "@ubeswap/token-math": "^0.1.3",
     "decimal.js": "^10.2.1",
     "jsbi": "^3.1.4",
-    "tiny-invariant": "^1.1.0"
+    "tiny-invariant": "^1.1.0",
+    "tslib": "^2.3.0"
   },
   "main": "dist/spl-token.cjs.production.min.js",
   "types": "dist/index.d.ts",
@@ -30,8 +28,5 @@
   "peerDependencies": {
     "bn.js": "*"
   },
-  "gitHead": "ad4ac22b534b5068d3bd95c8503313a4a03673f6",
-  "resolutions": {
-    "typescript": "^4.3.2"
-  }
+  "gitHead": "ad4ac22b534b5068d3bd95c8503313a4a03673f6"
 }

@@ -1,4 +1,4 @@
-import { Network } from "@saberhq/spl-token";
+import { Network } from "@saberhq/solana";
 import { useEffect, useMemo, useState } from "react";
 
 import { ConnectedWallet, WalletAdapter } from "../adapters/types";
