@@ -14,4 +14,4 @@ The best way to learn is by example. Some examples:
 
 ## License
 
-MIT
+Apache 2.0
