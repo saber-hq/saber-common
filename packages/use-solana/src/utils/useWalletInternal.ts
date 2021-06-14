@@ -1,4 +1,5 @@
 import { Network } from "@saberhq/solana";
+import { PublicKey } from "@solana/web3.js";
 import { useEffect, useMemo, useState } from "react";
 
 import { ConnectedWallet, WalletAdapter } from "../adapters/types";
@@ -7,6 +8,7 @@ import { useLocalStorageState } from "./useLocalStorageState";
 
 export interface UseWallet<T extends boolean = boolean> {
   wallet?: WalletAdapter<T>;
+  publicKey?: PublicKey;
   provider?: WalletProviderInfo;
   connected: T;
   activate: (walletType: WalletType) => void;
@@ -81,6 +83,7 @@ export const useWalletInternal = ({
     wallet,
     provider,
     connected,
+    publicKey: wallet?.publicKey ?? undefined,
     activate: (nextWalletType) => {
       if (walletType === nextWalletType) {
         // reconnect
