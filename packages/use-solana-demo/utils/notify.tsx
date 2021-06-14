@@ -1,4 +1,4 @@
-import { Network } from "@saberhq/spl-token";
+import { Network } from "@saberhq/solana";
 import { notification } from "antd";
 import { ArgsProps, NotificationInstance } from "antd/lib/notification";
 import React from "react";
