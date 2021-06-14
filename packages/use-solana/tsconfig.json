@@ -1,9 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.react.json",
   "compilerOptions": {
-    "sourceMap": true,
-    "lib": ["es2015", "es2016", "dom"],
-    "rootDir": "src/"
+    "outDir": "dist/"
   },
   "include": ["src/"]
 }
