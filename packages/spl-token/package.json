@@ -19,11 +19,11 @@
     "tiny-invariant": "^1.1.0",
     "tslib": "^2.3.0"
   },
-  "main": "dist/spl-token.cjs.production.min.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "module": "dist/spl-token.esm.js",
   "files": [
-    "dist/"
+    "dist/",
+    "src/"
   ],
   "peerDependencies": {
     "bn.js": "*"
