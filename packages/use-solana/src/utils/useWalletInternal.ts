@@ -1,6 +1,6 @@
 import { Network } from "@saberhq/solana";
 import { PublicKey } from "@solana/web3.js";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { ConnectedWallet, WalletAdapter } from "../adapters/types";
 import { WALLET_PROVIDERS, WalletProviderInfo, WalletType } from "../providers";
@@ -79,17 +79,22 @@ export const useWalletInternal = ({
     };
   }, [onConnect, onDisconnect, provider, wallet]);
 
+  const activate = useCallback(
+    async (nextWalletType: WalletType): Promise<void> => {
+      if (walletType === nextWalletType) {
+        // reconnect
+        await wallet?.connect();
+      }
+      setWalletTypeString(nextWalletType);
+    },
+    [wallet, walletType]
+  );
+
   return {
     wallet,
     provider,
     connected,
     publicKey: wallet?.publicKey ?? undefined,
-    activate: (nextWalletType) => {
-      if (walletType === nextWalletType) {
-        // reconnect
-        void wallet?.connect();
-      }
-      setWalletTypeString(nextWalletType);
-    },
+    activate,
   };
 };
