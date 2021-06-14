@@ -28,5 +28,8 @@
   "peerDependencies": {
     "bn.js": "*"
   },
-  "gitHead": "ad4ac22b534b5068d3bd95c8503313a4a03673f6"
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "f9fd3fbd36a7a6dd6f5e9597af5309affe50ac0e"
 }
