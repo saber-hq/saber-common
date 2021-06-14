@@ -5,7 +5,8 @@
     "noEmit": false,
     "sourceMap": true,
     "declaration": true,
-    "target": "ES5",
+    "target": "es6",
+    "module": "commonjs",
     "importHelpers": true
   }
 }
