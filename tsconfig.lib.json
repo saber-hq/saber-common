@@ -7,6 +7,7 @@
     "declaration": true,
     "target": "es6",
     "module": "commonjs",
+    "esModuleInterop": true,
     "importHelpers": true
   }
 }

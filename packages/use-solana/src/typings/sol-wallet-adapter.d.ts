@@ -1,5 +1,5 @@
 declare module "@project-serum/sol-wallet-adapter" {
-  import * as EventEmitter from "eventemitter3";
+  import EventEmitter from "eventemitter3";
   import { PublicKey, Transaction } from "@solana/web3.js";
 
   export default class Wallet<
