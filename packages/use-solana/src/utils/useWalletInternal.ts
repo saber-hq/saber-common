@@ -57,7 +57,12 @@ export const useWalletInternal = ({
   useEffect(() => {
     if (wallet && provider) {
       setTimeout(() => {
-        void wallet.connect();
+        void wallet.connect().catch((e) => {
+          console.warn(
+            `Error attempting to automatically connect to ${provider.name}`,
+            e
+          );
+        });
       }, 500);
       wallet.on("connect", () => {
         if (wallet?.publicKey) {
