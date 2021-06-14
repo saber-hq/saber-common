@@ -92,7 +92,7 @@ export const useWalletInternal = ({
       }
       setWalletTypeString(nextWalletType);
     },
-    [wallet, walletType]
+    [setWalletTypeString, wallet, walletType]
   );
 
   return {
