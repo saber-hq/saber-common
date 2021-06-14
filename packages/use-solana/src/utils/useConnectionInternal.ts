@@ -1,13 +1,17 @@
-import { Network } from "@saberhq/solana";
+import {
+  DEFAULT_NETWORK_CONFIG_MAP,
+  Network,
+  NetworkConfig,
+  NetworkConfigMap,
+} from "@saberhq/solana";
 import { Connection, Keypair } from "@solana/web3.js";
 import { useEffect, useMemo } from "react";
 
-import {
-  DEFAULT_NETWORK_CONFIG_MAP,
-  NetworkConfigMap,
-  PartialNetworkConfigMap,
-} from "../constants";
 import { useLocalStorageState } from "./useLocalStorageState";
+
+export type PartialNetworkConfigMap = {
+  [N in Network]?: Partial<NetworkConfig>;
+};
 
 export interface ConnectionContext {
   connection: Connection;
