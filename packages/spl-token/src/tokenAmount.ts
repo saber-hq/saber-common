@@ -1,12 +1,12 @@
 import { u64 } from "@solana/spl-token";
 import {
+  BigintIsh,
   Percent,
   TokenAmount as UTokenAmount,
   validateU64,
 } from "@ubeswap/token-math";
 
 import { Token } from "./token";
-import { BigintIsh } from "./utils";
 
 export interface IFormatUint {
   /**

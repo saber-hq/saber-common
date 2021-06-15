@@ -15,8 +15,6 @@
     "@solana/spl-token-registry": "^0.2.135",
     "@solana/web3.js": "^1.18.0",
     "@ubeswap/token-math": "^3.1.0",
-    "decimal.js": "^10.2.1",
-    "jsbi": "^3.1.4",
     "tiny-invariant": "^1.1.0",
     "tslib": "^2.3.0"
   },
