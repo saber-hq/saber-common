@@ -24,26 +24,6 @@ jobs:
       - name: Build
         run: yarn lerna run --ignore @saberhq/use-solana-demo build
 
-  lint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Use Node 14.x
-        uses: actions/setup-node@v2.1.5
-        with:
-          node-version: 14.x
-
-      - uses: actions/cache@v2
-        with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Install packages
-        run: yarn install
-
       - name: Lint
         run: yarn lint:ci
 
