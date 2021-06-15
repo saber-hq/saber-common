@@ -1,17 +1,55 @@
 import { Network } from "@saberhq/solana";
 import { NATIVE_MINT } from "@solana/spl-token";
-import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
+import { ENV, TokenInfo } from "@solana/spl-token-registry";
+import { PublicKey } from "@solana/web3.js";
+import { Token as UToken } from "@ubeswap/token-math";
 
 /**
  * Token information.
  */
-export interface Token {
-  tokenSymbol: string;
-  tokenName: string;
-  icon?: string;
-  mintAccount: PublicKey;
-  decimals: number;
-  network: Network;
+export class Token implements UToken<Token> {
+  public readonly mintAccount: PublicKey;
+  public readonly network: Network;
+
+  constructor(public readonly info: TokenInfo) {
+    this.mintAccount = new PublicKey(info.address);
+    this.network =
+      info.chainId === ENV.MainnetBeta
+        ? "mainnet-beta"
+        : info.chainId === ENV.Devnet
+        ? "devnet"
+        : info.chainId === ENV.Testnet
+        ? "testnet"
+        : "localnet";
+  }
+
+  public get chainId(): number {
+    return this.info.chainId;
+  }
+
+  public get decimals(): number {
+    return this.info.decimals;
+  }
+
+  public get name(): string {
+    return this.info.name;
+  }
+
+  public get symbol(): string {
+    return this.info.symbol;
+  }
+
+  public get address(): string {
+    return this.mintAccount.toString();
+  }
+
+  public get icon(): string | undefined {
+    return this.info.logoURI;
+  }
+
+  equals(other: Token): boolean {
+    return tokensEqual(this, other);
+  }
 }
 
 export const tokensEqual = (
@@ -29,23 +67,24 @@ export const tokensEqual = (
 export type TokenMap = { [c in Network]: Token };
 
 const sol = {
-  tokenSymbol: "SOL",
-  tokenName: "Solana",
-  icon: "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/solana/info/logo.png",
-  mintAccount: NATIVE_MINT,
-  decimals: Math.log10(LAMPORTS_PER_SOL),
+  address: NATIVE_MINT.toString(),
+  name: "Solana",
+  symbol: "SOL",
+  decimals: 9,
+  logoURI:
+    "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/solana/info/logo.png",
 };
 
 /**
  * Creates a Token for all networks.
  */
 export const makeTokenForAllNetworks = (
-  token: Omit<Token, "network">
+  token: Omit<TokenInfo, "chainId">
 ): TokenMap => ({
-  "mainnet-beta": { ...token, network: "mainnet-beta" },
-  devnet: { ...token, network: "devnet" },
-  testnet: { ...token, network: "testnet" },
-  localnet: { ...token, network: "localnet" },
+  "mainnet-beta": new Token({ ...token, chainId: ENV.MainnetBeta }),
+  devnet: new Token({ ...token, chainId: ENV.Devnet }),
+  testnet: new Token({ ...token, chainId: ENV.Testnet }),
+  localnet: new Token({ ...token, chainId: 99999 }),
 });
 
 /**
