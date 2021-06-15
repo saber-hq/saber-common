@@ -1,4 +1,4 @@
-import { Cluster } from "@solana/web3.js";
+import { Network } from "@saberhq/solana";
 import { notification } from "antd";
 import { ArgsProps, NotificationInstance } from "antd/lib/notification";
 import React from "react";
@@ -8,7 +8,7 @@ interface INotifyArgs {
   message?: string;
   description?: React.ReactNode;
   txid?: string;
-  env?: Cluster;
+  network?: Network;
   type?: keyof NotificationInstance;
   placement?: ArgsProps["placement"];
 }
@@ -17,7 +17,7 @@ export function notify({
   message = "",
   description,
   txid = "",
-  env,
+  network,
   type = "info",
   placement = "bottomLeft",
 }: INotifyArgs): void {
@@ -28,7 +28,7 @@ export function notify({
         View Transaction:{" "}
         <a
           href={`https://explorer.solana.com/tx/${txid}?cluster=${
-            env?.toString() ?? ""
+            network?.toString() ?? ""
           }`}
           target="_blank"
           rel="noopener noreferrer"

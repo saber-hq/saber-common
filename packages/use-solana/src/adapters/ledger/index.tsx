@@ -2,7 +2,7 @@ import type Transport from "@ledgerhq/hw-transport";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import type { Transaction } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
-import * as EventEmitter from "eventemitter3";
+import EventEmitter from "eventemitter3";
 
 import { DEFAULT_PUBLIC_KEY, WalletAdapter } from "../types";
 import { getPublicKey, signTransaction } from "./core";

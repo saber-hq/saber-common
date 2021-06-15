@@ -30,11 +30,11 @@ const useSolanaInternal = ({
   ...connectionArgs
 }: UseSolanaArgs = {}): UseSolana => {
   const connectionCtx = useConnectionInternal(connectionArgs);
-  const { cluster, endpoint } = connectionCtx;
+  const { network, endpoint } = connectionCtx;
   const walletCtx = useWalletInternal({
     onConnect,
     onDisconnect,
-    cluster,
+    network,
     endpoint,
   });
 

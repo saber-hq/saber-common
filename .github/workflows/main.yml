@@ -2,8 +2,6 @@ name: CI
 on: [push]
 jobs:
   build:
-    name: Build, lint, and test
-
     runs-on: ubuntu-latest
 
     steps:
@@ -15,14 +13,19 @@ jobs:
         with:
           node-version: 14.x
 
-      - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1
+      - uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Lint
-        run: yarn lerna run lint:ci
-
-      - name: Test
-        run: yarn lerna run test:ci
+      - name: Install packages
+        run: yarn install
 
       - name: Build
-        run: yarn lerna --scope @saberhq/use-solana run build
+        run: yarn lerna run --ignore @saberhq/use-solana-demo build
+
+      - name: Lint
+        run: yarn lint:ci
+
+      - name: Size
+        run: yarn size

@@ -1,5 +1,5 @@
 import { PublicKey, Transaction } from "@solana/web3.js";
-import * as EventEmitter from "eventemitter3";
+import EventEmitter from "eventemitter3";
 
 import { DEFAULT_PUBLIC_KEY, WalletAdapter } from "../types";
 

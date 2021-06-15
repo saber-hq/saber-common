@@ -1,5 +1,6 @@
-import { Cluster } from "@solana/web3.js";
-import { useEffect, useMemo, useState } from "react";
+import { Network } from "@saberhq/solana";
+import { PublicKey } from "@solana/web3.js";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { ConnectedWallet, WalletAdapter } from "../adapters/types";
 import { WALLET_PROVIDERS, WalletProviderInfo, WalletType } from "../providers";
@@ -7,6 +8,7 @@ import { useLocalStorageState } from "./useLocalStorageState";
 
 export interface UseWallet<T extends boolean = boolean> {
   wallet?: WalletAdapter<T>;
+  publicKey?: PublicKey;
   provider?: WalletProviderInfo;
   connected: T;
   activate: (walletType: WalletType) => void;
@@ -21,14 +23,14 @@ export interface UseWalletArgs {
     wallet: WalletAdapter<false>,
     provider: WalletProviderInfo
   ) => void;
-  cluster: Cluster;
+  network: Network;
   endpoint: string;
 }
 
 export const useWalletInternal = ({
   onConnect,
   onDisconnect,
-  cluster,
+  network,
   endpoint,
 }: UseWalletArgs): UseWallet<boolean> => {
   const [walletTypeString, setWalletTypeString] = useLocalStorageState<
@@ -46,16 +48,21 @@ export const useWalletInternal = ({
     | readonly [undefined, undefined] = useMemo(() => {
     if (walletType) {
       const provider = WALLET_PROVIDERS[walletType];
-      console.log("New wallet", provider.url, cluster);
+      console.log("New wallet", provider.url, network);
       return [provider, new provider.makeAdapter(provider.url, endpoint)];
     }
     return [undefined, undefined];
-  }, [walletType, cluster, endpoint]);
+  }, [walletType, network, endpoint]);
 
   useEffect(() => {
     if (wallet && provider) {
       setTimeout(() => {
-        void wallet.connect();
+        void wallet.connect().catch((e) => {
+          console.warn(
+            `Error attempting to automatically connect to ${provider.name}`,
+            e
+          );
+        });
       }, 500);
       wallet.on("connect", () => {
         if (wallet?.publicKey) {
@@ -77,16 +84,22 @@ export const useWalletInternal = ({
     };
   }, [onConnect, onDisconnect, provider, wallet]);
 
+  const activate = useCallback(
+    async (nextWalletType: WalletType): Promise<void> => {
+      if (walletType === nextWalletType) {
+        // reconnect
+        await wallet?.connect();
+      }
+      setWalletTypeString(nextWalletType);
+    },
+    [setWalletTypeString, wallet, walletType]
+  );
+
   return {
     wallet,
     provider,
     connected,
-    activate: (nextWalletType) => {
-      if (walletType === nextWalletType) {
-        // reconnect
-        void wallet?.connect();
-      }
-      setWalletTypeString(nextWalletType);
-    },
+    publicKey: wallet?.publicKey ?? undefined,
+    activate,
   };
 };

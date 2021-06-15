@@ -1,5 +1,6 @@
+import { Network } from "@saberhq/solana";
 import { NATIVE_MINT } from "@solana/spl-token";
-import { Cluster, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
+import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 
 /**
  * Token information.
@@ -10,7 +11,7 @@ export interface Token {
   icon?: string;
   mintAccount: PublicKey;
   decimals: number;
-  cluster: Cluster;
+  network: Network;
 }
 
 export const tokensEqual = (
@@ -20,9 +21,12 @@ export const tokensEqual = (
   a !== undefined &&
   b !== undefined &&
   a.mintAccount.equals(b.mintAccount) &&
-  a.cluster === b.cluster;
+  a.network === b.network;
 
-export type TokenMap = { [c in Cluster]: Token };
+/**
+ * Map of network to Token
+ */
+export type TokenMap = { [c in Network]: Token };
 
 const sol = {
   tokenSymbol: "SOL",
@@ -33,10 +37,18 @@ const sol = {
 };
 
 /**
+ * Creates a Token for all networks.
+ */
+export const makeTokenForAllNetworks = (
+  token: Omit<Token, "network">
+): TokenMap => ({
+  "mainnet-beta": { ...token, network: "mainnet-beta" },
+  devnet: { ...token, network: "devnet" },
+  testnet: { ...token, network: "testnet" },
+  localnet: { ...token, network: "localnet" },
+});
+
+/**
  * Solana native token.
  */
-export const SOL: TokenMap = {
-  "mainnet-beta": { ...sol, cluster: "mainnet-beta" },
-  devnet: { ...sol, cluster: "devnet" },
-  testnet: { ...sol, cluster: "testnet" },
-};
+export const SOL: TokenMap = makeTokenForAllNetworks(sol);
