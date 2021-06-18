@@ -50,6 +50,14 @@ export class TransactionEnvelope {
     const sig = await this.provider.send(this.build(), this.signers, opts);
     return new PendingTransaction(this.provider, sig);
   }
+
+  /**
+   * Sends the transaction and waits for confirmation.
+   * @param opts
+   */
+  public async confirm(opts?: ConfirmOptions): Promise<TransactionReceipt> {
+    return (await this.send(opts)).wait();
+  }
 }
 
 /**
