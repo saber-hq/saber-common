@@ -2766,9 +2766,9 @@
     webpack-bundle-analyzer "^4.4.2"
 
 "@solana/spl-token-registry@^0.2.135":
-  version "0.2.149"
-  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.149.tgz#0bab00c57361226e05a9f4ac17e28e03f8571d91"
-  integrity sha512-brqqzRj97wAUXb9MIanubjSCS75dohWyWGeL5YVcdbslv6esrnD1ZnRL+HbxNiL5uTne2k0Q+dgV2zT26nVnpg==
+  version "0.2.151"
+  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.151.tgz#14cd898a063c74c4f1960693b3a9ac5e58a9691c"
+  integrity sha512-JHKWX5Z1tMCu7vNJHkE+auGQi1mTIYZRPpYmNgmowwOd4Yb/z/4rL+2SGZyMob6qPuEZnjZobMgi5AB7vhzHGw==
   dependencies:
     cross-fetch "3.0.6"
 
