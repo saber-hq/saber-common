@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/solana",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Common types and libraries for Solana",
   "author": "Ian Macalinao <ian@saber.so>",
   "homepage": "https://github.com/saber-hq/use-solana#readme",

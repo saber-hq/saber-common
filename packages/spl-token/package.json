@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/spl-token",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "repository": "git@github.com:saber-hq/use-solana.git",
   "author": "Ian Macalinao <ian@saber.so>",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@saberhq/solana": "^0.2.0",
+    "@saberhq/solana": "^0.2.1",
     "@solana/spl-token": "^0.1.5",
     "@solana/spl-token-registry": "^0.2.153",
     "@solana/web3.js": "^1.19.0",
