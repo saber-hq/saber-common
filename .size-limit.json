@@ -7,7 +7,12 @@
   {
     "path": "packages/spl-token/dist/index.js",
     "limit": "50 KB",
-    "ignore": ["@solana/spl-token", "@solana/web3.js", "bn.js"]
+    "ignore": [
+      "@solana/spl-token",
+      "@solana/web3.js",
+      "bn.js",
+      "@solana/spl-token-registry"
+    ]
   },
   {
     "path": "packages/use-solana/dist/index.js",
