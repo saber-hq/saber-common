@@ -2765,10 +2765,10 @@
     webpack "^4.44.1"
     webpack-bundle-analyzer "^4.4.2"
 
-"@solana/spl-token-registry@^0.2.135":
-  version "0.2.151"
-  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.151.tgz#14cd898a063c74c4f1960693b3a9ac5e58a9691c"
-  integrity sha512-JHKWX5Z1tMCu7vNJHkE+auGQi1mTIYZRPpYmNgmowwOd4Yb/z/4rL+2SGZyMob6qPuEZnjZobMgi5AB7vhzHGw==
+"@solana/spl-token-registry@^0.2.153":
+  version "0.2.153"
+  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.153.tgz#5e16eb329e4111566bfd0b203912da77c35f139e"
+  integrity sha512-O4XdsZ/kRyl4iDQp4d+vUlops38aBmTdPWfI5D8c4dOu5/VDYhkcjoCPkfXb+bCEQITfmk3GJ1SVeW/ZynKU0Q==
   dependencies:
     cross-fetch "3.0.6"
 
@@ -2784,10 +2784,30 @@
     buffer-layout "^1.2.0"
     dotenv "10.0.0"
 
-"@solana/web3.js@^1.12.0", "@solana/web3.js@^1.18.0":
+"@solana/web3.js@^1.12.0":
   version "1.18.0"
   resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.18.0.tgz#f4c422a843aa57a1366d98b06cb6b45441644d59"
   integrity sha512-ijAoRd4Sje1QYoPAwDr7KYlDK40FE7tAUa2V3wT4PGKatWf4ETDXoyYlW89J6vrqOT+mV3GUuaVC76tOFlrXyA==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    bn.js "^5.0.0"
+    borsh "^0.4.0"
+    bs58 "^4.0.1"
+    buffer "6.0.1"
+    buffer-layout "^1.2.0"
+    crypto-hash "^1.2.2"
+    jayson "^3.4.4"
+    js-sha3 "^0.8.0"
+    node-fetch "^2.6.1"
+    rpc-websockets "^7.4.2"
+    secp256k1 "^4.0.2"
+    superstruct "^0.14.2"
+    tweetnacl "^1.0.0"
+
+"@solana/web3.js@^1.19.0":
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.19.0.tgz#b4f0153844a137d03a23b03e478138c1deada232"
+  integrity sha512-tZ+Bk0sD6xvyHas13eRTl0fOtWGHoKithNjIHHYeUbZWwdxOKdutfv14SuD1eqkBdoiQs3KFJvVUkj3M7zTVDg==
   dependencies:
     "@babel/runtime" "^7.12.5"
     bn.js "^5.0.0"
