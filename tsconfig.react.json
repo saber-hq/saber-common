@@ -3,10 +3,12 @@
   "compilerOptions": {
     "lib": ["es2015", "DOM"],
     "noEmit": false,
-    "sourceMap": true,
-    "declaration": true,
     "target": "es6",
     "module": "commonjs",
-    "importHelpers": true
+    "importHelpers": true,
+
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true
   }
 }
