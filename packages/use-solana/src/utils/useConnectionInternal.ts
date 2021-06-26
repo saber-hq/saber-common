@@ -28,8 +28,8 @@ const makeNetworkConfigMap = (
     (acc, [k, v]) => ({
       ...acc,
       [k as Network]: {
-        ...partial[k as Network],
         ...v,
+        ...partial[k as Network],
       },
     }),
     DEFAULT_NETWORK_CONFIG_MAP
