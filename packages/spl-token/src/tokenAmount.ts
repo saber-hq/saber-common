@@ -32,8 +32,8 @@ export class TokenAmount extends UTokenAmount<Token> {
    * @param uiAmount
    * @returns
    */
-  public static parseAmount(token: Token, uiAmount: string): TokenAmount {
-    const prev = UTokenAmount.parse(token, uiAmount);
+  public static parse(token: Token, uiAmount: string): TokenAmount {
+    const prev = UTokenAmount.parseFromString(token, uiAmount);
     return new TokenAmount(token, prev.raw);
   }
 

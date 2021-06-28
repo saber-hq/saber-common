@@ -50,6 +50,12 @@ export class Token implements UToken<Token> {
   equals(other: Token): boolean {
     return tokensEqual(this, other);
   }
+
+  toString(): string {
+    return `Token[mint=${this.mintAccount.toString()}, decimals=${
+      this.decimals
+    }, network=${this.network}]`;
+  }
 }
 
 export const tokensEqual = (
