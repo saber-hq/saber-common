@@ -1,7 +1,7 @@
 {
-  "name": "@saberhq/spl-token",
+  "name": "@saberhq/token-utils",
   "version": "0.3.0",
-  "repository": "git@github.com:saber-hq/use-solana.git",
+  "repository": "git@github.com:saber-hq/solana-common.git",
   "author": "Ian Macalinao <ian@saber.so>",
   "license": "MIT",
   "scripts": {

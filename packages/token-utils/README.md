@@ -1,11 +1,11 @@
-# @saberhq/spl-token
+# @saberhq/token-utils
 
 Math and utilities for SPL tokens.
 
 ## Installation
 
 ```
-yarn add @saberhq/spl-token
+yarn add @saberhq/token-utils
 ```
 
 ## License
