@@ -2765,9 +2765,9 @@
     webpack-bundle-analyzer "^4.4.2"
 
 "@solana/spl-token-registry@^0.2.154":
-  version "0.2.154"
-  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.154.tgz#00e6d65cdb786d6abf158ce9d6d97a0ea8b105b8"
-  integrity sha512-s5Nw9Ta4MGyjT89GpXm4OP3syEkgZYlEHSR19DVJ4BdS4j+mSnHkBrJbZh2+6BhiDKjDWZIpYnuLNU1SBc8bhw==
+  version "0.2.157"
+  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.157.tgz#ef4228531930b5072109832a5bda56b897ad4a9f"
+  integrity sha512-jLUwjm5lYbd4GGp2Ykf5p9IKLeEf6Nysr0eDaxzGeBLXPxU9aeQi4zb6TKe3ojy2p3B4GrSvFcxn3YXW5EST3w==
   dependencies:
     cross-fetch "3.0.6"
 
@@ -2783,30 +2783,10 @@
     buffer-layout "^1.2.0"
     dotenv "10.0.0"
 
-"@solana/web3.js@^1.12.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.18.0.tgz#f4c422a843aa57a1366d98b06cb6b45441644d59"
-  integrity sha512-ijAoRd4Sje1QYoPAwDr7KYlDK40FE7tAUa2V3wT4PGKatWf4ETDXoyYlW89J6vrqOT+mV3GUuaVC76tOFlrXyA==
-  dependencies:
-    "@babel/runtime" "^7.12.5"
-    bn.js "^5.0.0"
-    borsh "^0.4.0"
-    bs58 "^4.0.1"
-    buffer "6.0.1"
-    buffer-layout "^1.2.0"
-    crypto-hash "^1.2.2"
-    jayson "^3.4.4"
-    js-sha3 "^0.8.0"
-    node-fetch "^2.6.1"
-    rpc-websockets "^7.4.2"
-    secp256k1 "^4.0.2"
-    superstruct "^0.14.2"
-    tweetnacl "^1.0.0"
-
-"@solana/web3.js@^1.19.0":
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.19.0.tgz#b4f0153844a137d03a23b03e478138c1deada232"
-  integrity sha512-tZ+Bk0sD6xvyHas13eRTl0fOtWGHoKithNjIHHYeUbZWwdxOKdutfv14SuD1eqkBdoiQs3KFJvVUkj3M7zTVDg==
+"@solana/web3.js@^1.12.0", "@solana/web3.js@^1.19.0":
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.20.0.tgz#9a1855a239c96c5b946bdbe4cc5e3768ee3b2a77"
+  integrity sha512-s/hmbeC7h0QeMKDHl5HTJbY4NSrT3IK1oGerNwdmFfnbs9ygtBbXo1MXaeYVDcNazsthKgiYE+unNd+cpVH8HA==
   dependencies:
     "@babel/runtime" "^7.12.5"
     bn.js "^5.0.0"
@@ -10077,9 +10057,9 @@ prettier-linter-helpers@^1.0.0:
     fast-diff "^1.1.2"
 
 prettier@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.1.tgz#76903c3f8c4449bc9ac597acefa24dc5ad4cbea6"
-  integrity sha512-p+vNbgpLjif/+D+DwAZAbndtRrR0md0MwfmOVN9N+2RgyACMT+7tfaRnT+WDPkqnuVwleyuBIG2XBxKDme3hPA==
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.2.tgz#ef280a05ec253712e486233db5c6f23441e7342d"
+  integrity sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==
 
 process-nextick-args@~2.0.0:
   version "2.0.1"
