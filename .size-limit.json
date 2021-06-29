@@ -5,7 +5,7 @@
     "ignore": ["@solana/web3.js"]
   },
   {
-    "path": "packages/spl-token/dist/index.js",
+    "path": "packages/token-utils/dist/index.js",
     "limit": "50 KB",
     "ignore": [
       "@solana/spl-token",
