@@ -1,3 +1,13 @@
-# `@saberhq/spl-token`
+# @saberhq/spl-token
 
-Token helpers
+Math and utilities for SPL tokens.
+
+## Installation
+
+```
+yarn add @saberhq/spl-token
+```
+
+## License
+
+Apache 2.0
