@@ -35,6 +35,11 @@ export class TransactionEnvelope {
     return new Transaction().add(...this.instructions);
   }
 
+  /**
+   * Simulates the transaction.
+   * @param opts
+   * @returns
+   */
   public simulate(
     opts?: ConfirmOptions
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
@@ -57,6 +62,17 @@ export class TransactionEnvelope {
    */
   public async confirm(opts?: ConfirmOptions): Promise<TransactionReceipt> {
     return (await this.send(opts)).wait();
+  }
+
+  /**
+   * Combines the instructions/signers of the other envelope to create one large transaction.
+   */
+  public combine(other: TransactionEnvelope): TransactionEnvelope {
+    return new TransactionEnvelope(
+      this.provider,
+      [...this.instructions, ...other.instructions],
+      [...this.signers, ...other.signers]
+    );
   }
 }
 
