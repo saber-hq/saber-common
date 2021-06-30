@@ -36,5 +36,6 @@
     "prepare": "husky install",
     "size": "size-limit",
     "analyze": "size-limit --why"
-  }
+  },
+  "version": "0.0.0"
 }
