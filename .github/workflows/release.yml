@@ -5,9 +5,6 @@ on:
     tags:
       - "v*.*.*"
 
-env:
-  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
 jobs:
   programs:
     runs-on: ubuntu-latest
@@ -17,7 +14,6 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          always-auth: true
           node-version: 14.x
           registry-url: "https://registry.npmjs.org"
       - name: Cache Node modules
@@ -30,3 +26,6 @@ jobs:
         run: yarn install
       - name: Publish
         run: yarn lerna publish --yes from-git
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
