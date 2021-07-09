@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/use-solana",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "repository": "git@github.com:saber-hq/solana-common.git",
   "author": "Ian Macalinao <ian@saber.so>",
   "license": "MIT",
