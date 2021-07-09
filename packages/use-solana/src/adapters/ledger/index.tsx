@@ -7,16 +7,16 @@ import EventEmitter from "eventemitter3";
 import { DEFAULT_PUBLIC_KEY, WalletAdapter } from "../types";
 import { getPublicKey, getSolanaDerivationPath, signTransaction } from "./core";
 
+const DEFAULT_DERIVATION_PATH = getSolanaDerivationPath();
+
 export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
-  _connecting: boolean;
-  _publicKey: PublicKey | null;
-  _transport: Transport | null;
+  private _connecting = false;
+  private _publicKey: PublicKey | null = null;
+  private _transport: Transport | null = null;
+  private _derivationPath: Buffer = DEFAULT_DERIVATION_PATH;
 
   constructor() {
     super();
-    this._connecting = false;
-    this._publicKey = null;
-    this._transport = null;
   }
 
   get publicKey(): PublicKey {
@@ -51,8 +51,11 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
       throw new Error("Not connected to Ledger");
     }
 
-    // @TODO: account selection (derivation path changes with account)
-    const signature = await signTransaction(this._transport, transaction);
+    const signature = await signTransaction(
+      this._transport,
+      transaction,
+      this._derivationPath
+    );
 
     transaction.addSignature(this._publicKey, signature);
 
@@ -74,9 +77,10 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
           account?: number;
           change?: number;
         };
+        this._derivationPath = getSolanaDerivationPath(account, change);
         this._publicKey = await getPublicKey(
           this._transport,
-          getSolanaDerivationPath(account, change)
+          this._derivationPath
         );
       } else {
         this._publicKey = await getPublicKey(this._transport);
