@@ -11,7 +11,10 @@ export interface UseWallet<T extends boolean = boolean> {
   publicKey?: PublicKey;
   provider?: WalletProviderInfo;
   connected: T;
-  activate: (walletType: WalletType, walletArgs: unknown) => void;
+  activate: (
+    walletType: WalletType,
+    walletArgs?: Record<string, unknown>
+  ) => void;
 }
 
 export interface UseWalletArgs {
@@ -27,26 +30,33 @@ export interface UseWalletArgs {
   endpoint: string;
 }
 
+interface WalletConfig {
+  walletType: WalletType;
+  walletArgs?: Record<string, unknown>;
+}
+
 export const useWalletInternal = ({
   onConnect,
   onDisconnect,
   network,
   endpoint,
 }: UseWalletArgs): UseWallet<boolean> => {
-  const [walletTypeString, setWalletTypeString] = useLocalStorageState<
+  const [walletConfigStr, setWalletConfigStr] = useLocalStorageState<
     string | null
-  >("use-solana/wallet-type", null);
-  const [walletArgsString, setWalletArgsString] = useLocalStorageState<
-    string | null
-  >("use-solana/wallet-args", null);
+  >("use-solana/wallet-config", null);
 
-  const walletType =
-    walletTypeString && walletTypeString in WalletType
-      ? (walletTypeString as WalletType)
+  let walletConfig: WalletConfig | null = null;
+  try {
+    walletConfig = walletConfigStr
+      ? (JSON.parse(walletConfigStr) as WalletConfig)
       : null;
-  const walletArgs: unknown = walletArgsString
-    ? JSON.parse(walletArgsString)
-    : null;
+  } catch (e) {
+    console.warn("Error parsing wallet config", e);
+  }
+  const { walletType, walletArgs } = walletConfig ?? {
+    walletType: null,
+    walletArgs: null,
+  };
 
   const [connected, setConnected] = useState(false);
 
@@ -94,16 +104,20 @@ export const useWalletInternal = ({
   const activate = useCallback(
     async (
       nextWalletType: WalletType,
-      nextWalletArgs: unknown
+      nextWalletArgs?: Record<string, unknown>
     ): Promise<void> => {
       if (walletType === nextWalletType) {
         // reconnect
         await wallet?.connect(nextWalletArgs);
       }
-      setWalletArgsString(JSON.stringify(nextWalletArgs));
-      setWalletTypeString(nextWalletType);
+      setWalletConfigStr(
+        JSON.stringify({
+          walletType: nextWalletType,
+          walletArgs: nextWalletArgs,
+        })
+      );
     },
-    [setWalletArgsString, setWalletTypeString, wallet, walletType]
+    [setWalletConfigStr, wallet, walletType]
   );
 
   return {
