@@ -6,12 +6,37 @@ import { ConnectedWallet, WalletAdapter } from "../adapters/types";
 import { WALLET_PROVIDERS, WalletProviderInfo, WalletType } from "../providers";
 import { useLocalStorageState } from "./useLocalStorageState";
 
+/**
+ * Wallet-related information.
+ */
 export interface UseWallet<T extends boolean = boolean> {
+  /**
+   * Wallet.
+   */
   wallet?: WalletAdapter<T>;
-  publicKey?: PublicKey;
+  /**
+   * Wallet public key.
+   */
+  publicKey: T extends true ? PublicKey : undefined;
+  /**
+   * Information about the wallet used.
+   */
   provider?: WalletProviderInfo;
+  /**
+   * Whether or not the wallet is connected.
+   */
   connected: T;
-  activate: (walletType: WalletType, walletArgs: unknown) => void;
+  /**
+   * Activates a new wallet.
+   */
+  activate: (
+    walletType: WalletType,
+    walletArgs?: Record<string, unknown>
+  ) => void;
+  /**
+   * Disconnects the wallet and prevents auto-reconnect.
+   */
+  disconnect: () => void;
 }
 
 export interface UseWalletArgs {
@@ -27,26 +52,35 @@ export interface UseWalletArgs {
   endpoint: string;
 }
 
+interface WalletConfig {
+  walletType: WalletType;
+  walletArgs: Record<string, unknown> | null;
+}
+
 export const useWalletInternal = ({
   onConnect,
   onDisconnect,
   network,
   endpoint,
 }: UseWalletArgs): UseWallet<boolean> => {
-  const [walletTypeString, setWalletTypeString] = useLocalStorageState<
+  const [walletConfigStr, setWalletConfigStr] = useLocalStorageState<
     string | null
-  >("use-solana/wallet-type", null);
-  const [walletArgsString, setWalletArgsString] = useLocalStorageState<
-    string | null
-  >("use-solana/wallet-args", null);
+  >("use-solana/wallet-config", null);
 
-  const walletType =
-    walletTypeString && walletTypeString in WalletType
-      ? (walletTypeString as WalletType)
-      : null;
-  const walletArgs: unknown = walletArgsString
-    ? JSON.parse(walletArgsString)
-    : null;
+  const walletConfig: WalletConfig | null = useMemo(() => {
+    try {
+      return walletConfigStr
+        ? (JSON.parse(walletConfigStr) as WalletConfig)
+        : null;
+    } catch (e) {
+      console.warn("Error parsing wallet config", e);
+      return null;
+    }
+  }, [walletConfigStr]);
+  const { walletType, walletArgs } = walletConfig ?? {
+    walletType: null,
+    walletArgs: null,
+  };
 
   const [connected, setConnected] = useState(false);
 
@@ -94,17 +128,26 @@ export const useWalletInternal = ({
   const activate = useCallback(
     async (
       nextWalletType: WalletType,
-      nextWalletArgs: unknown
+      nextWalletArgs?: Record<string, unknown>
     ): Promise<void> => {
       if (walletType === nextWalletType) {
         // reconnect
         await wallet?.connect(nextWalletArgs);
       }
-      setWalletArgsString(JSON.stringify(nextWalletArgs));
-      setWalletTypeString(nextWalletType);
+      setWalletConfigStr(
+        JSON.stringify({
+          walletType: nextWalletType,
+          walletArgs: nextWalletArgs ?? null,
+        })
+      );
     },
-    [setWalletArgsString, setWalletTypeString, wallet, walletType]
+    [setWalletConfigStr, wallet, walletType]
   );
+
+  const disconnect = useCallback(() => {
+    wallet?.disconnect();
+    setWalletConfigStr(null);
+  }, [setWalletConfigStr, wallet]);
 
   return {
     wallet,
@@ -112,5 +155,6 @@ export const useWalletInternal = ({
     connected,
     publicKey: wallet?.publicKey ?? undefined,
     activate,
+    disconnect,
   };
 };
