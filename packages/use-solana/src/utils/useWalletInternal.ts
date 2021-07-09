@@ -100,8 +100,8 @@ export const useWalletInternal = ({
         // reconnect
         await wallet?.connect(nextWalletArgs);
       }
-      setWalletTypeString(nextWalletType);
       setWalletArgsString(JSON.stringify(nextWalletArgs));
+      setWalletTypeString(nextWalletType);
     },
     [setWalletArgsString, setWalletTypeString, wallet, walletType]
   );
