@@ -9,6 +9,18 @@ import { getPublicKey, getSolanaDerivationPath, signTransaction } from "./core";
 
 const DEFAULT_DERIVATION_PATH = getSolanaDerivationPath();
 
+export interface LedgerHDWalletPath {
+  account?: number;
+  change?: number;
+}
+
+/**
+ * An account associated with the connected Ledger device.
+ */
+export interface LedgerHDWalletAccount extends LedgerHDWalletPath {
+  key: PublicKey;
+}
+
 export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
   private _connecting = false;
   private _publicKey: PublicKey | null = null;
@@ -107,6 +119,44 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
 
     if (emit) {
       this.emit("disconnect");
+    }
+  }
+
+  /**
+   * Ledger transport.
+   */
+  get transport(): Transport | null {
+    return this._transport;
+  }
+
+  /**
+   * Fetches accounts associated with the given derivation paths.
+   *
+   * @param paths
+   * @returns
+   */
+  static async fetchAccountsForPaths(
+    paths: LedgerHDWalletPath[]
+  ): Promise<LedgerHDWalletAccount[]> {
+    let transport: Transport | null = null;
+    try {
+      transport = await TransportWebUSB.create();
+      const ret = [];
+      for (const path of paths) {
+        const derivationPath = getSolanaDerivationPath(
+          path.account,
+          path.change
+        );
+        ret.push({
+          ...path,
+          key: await getPublicKey(transport, derivationPath),
+        });
+      }
+      return ret;
+    } catch (error) {
+      throw new LedgerError(error);
+    } finally {
+      await transport?.close();
     }
   }
 }
