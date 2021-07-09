@@ -109,6 +109,46 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
       this.emit("disconnect");
     }
   }
+
+  /**
+   * Ledger transport.
+   */
+  get transport(): Transport | null {
+    return this._transport;
+  }
+
+  /**
+   * Fetches keys associated with the given derivation paths.
+   *
+   * @param paths
+   * @returns
+   */
+  async fetchKeysForPaths(
+    paths: { account?: number; change?: number }[]
+  ): Promise<
+    {
+      account?: number;
+      change?: number;
+      key: PublicKey;
+    }[]
+  > {
+    const transport = this._transport;
+    if (!transport) {
+      return [];
+    }
+    return await Promise.all(
+      paths.map(async (path) => {
+        const derivationPath = getSolanaDerivationPath(
+          path.account,
+          path.change
+        );
+        return {
+          ...path,
+          key: await getPublicKey(transport, derivationPath),
+        };
+      })
+    );
+  }
 }
 
 export class LedgerError extends Error {
