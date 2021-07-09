@@ -5,7 +5,7 @@ import { PublicKey } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
 import { DEFAULT_PUBLIC_KEY, WalletAdapter } from "../types";
-import { getPublicKey, signTransaction } from "./core";
+import { getPublicKey, getSolanaDerivationPath, signTransaction } from "./core";
 
 export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
   _connecting: boolean;
@@ -59,7 +59,7 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
     return transaction;
   }
 
-  async connect(): Promise<void> {
+  async connect(args?: unknown): Promise<void> {
     if (this._connecting) {
       return;
     }
@@ -69,8 +69,18 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
     try {
       // @TODO: transport selection (WebUSB, WebHID, bluetooth, ...)
       this._transport = await TransportWebUSB.create();
-      // @TODO: account selection
-      this._publicKey = await getPublicKey(this._transport);
+      if (args) {
+        const { account, change } = args as {
+          account?: number;
+          change?: number;
+        };
+        this._publicKey = await getPublicKey(
+          this._transport,
+          getSolanaDerivationPath(account, change)
+        );
+      } else {
+        this._publicKey = await getPublicKey(this._transport);
+      }
       this.emit("connect", this._publicKey);
     } catch (error) {
       await this.disconnect();
