@@ -11,7 +11,7 @@ export interface UseWallet<T extends boolean = boolean> {
   publicKey?: PublicKey;
   provider?: WalletProviderInfo;
   connected: T;
-  activate: (walletType: WalletType) => void;
+  activate: (walletType: WalletType, walletArgs: unknown) => void;
 }
 
 export interface UseWalletArgs {
@@ -36,10 +36,17 @@ export const useWalletInternal = ({
   const [walletTypeString, setWalletTypeString] = useLocalStorageState<
     string | null
   >("use-solana/wallet-type", null);
+  const [walletArgsString, setWalletArgsString] = useLocalStorageState<
+    string | null
+  >("use-solana/wallet-args", null);
+
   const walletType =
     walletTypeString && walletTypeString in WalletType
       ? (walletTypeString as WalletType)
       : null;
+  const walletArgs: unknown = walletArgsString
+    ? JSON.parse(walletArgsString)
+    : null;
 
   const [connected, setConnected] = useState(false);
 
@@ -57,7 +64,7 @@ export const useWalletInternal = ({
   useEffect(() => {
     if (wallet && provider) {
       setTimeout(() => {
-        void wallet.connect().catch((e) => {
+        void wallet.connect(walletArgs).catch((e) => {
           console.warn(
             `Error attempting to automatically connect to ${provider.name}`,
             e
@@ -82,17 +89,21 @@ export const useWalletInternal = ({
         void wallet.disconnect();
       }
     };
-  }, [onConnect, onDisconnect, provider, wallet]);
+  }, [onConnect, onDisconnect, provider, wallet, walletArgs]);
 
   const activate = useCallback(
-    async (nextWalletType: WalletType): Promise<void> => {
+    async (
+      nextWalletType: WalletType,
+      nextWalletArgs: unknown
+    ): Promise<void> => {
       if (walletType === nextWalletType) {
         // reconnect
-        await wallet?.connect();
+        await wallet?.connect(nextWalletArgs);
       }
       setWalletTypeString(nextWalletType);
+      setWalletArgsString(JSON.stringify(nextWalletArgs));
     },
-    [setWalletTypeString, wallet, walletType]
+    [setWalletArgsString, setWalletTypeString, wallet, walletType]
   );
 
   return {
