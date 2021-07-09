@@ -69,7 +69,6 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
     try {
       // @TODO: transport selection (WebUSB, WebHID, bluetooth, ...)
       this._transport = await TransportWebUSB.create();
-      // @TODO: account selection
       if (args) {
         const { account, change } = args as {
           account?: number;
