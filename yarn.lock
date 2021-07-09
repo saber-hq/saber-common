@@ -1157,15 +1157,29 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@humanwhocodes/config-array@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.5.0.tgz#1407967d4c6eecd7388f83acf1eaf4d0c6e58ef9"
+  integrity sha512-FagtKFz74XrTl7y6HCzQpwDfXP0yhxe9lHLD1UZxjvZIcbyRz8zTFF/yYNfSfzU414eDwZ1SrO0Qvtyf+wFMQg==
+  dependencies:
+    "@humanwhocodes/object-schema" "^1.2.0"
+    debug "^4.1.1"
+    minimatch "^3.0.4"
+
+"@humanwhocodes/object-schema@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
+  integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
+
 "@iarna/toml@^2.2.0":
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
   integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
 
-"@ledgerhq/devices@^6.0.2":
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-6.0.2.tgz#cbf730368f00ddb5a4384f73bb4966371aa2a4c3"
-  integrity sha512-xR4RYXltXISH4Vf7bLgiaIRy4W3F+kvDXYhXY7Q72goR4NA+vAosuRLGFQZIQiuZZMdPCIbXHuysj07z/NsEpA==
+"@ledgerhq/devices@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-6.1.0.tgz#54963409011c0bb83e2cc3d4d55ad9b905e296ff"
+  integrity sha512-Swl08sVuvx7IL9yx9P0ZzvwjIl4JXl51X34Po3pT2uRRaLnh/fRRSNe9tSC1gFMioviiLJlkmO+yydE4XeV+Jg==
   dependencies:
     "@ledgerhq/errors" "^6.0.2"
     "@ledgerhq/logs" "^6.0.2"
@@ -1178,21 +1192,21 @@
   integrity sha512-m42ZMzR/EKpOrZfPR3DzusE98DoF3d03cbBkQG6ddm6diwVXFSa7MabaKzgD+41EYQ+hrCGOEZK1K0kosX1itg==
 
 "@ledgerhq/hw-transport-webusb@^6.0.2":
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-webusb/-/hw-transport-webusb-6.0.2.tgz#d479e854ac8fd5051b7a6544146a96128b63d9a4"
-  integrity sha512-eSYKzj4RvRMY6pcOvCECVyVXtjUiTtYr1S51fGdRy9bwS51DlLujyKAQb+gKM8aWJHAN0FRgiwUaQLsYETd1eg==
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-webusb/-/hw-transport-webusb-6.1.0.tgz#47f779c000de6b1f6d7e3b44805bcc18beea416c"
+  integrity sha512-UsfB9UcDgAo6ykO40Ai8qimv/VYvGwZVIe65nUGs6JK+2PRnkuk2i00FTK3NTgmvIeX4cOIlkg8+ZmGQuB8Evw==
   dependencies:
-    "@ledgerhq/devices" "^6.0.2"
+    "@ledgerhq/devices" "^6.1.0"
     "@ledgerhq/errors" "^6.0.2"
-    "@ledgerhq/hw-transport" "^6.0.2"
+    "@ledgerhq/hw-transport" "^6.1.0"
     "@ledgerhq/logs" "^6.0.2"
 
-"@ledgerhq/hw-transport@^6.0.2":
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.0.2.tgz#5b3a0cb01eb6adbd876916bc7d566226e505d333"
-  integrity sha512-JI8bhs0vQW1pjDeZ8/Cv/OT4iejH2F3j0i5z5mGNkSgs179GiGeM81EhStLB0XuXqxWpFZMnZ97/Cdo0XmffrA==
+"@ledgerhq/hw-transport@^6.0.2", "@ledgerhq/hw-transport@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.1.0.tgz#b50151c6199e9ad6d3ab9e447532a22170c9f3b7"
+  integrity sha512-j9IyvksI9PjFoFrk/B3p8wCXWRWc8uK24gc20pAaXQiDtqMkWqEge8iZyPKWBVIv69vDQF3LE3Y6EeRwwA7wJA==
   dependencies:
-    "@ledgerhq/devices" "^6.0.2"
+    "@ledgerhq/devices" "^6.1.0"
     "@ledgerhq/errors" "^6.0.2"
     events "^3.3.0"
 
@@ -2800,9 +2814,9 @@
     webpack-bundle-analyzer "^4.4.2"
 
 "@solana/spl-token-registry@^0.2.154":
-  version "0.2.160"
-  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.160.tgz#38a7dc75434348c5ea9192128adff4e5f2d37319"
-  integrity sha512-t8AB5AoJiIoT+QFxmmj2DOlfnahS4yDSIN1kiWctcX+1/KFTqCLXIrjBWex76/Pr2uVdj4EHck+7DjY44vICqg==
+  version "0.2.171"
+  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.171.tgz#0d43977593a631a58608b6f68b1902facb4958af"
+  integrity sha512-nVwptB0oBrYo0ZCxJsA6ygwZfbVUba4UxjNNUNLvvRlFUWCNRt8hr3CxzjprF+juMylSpKbbJ56f9kkvMkRNIw==
   dependencies:
     cross-fetch "3.0.6"
 
@@ -5142,9 +5156,9 @@ dateformat@^3.0.0:
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
 
 dayjs@^1.10.5:
-  version "1.10.5"
-  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.5.tgz#5600df4548fc2453b3f163ebb2abbe965ccfb986"
-  integrity sha512-BUFis41ikLz+65iH6LHQCDm4YPMj5r1YFLdupPIyM4SGcXMmtiLQ7U37i+hGS8urIuqe7I/ou3IS1jVc4nbN4g==
+  version "1.10.6"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.6.tgz#288b2aa82f2d8418a6c9d4df5898c0737ad02a63"
+  integrity sha512-AztC/IOW4L1Q41A86phW5Thhcrco3xuAA+YX/BLpLWWjRcTj5TOt/QImBLmCKlrF7u7k47arTnOyL6GnbG8Hvw==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.9:
   version "2.6.9"
@@ -5792,12 +5806,13 @@ eslint-visitor-keys@^2.0.0:
   integrity sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==
 
 eslint@^7.28.0:
-  version "7.29.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.29.0.tgz#ee2a7648f2e729485e4d0bd6383ec1deabc8b3c0"
-  integrity sha512-82G/JToB9qIy/ArBzIWG9xvvwL3R86AlCjtGw+A29OMZDqhTybz/MByORSukGxeI+YPCR4coYyITKk8BFH9nDA==
+  version "7.30.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.30.0.tgz#6d34ab51aaa56112fd97166226c9a97f505474f8"
+  integrity sha512-VLqz80i3as3NdloY44BQSJpFw534L9Oh+6zJOUaViV4JPd+DaHwutqP7tcpkW3YiXbK6s05RZl7yl7cQn+lijg==
   dependencies:
     "@babel/code-frame" "7.12.11"
     "@eslint/eslintrc" "^0.4.2"
+    "@humanwhocodes/config-array" "^0.5.0"
     ajv "^6.10.0"
     chalk "^4.0.0"
     cross-spawn "^7.0.2"
