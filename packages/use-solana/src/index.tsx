@@ -1,4 +1,4 @@
-export * from "./adapters/types";
+export * from "./adapters";
 export * from "./context";
 export * from "./hooks";
 export * from "./providers";
