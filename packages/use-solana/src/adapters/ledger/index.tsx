@@ -138,8 +138,9 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
   static async fetchAccountsForPaths(
     paths: LedgerHDWalletPath[]
   ): Promise<LedgerHDWalletAccount[]> {
+    let transport: Transport | null = null;
     try {
-      const transport = await TransportWebUSB.create();
+      transport = await TransportWebUSB.create();
       const ret = [];
       for (const path of paths) {
         const derivationPath = getSolanaDerivationPath(
@@ -154,6 +155,8 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
       return ret;
     } catch (error) {
       throw new LedgerError(error);
+    } finally {
+      await transport?.close();
     }
   }
 }
