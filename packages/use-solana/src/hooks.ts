@@ -42,14 +42,32 @@ export function useConnectionContext(): ConnectionContext {
  * Gets the read connection
  * @returns
  */
-export function useConnection(): Connection {
-  return useConnectionContext().connection;
+export async function useConnection(): Promise<Connection> {
+  const ctx = useConnectionContext();
+  return selectConnection(ctx.connection, ctx.fallbackConnection);
 }
 
 /**
  * Gets the send connection
  * @returns
  */
-export function useSendConnection(): Connection {
-  return useConnectionContext().sendConnection;
+export async function useSendConnection(): Promise<Connection> {
+  const ctx = useConnectionContext();
+  return selectConnection(ctx.sendConnection, ctx.fallbackConnection);
 }
+
+const selectConnection = async (
+  primary: Connection,
+  fallback: Connection | null
+): Promise<Connection> => {
+  if (fallback) {
+    try {
+      await primary.getSlot();
+    } catch (e) {
+      console.log("Failed to get slot from primary connection");
+      return fallback;
+    }
+  }
+
+  return primary;
+};
