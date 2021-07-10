@@ -8,6 +8,10 @@ export type NetworkConfig = Readonly<{
    * HTTP endpoint to connect to for this network.
    */
   endpoint: string;
+  /**
+   * Backup HTTP endpoint.
+   */
+  fallbackEndpoint?: string;
 }>;
 
 /**
@@ -17,6 +21,7 @@ export const DEFAULT_NETWORK_CONFIG_MAP = {
   "mainnet-beta": {
     name: "Mainnet Beta",
     endpoint: "https://solana-api.projectserum.com/",
+    fallbackEndpoint: "https://api.mainnet-beta.solana.com",
   },
   devnet: {
     name: "Devnet",

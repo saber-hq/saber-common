@@ -16,6 +16,7 @@ export type PartialNetworkConfigMap = {
 export interface ConnectionContext {
   connection: Connection;
   sendConnection: Connection;
+  fallbackConnection: Connection | null;
   network: Network;
   setNetwork: (val: Network) => void;
   endpoint: string;
@@ -54,7 +55,7 @@ export const useConnectionInternal = ({
     defaultNetwork
   );
   const configMap = makeNetworkConfigMap(networkConfigs);
-  const { endpoint } = configMap[network];
+  const { endpoint, fallbackEndpoint } = configMap[network];
 
   const connection = useMemo(
     () => new Connection(endpoint, "recent"),
@@ -63,6 +64,11 @@ export const useConnectionInternal = ({
   const sendConnection = useMemo(
     () => new Connection(endpoint, "recent"),
     [endpoint]
+  );
+  const fallbackConnection = useMemo(
+    () =>
+      fallbackEndpoint ? new Connection(fallbackEndpoint, "recent") : null,
+    [fallbackEndpoint]
   );
 
   // The websocket library solana/web3.js uses closes its websocket connection when the subscription list
@@ -105,6 +111,7 @@ export const useConnectionInternal = ({
   return {
     connection,
     sendConnection,
+    fallbackConnection,
     network,
     setNetwork,
     endpoint,
