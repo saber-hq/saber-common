@@ -64,7 +64,7 @@ const selectConnection = async (
     try {
       await primary.getSlot();
     } catch (e) {
-      console.log("Failed to get slot from primary connection");
+      console.log("Failed to get slot from primary connection, error:", e);
       return fallback;
     }
   }
