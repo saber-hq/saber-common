@@ -5,7 +5,7 @@ import {
   NetworkConfigMap,
 } from "@saberhq/solana";
 import { Connection, Keypair } from "@solana/web3.js";
-import { useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
 
 import { useLocalStorageState } from "./useLocalStorageState";
 
@@ -16,7 +16,6 @@ export type PartialNetworkConfigMap = {
 export interface ConnectionContext {
   connection: Connection;
   sendConnection: Connection;
-  fallbackConnection: Connection | null;
   network: Network;
   setNetwork: (val: Network) => void;
   endpoint: string;
@@ -55,21 +54,43 @@ export const useConnectionInternal = ({
     defaultNetwork
   );
   const configMap = makeNetworkConfigMap(networkConfigs);
-  const { endpoint, fallbackEndpoint } = configMap[network];
+  const { endpoint, fallbackEndpoints = [] } = configMap[network];
 
-  const connection = useMemo(
-    () => new Connection(endpoint, "recent"),
-    [endpoint]
-  );
-  const sendConnection = useMemo(
-    () => new Connection(endpoint, "recent"),
-    [endpoint]
-  );
-  const fallbackConnection = useMemo(
-    () =>
-      fallbackEndpoint ? new Connection(fallbackEndpoint, "recent") : null,
-    [fallbackEndpoint]
-  );
+  const [{ connection, sendConnection }, setConnections] = useState<{
+    connection: Connection;
+    sendConnection: Connection;
+  }>({
+    connection: new Connection(endpoint, "recent"),
+    sendConnection: new Connection(endpoint, "recent"),
+  });
+
+  useEffect(() => {
+    if (fallbackEndpoints.length > 0) {
+      void (async () => {
+        let nextEndpoint = endpoint;
+        for (const fallbackEndpoint of fallbackEndpoints) {
+          try {
+            const conn = new Connection(nextEndpoint, "recent");
+            await conn.getSlot();
+            setConnections({
+              connection: conn,
+              sendConnection: new Connection(nextEndpoint, "recent"),
+            });
+          } catch (e) {
+            console.warn(
+              `Failed to get slot from connection at endpoint ${nextEndpoint}, error:`,
+              e
+            );
+            nextEndpoint = fallbackEndpoint;
+          }
+        }
+      })();
+    }
+    setConnections({
+      connection: new Connection(endpoint, "recent"),
+      sendConnection: new Connection(endpoint, "recent"),
+    });
+  }, [endpoint, fallbackEndpoints]);
 
   // The websocket library solana/web3.js uses closes its websocket connection when the subscription list
   // is empty after opening its first time, preventing subsequent subscriptions from receiving responses.
@@ -111,7 +132,6 @@ export const useConnectionInternal = ({
   return {
     connection,
     sendConnection,
-    fallbackConnection,
     network,
     setNetwork,
     endpoint,

@@ -9,19 +9,21 @@ export type NetworkConfig = Readonly<{
    */
   endpoint: string;
   /**
-   * Backup HTTP endpoint.
+   * Backup HTTP endpoints.
    */
-  fallbackEndpoint?: string;
+  fallbackEndpoints?: string[];
 }>;
+
+export type NetworkConfigMap = { [N in Network]: NetworkConfig };
 
 /**
  * Default configuration for all networks.
  */
-export const DEFAULT_NETWORK_CONFIG_MAP = {
+export const DEFAULT_NETWORK_CONFIG_MAP: NetworkConfigMap = {
   "mainnet-beta": {
     name: "Mainnet Beta",
     endpoint: "https://solana-api.projectserum.com/",
-    fallbackEndpoint: "https://api.mainnet-beta.solana.com",
+    fallbackEndpoints: ["https://api.mainnet-beta.solana.com"] as string[],
   },
   devnet: {
     name: "Devnet",
@@ -35,9 +37,7 @@ export const DEFAULT_NETWORK_CONFIG_MAP = {
     name: "Localnet",
     endpoint: "http://127.0.0.1:8899",
   },
-} as const;
-
-export type NetworkConfigMap = { [N in Network]: NetworkConfig };
+};
 
 // comes from @solana/spl-token-registry
 export enum ENV {
