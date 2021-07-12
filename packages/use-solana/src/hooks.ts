@@ -43,8 +43,7 @@ export function useConnectionContext(): ConnectionContext {
  * @returns
  */
 export function useConnection(): Connection {
-  const ctx = useConnectionContext();
-  return ctx.connection;
+  return useConnectionContext().connection;
 }
 
 /**
@@ -52,6 +51,5 @@ export function useConnection(): Connection {
  * @returns
  */
 export function useSendConnection(): Connection {
-  const ctx = useConnectionContext();
-  return ctx.sendConnection;
+  return useConnectionContext().sendConnection;
 }
