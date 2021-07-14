@@ -2820,10 +2820,10 @@
   dependencies:
     buffer "~6.0.3"
 
-"@solana/spl-token-registry@^0.2.154":
-  version "0.2.178"
-  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.178.tgz#ea11292e6fac9fcca2804a6fcdf36ced53685877"
-  integrity sha512-/Onl2qAH8YBzno6mDO4/OFRb8zzthVwqQZTtjLU5L78BiNokqp49QCPlXAVHO3R8ddc4mTaSicaf1R5rvykYcg==
+"@solana/spl-token-registry@^0.2.182":
+  version "0.2.182"
+  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.182.tgz#068ef8d8ae59592223f76d2c63739ed7f230bb5e"
+  integrity sha512-Qx7+FpSK6ICr/21y32nIb4EN3dfzTt8klq/Z1Mw8j4HDLMk1fDzUAjMNmFALgWtJCc+1tb+2eGdSBaK9qm2RFA==
   dependencies:
     cross-fetch "3.0.6"
 
@@ -2839,10 +2839,30 @@
     buffer-layout "^1.2.0"
     dotenv "10.0.0"
 
-"@solana/web3.js@^1.12.0", "@solana/web3.js@^1.19.0":
+"@solana/web3.js@^1.12.0":
   version "1.20.2"
   resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.20.2.tgz#accaec39572563024f2d08c2721e081d705d957c"
   integrity sha512-ndde6LPIO9l+3s5f9kbkUO84pbj1QYyiQf76la4g5jrKCCMQlq/cPCN3pt0iv6yFI0MX4778yZx/bGwgQioEuw==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    "@solana/buffer-layout" "^3.0.0"
+    bn.js "^5.0.0"
+    borsh "^0.4.0"
+    bs58 "^4.0.1"
+    buffer "6.0.1"
+    crypto-hash "^1.2.2"
+    jayson "^3.4.4"
+    js-sha3 "^0.8.0"
+    node-fetch "^2.6.1"
+    rpc-websockets "^7.4.2"
+    secp256k1 "^4.0.2"
+    superstruct "^0.14.2"
+    tweetnacl "^1.0.0"
+
+"@solana/web3.js@^1.21.0":
+  version "1.21.0"
+  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.21.0.tgz#4f98edea38d4cb3ae4d2ea49a050b0ec09508023"
+  integrity sha512-x1NXlF92tEjxuTxS0u4n9JV17UKk0Dn2L+qSWGvKOb4iWhzApDj6wicJsrGdSbGdxnZ7eciQ/SNn3zB4ydUllA==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@solana/buffer-layout" "^3.0.0"
@@ -7763,10 +7783,10 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
-lint-staged@>=10:
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-11.0.0.tgz#24d0a95aa316ba28e257f5c4613369a75a10c712"
-  integrity sha512-3rsRIoyaE8IphSUtO1RVTFl1e0SLBtxxUOPBtHxQgBHS5/i6nqvjcUfNioMa4BU9yGnPzbO+xkfLtXtxBpCzjw==
+lint-staged@>=11.0.1:
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-11.0.1.tgz#1b8ae8ed5a52ed87252db95fe008c2618c85f55a"
+  integrity sha512-RkTA1ulE6jAGFskxpGAwxfVRXjHp7D9gFg/+KMARUWMPiVFP0t28Em2u0gL8sA0w3/ck3TC57F2v2RNeQ5XPnw==
   dependencies:
     chalk "^4.1.1"
     cli-truncate "^2.1.0"
@@ -10741,10 +10761,10 @@ react-remove-scroll@^2.4.2:
     use-callback-ref "^1.2.3"
     use-sidecar "^1.0.1"
 
-react-spring@^9.2.3:
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-9.2.3.tgz#ff644f8857782389b47171239ee8dead372ebd46"
-  integrity sha512-D3fx9A7UjX4yp35TM3YxbhzKhjq6nFaEs4/RkKT+/Ch732opG6iUek9jt+mwR1bST29aa9Da6mWipAtQbD2U3g==
+react-spring@^9.2.4:
+  version "9.2.4"
+  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-9.2.4.tgz#9d89b0321664d594f957dca9459b13d94b3dfa39"
+  integrity sha512-bMjbyTW0ZGd+/h9cjtohLqCwOGqX2OuaTvalOVfLCGmhzEg/u3GgopI3LAm4UD2Br3MNdVdGgNVoESg4MGqKFQ==
   dependencies:
     "@react-spring/core" "~9.2.0"
     "@react-spring/konva" "~9.2.0"
