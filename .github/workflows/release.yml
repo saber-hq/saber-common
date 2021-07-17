@@ -25,6 +25,7 @@ jobs:
       - name: Install Yarn dependencies
         run: yarn install
       - run: echo '//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}' > .npmrc
+      - run: yarn build
       - name: Publish
         run: yarn lerna publish --yes from-package
         env:
