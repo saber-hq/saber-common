@@ -1,5 +1,6 @@
 import { Network } from "@saberhq/solana";
 import { PublicKey } from "@solana/web3.js";
+import stringify from "fast-json-stable-stringify";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { ConnectedWallet, WalletAdapter } from "../adapters/types";
@@ -130,18 +131,17 @@ export const useWalletInternal = ({
       nextWalletType: WalletType,
       nextWalletArgs?: Record<string, unknown>
     ): Promise<void> => {
-      if (walletType === nextWalletType) {
+      const nextWalletConfigStr = stringify({
+        walletType: nextWalletType,
+        walletArgs: nextWalletArgs ?? null,
+      });
+      if (walletConfigStr === nextWalletConfigStr) {
         // reconnect
         await wallet?.connect(nextWalletArgs);
       }
-      setWalletConfigStr(
-        JSON.stringify({
-          walletType: nextWalletType,
-          walletArgs: nextWalletArgs ?? null,
-        })
-      );
+      setWalletConfigStr(nextWalletConfigStr);
     },
-    [setWalletConfigStr, wallet, walletType]
+    [setWalletConfigStr, wallet, walletConfigStr]
   );
 
   const disconnect = useCallback(() => {
