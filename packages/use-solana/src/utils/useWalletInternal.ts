@@ -32,7 +32,7 @@ export interface UseWallet<T extends boolean = boolean> {
   activate: (
     walletType: WalletType,
     walletArgs?: Record<string, unknown>
-  ) => void;
+  ) => Promise<void>;
   /**
    * Disconnects the wallet and prevents auto-reconnect.
    */
