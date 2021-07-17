@@ -2820,10 +2820,10 @@
   dependencies:
     buffer "~6.0.3"
 
-"@solana/spl-token-registry@^0.2.154":
-  version "0.2.194"
-  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.194.tgz#4592d74fe8d675fb8b3e791810337476f9fa8535"
-  integrity sha512-Jf9WkPpU5gGHaSSRQm+UlA4+w93JwqqzwT3zgEO/G+Hbw4dV/jH7m15UfBBtYI4JqG4dHV+hfkjGam8fgqSQqw==
+"@solana/spl-token-registry@^0.2.199":
+  version "0.2.199"
+  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.199.tgz#8d59bef04135353f29e1a39dbba5c5f1f43287d7"
+  integrity sha512-qBMZiDnagO3K1uQ+wFAyr62AeaH5oXT9oifZw6ae6X1OiXy+O59cK7Ad5gMRPaB/r2MFufM58zL6QAk9Ha3Hlw==
   dependencies:
     cross-fetch "3.0.6"
 
@@ -3080,10 +3080,10 @@
     "@typescript-eslint/types" "4.28.3"
     eslint-visitor-keys "^2.0.0"
 
-"@ubeswap/token-math@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@ubeswap/token-math/-/token-math-4.0.0.tgz#60437276cd29a7f3db3c95dfa77fa250826e3364"
-  integrity sha512-tRDuLm3MkWVQgD1+ZoH9zqojBq37m7iRjO0d6YVAI65bIavmhHxpXtdqwmbKiUK70wrfz4eEASD4PssYgU7tYQ==
+"@ubeswap/token-math@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@ubeswap/token-math/-/token-math-4.0.1.tgz#b0eb471d3f8b3b6de06332847274a3127c18a1f2"
+  integrity sha512-FNGUi1oct9voojBeLayFpmPOuqgDAIM7feORGUIR4cheWaD2FCv/9lxRx1gGNOJZgr2iLn8in0Dfe1UB4xd/VA==
   dependencies:
     "@types/bn.js" "^5.1.0"
     big.js "^6.1.1"
