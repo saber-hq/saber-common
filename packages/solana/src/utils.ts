@@ -10,6 +10,10 @@ export const isPublicKey = (pk: unknown): pk is PublicKey => {
     return true;
   }
 
+  if (typeof pk !== "object" || Array.isArray(pk)) {
+    return false;
+  }
+
   try {
     new PublicKey(pk as PublicKeyData);
     return true;
