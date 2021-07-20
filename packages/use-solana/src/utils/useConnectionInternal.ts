@@ -57,7 +57,7 @@ export const useConnectionInternal = ({
   );
   const configMap = makeNetworkConfigMap(networkConfigs);
   const config = configMap[network];
-  const { endpoint, endpointWs = endpoint } = config;
+  const { endpoint, endpointWs } = config;
 
   const connection = useMemo(
     () =>
