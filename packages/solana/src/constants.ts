@@ -8,6 +8,10 @@ export type NetworkConfig = Readonly<{
    * HTTP endpoint to connect to for this network.
    */
   endpoint: string;
+  /**
+   * Websocket endpoint to connect to for this network.
+   */
+  endpointWs?: string;
 }>;
 
 /**
