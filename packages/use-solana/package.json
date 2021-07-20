@@ -21,9 +21,12 @@
     "@project-serum/sol-wallet-adapter": "^0.2.0",
     "@saberhq/solana": "^0.6.4",
     "@solana/web3.js": "^1.19.0",
+    "@toruslabs/fetch-node-details": "^2.7.0",
+    "@toruslabs/torus.js": "^2.4.1",
     "@types/bs58": "^4.0.1",
     "bs58": "^4.0.1",
     "eventemitter3": "^4.0.7",
+    "react-google-login": "^5.2.2",
     "tslib": "^2.3.0",
     "unstated-next": "^1.1.0"
   },
