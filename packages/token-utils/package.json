@@ -13,8 +13,8 @@
     "@saberhq/solana": "^0.6.4",
     "@solana/spl-token": "^0.1.5",
     "@solana/spl-token-registry": "^0.2.199",
-    "@solana/web3.js": "^1.19.0",
-    "@ubeswap/token-math": "^4.0.1",
+    "@solana/web3.js": "^1.22.0",
+    "@ubeswap/token-math": "^4.0.2",
     "tiny-invariant": "^1.1.0",
     "tslib": "^2.3.0"
   },
