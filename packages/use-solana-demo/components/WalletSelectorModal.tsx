@@ -49,12 +49,12 @@ export const WalletSelectorModal: React.FC<IProps> = ({
             <WalletProvider
               key={provider.url}
               role="button"
-              onClick={() => {
+              onClick={async () => {
                 if (mustInstall) {
                   window.open(provider.url, "_blank", "noopener noreferrer");
                   return;
                 }
-                activate(walletType);
+                await activate(walletType);
                 modalProps.onDismiss();
               }}
             >
