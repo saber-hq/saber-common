@@ -4,7 +4,7 @@ import {
   NetworkConfig,
   NetworkConfigMap,
 } from "@saberhq/solana";
-import { Connection, Keypair } from "@solana/web3.js";
+import { Commitment, Connection, Keypair } from "@solana/web3.js";
 import { useEffect, useMemo } from "react";
 
 import { useLocalStorageState } from "./useLocalStorageState";
@@ -38,6 +38,7 @@ const makeNetworkConfigMap = (
 export interface ConnectionArgs {
   defaultNetwork?: Network;
   networkConfigs?: PartialNetworkConfigMap;
+  commitment?: Commitment;
 }
 
 /**
@@ -48,21 +49,31 @@ export const useConnectionInternal = ({
   // default to mainnet-beta
   defaultNetwork = "mainnet-beta",
   networkConfigs = DEFAULT_NETWORK_CONFIG_MAP,
+  commitment = "recent",
 }: ConnectionArgs): ConnectionContext => {
   const [network, setNetwork] = useLocalStorageState<Network>(
     "use-solana/network",
     defaultNetwork
   );
   const configMap = makeNetworkConfigMap(networkConfigs);
-  const { endpoint } = configMap[network];
+  const config = configMap[network];
+  const { endpoint, endpointWs = endpoint } = config;
 
   const connection = useMemo(
-    () => new Connection(endpoint, "recent"),
-    [endpoint]
+    () =>
+      new Connection(endpoint, {
+        commitment,
+        wsEndpoint: endpointWs,
+      }),
+    [commitment, endpoint, endpointWs]
   );
   const sendConnection = useMemo(
-    () => new Connection(endpoint, "recent"),
-    [endpoint]
+    () =>
+      new Connection(endpoint, {
+        commitment,
+        wsEndpoint: endpointWs,
+      }),
+    [commitment, endpoint, endpointWs]
   );
 
   // The websocket library solana/web3.js uses closes its websocket connection when the subscription list
