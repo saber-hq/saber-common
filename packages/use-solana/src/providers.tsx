@@ -10,7 +10,7 @@ import {
   WalletAdapterConstructor,
 } from "./adapters";
 import { Coin98Adapter } from "./adapters/coin98";
-import { COIN98, LEDGER, MATHWALLET, PHANTOM, SOLLET } from "./icons";
+import { COIN98, FILE, LEDGER, MATHWALLET, PHANTOM, SOLLET } from "./icons";
 
 export enum WalletType {
   Coin98 = "Coin98",
@@ -20,6 +20,7 @@ export enum WalletType {
   Sollet = "Sollet",
   SolletExtension = "SolletExtension",
   Solong = "Solong",
+  SecretKey = "SecretKey",
 }
 
 export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
@@ -75,6 +76,12 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     makeAdapter: Coin98Adapter,
     isInstalled: () => window.coin98 !== undefined,
     isMobile: true,
+  },
+  [WalletType.SecretKey]: {
+    name: "Secret Key",
+    url: "https://solana.com/",
+    icon: FILE,
+    makeAdapter: LedgerWalletAdapter,
   },
 };
 
