@@ -51,14 +51,14 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
   connect = (args?: unknown): Promise<void> => {
     const argsTyped = args as
       | {
-          secretKey?: Uint8Array;
+          secretKey?: number[];
         }
       | undefined;
     const secretKey = argsTyped?.secretKey;
     if (!secretKey || !Array.isArray(secretKey)) {
       throw new Error("Secret key missing.");
     }
-    this._keypair = Keypair.fromSecretKey(secretKey);
+    this._keypair = Keypair.fromSecretKey(Uint8Array.from(secretKey));
     this._connected = true;
     this.emit("connect", this.publicKey);
     return Promise.resolve();
