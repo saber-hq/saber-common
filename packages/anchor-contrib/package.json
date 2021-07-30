@@ -1,0 +1,28 @@
+{
+  "name": "@saberhq/anchor-contrib",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saber-hq/saber-common.git"
+  },
+  "version": "0.6.6",
+  "main": "dist/index.js",
+  "author": "Ian Macalinao <ian@saber.so>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -fr dist/",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@project-serum/anchor": "^0.11.1",
+    "@solana/web3.js": "^1.22.0",
+    "eventemitter3": "^4.0.7"
+  },
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
