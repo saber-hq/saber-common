@@ -1,5 +1,9 @@
 import { Address, BN, Idl } from "@project-serum/anchor";
-import { PendingTransaction, TransactionEnvelope } from "@saberhq/solana";
+import {
+  PendingTransaction,
+  TransactionEnvelope,
+  TransactionReceipt,
+} from "@saberhq/solana";
 import { BigintIsh, TokenAmount } from "@saberhq/token-utils";
 import { PublicKey } from "@solana/web3.js";
 import chai, { assert, expect } from "chai";
@@ -159,25 +163,38 @@ export const expectTX = (
     | Promise<TransactionEnvelope | null>
     | PendingTransaction
     | Promise<PendingTransaction>,
-  msg?: string
+  msg?: string,
+  cb?: (receipt: TransactionReceipt) => Promise<void>
 ): Chai.PromisedAssertion => {
+  const handleReceipt = async (receipt: TransactionReceipt) => {
+    await cb?.(receipt);
+    return receipt;
+  };
+
   if (tx && "then" in tx) {
     return expect(
-      tx.then((tx) => {
-        if (tx instanceof PendingTransaction) {
-          return tx.wait();
-        } else {
-          return tx?.confirm();
-        }
-      }),
+      tx
+        .then((tx) => {
+          if (tx instanceof PendingTransaction) {
+            return tx.wait();
+          } else if (tx) {
+            return tx.confirm();
+          } else {
+            throw new Error("tx is null");
+          }
+        })
+        .then(handleReceipt),
       msg
     ).eventually;
   }
   if (tx instanceof PendingTransaction) {
-    return expect(tx.wait(), msg).eventually;
+    return expect(tx.wait().then(handleReceipt), msg).eventually;
   } else {
     return expect(
-      tx?.send().then((res) => res.wait()),
+      tx
+        ?.send()
+        .then((res) => res.wait())
+        .then(handleReceipt),
       msg
     ).eventually;
   }
