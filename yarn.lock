@@ -3195,16 +3195,16 @@
     "@typescript-eslint/types" "4.28.5"
     eslint-visitor-keys "^2.0.0"
 
-"@ubeswap/token-math@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@ubeswap/token-math/-/token-math-4.0.2.tgz#0e7e0467c6e8c07709a06f0463b68ae0bd885a0c"
-  integrity sha512-VO3GwdYPEbjezSylojDtlZS68Rd0EU/KdY10ApoR/LhaaHT1xT+ie+QIc+RbsLinTy/WVLEFkggJR9Ohfqcvhg==
+"@ubeswap/token-math@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@ubeswap/token-math/-/token-math-4.0.3.tgz#2b554b5d9db5e44248ff169d18296aca607200f9"
+  integrity sha512-bACukKnf8rjJrJU5t8p4JOulhUPypFvUSIVq9TMlilFkLi1d50ZTPGh2zqXb5k4vO8KT89ASe+Nr1KVLu/vJqA==
   dependencies:
     "@types/bn.js" "^5.1.0"
     big.js "^6.1.1"
     bn.js "^5.2.0"
     decimal.js-light "^2.5.0"
-    jsbi "^3.1.5"
+    jsbi "^3.1.6"
     tiny-invariant "^1.1.0"
     toformat "^2.0.0"
 
@@ -7648,10 +7648,10 @@ js-yaml@^3.13.1:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
-jsbi@^3.1.5:
-  version "3.1.5"
-  resolved "https://registry.yarnpkg.com/jsbi/-/jsbi-3.1.5.tgz#70c2aaa2f75e1dc7604fed45298061ca23724046"
-  integrity sha512-w2BY0VOYC1ahe+w6Qhl4SFoPvPsZ9NPHY4bwass+LCgU7RK3PBoVQlQ3G1s7vI8W3CYyJiEXcbKF7FIM/L8q3Q==
+jsbi@^3.1.6:
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/jsbi/-/jsbi-3.1.6.tgz#572431b0ff4b9c0f5f4b41e214dba76a734e676b"
+  integrity sha512-CGjq13y28FrBA5mAU+rsfHaVKEF9jrw3PhzZpIzTeMiPsT0XRDAS6E7QS8/ZTmFQUtl2MDJsxKQoYJzAhF7B1w==
 
 jsbn@~0.1.0:
   version "0.1.1"
