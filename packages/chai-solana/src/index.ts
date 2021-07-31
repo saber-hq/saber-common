@@ -4,6 +4,8 @@ import { PublicKey } from "@solana/web3.js";
 import chaiAsPromised from "chai-as-promised";
 import chaiBN from "chai-bn";
 
+export * from "./utils";
+
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Chai {
