@@ -26,9 +26,9 @@ export default class SolanaProvider implements Provider {
    * @param opts       Transaction confirmation options to use by default.
    */
   constructor(
-    readonly connection: Connection,
-    readonly wallet: Wallet,
-    readonly opts: ConfirmOptions
+    public readonly connection: Connection,
+    public readonly wallet: Wallet,
+    public readonly opts: ConfirmOptions = SolanaProvider.defaultOptions()
   ) {}
 
   static defaultOptions(): ConfirmOptions {

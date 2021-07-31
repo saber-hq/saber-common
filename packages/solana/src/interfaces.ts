@@ -33,6 +33,8 @@ export type SendTxRequest = {
  */
 export interface Provider {
   connection: Connection;
+  wallet: Wallet;
+
   /**
    * Sends the given transaction, paid for and signed by the provider's wallet.
    *
