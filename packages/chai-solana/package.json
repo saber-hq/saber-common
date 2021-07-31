@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/chai-solana",
-  "version": "0.7.3",
+  "version": "0.7.5",
   "description": "Solana Chai helpers",
   "author": "Ian Macalinao <ian@saber.so>",
   "homepage": "https://github.com/saber-hq/use-solana#readme",
