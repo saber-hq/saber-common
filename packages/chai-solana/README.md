@@ -1,11 +1,11 @@
-# @saberhq/solana
+# `@saberhq/chai-solana`
 
-Common types and libraries for Solana development.
+Chai helpers for Solana tests.
 
 ## Installation
 
 ```
-yarn add @saberhq/solana
+yarn add @saberhq/chai-solana
 ```
 
 ## License
