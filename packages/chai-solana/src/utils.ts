@@ -1,3 +1,5 @@
+import "chai-as-promised";
+
 import { Idl } from "@project-serum/anchor";
 import {
   PendingTransaction,
