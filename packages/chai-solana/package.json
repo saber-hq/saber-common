@@ -31,14 +31,12 @@
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
     "chai-bn": "^0.3.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@types/chai": "^4.2.21",
+    "@types/chai-as-promised": "^7.1.4"
   },
   "gitHead": "f9fd3fbd36a7a6dd6f5e9597af5309affe50ac0e",
   "publishConfig": {
     "access": "public"
-  },
-  "devDependencies": {
-    "@types/chai": "^4.2.21",
-    "@types/chai-as-promised": "^7.1.4"
   }
 }
