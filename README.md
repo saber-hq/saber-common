@@ -1,6 +1,6 @@
-# solana-common
+# `saber-common`
 
-Common Solana libraries across Saber projects.
+Common libraries across Saber projects.
 
 ## Documentation
 
