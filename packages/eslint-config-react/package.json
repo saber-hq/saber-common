@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/eslint-config-react",
-  "version": "0.8.0",
+  "version": "0.8.2",
   "description": "Saber base React ESLint config",
   "keywords": [
     "eslint",
