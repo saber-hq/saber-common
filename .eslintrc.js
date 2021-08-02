@@ -6,11 +6,7 @@ module.exports = {
     jest: true,
   },
   ignorePatterns: ["*.js", "packages/*/dist/**/*"],
-  extends: [
-    "@saberhq",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-  ],
+  extends: ["@saberhq/eslint-config-react"],
   settings: { react: { version: "detect" } },
   parserOptions: {
     tsconfigRootDir: __dirname,

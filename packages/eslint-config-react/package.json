@@ -1,0 +1,42 @@
+{
+  "name": "@saberhq/eslint-config-react",
+  "version": "0.7.8",
+  "description": "Saber base React ESLint config",
+  "keywords": [
+    "eslint",
+    "saber",
+    "react"
+  ],
+  "author": "Ian Macalinao <ian@saber.so>",
+  "homepage": "https://saber.so",
+  "license": "MIT",
+  "main": "lib/eslint-config-react.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saber-hq/saber-common.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/saber-hq/saber-common/issues"
+  },
+  "dependencies": {
+    "@saberhq/eslint-config": "^0.7.8",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0"
+  },
+  "peerDependencies": {
+    "eslint": ">=7"
+  }
+}
