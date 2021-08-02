@@ -21,6 +21,7 @@
   },
   "scripts": {
     "build": "lerna run build",
+    "build:no-demo": "lerna run --ignore @saberhq/use-solana-demo build",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",
     "lint:ci": "eslint . --max-warnings=0",
