@@ -10,6 +10,7 @@ import {
   SolongWalletAdapter,
 } from "./adapters";
 import { Coin98Adapter } from "./adapters/coin98";
+import { SecretKeyAdapter } from "./adapters/secret-key";
 import { COIN98, FILE, LEDGER, MATHWALLET, PHANTOM, SOLLET } from "./icons";
 
 export enum WalletType {
@@ -81,7 +82,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     name: "Secret Key",
     url: "https://solana.com/",
     icon: FILE,
-    makeAdapter: LedgerWalletAdapter,
+    makeAdapter: SecretKeyAdapter,
   },
 };
 
