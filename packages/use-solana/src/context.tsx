@@ -1,16 +1,14 @@
-import React, { ReactNode } from "react";
+import type { ReactNode } from "react";
+import React from "react";
 import { createContainer } from "unstated-next";
 
-import {
+import type {
   ConnectionArgs,
   ConnectionContext,
-  useConnectionInternal,
 } from "./utils/useConnectionInternal";
-import {
-  UseWallet,
-  UseWalletArgs,
-  useWalletInternal,
-} from "./utils/useWalletInternal";
+import { useConnectionInternal } from "./utils/useConnectionInternal";
+import type { UseWallet, UseWalletArgs } from "./utils/useWalletInternal";
+import { useWalletInternal } from "./utils/useWalletInternal";
 
 export interface UseSolana<T extends boolean = boolean>
   extends ConnectionContext,

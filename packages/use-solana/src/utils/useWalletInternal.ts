@@ -1,10 +1,11 @@
-import { Network } from "@saberhq/solana";
-import { PublicKey } from "@solana/web3.js";
+import type { Network } from "@saberhq/solana";
+import type { PublicKey } from "@solana/web3.js";
 import stringify from "fast-json-stable-stringify";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { ConnectedWallet, WalletAdapter } from "../adapters/types";
-import { WALLET_PROVIDERS, WalletProviderInfo, WalletType } from "../providers";
+import type { ConnectedWallet, WalletAdapter } from "../adapters/types";
+import type { WalletProviderInfo, WalletType } from "../providers";
+import { WALLET_PROVIDERS } from "../providers";
 import { useLocalStorageState } from "./useLocalStorageState";
 
 /**

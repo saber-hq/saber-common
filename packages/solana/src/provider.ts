@@ -1,17 +1,17 @@
-import {
+import type {
   Commitment,
   ConfirmOptions,
   Connection,
   RpcResponseAndContext,
-  sendAndConfirmRawTransaction,
   Signer,
   SimulatedTransactionResponse,
   Transaction,
   TransactionSignature,
 } from "@solana/web3.js";
+import { sendAndConfirmRawTransaction } from "@solana/web3.js";
 import invariant from "tiny-invariant";
 
-import { Provider, SendTxRequest, Wallet } from "./interfaces";
+import type { Provider, SendTxRequest, Wallet } from "./interfaces";
 
 /**
  * The network and wallet context used to send transactions paid for and signed

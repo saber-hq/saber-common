@@ -1,11 +1,8 @@
 import "chai-as-promised";
 
-import { Idl } from "@project-serum/anchor";
-import {
-  PendingTransaction,
-  TransactionEnvelope,
-  TransactionReceipt,
-} from "@saberhq/solana";
+import type { Idl } from "@project-serum/anchor";
+import type { TransactionEnvelope, TransactionReceipt } from "@saberhq/solana";
+import { PendingTransaction } from "@saberhq/solana";
 import { assert, expect } from "chai";
 
 export const expectTX = (

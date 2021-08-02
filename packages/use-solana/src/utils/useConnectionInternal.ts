@@ -1,10 +1,7 @@
-import {
-  DEFAULT_NETWORK_CONFIG_MAP,
-  Network,
-  NetworkConfig,
-  NetworkConfigMap,
-} from "@saberhq/solana";
-import { Commitment, Connection, Keypair } from "@solana/web3.js";
+import type { Network, NetworkConfig, NetworkConfigMap } from "@saberhq/solana";
+import { DEFAULT_NETWORK_CONFIG_MAP } from "@saberhq/solana";
+import type { Commitment } from "@solana/web3.js";
+import { Connection, Keypair } from "@solana/web3.js";
 import { useEffect, useMemo } from "react";
 
 import { useLocalStorageState } from "./useLocalStorageState";

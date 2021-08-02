@@ -1,17 +1,17 @@
-import {
+import type {
   ConfirmOptions,
   RpcResponseAndContext,
   Signer,
   SimulatedTransactionResponse,
-  Transaction,
   TransactionInstruction,
   TransactionResponse,
   TransactionSignature,
 } from "@solana/web3.js";
+import { Transaction } from "@solana/web3.js";
 import promiseRetry from "promise-retry";
 import invariant from "tiny-invariant";
 
-import { Event, EventParser, Provider } from "./interfaces";
+import type { Event, EventParser, Provider } from "./interfaces";
 
 /**
  * Contains a Transaction that is being built.

@@ -1,7 +1,9 @@
-import { Keypair, PublicKey, Transaction } from "@solana/web3.js";
+import type { PublicKey, Transaction } from "@solana/web3.js";
+import { Keypair } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
-import { DEFAULT_PUBLIC_KEY, WalletAdapter } from "../types";
+import type { WalletAdapter } from "../types";
+import { DEFAULT_PUBLIC_KEY } from "../types";
 
 export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
   _keypair?: Keypair;

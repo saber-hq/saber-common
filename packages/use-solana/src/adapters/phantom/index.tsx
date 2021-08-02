@@ -1,8 +1,9 @@
-import { PublicKey, Transaction } from "@solana/web3.js";
+import type { PublicKey, Transaction } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
-import { PhantomProvider } from "../../typings/window";
-import { DEFAULT_PUBLIC_KEY, WalletAdapter } from "../types";
+import type { PhantomProvider } from "../../typings/window";
+import type { WalletAdapter } from "../types";
+import { DEFAULT_PUBLIC_KEY } from "../types";
 
 export class PhantomWalletAdapter
   extends EventEmitter

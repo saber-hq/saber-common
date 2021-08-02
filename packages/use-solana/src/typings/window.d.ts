@@ -1,4 +1,4 @@
-import { PublicKey, Transaction } from "@solana/web3.js";
+import type { PublicKey, Transaction } from "@solana/web3.js";
 
 type PhantomEvent = "disconnect" | "connect";
 type PhantomRequestMethod =
