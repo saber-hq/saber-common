@@ -12,8 +12,6 @@
     "@size-limit/file": "^5.0.2",
     "@size-limit/preset-small-lib": "^5.0.2",
     "eslint": "^7.32.0",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
     "husky": ">=6",
     "lerna": "^4.0.0",
     "lint-staged": ">=11.1.1",
