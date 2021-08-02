@@ -1,4 +1,4 @@
-import type { Provider } from "@saberhq/solana";
+import type { Provider } from "@saberhq/solana-contrib";
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   Token,

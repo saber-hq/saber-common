@@ -1,4 +1,4 @@
-import type { Network } from "@saberhq/solana";
+import type { Network } from "@saberhq/solana-contrib";
 import { NATIVE_MINT } from "@solana/spl-token";
 import type { TokenInfo } from "@solana/spl-token-registry";
 import { ENV } from "@solana/spl-token-registry";

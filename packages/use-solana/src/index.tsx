@@ -4,4 +4,4 @@ export * from "./hooks";
 export * from "./providers";
 
 // re-export solana utils
-export * as solana from "@saberhq/solana";
+export * as solana from "@saberhq/solana-contrib";

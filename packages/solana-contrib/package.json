@@ -1,9 +1,9 @@
 {
-  "name": "@saberhq/solana",
+  "name": "@saberhq/solana-contrib",
   "version": "0.7.9",
   "description": "Common types and libraries for Solana",
   "author": "Ian Macalinao <ian@saber.so>",
-  "homepage": "https://github.com/saber-hq/use-solana#readme",
+  "homepage": "https://github.com/saber-hq/saber-common#readme",
   "license": "Apache-2.0",
   "scripts": {
     "build": "tsc",

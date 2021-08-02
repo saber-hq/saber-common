@@ -1,4 +1,4 @@
-import type { Network } from "@saberhq/solana";
+import type { Network } from "@saberhq/solana-contrib";
 import { notification } from "antd";
 import type { ArgsProps, NotificationInstance } from "antd/lib/notification";
 import React from "react";

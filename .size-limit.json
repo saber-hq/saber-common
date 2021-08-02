@@ -5,7 +5,7 @@
     "ignore": ["@project-serum/anchor", "@solana/web3.js"]
   },
   {
-    "path": "packages/solana/dist/index.js",
+    "path": "packages/solana-contrib/dist/index.js",
     "limit": "10 KB",
     "ignore": ["@solana/web3.js"]
   },
