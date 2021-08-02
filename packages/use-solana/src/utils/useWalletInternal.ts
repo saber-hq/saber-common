@@ -1,4 +1,4 @@
-import type { Network } from "@saberhq/solana";
+import type { Network } from "@saberhq/solana-contrib";
 import type { PublicKey } from "@solana/web3.js";
 import stringify from "fast-json-stable-stringify";
 import { useCallback, useEffect, useMemo, useState } from "react";

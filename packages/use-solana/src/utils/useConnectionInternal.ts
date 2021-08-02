@@ -1,5 +1,9 @@
-import type { Network, NetworkConfig, NetworkConfigMap } from "@saberhq/solana";
-import { DEFAULT_NETWORK_CONFIG_MAP } from "@saberhq/solana";
+import type {
+  Network,
+  NetworkConfig,
+  NetworkConfigMap,
+} from "@saberhq/solana-contrib";
+import { DEFAULT_NETWORK_CONFIG_MAP } from "@saberhq/solana-contrib";
 import type { Commitment } from "@solana/web3.js";
 import { Connection, Keypair } from "@solana/web3.js";
 import { useEffect, useMemo } from "react";
