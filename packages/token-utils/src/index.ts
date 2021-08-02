@@ -24,3 +24,6 @@ export {
   validateU256,
   ZERO,
 } from "@ubeswap/token-math";
+
+// re-export TOKEN_PROGRAM_ID
+export { TOKEN_PROGRAM_ID } from "@solana/spl-token";
