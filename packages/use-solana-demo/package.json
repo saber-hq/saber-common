@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.3.0",
     "@reach/dialog": "^0.15.0",
     "@saberhq/use-solana": "^0.7.9",
+    "@saberhq/solana-contrib": "^0.7.9",
     "antd": "^4.16.9",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
