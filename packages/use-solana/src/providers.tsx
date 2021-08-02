@@ -1,13 +1,13 @@
 import Wallet from "@project-serum/sol-wallet-adapter";
-import React from "react";
+import type React from "react";
 
+import type { WalletAdapterConstructor } from "./adapters";
 import {
   LedgerWalletAdapter,
   MathWalletAdapter,
   PhantomWalletAdapter,
   SolletExtensionAdapter,
   SolongWalletAdapter,
-  WalletAdapterConstructor,
 } from "./adapters";
 import { Coin98Adapter } from "./adapters/coin98";
 import { COIN98, FILE, LEDGER, MATHWALLET, PHANTOM, SOLLET } from "./icons";

@@ -1,5 +1,7 @@
-import { Address, BN } from "@project-serum/anchor";
-import { BigintIsh, TokenAmount } from "@saberhq/token-utils";
+import type { Address } from "@project-serum/anchor";
+import { BN } from "@project-serum/anchor";
+import type { BigintIsh } from "@saberhq/token-utils";
+import { TokenAmount } from "@saberhq/token-utils";
 import { PublicKey } from "@solana/web3.js";
 import chaiAsPromised from "chai-as-promised";
 import chaiBN from "chai-bn";

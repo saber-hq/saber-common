@@ -1,13 +1,12 @@
+import type { AccountInfo, MintInfo } from "@solana/spl-token";
 import {
-  AccountInfo,
   AccountLayout,
-  MintInfo,
   MintLayout as TokenMintLayout,
   u64,
 } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
+import type { Layout } from "buffer-layout";
 import * as BufferLayout from "buffer-layout";
-import { Layout } from "buffer-layout";
 
 /**
  * Layout for a public key

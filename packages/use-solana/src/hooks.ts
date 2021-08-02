@@ -1,8 +1,9 @@
-import { Connection } from "@solana/web3.js";
+import type { Connection } from "@solana/web3.js";
 
-import { ConnectedWallet } from "./adapters/types";
-import { UseSolana, useSolana } from "./context";
-import { ConnectionContext } from "./utils/useConnectionInternal";
+import type { ConnectedWallet } from "./adapters/types";
+import type { UseSolana } from "./context";
+import { useSolana } from "./context";
+import type { ConnectionContext } from "./utils/useConnectionInternal";
 
 /**
  * Gets the current Solana wallet.

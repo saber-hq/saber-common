@@ -1,4 +1,5 @@
-import { Provider, TransactionEnvelope } from "@saberhq/solana";
+import type { Provider } from "@saberhq/solana";
+import { TransactionEnvelope } from "@saberhq/solana";
 import {
   MintLayout,
   Token as SPLToken,

@@ -1,14 +1,11 @@
 import styled from "@emotion/styled";
-import {
-  useSolana,
-  WALLET_PROVIDERS,
-  WalletProviderInfo,
-  WalletType,
-} from "@saberhq/use-solana";
+import type { WalletProviderInfo, WalletType } from "@saberhq/use-solana";
+import { useSolana, WALLET_PROVIDERS } from "@saberhq/use-solana";
 import React from "react";
 import { isMobile } from "react-device-detect";
 
-import { IProps as IModalProps, Modal } from "./Modal";
+import type { IProps as IModalProps } from "./Modal";
+import { Modal } from "./Modal";
 
 type IProps = Omit<IModalProps, "children" | "title">;
 

@@ -1,6 +1,6 @@
-import { Network } from "@saberhq/solana";
+import type { Network } from "@saberhq/solana";
 import { notification } from "antd";
-import { ArgsProps, NotificationInstance } from "antd/lib/notification";
+import type { ArgsProps, NotificationInstance } from "antd/lib/notification";
 import React from "react";
 import { isMobile } from "react-device-detect";
 

@@ -12,10 +12,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saber-hq/solana-common.git"
+    "url": "git+https://github.com/saber-hq/saber-common.git"
   },
   "bugs": {
-    "url": "https://github.com/saber-hq/use-solana/issues"
+    "url": "https://github.com/saber-hq/saber-common/issues"
   },
   "main": "dist/index.js",
   "files": [

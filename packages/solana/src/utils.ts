@@ -1,4 +1,5 @@
-import { PublicKey, PublicKeyData } from "@solana/web3.js";
+import type { PublicKeyData } from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 
 /**
  * Returns true if the given value is a {@link PublicKey}.

@@ -1,8 +1,9 @@
-import { Network } from "@saberhq/solana";
+import type { Network } from "@saberhq/solana";
 import { NATIVE_MINT } from "@solana/spl-token";
-import { ENV, TokenInfo } from "@solana/spl-token-registry";
+import type { TokenInfo } from "@solana/spl-token-registry";
+import { ENV } from "@solana/spl-token-registry";
 import { PublicKey } from "@solana/web3.js";
-import { Token as UToken } from "@ubeswap/token-math";
+import type { Token as UToken } from "@ubeswap/token-math";
 
 /**
  * Token information.
