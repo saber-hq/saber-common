@@ -29,9 +29,11 @@ export {
 export {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   AuthorityType,
+  MintInfo as MintData,
   MultisigInfo,
   NATIVE_MINT,
   Token as SPLToken,
   TOKEN_PROGRAM_ID,
+  AccountInfo as TokenAccountData,
   u64,
 } from "@solana/spl-token";
