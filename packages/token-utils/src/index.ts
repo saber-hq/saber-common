@@ -25,5 +25,9 @@ export {
   ZERO,
 } from "@ubeswap/token-math";
 
-// re-export TOKEN_PROGRAM_ID, u64
-export { TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
+// re-export from @solana/spl-token
+export {
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+  TOKEN_PROGRAM_ID,
+  u64,
+} from "@solana/spl-token";
