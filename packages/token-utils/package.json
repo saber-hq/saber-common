@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/token-utils",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "repository": "git@github.com:saber-hq/solana-common.git",
   "author": "Ian Macalinao <ian@saber.so>",
   "license": "MIT",

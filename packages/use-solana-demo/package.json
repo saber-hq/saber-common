@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/use-solana-demo",
-  "version": "0.8.3",
+  "version": "0.8.6",
   "main": "dist/index.html",
   "private": true,
   "license": "MIT",
