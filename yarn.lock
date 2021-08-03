@@ -1234,10 +1234,10 @@
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
   integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
 
-"@ledgerhq/devices@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-6.2.0.tgz#2dd38ff81bb72d5d93eb9137574ef53a83f68b78"
-  integrity sha512-X64YWq29E0Ogqb5HPeNjzLaDxre4yPK9yv3AJ3ttTCNrES4qM/QPkb1E/rAhD75LTXVBDb8NKJRPA9fKKLpdcg==
+"@ledgerhq/devices@^6.2.0", "@ledgerhq/devices@^6.3.0":
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-6.3.0.tgz#7ee59614198882311d1805912e368451527d05b2"
+  integrity sha512-DmVxqMAf3FhkpKjkbBCFVJ5DmesfplujeCLzFwO/zF5VGuwY7xxPqeSxlpusXJkqhEq+DbFzIDRWJYDf7rtXqg==
   dependencies:
     "@ledgerhq/errors" "^6.2.0"
     "@ledgerhq/logs" "^6.2.0"
@@ -1260,11 +1260,11 @@
     "@ledgerhq/logs" "^6.2.0"
 
 "@ledgerhq/hw-transport@^6.0.2", "@ledgerhq/hw-transport@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.2.0.tgz#b3bf21e6d8a0552bf67b0d0be5139c6b855ba5ca"
-  integrity sha512-6Yz6Hm5fbjdNhbOFb86H6q4o92DHm9HaPXdavk7PM9VXTcdyz4d7BjIZxlVTmoa4+4nWjfere5o+psAl1WD+Ug==
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.3.0.tgz#4fc966b1a68c991c0a6b5384841f99c4f8304ce9"
+  integrity sha512-kdnVrgmxrFtKaRdkoaQBEa02RXgLzEBiooYbxA65BGSJig3PGWDS9LrqNpzLTZM1RQlivd9NLBmfwU2ze4chWA==
   dependencies:
-    "@ledgerhq/devices" "^6.2.0"
+    "@ledgerhq/devices" "^6.3.0"
     "@ledgerhq/errors" "^6.2.0"
     events "^3.3.0"
 
