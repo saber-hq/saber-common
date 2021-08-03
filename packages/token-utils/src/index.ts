@@ -35,4 +35,4 @@ export {
   Token as SPLToken,
   TOKEN_PROGRAM_ID,
   AccountInfo as TokenAccountData,
-}
+} from "@solana/spl-token";
