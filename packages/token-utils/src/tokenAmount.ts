@@ -50,6 +50,14 @@ export class TokenAmount extends UTokenAmount<Token> {
     return new TokenAmount(this.token, result.raw);
   }
 
+  /**
+   * Formats the token amount with units and decimal adjustment, e.g. "100.42 SOL"
+   * @returns
+   */
+  formatUnits(): string {
+    return `${this.toExact()} ${this.token.symbol}`;
+  }
+
   toString(): string {
     return `TokenAmount[Token=(${this.token.toString()}), amount=${this.toExact()}`;
   }
