@@ -51,10 +51,22 @@ export class TokenAmount extends UTokenAmount<Token> {
   }
 
   /**
+   * Formats the token amount with units and decimal adjustment, e.g. "100.42 SOL"
+   * @returns
+   */
+  formatUnits(): string {
+    return `${this.toExact()} ${this.token.symbol}`;
+  }
+
+  toString(): string {
+    return `TokenAmount[Token=(${this.token.toString()}), amount=${this.toExact()}`;
+  }
+
+  /**
    * Converts this to the raw u64 used by the SPL library
    * @returns
    */
-  public toU64(): u64 {
+  toU64(): u64 {
     return new u64(this.raw.toString());
   }
 }

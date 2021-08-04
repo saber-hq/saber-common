@@ -37,21 +37,3 @@ export const DEFAULT_NETWORK_CONFIG_MAP = {
 } as const;
 
 export type NetworkConfigMap = { [N in Network]: NetworkConfig };
-
-// comes from @solana/spl-token-registry
-export enum ENV {
-  MainnetBeta = 101,
-  Testnet = 102,
-  Devnet = 103,
-}
-
-export const envToNetwork = (env: ENV): Network => {
-  switch (env) {
-    case ENV.MainnetBeta:
-      return "mainnet-beta";
-    case ENV.Devnet:
-      return "devnet";
-    case ENV.Testnet:
-      return "testnet";
-  }
-};
