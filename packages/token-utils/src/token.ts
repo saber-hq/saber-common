@@ -50,6 +50,10 @@ export class Token implements UToken<Token> {
     }, network=${this.network}]`;
   }
 
+  toJSON(): unknown {
+    return this.info;
+  }
+
   /**
    * Loads a token from a Mint.
    * @param mint
