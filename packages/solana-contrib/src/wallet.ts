@@ -32,6 +32,11 @@ export class SignerWallet implements Wallet {
     return Promise.resolve(transaction);
   }
 
+  /**
+   * Creates a Provider from this Wallet by adding a Connection.
+   * @param connection
+   * @returns
+   */
   createProvider(connection: Connection): Provider {
     return new SolanaProvider(connection, this);
   }
