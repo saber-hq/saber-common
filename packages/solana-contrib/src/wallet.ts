@@ -1,7 +1,7 @@
 import type {
   Connection,
-  Keypair,
   PublicKey,
+  Signer,
   Transaction,
 } from "@solana/web3.js";
 
@@ -9,32 +9,26 @@ import type { Provider, Wallet } from "./interfaces";
 import { SolanaProvider } from "./provider";
 
 /**
- * Wallet based on a Keypair.
+ * Wallet based on a Signer.
  */
 export class SignerWallet implements Wallet {
-  private _publicKey: PublicKey;
+  constructor(public readonly signer: Signer) {}
 
-  constructor(public keypair: Keypair) {
-    this._publicKey = keypair.publicKey;
+  get publicKey(): PublicKey {
+    return this.signer.publicKey;
   }
 
-  public signAllTransactions(
-    transactions: Transaction[]
-  ): Promise<Transaction[]> {
+  signAllTransactions(transactions: Transaction[]): Promise<Transaction[]> {
     return Promise.resolve(
       transactions.map((tx) => {
-        tx.partialSign(this.keypair);
+        tx.partialSign(this.signer);
         return tx;
       })
     );
   }
 
-  get publicKey(): PublicKey {
-    return this._publicKey;
-  }
-
   signTransaction(transaction: Transaction): Promise<Transaction> {
-    transaction.partialSign(this.keypair);
+    transaction.partialSign(this.signer);
     return Promise.resolve(transaction);
   }
 
