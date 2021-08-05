@@ -1,3 +1,4 @@
+import { SignerWallet } from "@saberhq/solana-contrib";
 import type { PublicKey, Transaction } from "@solana/web3.js";
 import { Keypair } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
@@ -6,7 +7,7 @@ import type { WalletAdapter } from "../types";
 import { DEFAULT_PUBLIC_KEY } from "../types";
 
 export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
-  _keypair?: Keypair;
+  _wallet?: SignerWallet;
   _publicKey?: PublicKey;
 
   _connected: boolean;
@@ -27,16 +28,11 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
   public signAllTransactions(
     transactions: Transaction[]
   ): Promise<Transaction[]> {
-    const kp = this._keypair;
-    if (!kp) {
+    const wallet = this._wallet;
+    if (!wallet) {
       return Promise.resolve(transactions);
     }
-    return Promise.resolve(
-      transactions.map((tx) => {
-        tx.partialSign(kp);
-        return tx;
-      })
-    );
+    return wallet.signAllTransactions(transactions);
   }
 
   get publicKey(): PublicKey {
@@ -44,12 +40,11 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
   }
 
   async signTransaction(transaction: Transaction): Promise<Transaction> {
-    const kp = this._keypair;
-    if (!kp) {
+    const wallet = this._wallet;
+    if (!wallet) {
       return Promise.resolve(transaction);
     }
-    transaction.partialSign(kp);
-    return transaction;
+    return wallet.signTransaction(transaction);
   }
 
   connect = (args?: unknown): Promise<void> => {
@@ -62,16 +57,18 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
     if (!secretKey || !Array.isArray(secretKey)) {
       throw new Error("Secret key missing.");
     }
-    this._keypair = Keypair.fromSecretKey(Uint8Array.from(secretKey));
-    this._publicKey = this._keypair.publicKey;
+    this._wallet = new SignerWallet(
+      Keypair.fromSecretKey(Uint8Array.from(secretKey))
+    );
+    this._publicKey = this._wallet.publicKey;
     this._connected = true;
     this.emit("connect", this.publicKey);
     return Promise.resolve();
   };
 
   disconnect(): void {
-    if (this._keypair) {
-      this._keypair = undefined;
+    if (this._wallet) {
+      this._wallet = undefined;
       this._publicKey = undefined;
       this._publicKey = undefined;
       this._connected = false;
