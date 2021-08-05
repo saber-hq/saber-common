@@ -57,14 +57,12 @@ export const getOrCreateATA = async ({
   } else {
     return {
       address,
-      instruction: Token.createAssociatedTokenAccountInstruction(
-        ASSOCIATED_TOKEN_PROGRAM_ID,
-        TOKEN_PROGRAM_ID,
+      instruction: createATAInstruction({
         mint,
         address,
         owner,
-        payer
-      ),
+        payer,
+      }),
     };
   }
 };
@@ -141,3 +139,27 @@ export const getOrCreateATAs = async <K extends string>({
     instructions: Object.values(deduped.instructions),
   } as Results<K>;
 };
+
+/**
+ * Instruction for creating an ATA.
+ * @returns
+ */
+export const createATAInstruction = ({
+  address,
+  mint,
+  owner,
+  payer,
+}: {
+  address: PublicKey;
+  mint: PublicKey;
+  owner: PublicKey;
+  payer: PublicKey;
+}): TransactionInstruction =>
+  Token.createAssociatedTokenAccountInstruction(
+    ASSOCIATED_TOKEN_PROGRAM_ID,
+    TOKEN_PROGRAM_ID,
+    mint,
+    address,
+    owner,
+    payer
+  );
