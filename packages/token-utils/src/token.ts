@@ -114,11 +114,6 @@ export const makeTokenForAllNetworks = (
   localnet: new Token({ ...token, chainId: ChainId.Localnet }),
 });
 
-/**
- * Solana native token.
- */
-export const SOL: TokenMap = makeTokenForAllNetworks(sol);
-
 // comes from @solana/spl-token-registry, except we've added localnet
 export enum ChainId {
   MainnetBeta = 101,
@@ -155,3 +150,8 @@ export const networkToChainId = (network: Network): ChainId =>
  */
 export const chainIdToNetwork = (env: ChainId): Network =>
   CHAIN_ID_TO_NETWORK[env];
+
+/**
+ * Solana native token.
+ */
+export const SOL: TokenMap = makeTokenForAllNetworks(sol);
