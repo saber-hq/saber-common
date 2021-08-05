@@ -2660,10 +2660,10 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.15.tgz#6a9d143f7f4f49db2d782f9e1c8839a29b43ae23"
   integrity sha512-15spi3V28QdevleWBNXE4pIls3nFZmBbUGrW9IVPwiQczuSb9n76TCB4bsk8TSel+I1OkHEdPhu5QKMfY6rQHA==
 
-"@project-serum/anchor@^0.11.1":
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/@project-serum/anchor/-/anchor-0.11.1.tgz#155bff2c70652eafdcfd5559c81a83bb19cec9ff"
-  integrity sha512-oIdm4vTJkUy6GmE6JgqDAuQPKI7XM4TPJkjtoIzp69RZe0iAD9JP2XHx7lV1jLdYXeYHqDXfBt3zcq7W91K6PA==
+"@project-serum/anchor@^0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@project-serum/anchor/-/anchor-0.12.0.tgz#abd7379a78f47fb63bc472746e3313062bf9f296"
+  integrity sha512-Bl40WV+iITY5soAV+9hYvInT23otRGgIVhE4MvQAba7zLyPTS90gxols6enmpuMd2+pGId28qvWw1y8NxrVMoA==
   dependencies:
     "@project-serum/borsh" "^0.2.2"
     "@solana/web3.js" "^1.17.0"
@@ -2847,7 +2847,7 @@
   dependencies:
     buffer "~6.0.3"
 
-"@solana/spl-token-registry@^0.2.206":
+"@solana/spl-token-registry@^0.2.210":
   version "0.2.210"
   resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.210.tgz#50848b8b12d6f1a439ecde04246b631218d0e623"
   integrity sha512-hdbRzQI+NimtohJ1GDElEwRhmTD/OPqA/jUvw+Re1ygx5C/u7cgpEMURA/KJCZp1fC6CFhh8zgnwsuylZhPQMQ==
