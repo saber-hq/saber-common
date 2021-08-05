@@ -1,5 +1,4 @@
-import type { PublicKey, Transaction } from "@solana/web3.js";
-import { Keypair } from "@solana/web3.js";
+import type { Keypair, PublicKey, Transaction } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
 import type { WalletAdapter } from "../types";
@@ -7,6 +6,8 @@ import { DEFAULT_PUBLIC_KEY } from "../types";
 
 export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
   _keypair?: Keypair;
+  _publicKey?: PublicKey;
+
   _connected: boolean;
 
   constructor() {
@@ -38,7 +39,7 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
   }
 
   get publicKey(): PublicKey {
-    return this._keypair?.publicKey ?? DEFAULT_PUBLIC_KEY;
+    return this._publicKey ?? DEFAULT_PUBLIC_KEY;
   }
 
   async signTransaction(transaction: Transaction): Promise<Transaction> {
@@ -53,14 +54,15 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
   connect = (args?: unknown): Promise<void> => {
     const argsTyped = args as
       | {
-          secretKey?: number[];
+          keypair?: Keypair;
         }
       | undefined;
-    const secretKey = argsTyped?.secretKey;
-    if (!secretKey || !Array.isArray(secretKey)) {
-      throw new Error("Secret key missing.");
+    const keypair = argsTyped?.keypair;
+    if (!keypair) {
+      throw new Error("Keypair missing.");
     }
-    this._keypair = Keypair.fromSecretKey(Uint8Array.from(secretKey));
+    this._keypair = keypair;
+    this._publicKey = this._keypair.publicKey;
     this._connected = true;
     this.emit("connect", this.publicKey);
     return Promise.resolve();
@@ -69,6 +71,8 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
   disconnect(): void {
     if (this._keypair) {
       this._keypair = undefined;
+      this._publicKey = undefined;
+      this._publicKey = undefined;
       this._connected = false;
       this.emit("disconnect");
     }
