@@ -11,14 +11,14 @@ import { Keypair, SystemProgram } from "@solana/web3.js";
 export const createTokenAccount = async ({
   provider,
   mint,
-  owner,
-  payer,
+  owner = provider.wallet.publicKey,
+  payer = provider.wallet.publicKey,
   accountSigner = Keypair.generate(),
 }: {
   provider: Provider;
   mint: PublicKey;
-  owner: PublicKey;
-  payer: PublicKey;
+  owner?: PublicKey;
+  payer?: PublicKey;
   /**
    * The keypair of the account to be created.
    */
