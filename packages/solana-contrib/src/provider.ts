@@ -13,6 +13,11 @@ import invariant from "tiny-invariant";
 
 import type { Provider, SendTxRequest, Wallet } from "./interfaces";
 
+export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
+  preflightCommitment: "recent",
+  commitment: "recent",
+};
+
 /**
  * The network and wallet context used to send transactions paid for and signed
  * by the provider.
@@ -28,14 +33,11 @@ export class SolanaProvider implements Provider {
   constructor(
     public readonly connection: Connection,
     public readonly wallet: Wallet,
-    public readonly opts: ConfirmOptions = SolanaProvider.defaultOptions()
+    public readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {}
 
   static defaultOptions(): ConfirmOptions {
-    return {
-      preflightCommitment: "recent",
-      commitment: "recent",
-    };
+    return DEFAULT_PROVIDER_OPTIONS;
   }
 
   /**
