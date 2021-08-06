@@ -11,7 +11,16 @@ import {
 } from "./adapters";
 import { Coin98Adapter } from "./adapters/coin98";
 import { SecretKeyAdapter } from "./adapters/secret-key";
-import { COIN98, FILE, LEDGER, MATHWALLET, PHANTOM, SOLLET } from "./icons";
+import { SolflareExtensionWalletAdapter } from "./adapters/solflare-extension";
+import {
+  COIN98,
+  FILE,
+  LEDGER,
+  MATHWALLET,
+  PHANTOM,
+  SOLFLARE,
+  SOLLET,
+} from "./icons";
 
 export enum WalletType {
   Coin98 = "Coin98",
@@ -20,6 +29,8 @@ export enum WalletType {
   Phantom = "Phantom",
   Sollet = "Sollet",
   SolletExtension = "SolletExtension",
+  Solflare = "Solflare",
+  SolflareExtension = "SolflareExtension",
   Solong = "Solong",
   SecretKey = "SecretKey",
 }
@@ -83,6 +94,20 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     url: "https://solana.com/",
     icon: FILE,
     makeAdapter: SecretKeyAdapter,
+  },
+  [WalletType.Solflare]: {
+    name: "Solflare",
+    url: "https://solflare.com/provider",
+    icon: SOLFLARE,
+    makeAdapter: Wallet,
+  },
+  [WalletType.SolflareExtension]: {
+    name: "Solflare",
+    url: "https://solflare.com/",
+    icon: SOLFLARE,
+    makeAdapter: SolflareExtensionWalletAdapter,
+
+    isInstalled: () => window.solflare?.isSolflare === true,
   },
 };
 
