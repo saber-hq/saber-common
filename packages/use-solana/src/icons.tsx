@@ -202,7 +202,7 @@ export const FILE: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 
 export const SOLFLARE: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
-    width="157"
+    width="40"
     height="40"
     viewBox="0 0 40 40"
     fill="none"
