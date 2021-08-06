@@ -1,11 +1,12 @@
 import type { Provider } from "@saberhq/solana-contrib";
 import { TransactionEnvelope } from "@saberhq/solana-contrib";
+import type { u64 } from "@solana/spl-token";
 import {
   MintLayout,
   Token as SPLToken,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-import type { PublicKey, Signer } from "@solana/web3.js";
+import type { Keypair, PublicKey, Signer } from "@solana/web3.js";
 import { SystemProgram } from "@solana/web3.js";
 
 /**
@@ -48,5 +49,34 @@ export const createInitMintInstructions = async ({
       ),
     ],
     [mintKP]
+  );
+};
+
+export const createMintToInstruction = ({
+  provider,
+  mint,
+  mintAuthorityKP,
+  to,
+  amount,
+}: {
+  provider: Provider;
+  mint: PublicKey;
+  mintAuthorityKP: Keypair;
+  to: PublicKey;
+  amount: u64;
+}): TransactionEnvelope => {
+  return new TransactionEnvelope(
+    provider,
+    [
+      SPLToken.createMintToInstruction(
+        TOKEN_PROGRAM_ID,
+        mint,
+        to,
+        mintAuthorityKP.publicKey,
+        [],
+        amount
+      ),
+    ],
+    [mintAuthorityKP]
   );
 };
