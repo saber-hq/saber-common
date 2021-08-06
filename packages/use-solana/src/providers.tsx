@@ -102,7 +102,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     makeAdapter: Wallet,
   },
   [WalletType.SolflareExtension]: {
-    name: "Solflare",
+    name: "Solflare Extension",
     url: "https://solflare.com/",
     icon: SOLFLARE,
     makeAdapter: SolflareExtensionWalletAdapter,
