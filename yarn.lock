@@ -2886,10 +2886,30 @@
     superstruct "^0.14.2"
     tweetnacl "^1.0.0"
 
-"@solana/web3.js@^1.17.0", "@solana/web3.js@^1.22.0":
+"@solana/web3.js@^1.17.0":
   version "1.22.0"
   resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.22.0.tgz#ded439eb903aff4269a16a7fdfacc6866c6f0c13"
   integrity sha512-7BQUiR1AIj2L8KJ8LYsI31iPRLytgF8T4hz7xLlvvBfalpUK7qD2om7frlNpXl8ROUpvruNf83QaectJdZJW1w==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    "@solana/buffer-layout" "^3.0.0"
+    bn.js "^5.0.0"
+    borsh "^0.4.0"
+    bs58 "^4.0.1"
+    buffer "6.0.1"
+    crypto-hash "^1.2.2"
+    jayson "^3.4.4"
+    js-sha3 "^0.8.0"
+    node-fetch "^2.6.1"
+    rpc-websockets "^7.4.2"
+    secp256k1 "^4.0.2"
+    superstruct "^0.14.2"
+    tweetnacl "^1.0.0"
+
+"@solana/web3.js@^1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.23.0.tgz#74f81d074c1b13aeb286990edde6f2e4c7301731"
+  integrity sha512-+bstAFs3qnajHlxW0k4BM/hNZ93tmtSacfVBmdDWkk0kvCpLZUuMop5Qfrf10TPD4yfvdCA9hOT5CXwRnWc87Q==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@solana/buffer-layout" "^3.0.0"

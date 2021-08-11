@@ -20,7 +20,7 @@
     "@ledgerhq/hw-transport-webusb": "^6.0.2",
     "@project-serum/sol-wallet-adapter": "^0.2.0",
     "@saberhq/solana-contrib": "^0.9.4",
-    "@solana/web3.js": "^1.22.0",
+    "@solana/web3.js": "^1.23.0",
     "@types/bs58": "^4.0.1",
     "bs58": "^4.0.1",
     "eventemitter3": "^4.0.7",
