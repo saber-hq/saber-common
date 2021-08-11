@@ -13,7 +13,7 @@
     "@saberhq/solana-contrib": "^0.9.4",
     "@solana/spl-token": "^0.1.5",
     "@solana/spl-token-registry": "^0.2.210",
-    "@solana/web3.js": "^1.22.0",
+    "@solana/web3.js": "^1.23.0",
     "@ubeswap/token-math": "^4.0.3",
     "buffer-layout": "^1.2.2",
     "tiny-invariant": "^1.1.0",
