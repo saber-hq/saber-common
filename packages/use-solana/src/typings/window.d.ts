@@ -37,6 +37,9 @@ declare global {
       | MathWalletProvider
       | PhantomProvider
       | { isPhantom?: false; isMathWallet?: false };
+    solflare?: PhantomProvider & {
+      isSolflare?: boolean;
+    };
     sollet?: string;
     solong?: {
       signAllTransactions?: (txs: Transaction[]) => Promise<Transaction[]>;
