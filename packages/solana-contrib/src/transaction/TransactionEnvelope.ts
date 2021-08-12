@@ -1,5 +1,7 @@
 import type {
+  AccountMeta,
   ConfirmOptions,
+  PublicKey,
   RpcResponseAndContext,
   Signer,
   SimulatedTransactionResponse,
@@ -10,6 +12,12 @@ import { Transaction } from "@solana/web3.js";
 import type { Provider } from "../interfaces";
 import { PendingTransaction } from "./PendingTransaction";
 import type { TransactionReceipt } from "./TransactionReceipt";
+
+export interface SerializableInstruction {
+  programId: string;
+  keys: (Omit<AccountMeta, "pubkey"> & { publicKey: string })[];
+  data: string;
+}
 
 /**
  * Contains a Transaction that is being built.
@@ -71,5 +79,34 @@ export class TransactionEnvelope {
       [...this.instructions, ...other.instructions],
       [...this.signers, ...other.signers]
     );
+  }
+
+  // get a list of all writable accounts, deduped
+  // all of these accounts likely need to be updated.
+  get writableKeys(): PublicKey[] {
+    return [
+      ...new Set([
+        ...this.instructions
+          .map((inst) =>
+            inst.keys.filter((key) => key.isWritable).map((k) => k.pubkey)
+          )
+          .reduce((acc, el) => acc.concat(el)),
+      ]).values(),
+    ];
+  }
+
+  /**
+   * Gets the instructions in a format that can be serialized easily to JSON.
+   */
+  get instructionsJSON(): SerializableInstruction[] {
+    return this.instructions.map((instruction) => ({
+      programId: instruction.programId.toString(),
+      keys: instruction.keys.map((m) => ({
+        isSigner: m.isSigner,
+        isWritable: m.isWritable,
+        publicKey: m.pubkey.toString(),
+      })),
+      data: instruction.data.toString("base64"),
+    }));
   }
 }
