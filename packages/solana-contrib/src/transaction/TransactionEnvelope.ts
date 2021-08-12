@@ -118,4 +118,18 @@ export class TransactionEnvelope {
   static combineAll(...txs: TransactionEnvelope[]): TransactionEnvelope {
     return txs.reduce((acc, tx) => acc.combine(tx));
   }
+
+  /**
+   * Combines multiple async TransactionEnvelopes into one, serially.
+   */
+  static async combineAllAsync(
+    firstTX: Promise<TransactionEnvelope>,
+    ...txs: Promise<TransactionEnvelope>[]
+  ): Promise<TransactionEnvelope> {
+    let acc: TransactionEnvelope = await firstTX;
+    for (const tx of txs) {
+      acc = acc.combine(await tx);
+    }
+    return acc;
+  }
 }
