@@ -2661,9 +2661,9 @@
   integrity sha512-15spi3V28QdevleWBNXE4pIls3nFZmBbUGrW9IVPwiQczuSb9n76TCB4bsk8TSel+I1OkHEdPhu5QKMfY6rQHA==
 
 "@project-serum/anchor@^0.13.0":
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/@project-serum/anchor/-/anchor-0.13.1.tgz#2bef1116aa9bc5c5232b287673129390a856b26f"
-  integrity sha512-4Phz0RykA8Bf8lgGDC5i2U8jcsw1r7H5cXZ6GGPPbVCiXgzHoE5BrbTazz/aG/dPQfXmsHGO03oZgXuxpdyzyw==
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/@project-serum/anchor/-/anchor-0.13.2.tgz#c6c9a15720cbecd0f79bab56a0690d156fd06f8a"
+  integrity sha512-xfjzHBy8ZvJuK1EYAba7+CT6TmJ+UWXmGGm915J0IFJTwGwYT4+bDa/qZF7EnZ6trYxg7owEOMLfvF7Jp+WC0w==
   dependencies:
     "@project-serum/borsh" "^0.2.2"
     "@solana/web3.js" "^1.17.0"
