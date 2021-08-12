@@ -111,4 +111,11 @@ export class TransactionEnvelope {
       data: instruction.data.toString("base64"),
     }));
   }
+
+  /**
+   * Combines multiple TransactionEnvelopes into one.
+   */
+  static combineAll(...txs: TransactionEnvelope[]): TransactionEnvelope {
+    return txs.reduce((acc, tx) => acc.combine(tx));
+  }
 }
