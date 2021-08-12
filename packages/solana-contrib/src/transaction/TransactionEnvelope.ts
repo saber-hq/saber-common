@@ -81,8 +81,10 @@ export class TransactionEnvelope {
     );
   }
 
-  // get a list of all writable accounts, deduped
-  // all of these accounts likely need to be updated.
+  /**
+   * Get a list of all writable accounts, deduped
+   * All of these accounts likely need to be updated after the transaction is confirmed.
+   */
   get writableKeys(): PublicKey[] {
     return [
       ...new Set([
