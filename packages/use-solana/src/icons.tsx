@@ -1,52 +1,44 @@
 import React from "react";
 
 export const LEDGER: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35" {...props}>
-    <defs>
-      <style>{`.prefix__cls-1{fill:#FFFFFF}`}</style>
-    </defs>
-    <g
-      id="prefix__Group_26536"
-      data-name="Group 26536"
-      transform="translate(-80 -205)"
-    >
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 35 35"
+    fill="currentcolor"
+    {...props}
+  >
+    <g id="prefix__Group_26536" transform="translate(-80 -205)">
       <path
         id="prefix__Shape"
         d="M23.588 0h-16v21.583h21.6v-16A5.585 5.585 0 0023.588 0z"
-        className="prefix__cls-1"
         transform="translate(85.739 205)"
       />
       <path
         id="prefix__Path_8749"
         d="M8.342 0H5.585A5.585 5.585 0 000 5.585v2.757h8.342z"
-        className="prefix__cls-1"
         data-name="Path 8749"
         transform="translate(80 205)"
       />
       <path
         id="prefix__Rectangle-path"
         d="M0 7.59h8.342v8.342H0z"
-        className="prefix__cls-1"
         transform="translate(80 210.739)"
       />
       <path
         id="prefix__Path_8750"
         d="M15.18 23.451h2.757a5.585 5.585 0 005.585-5.6V15.18H15.18z"
-        className="prefix__cls-1"
         data-name="Path 8750"
         transform="translate(91.478 216.478)"
       />
       <path
         id="prefix__Path_8751"
         d="M7.59 15.18h8.342v8.342H7.59z"
-        className="prefix__cls-1"
         data-name="Path 8751"
         transform="translate(85.739 216.478)"
       />
       <path
         id="prefix__Path_8752"
         d="M0 15.18v2.757a5.585 5.585 0 005.585 5.585h2.757V15.18z"
-        className="prefix__cls-1"
         data-name="Path 8752"
         transform="translate(80 216.478)"
       />
@@ -63,10 +55,12 @@ export const MATHWALLET: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <title>Logo_Icon_White</title>
-    <desc>Created with Sketch.</desc>
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <g id="A3" transform="translate(-216.000000, -514.000000)" fill="#FFFFFF">
+      <g
+        id="A3"
+        transform="translate(-216.000000, -514.000000)"
+        fill="currentcolor"
+      >
         <g id="Logo_Icon" transform="translate(216.000000, 514.000000)">
           <rect
             id="Rectangle"
