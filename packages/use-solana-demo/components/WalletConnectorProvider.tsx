@@ -1,6 +1,6 @@
 import type { ConnectedWallet } from "@saberhq/use-solana";
 import { SolanaProvider } from "@saberhq/use-solana";
-import React, { useCallback, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { notify } from "../utils/notify";
 import { WalletSelectorModal } from "./WalletSelectorModal";
@@ -8,6 +8,29 @@ import { WalletSelectorModal } from "./WalletSelectorModal";
 export type ConnectWallet = () => void;
 
 const WalletConnectorContext = React.createContext<ConnectWallet | null>(null);
+
+const onConnect = (wallet: ConnectedWallet) => {
+  const walletPublicKey = wallet.publicKey.toBase58();
+  const keyToDisplay =
+    walletPublicKey.length > 20
+      ? `${walletPublicKey.substring(0, 7)}.....${walletPublicKey.substring(
+          walletPublicKey.length - 7,
+          walletPublicKey.length
+        )}`
+      : walletPublicKey;
+
+  notify({
+    message: "Wallet update",
+    description: "Connected to wallet " + keyToDisplay,
+  });
+};
+
+const onDisconnect = () => {
+  notify({
+    message: "Wallet update",
+    description: "Disconnected from wallet",
+  });
+};
 
 interface Props {
   children: React.ReactNode;
@@ -18,29 +41,6 @@ export const WalletConnectorProvider: React.FC<Props> = ({
 }: Props) => {
   const [showWalletSelector, setShowWalletSelector] = useState<boolean>(false);
   const connect = () => setShowWalletSelector(true);
-
-  const onConnect = useCallback((wallet: ConnectedWallet) => {
-    const walletPublicKey = wallet.publicKey.toBase58();
-    const keyToDisplay =
-      walletPublicKey.length > 20
-        ? `${walletPublicKey.substring(0, 7)}.....${walletPublicKey.substring(
-            walletPublicKey.length - 7,
-            walletPublicKey.length
-          )}`
-        : walletPublicKey;
-
-    notify({
-      message: "Wallet update",
-      description: "Connected to wallet " + keyToDisplay,
-    });
-  }, []);
-
-  const onDisconnect = useCallback(() => {
-    notify({
-      message: "Wallet update",
-      description: "Disconnected from wallet",
-    });
-  }, []);
 
   return (
     <SolanaProvider onConnect={onConnect} onDisconnect={onDisconnect}>
