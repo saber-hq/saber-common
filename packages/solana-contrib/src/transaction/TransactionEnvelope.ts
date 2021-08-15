@@ -132,4 +132,24 @@ export class TransactionEnvelope {
     }
     return acc;
   }
+
+  /**
+   * Sends all of the envelopes.
+   * @returns Pending transactions
+   */
+  static async sendAll(
+    txs: TransactionEnvelope[],
+    opts?: ConfirmOptions
+  ): Promise<PendingTransaction[]> {
+    const firstTX = txs[0];
+    if (!firstTX) {
+      return [];
+    }
+    const provider = firstTX.provider;
+    const txSigs = await provider.sendAll(
+      txs.map((tx) => ({ tx: tx.build(), signers: tx.signers })),
+      opts
+    );
+    return txSigs.map((sig) => new PendingTransaction(provider, sig));
+  }
 }
