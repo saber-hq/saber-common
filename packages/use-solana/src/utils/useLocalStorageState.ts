@@ -6,10 +6,13 @@ export function useLocalStorageState<T>(
 ): [T, (newState: T) => void] {
   const [state, setState] = useState<T>((): T => {
     // NOTE: Not sure if this is ok
-    const storedState = localStorage.getItem(key);
-    if (storedState) {
-      return JSON.parse(storedState) as T;
+    if (typeof window !== "undefined") {
+      const storedState = localStorage.getItem(key);
+      if (storedState) {
+        return JSON.parse(storedState) as T;
+      }
     }
+
     return defaultState;
   });
 

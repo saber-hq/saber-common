@@ -11,9 +11,7 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.18",
-    "@types/react-dom": "^17.0.7",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "@types/react-dom": "^17.0.7"
   },
   "dependencies": {
     "@ledgerhq/hw-transport": "^6.0.2",
