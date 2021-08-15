@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/use-solana-demo",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "main": "dist/index.html",
   "private": true,
   "license": "MIT",
@@ -13,7 +13,7 @@
     "@emotion/styled": "^11.3.0",
     "@reach/dialog": "^0.16.0",
     "@saberhq/solana-contrib": "^0.12.0",
-    "@saberhq/use-solana": "^0.12.0",
+    "@saberhq/use-solana": "^0.12.1",
     "antd": "^4.16.9",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
