@@ -9,7 +9,7 @@
   ],
   "author": "Ian Macalinao <ian@saber.so>",
   "homepage": "https://saber.so",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "main": "lib/eslint-config-react.js",
   "directories": {
     "lib": "lib"

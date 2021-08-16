@@ -1,0 +1,56 @@
+{
+  "name": "@saberhq/stableswap-sdk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saber-hq/saber-common.git"
+  },
+  "author": "Saber Team <team@saber.so>",
+  "version": "0.12.1",
+  "main": "dist/index.js",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "test": "jest"
+  },
+  "engines": {
+    "node": ">=12.x"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-typescript": "^7.15.0",
+    "@saberhq/eslint-config": "^0.12.0",
+    "@saberhq/solana-contrib": "^0.12.0",
+    "@types/bs58": "^4.0.1",
+    "@types/jest": "^27.0.1",
+    "@types/lodash.mapvalues": "^4.6.6",
+    "@types/node": "^16.4.12",
+    "b58": "^4.0.3",
+    "eslint": "^7.32.0",
+    "husky": ">=7",
+    "jest": "^27.0.6",
+    "lint-staged": ">=11.1.1",
+    "lodash.mapvalues": "^4.6.0",
+    "prettier": "^2.3.2",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@saberhq/token-utils": "^0.12.0",
+    "@solana/web3.js": "^1.24.0",
+    "@types/bn.js": "^5.1.0",
+    "@types/yargs": "^17.0.2",
+    "bn.js": "^5.2.0",
+    "buffer-layout": "^1.2.2",
+    "jsbi": "^3.1.6",
+    "yargs": "^17.1.0"
+  },
+  "resolutions": {},
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
