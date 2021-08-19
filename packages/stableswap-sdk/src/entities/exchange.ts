@@ -1,13 +1,15 @@
-import type { Token } from "@saberhq/token-utils";
 import {
   deserializeAccount,
   deserializeMint,
   parseBigintIsh,
+  Token,
   TokenAmount,
 } from "@saberhq/token-utils";
+import type { TokenInfo } from "@solana/spl-token-registry";
 import type { Connection, PublicKey } from "@solana/web3.js";
 import type JSBI from "jsbi";
 
+import { SWAP_PROGRAM_ID } from "../constants";
 import type { StableSwap } from "../stable-swap";
 import type { Fees } from "../state/fees";
 import { loadProgramAccount } from "../util/account";
@@ -146,4 +148,55 @@ export const loadExchangeInfo = async (
       poolMint,
     },
   });
+};
+
+/**
+ * Simplified representation of an IExchange. Useful for configuration.
+ */
+export interface ExchangeBasic {
+  /**
+   * Swap account.
+   */
+  swapAccount: PublicKey;
+  /**
+   * Mint of the LP token.
+   */
+  lpToken: PublicKey;
+  /**
+   * Info of token A.
+   */
+  tokenA: TokenInfo;
+  /**
+   * Info of token B.
+   */
+  tokenB: TokenInfo;
+}
+
+/**
+ * Creates an IExchange from an ExchangeBasic.
+ * @param tokenMap
+ * @param param1
+ * @returns
+ */
+export const makeExchange = ({
+  swapAccount,
+  lpToken,
+  tokenA,
+  tokenB,
+}: ExchangeBasic): IExchange | null => {
+  const exchange: IExchange = {
+    swapAccount,
+    programID: SWAP_PROGRAM_ID,
+    lpToken: new Token({
+      symbol: "SLP",
+      name: `${tokenA.symbol}-${tokenB.symbol} Saber LP`,
+      logoURI: "https://app.saber.so/tokens/slp.png",
+      decimals: tokenA.decimals,
+      address: lpToken.toString(),
+      chainId: tokenA.chainId,
+      tags: ["saber-stableswap-lp"],
+    }),
+    tokens: [new Token(tokenA), new Token(tokenB)],
+  };
+  return exchange;
 };
