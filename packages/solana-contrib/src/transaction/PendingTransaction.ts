@@ -1,6 +1,5 @@
-import type { TransactionSignature } from "@solana/web3.js";
+import type { Finality, TransactionSignature } from "@solana/web3.js";
 import promiseRetry from "promise-retry";
-import invariant from "tiny-invariant";
 
 import type { Provider } from "../interfaces";
 import { TransactionReceipt } from "../transaction";
@@ -20,7 +19,9 @@ export class PendingTransaction {
    * Waits for the confirmation of the transaction.
    * @returns
    */
-  public async wait(): Promise<TransactionReceipt> {
+  public async wait(
+    commitment: Finality = "confirmed"
+  ): Promise<TransactionReceipt> {
     if (this.receipt) {
       return this.receipt;
     }
@@ -29,7 +30,7 @@ export class PendingTransaction {
         const result = await this.provider.connection.getTransaction(
           this.signature,
           {
-            commitment: "confirmed",
+            commitment,
           }
         );
         if (!result) {
@@ -40,7 +41,9 @@ export class PendingTransaction {
       },
       { retries: 5 }
     );
-    invariant(receipt, "transaction could not be confirmed");
+    if (!receipt) {
+      throw new Error("transaction could not be confirmed");
+    }
     return receipt;
   }
 }
