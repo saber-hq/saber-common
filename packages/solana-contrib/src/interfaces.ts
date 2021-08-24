@@ -32,7 +32,16 @@ export type SendTxRequest = {
  * This interface comes from Anchor.
  */
 export interface Provider {
+  /**
+   * Connection for reading data.
+   */
   connection: Connection;
+
+  /**
+   * Connection in which transactions are sent.
+   */
+  sendConnection: Connection;
+
   wallet: Wallet;
 
   /**

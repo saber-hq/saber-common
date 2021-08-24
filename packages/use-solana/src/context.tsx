@@ -7,12 +7,15 @@ import type {
   ConnectionContext,
 } from "./utils/useConnectionInternal";
 import { useConnectionInternal } from "./utils/useConnectionInternal";
+import type { UseProvider } from "./utils/useProviderInternal";
+import { useProviderInternal } from "./utils/useProviderInternal";
 import type { UseWallet, UseWalletArgs } from "./utils/useWalletInternal";
 import { useWalletInternal } from "./utils/useWalletInternal";
 
 export interface UseSolana<T extends boolean = boolean>
   extends ConnectionContext,
-    UseWallet<T> {}
+    UseWallet<T>,
+    UseProvider {}
 
 export interface UseSolanaArgs
   extends ConnectionArgs,
@@ -35,10 +38,15 @@ const useSolanaInternal = ({
     network,
     endpoint,
   });
+  const providerCtx = useProviderInternal({
+    connection: connectionCtx.connection,
+    wallet: walletCtx.wallet,
+  });
 
   return {
     ...walletCtx,
     ...connectionCtx,
+    ...providerCtx,
   };
 };
 

@@ -37,7 +37,10 @@ export class SignerWallet implements Wallet {
    * @param connection
    * @returns
    */
-  createProvider(connection: Connection): Provider {
-    return new SolanaProvider(connection, this);
+  createProvider(
+    connection: Connection,
+    sendConnection?: Connection
+  ): Provider {
+    return new SolanaProvider(connection, sendConnection ?? connection, this);
   }
 }

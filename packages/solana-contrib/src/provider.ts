@@ -27,11 +27,13 @@ export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
 export class SolanaProvider implements Provider {
   /**
    * @param connection The cluster connection where the program is deployed.
+   * @param sendConnection The connection where transactions are sent to.
    * @param wallet     The wallet used to pay for and sign all transactions.
    * @param opts       Transaction confirmation options to use by default.
    */
   constructor(
     public readonly connection: Connection,
+    public readonly sendConnection: Connection,
     public readonly wallet: Wallet,
     public readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {}
@@ -62,7 +64,7 @@ export class SolanaProvider implements Provider {
 
     tx.feePayer = this.wallet.publicKey;
     tx.recentBlockhash = (
-      await this.connection.getRecentBlockhash(opts.preflightCommitment)
+      await this.sendConnection.getRecentBlockhash(opts.preflightCommitment)
     ).blockhash;
 
     await this.wallet.signTransaction(tx);
@@ -75,7 +77,7 @@ export class SolanaProvider implements Provider {
     const rawTx = tx.serialize();
 
     const txId = await sendAndConfirmRawTransaction(
-      this.connection,
+      this.sendConnection,
       rawTx,
       opts
     );

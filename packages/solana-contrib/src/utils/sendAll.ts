@@ -21,7 +21,7 @@ export const sendAll = async ({
   opts: ConfirmOptions;
   confirm?: boolean;
 }): Promise<TransactionSignature[]> => {
-  const blockhash = await provider.connection.getRecentBlockhash(
+  const blockhash = await provider.sendConnection.getRecentBlockhash(
     opts.preflightCommitment
   );
 
@@ -57,10 +57,16 @@ export const sendAll = async ({
       const rawTx = tx.serialize();
       if (confirm) {
         sigs.push(
-          await sendAndConfirmRawTransaction(provider.connection, rawTx, opts)
+          await sendAndConfirmRawTransaction(
+            provider.sendConnection,
+            rawTx,
+            opts
+          )
         );
       } else {
-        sigs.push(await provider.connection.sendRawTransaction(rawTx, opts));
+        sigs.push(
+          await provider.sendConnection.sendRawTransaction(rawTx, opts)
+        );
       }
     })
   );
