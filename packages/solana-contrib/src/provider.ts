@@ -9,9 +9,9 @@ import type {
   TransactionSignature,
 } from "@solana/web3.js";
 import { sendAndConfirmRawTransaction } from "@solana/web3.js";
-import invariant from "tiny-invariant";
 
 import type { Provider, SendTxRequest, Wallet } from "./interfaces";
+import { sendAll } from "./utils";
 
 export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
   preflightCommitment: "recent",
@@ -90,47 +90,12 @@ export class SolanaProvider implements Provider {
     reqs: Array<SendTxRequest>,
     opts?: ConfirmOptions
   ): Promise<Array<TransactionSignature>> {
-    if (opts === undefined) {
-      opts = this.opts;
-    }
-    const blockhash = await this.connection.getRecentBlockhash(
-      opts.preflightCommitment
-    );
-
-    const txs = reqs.map((r) => {
-      const tx = r.tx;
-      let signers = r.signers;
-
-      if (signers === undefined) {
-        signers = [];
-      }
-
-      tx.feePayer = this.wallet.publicKey;
-      tx.recentBlockhash = blockhash.blockhash;
-
-      signers
-        .filter((s): s is Signer => s !== undefined)
-        .forEach((kp) => {
-          tx.partialSign(kp);
-        });
-
-      return tx;
+    return await sendAll({
+      provider: this,
+      reqs,
+      opts: opts ?? this.opts,
+      confirm: true,
     });
-
-    const signedTxs = await this.wallet.signAllTransactions(txs);
-
-    const sigs = [];
-
-    for (let k = 0; k < txs.length; k += 1) {
-      const tx = signedTxs[k];
-      invariant(tx, "tx missing");
-      const rawTx = tx.serialize();
-      sigs.push(
-        await sendAndConfirmRawTransaction(this.connection, rawTx, opts)
-      );
-    }
-
-    return sigs;
   }
 
   /**
