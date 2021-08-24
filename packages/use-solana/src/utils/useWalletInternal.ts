@@ -23,7 +23,7 @@ export interface UseWallet<T extends boolean = boolean> {
   /**
    * Information about the wallet used.
    */
-  provider?: WalletProviderInfo;
+  walletProviderInfo?: WalletProviderInfo;
   /**
    * Whether or not the wallet is connected.
    */
@@ -86,7 +86,7 @@ export const useWalletInternal = ({
 
   const [connected, setConnected] = useState(false);
 
-  const [provider, wallet]:
+  const [walletProviderInfo, wallet]:
     | readonly [WalletProviderInfo, WalletAdapter]
     | readonly [undefined, undefined] = useMemo(() => {
     if (walletType) {
@@ -98,11 +98,11 @@ export const useWalletInternal = ({
   }, [walletType, network, endpoint]);
 
   useEffect(() => {
-    if (wallet && provider) {
+    if (wallet && walletProviderInfo) {
       setTimeout(() => {
         void wallet.connect(walletArgs).catch((e) => {
           console.warn(
-            `Error attempting to automatically connect to ${provider.name}`,
+            `Error attempting to automatically connect to ${walletProviderInfo.name}`,
             e
           );
         });
@@ -110,13 +110,13 @@ export const useWalletInternal = ({
       wallet.on("connect", () => {
         if (wallet?.publicKey) {
           setConnected(true);
-          onConnect?.(wallet as ConnectedWallet, provider);
+          onConnect?.(wallet as ConnectedWallet, walletProviderInfo);
         }
       });
 
       wallet.on("disconnect", () => {
         setConnected(false);
-        onDisconnect?.(wallet as WalletAdapter<false>, provider);
+        onDisconnect?.(wallet as WalletAdapter<false>, walletProviderInfo);
       });
     }
 
@@ -125,7 +125,7 @@ export const useWalletInternal = ({
         void wallet.disconnect();
       }
     };
-  }, [onConnect, onDisconnect, provider, wallet, walletArgs]);
+  }, [onConnect, onDisconnect, wallet, walletArgs, walletProviderInfo]);
 
   const activate = useCallback(
     async (
@@ -152,7 +152,7 @@ export const useWalletInternal = ({
 
   return {
     wallet,
-    provider,
+    walletProviderInfo,
     connected,
     publicKey: wallet?.publicKey ?? undefined,
     activate,
