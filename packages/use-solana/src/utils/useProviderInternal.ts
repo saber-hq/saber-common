@@ -26,6 +26,10 @@ export interface UseProviderArgs {
    */
   connection: Connection;
   /**
+   * Send connection.
+   */
+  sendConnection?: Connection;
+  /**
    * Wallet.
    */
   wallet?: WalletAdapter<boolean>;
@@ -41,23 +45,36 @@ export interface UseProviderArgs {
 
 export const useProviderInternal = ({
   connection,
+  sendConnection = connection,
   wallet,
+  commitment = "recent",
+  commitmentMut = "recent",
 }: UseProviderArgs): UseProvider => {
   const provider = useMemo(
     () =>
-      new SolanaProvider(connection, new SignerWallet(Keypair.generate()), {
-        commitment: "recent",
-      }),
-    [connection]
+      new SolanaProvider(
+        connection,
+        sendConnection,
+        new SignerWallet(Keypair.generate()),
+        {
+          commitment,
+        }
+      ),
+    [commitment, connection, sendConnection]
   );
   const providerMut = useMemo(
     () =>
       wallet && wallet.publicKey
-        ? new SolanaProvider(connection, wallet as ConnectedWallet, {
-            commitment: "recent",
-          })
+        ? new SolanaProvider(
+            connection,
+            sendConnection,
+            wallet as ConnectedWallet,
+            {
+              commitment: commitmentMut,
+            }
+          )
         : null,
-    [connection, wallet]
+    [commitmentMut, connection, sendConnection, wallet]
   );
 
   return {
