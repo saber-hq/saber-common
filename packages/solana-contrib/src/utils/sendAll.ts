@@ -1,10 +1,11 @@
-import type { Provider, SendTxRequest } from "@saberhq/solana-contrib";
 import type {
   ConfirmOptions,
   Signer,
   TransactionSignature,
 } from "@solana/web3.js";
 import { sendAndConfirmRawTransaction } from "@solana/web3.js";
+
+import type { Provider, SendTxRequest } from "../interfaces";
 
 /**
  * Similar to `send`, but for an array of transactions and signers.
@@ -16,7 +17,7 @@ export const sendAll = async ({
   confirm = true,
 }: {
   provider: Provider;
-  reqs: Array<SendTxRequest>;
+  reqs: SendTxRequest[];
   opts: ConfirmOptions;
   confirm?: boolean;
 }): Promise<TransactionSignature[]> => {
