@@ -20,12 +20,16 @@ export class PendingTransaction {
    * Waits for the confirmation of the transaction, via polling.
    * @returns
    */
-  public async wait({
-    commitment = "confirmed",
-    ...retryOpts
-  }: OperationOptions & {
-    commitment: Finality;
-  }): Promise<TransactionReceipt> {
+  public async wait(
+    {
+      commitment = "confirmed",
+      ...retryOpts
+    }: OperationOptions & {
+      commitment: Finality;
+    } = {
+      commitment: "confirmed",
+    }
+  ): Promise<TransactionReceipt> {
     if (this.receipt) {
       return this.receipt;
     }
