@@ -1,5 +1,6 @@
 import type { Finality, TransactionSignature } from "@solana/web3.js";
 import promiseRetry from "promise-retry";
+import type { OperationOptions } from "retry";
 
 import type { Provider } from "../interfaces";
 import { TransactionReceipt } from "../transaction";
@@ -16,30 +17,41 @@ export class PendingTransaction {
   ) {}
 
   /**
-   * Waits for the confirmation of the transaction.
+   * Waits for the confirmation of the transaction, via polling.
    * @returns
    */
   public async wait(
-    commitment: Finality = "confirmed"
+    {
+      commitment = "confirmed",
+      ...retryOpts
+    }: OperationOptions & {
+      commitment: Finality;
+    } = {
+      commitment: "confirmed",
+    }
   ): Promise<TransactionReceipt> {
     if (this.receipt) {
       return this.receipt;
     }
     const receipt = await promiseRetry(
       async (retry) => {
-        const result = await this.provider.connection.getTransaction(
+        const result = await this.provider.sendConnection.getTransaction(
           this.signature,
           {
             commitment,
           }
         );
         if (!result) {
-          retry(new Error("error"));
+          retry(new Error("Error fetching transaction"));
           return;
         }
         return new TransactionReceipt(this.provider, this.signature, result);
       },
-      { retries: 5 }
+      {
+        retries: 5,
+        minTimeout: 500,
+        ...retryOpts,
+      }
     );
     if (!receipt) {
       throw new Error("transaction could not be confirmed");
