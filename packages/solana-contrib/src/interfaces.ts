@@ -29,7 +29,7 @@ export type SendTxRequest = {
  * The network and wallet context used to send transactions paid for and signed
  * by the provider.
  *
- * This interface comes from Anchor.
+ * This interface is adapted from Anchor.
  */
 export interface Provider {
   /**
@@ -42,6 +42,14 @@ export interface Provider {
    */
   sendConnection: Connection;
 
+  /**
+   * Transaction confirmation options to use by default.
+   */
+  opts: ConfirmOptions;
+
+  /**
+   * The wallet used to pay for and sign all transactions.
+   */
   wallet: Wallet;
 
   /**
