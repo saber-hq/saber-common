@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/token-utils",
-  "version": "0.14.1",
+  "version": "0.14.2",
   "repository": "git@github.com:saber-hq/solana-common.git",
   "author": "Ian Macalinao <ian@saber.so>",
   "license": "Apache-2.0",
@@ -10,7 +10,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@saberhq/solana-contrib": "^0.14.1",
+    "@saberhq/solana-contrib": "^0.14.2",
     "@solana/spl-token": "^0.1.5",
     "@solana/spl-token-registry": "^0.2.210",
     "@solana/web3.js": "^1.23.0",
