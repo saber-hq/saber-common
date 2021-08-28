@@ -27,6 +27,8 @@ import type {
 } from "@solana/web3.js";
 import type EventEmitter from "eventemitter3";
 
+export * as testutils from "./testutils";
+
 type InstructionsParsed = Record<
   string,
   {
