@@ -117,28 +117,21 @@ export const loadExchangeInfo = async (
     throw new Error("Swap program id mismatch");
   }
 
-  let reserveA;
-  let reserveB;
-  let poolMint;
-  try {
-    reserveA = await loadProgramAccount(
-      connection,
-      swap.state.tokenA.reserve,
-      swap.config.tokenProgramID
-    );
-    reserveB = await loadProgramAccount(
-      connection,
-      swap.state.tokenB.reserve,
-      swap.config.tokenProgramID
-    );
-    poolMint = await loadProgramAccount(
-      connection,
-      swap.state.poolTokenMint,
-      swap.config.tokenProgramID
-    );
-  } catch (e) {
-    throw new Error(e);
-  }
+  const reserveA = await loadProgramAccount(
+    connection,
+    swap.state.tokenA.reserve,
+    swap.config.tokenProgramID
+  );
+  const reserveB = await loadProgramAccount(
+    connection,
+    swap.state.tokenB.reserve,
+    swap.config.tokenProgramID
+  );
+  const poolMint = await loadProgramAccount(
+    connection,
+    swap.state.poolTokenMint,
+    swap.config.tokenProgramID
+  );
   return makeExchangeInfo({
     swap,
     exchange,
