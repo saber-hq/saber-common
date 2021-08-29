@@ -10,13 +10,13 @@ export const mintNFT = async (
   owner: PublicKey = provider.wallet.publicKey
 ): Promise<TransactionEnvelope> => {
   // Temporary mint authority
-  const mintAuthority = provider.wallet.publicKey;
+  const tempMintAuthority = provider.wallet.publicKey;
   // Mint for the NFT
   const tx = await createInitMintInstructions({
     provider,
     mintKP,
     decimals: 0,
-    mintAuthority,
+    mintAuthority: tempMintAuthority,
   });
   // Token account for the NFT
   const { address, instruction } = await getOrCreateATA({
@@ -34,7 +34,7 @@ export const mintNFT = async (
       TOKEN_PROGRAM_ID,
       mintKP.publicKey,
       address,
-      mintAuthority,
+      tempMintAuthority,
       [],
       new u64(1)
     )
@@ -46,7 +46,7 @@ export const mintNFT = async (
       mintKP.publicKey,
       null,
       "MintTokens",
-      provider.wallet.publicKey,
+      tempMintAuthority,
       []
     )
   );
