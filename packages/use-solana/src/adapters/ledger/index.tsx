@@ -100,7 +100,7 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
       this.emit("connect", this._publicKey);
     } catch (error) {
       await this.disconnect();
-      throw new LedgerError(error);
+      throw new LedgerError(error as Error);
     } finally {
       this._connecting = false;
     }
@@ -154,7 +154,7 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
       }
       return ret;
     } catch (error) {
-      throw new LedgerError(error);
+      throw new LedgerError(error as Error);
     } finally {
       await transport?.close();
     }
