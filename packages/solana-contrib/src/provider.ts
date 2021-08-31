@@ -2,6 +2,8 @@ import type {
   Commitment,
   ConfirmOptions,
   Connection,
+  KeyedAccountInfo,
+  PublicKey,
   RpcResponseAndContext,
   Signer,
   SimulatedTransactionResponse,
@@ -37,6 +39,22 @@ export class SolanaProvider implements Provider {
     public readonly wallet: Wallet,
     public readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {}
+
+  /**
+   * Gets
+   * @param accountId
+   * @returns
+   */
+  async getAccountInfo(accountId: PublicKey): Promise<KeyedAccountInfo | null> {
+    const accountInfo = await this.connection.getAccountInfo(accountId);
+    if (!accountInfo) {
+      return null;
+    }
+    return {
+      accountId,
+      accountInfo,
+    };
+  }
 
   static defaultOptions(): ConfirmOptions {
     return DEFAULT_PROVIDER_OPTIONS;
@@ -89,9 +107,9 @@ export class SolanaProvider implements Provider {
    * Similar to `send`, but for an array of transactions and signers.
    */
   async sendAll(
-    reqs: Array<SendTxRequest>,
+    reqs: SendTxRequest[],
     opts?: ConfirmOptions
-  ): Promise<Array<TransactionSignature>> {
+  ): Promise<TransactionSignature[]> {
     return await sendAll({
       provider: this,
       reqs,

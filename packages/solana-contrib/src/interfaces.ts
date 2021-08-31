@@ -1,6 +1,7 @@
 import type {
   ConfirmOptions,
   Connection,
+  KeyedAccountInfo,
   PublicKey,
   RpcResponseAndContext,
   Signer,
@@ -20,18 +21,34 @@ export interface Wallet {
   publicKey: PublicKey;
 }
 
-export type SendTxRequest = {
+/**
+ * Request to send a transaction.
+ */
+export interface SendTxRequest {
   tx: Transaction;
   signers: Array<Signer | undefined>;
-};
+}
+
+/**
+ * An entity that can fetch {@link KeyedAccountInfo}.
+ */
+export interface AccountInfoFetcher {
+  /**
+   * Fetches the {@link KeyedAccountInfo} associated with a
+   * {@link PublicKey}, if it exists.
+   *
+   * @param accountId The account
+   */
+  getAccountInfo(accountId: PublicKey): Promise<KeyedAccountInfo | null>;
+}
 
 /**
  * The network and wallet context used to send transactions paid for and signed
  * by the provider.
  *
- * This interface is adapted from Anchor.
+ * This interface is based on Anchor, but includes more features.
  */
-export interface Provider {
+export interface Provider extends AccountInfoFetcher {
   /**
    * Connection for reading data.
    */
