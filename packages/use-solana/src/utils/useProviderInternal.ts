@@ -1,7 +1,9 @@
-import type { Provider } from "@saberhq/solana-contrib";
-import { SignerWallet, SolanaProvider } from "@saberhq/solana-contrib";
+import type { Provider, ReadonlyProvider } from "@saberhq/solana-contrib";
+import {
+  SolanaProvider,
+  SolanaReadonlyProvider,
+} from "@saberhq/solana-contrib";
 import type { Commitment, Connection } from "@solana/web3.js";
-import { Keypair } from "@solana/web3.js";
 import { useMemo } from "react";
 
 import type { ConnectedWallet, WalletAdapter } from "../adapters/types";
@@ -11,9 +13,9 @@ import type { ConnectedWallet, WalletAdapter } from "../adapters/types";
  */
 export interface UseProvider {
   /**
-   * Read-only {@link Provider}.
+   * Read-only provider.
    */
-  provider: Provider;
+  provider: ReadonlyProvider;
   /**
    * {@link Provider} of the currently connected wallet.
    */
@@ -52,15 +54,10 @@ export const useProviderInternal = ({
 }: UseProviderArgs): UseProvider => {
   const provider = useMemo(
     () =>
-      new SolanaProvider(
-        connection,
-        sendConnection,
-        new SignerWallet(Keypair.generate()),
-        {
-          commitment,
-        }
-      ),
-    [commitment, connection, sendConnection]
+      new SolanaReadonlyProvider(connection, {
+        commitment,
+      }),
+    [commitment, connection]
   );
 
   const connected = wallet?.connected;
