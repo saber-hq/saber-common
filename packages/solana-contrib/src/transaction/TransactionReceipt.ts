@@ -1,7 +1,10 @@
-import type { TransactionResponse } from "@solana/web3.js";
+import type {
+  TransactionResponse,
+  TransactionSignature,
+} from "@solana/web3.js";
 import invariant from "tiny-invariant";
 
-import type { Event, EventParser, Provider } from "../interfaces";
+import type { Event, EventParser, ReadonlyProvider } from "../interfaces";
 
 /**
  * A transaction that has been processed by the cluster.
@@ -11,11 +14,11 @@ export class TransactionReceipt {
     /**
      * Current provider.
      */
-    public readonly provider: Provider,
+    public readonly provider: ReadonlyProvider,
     /**
      * Signature (id) of the transaction.
      */
-    public readonly signature: string,
+    public readonly signature: TransactionSignature,
     /**
      * Raw response from web3.js
      */

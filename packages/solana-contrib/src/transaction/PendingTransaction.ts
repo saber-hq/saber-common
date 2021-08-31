@@ -2,7 +2,7 @@ import type { Finality, TransactionSignature } from "@solana/web3.js";
 import promiseRetry from "promise-retry";
 import type { OperationOptions } from "retry";
 
-import type { Provider } from "../interfaces";
+import type { ReadonlyProvider } from "../interfaces";
 import { TransactionReceipt } from "../transaction";
 
 /**
@@ -12,7 +12,7 @@ export class PendingTransaction {
   receipt: TransactionReceipt | null = null;
 
   constructor(
-    public readonly provider: Provider,
+    public readonly provider: ReadonlyProvider,
     public readonly signature: TransactionSignature
   ) {}
 
@@ -35,7 +35,7 @@ export class PendingTransaction {
     }
     const receipt = await promiseRetry(
       async (retry) => {
-        const result = await this.provider.sendConnection.getTransaction(
+        const result = await this.provider.connection.getTransaction(
           this.signature,
           {
             commitment,

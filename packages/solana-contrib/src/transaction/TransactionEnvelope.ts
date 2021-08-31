@@ -113,6 +113,31 @@ export class TransactionEnvelope {
   }
 
   /**
+   * Returns a string representation of the {@link TransactionEnvelope}.
+   */
+  get debugStr(): string {
+    return [
+      "=> Instructions",
+      this.instructions
+        .map((ser, i) => {
+          return [
+            `Instruction ${i}: ${ser.programId.toString()}`,
+            ...ser.keys.map(
+              (k, i) =>
+                `  [${i}] ${k.pubkey.toString()} ${
+                  k.isWritable ? "(mut)" : ""
+                } ${k.isSigner ? "(signer)" : ""}`
+            ),
+            `  Data (base64): ${ser.data.toString("base64")}`,
+          ].join("\n");
+        })
+        .join("\n"),
+      "=> Signers",
+      this.signers.map((sg) => sg.publicKey.toString()).join("\n"),
+    ].join("\n");
+  }
+
+  /**
    * Combines multiple TransactionEnvelopes into one.
    */
   static combineAll(...txs: TransactionEnvelope[]): TransactionEnvelope {
