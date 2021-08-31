@@ -12,7 +12,7 @@
   "dependencies": {
     "@saberhq/solana-contrib": "^0.14.2",
     "@solana/spl-token": "^0.1.5",
-    "@solana/spl-token-registry": "^0.2.223",
+    "@solana/spl-token-registry": "^0.2.226",
     "@solana/web3.js": "^1.23.0",
     "@ubeswap/token-math": "^4.1.0",
     "buffer-layout": "^1.2.2",
