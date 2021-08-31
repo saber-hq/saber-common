@@ -42,13 +42,20 @@ export interface AccountInfoFetcher {
   getAccountInfo(accountId: PublicKey): Promise<KeyedAccountInfo | null>;
 }
 
+export interface ReadonlyProvider extends AccountInfoFetcher {
+  /**
+   * Connection for reading data.
+   */
+  connection: Connection;
+}
+
 /**
  * The network and wallet context used to send transactions paid for and signed
  * by the provider.
  *
  * This interface is based on Anchor, but includes more features.
  */
-export interface Provider extends AccountInfoFetcher {
+export interface Provider extends ReadonlyProvider {
   /**
    * Connection for reading data.
    */
@@ -109,10 +116,10 @@ export interface Provider extends AccountInfoFetcher {
 /**
  * An event emitted by a program.
  */
-export type Event = {
+export interface Event {
   name: string;
   data: Record<string, unknown>;
-};
+}
 
 /**
  * Parses the events from logs.

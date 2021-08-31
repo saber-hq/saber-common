@@ -1,5 +1,4 @@
 import type {
-  Commitment,
   ConfirmOptions,
   Connection,
   KeyedAccountInfo,
@@ -12,8 +11,9 @@ import type {
 } from "@solana/web3.js";
 import { sendAndConfirmRawTransaction } from "@solana/web3.js";
 
+import type { ReadonlyProvider } from ".";
 import type { Provider, SendTxRequest, Wallet } from "./interfaces";
-import { sendAll } from "./utils";
+import { sendAll, simulateTransactionWithCommitment } from "./utils";
 
 export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
   preflightCommitment: "recent",
@@ -21,12 +21,47 @@ export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
 };
 
 /**
+ * Provider that can only read.
+ */
+export class SolanaReadonlyProvider implements ReadonlyProvider {
+  /**
+   * @param connection The cluster connection where the program is deployed.
+   * @param sendConnection The connection where transactions are sent to.
+   * @param wallet     The wallet used to pay for and sign all transactions.
+   * @param opts       Transaction confirmation options to use by default.
+   */
+  constructor(
+    public readonly connection: Connection,
+    public readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
+  ) {}
+
+  /**
+   * Gets
+   * @param accountId
+   * @returns
+   */
+  async getAccountInfo(accountId: PublicKey): Promise<KeyedAccountInfo | null> {
+    const accountInfo = await this.connection.getAccountInfo(
+      accountId,
+      this.opts.commitment
+    );
+    if (!accountInfo) {
+      return null;
+    }
+    return {
+      accountId,
+      accountInfo,
+    };
+  }
+}
+
+/**
  * The network and wallet context used to send transactions paid for and signed
  * by the provider.
  *
  * This implementation was taken from Anchor.
  */
-export class SolanaProvider implements Provider {
+export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
   /**
    * @param connection The cluster connection where the program is deployed.
    * @param sendConnection The connection where transactions are sent to.
@@ -38,26 +73,8 @@ export class SolanaProvider implements Provider {
     public readonly sendConnection: Connection,
     public readonly wallet: Wallet,
     public readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
-  ) {}
-
-  /**
-   * Gets
-   * @param accountId
-   * @returns
-   */
-  async getAccountInfo(accountId: PublicKey): Promise<KeyedAccountInfo | null> {
-    const accountInfo = await this.connection.getAccountInfo(accountId);
-    if (!accountInfo) {
-      return null;
-    }
-    return {
-      accountId,
-      accountInfo,
-    };
-  }
-
-  static defaultOptions(): ConfirmOptions {
-    return DEFAULT_PROVIDER_OPTIONS;
+  ) {
+    super(connection, opts);
   }
 
   /**
@@ -152,57 +169,10 @@ export class SolanaProvider implements Provider {
         tx.partialSign(kp);
       });
 
-    return await simulateTransaction(
+    return await simulateTransactionWithCommitment(
       this.connection,
       tx,
-      opts.commitment ?? this.opts.commitment ?? "recent"
+      opts.commitment ?? this.opts.commitment
     );
   }
-}
-
-// Copy of Connection.simulateTransaction that takes a commitment parameter.
-export async function simulateTransaction(
-  connection: Connection,
-  transaction: Transaction,
-  commitment: Commitment
-): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
-  const connectionInner = connection as Connection & {
-    _disableBlockhashCaching: boolean;
-    _recentBlockhash: (disableBlockhashCaching: boolean) => Promise<string>;
-    _rpcRequest: (
-      rpc: "simulateTransaction",
-      args: [
-        string,
-        {
-          encoding: string;
-          commitment: Commitment;
-        }
-      ]
-    ) => Promise<{
-      error: Error;
-      result: RpcResponseAndContext<SimulatedTransactionResponse>;
-    }>;
-  };
-  const transactionTyped = transaction as Transaction & {
-    _serialize: (buffer: Buffer) => Buffer;
-  };
-
-  transaction.recentBlockhash = await connectionInner._recentBlockhash(
-    connectionInner._disableBlockhashCaching
-  );
-
-  const signData = transaction.serializeMessage();
-
-  const wireTransaction = transactionTyped._serialize(signData);
-  const encodedTransaction = wireTransaction.toString("base64");
-  const config = { encoding: "base64", commitment };
-
-  const res = await connectionInner._rpcRequest("simulateTransaction", [
-    encodedTransaction,
-    config,
-  ]);
-  if (res.error) {
-    throw new Error("failed to simulate transaction: " + res.error.message);
-  }
-  return res.result;
 }
