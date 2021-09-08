@@ -3268,9 +3268,9 @@
     buffer "~6.0.3"
 
 "@solana/spl-token-registry@^0.2.226":
-  version "0.2.226"
-  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.226.tgz#e080801c7644c92d6e37653bc31ba33ca25dae85"
-  integrity sha512-QPLYfw7Dob4WKC9tGmdgi/zihlRgiH4S2LUzSrIDJXhx2KfNVmkOIqgCutKAJPsqEdDUZ4sQ0YQ4RbBWkWmwUw==
+  version "0.2.235"
+  resolved "https://registry.yarnpkg.com/@solana/spl-token-registry/-/spl-token-registry-0.2.235.tgz#a709126d9a00a9ca0ad803f0997f500a9abde449"
+  integrity sha512-m7IvYoWtGGJPs2xF1KBcYyva8q7nbvsbfYntAgYc+iKtu/s6wkU5twVGXIcRBeNEWWVOqj1BoQgZOXNT60SBQQ==
   dependencies:
     cross-fetch "3.0.6"
 
