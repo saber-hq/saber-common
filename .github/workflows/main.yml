@@ -18,7 +18,7 @@ jobs:
       - name: Install packages
         run: yarn install
       - name: Build
-        run: yarn build:no-demo
+        run: yarn build
       - name: Lint
         run: yarn lint:ci
       - name: Size

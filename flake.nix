@@ -1,5 +1,5 @@
 {
-  description = "use-solana development environment";
+  description = "Saber-common development environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
