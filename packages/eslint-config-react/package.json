@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/eslint-config-react",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "description": "Saber base React ESLint config",
   "keywords": [
     "eslint",
@@ -31,7 +31,7 @@
     "url": "https://github.com/saber-hq/saber-common/issues"
   },
   "dependencies": {
-    "@saberhq/eslint-config": "^0.17.0",
+    "@saberhq/eslint-config": "^0.18.0",
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0"
   },
