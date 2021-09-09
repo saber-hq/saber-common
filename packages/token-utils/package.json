@@ -14,7 +14,7 @@
     "@solana/spl-token": "^0.1.5",
     "@solana/spl-token-registry": "^0.2.226",
     "@solana/web3.js": "^1.25.0",
-    "@ubeswap/token-math": "^4.1.0",
+    "@ubeswap/token-math": "^4.2.0",
     "buffer-layout": "^1.2.2",
     "tiny-invariant": "^1.1.0",
     "tslib": "^2.3.0"
