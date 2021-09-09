@@ -124,6 +124,8 @@ type DecodeType<T extends IdlType, Defined> = T extends keyof TypeMap
   ? Defined[T["vec"]["defined"]][]
   : T extends { vec: keyof TypeMap }
   ? TypeMap[T["vec"]][]
+  : T extends { array: [idlType: keyof TypeMap, size: number] }
+  ? TypeMap[T["array"][0]][]
   : unknown;
 
 type MakeArgs<A extends IdlField[], Defined> = {
