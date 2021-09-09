@@ -14,7 +14,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@project-serum/anchor": "^0.13.0",
+    "@project-serum/anchor": "^0.15.0",
     "@solana/web3.js": "^1.23.0",
     "eventemitter3": "^4.0.7"
   },
