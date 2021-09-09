@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "use-solana",
+  "name": "@saberhq/saber-common",
   "workspaces": [
     "packages/*"
   ],
@@ -21,7 +21,6 @@
   },
   "scripts": {
     "build": "lerna run build",
-    "build:no-demo": "lerna run --ignore @saberhq/use-solana-demo build",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",
     "lint:ci": "eslint . --max-warnings=0",
@@ -29,5 +28,8 @@
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "resolutions": {
+    "jsbi": "^3.2.3"
+  }
 }
