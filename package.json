@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "@saberhq/saber-common",
+  "description": "Common libraries across Saber projects.",
   "workspaces": [
     "packages/*"
   ],
