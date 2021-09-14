@@ -1,8 +1,4 @@
-import type {
-  ConfirmOptions,
-  Signer,
-  TransactionSignature,
-} from "@solana/web3.js";
+import type { ConfirmOptions, TransactionSignature } from "@solana/web3.js";
 import { sendAndConfirmRawTransaction } from "@solana/web3.js";
 
 import type { Provider, SendTxRequest } from "../interfaces";
@@ -21,35 +17,10 @@ export const sendAll = async ({
   opts: ConfirmOptions;
   confirm?: boolean;
 }): Promise<TransactionSignature[]> => {
-  const blockhash = await provider.sendConnection.getRecentBlockhash(
-    opts.preflightCommitment
-  );
-
-  const txs = reqs.map((r) => {
-    const tx = r.tx;
-    let signers = r.signers;
-
-    if (signers === undefined) {
-      signers = [];
-    }
-
-    tx.feePayer = provider.wallet.publicKey;
-    tx.recentBlockhash = blockhash.blockhash;
-
-    signers
-      .filter((s): s is Signer => s !== undefined)
-      .forEach((kp) => {
-        tx.partialSign(kp);
-      });
-
-    return tx;
-  });
-
-  const signedTxs = await provider.wallet.signAllTransactions(txs);
-
+  const signedTxs = await provider.signAll(reqs, opts);
   const sigs: TransactionSignature[] = [];
   await Promise.all(
-    txs.map(async (_, i) => {
+    signedTxs.map(async (_, i) => {
       const tx = signedTxs[i];
       if (!tx) {
         throw new Error(`tx ${i} missing in signed txs response from provider`);

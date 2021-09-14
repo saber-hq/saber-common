@@ -77,6 +77,28 @@ export interface Provider extends ReadonlyProvider {
   wallet: Wallet;
 
   /**
+   * Signs the given transaction, paid for and signed by the provider's wallet.
+   *
+   * @param tx      The transaction to sign.
+   * @param signers The set of signers in addition to the provdier wallet that
+   *                will sign the transaction.
+   * @param opts    Transaction confirmation options.
+   */
+  sign: (
+    tx: Transaction,
+    signers?: readonly (Signer | undefined)[],
+    opts?: ConfirmOptions
+  ) => Promise<Transaction>;
+
+  /**
+   * Similar to `sign`, but for an array of transactions and signers.
+   */
+  signAll: (
+    reqs: readonly SendTxRequest[],
+    opts?: ConfirmOptions
+  ) => Promise<Transaction[]>;
+
+  /**
    * Sends the given transaction, paid for and signed by the provider's wallet.
    *
    * @param tx      The transaction to send.
@@ -86,7 +108,7 @@ export interface Provider extends ReadonlyProvider {
    */
   send: (
     tx: Transaction,
-    signers?: Array<Signer | undefined>,
+    signers?: (Signer | undefined)[],
     opts?: ConfirmOptions
   ) => Promise<TransactionSignature>;
 

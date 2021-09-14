@@ -85,18 +85,11 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
    *                will sign the transaction.
    * @param opts    Transaction confirmation options.
    */
-  async send(
+  async sign(
     tx: Transaction,
-    signers?: Array<Signer | undefined>,
-    opts?: ConfirmOptions
-  ): Promise<TransactionSignature> {
-    if (signers === undefined) {
-      signers = [];
-    }
-    if (opts === undefined) {
-      opts = this.opts;
-    }
-
+    signers: readonly (Signer | undefined)[] = [],
+    opts: ConfirmOptions = this.opts
+  ): Promise<Transaction> {
     tx.feePayer = this.wallet.publicKey;
     tx.recentBlockhash = (
       await this.sendConnection.getRecentBlockhash(opts.preflightCommitment)
@@ -109,7 +102,59 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
         tx.partialSign(kp);
       });
 
-    const rawTx = tx.serialize();
+    return tx;
+  }
+
+  /**
+   * Similar to `send`, but for an array of transactions and signers.
+   */
+  async signAll(
+    reqs: readonly SendTxRequest[],
+    opts: ConfirmOptions = this.opts
+  ): Promise<Transaction[]> {
+    const blockhash = await this.sendConnection.getRecentBlockhash(
+      opts.preflightCommitment
+    );
+
+    const txs = reqs.map((r) => {
+      const tx = r.tx;
+      let signers = r.signers;
+
+      if (signers === undefined) {
+        signers = [];
+      }
+
+      tx.feePayer = this.wallet.publicKey;
+      tx.recentBlockhash = blockhash.blockhash;
+
+      signers
+        .filter((s): s is Signer => s !== undefined)
+        .forEach((kp) => {
+          tx.partialSign(kp);
+        });
+
+      return tx;
+    });
+
+    const signedTxs = await this.wallet.signAllTransactions(txs);
+    return signedTxs;
+  }
+
+  /**
+   * Sends the given transaction, paid for and signed by the provider's wallet.
+   *
+   * @param tx      The transaction to send.
+   * @param signers The set of signers in addition to the provdier wallet that
+   *                will sign the transaction.
+   * @param opts    Transaction confirmation options.
+   */
+  async send(
+    tx: Transaction,
+    signers: (Signer | undefined)[] = [],
+    opts: ConfirmOptions = this.opts
+  ): Promise<TransactionSignature> {
+    const theTx = await this.sign(tx, signers, opts);
+    const rawTx = theTx.serialize();
 
     const txId = await sendAndConfirmRawTransaction(
       this.sendConnection,
@@ -125,12 +170,12 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
    */
   async sendAll(
     reqs: SendTxRequest[],
-    opts?: ConfirmOptions
+    opts: ConfirmOptions = this.opts
   ): Promise<TransactionSignature[]> {
     return await sendAll({
       provider: this,
       reqs,
-      opts: opts ?? this.opts,
+      opts,
       confirm: true,
     });
   }
@@ -146,33 +191,13 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
   async simulate(
     tx: Transaction,
     signers?: Array<Signer | undefined>,
-    opts?: ConfirmOptions
+    opts: ConfirmOptions = this.opts
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
-    if (signers === undefined) {
-      signers = [];
-    }
-    if (opts === undefined) {
-      opts = this.opts;
-    }
-
-    tx.feePayer = this.wallet.publicKey;
-    tx.recentBlockhash = (
-      await this.connection.getRecentBlockhash(
-        opts.preflightCommitment ?? this.opts.preflightCommitment
-      )
-    ).blockhash;
-
-    await this.wallet.signTransaction(tx);
-    signers
-      .filter((s): s is Signer => s !== undefined)
-      .forEach((kp) => {
-        tx.partialSign(kp);
-      });
-
+    const signedTx = await this.sign(tx, signers, opts);
     return await simulateTransactionWithCommitment(
       this.connection,
-      tx,
-      opts.commitment ?? this.opts.commitment
+      signedTx,
+      opts.commitment
     );
   }
 }
