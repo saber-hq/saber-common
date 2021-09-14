@@ -1,5 +1,6 @@
 import type {
   AccountMeta,
+  Cluster,
   ConfirmOptions,
   PublicKey,
   RpcResponseAndContext,
@@ -39,6 +40,19 @@ export class TransactionEnvelope {
    */
   public build(): Transaction {
     return new Transaction().add(...this.instructions);
+  }
+
+  /**
+   * Generates a link for inspecting the contents of this {@link TransactionEnvelope}.
+   *
+   * @returns URL
+   */
+  public generateInspectLink(cluster: Cluster = "mainnet-beta"): string {
+    const t = this.build();
+    t.recentBlockhash = "EETubP5AKHgjPAhzPAFcb8BAY1hMH639CWCFTqi3hq1k"; // Some stub
+    t.feePayer = this.provider.wallet.publicKey;
+    const str = t.serializeMessage().toString("base64");
+    return `https://explorer.solana.com/tx/inspector?cluster=${cluster}&message=${str}`;
   }
 
   /**
