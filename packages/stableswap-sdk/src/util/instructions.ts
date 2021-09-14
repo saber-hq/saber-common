@@ -1,10 +1,10 @@
+import type { Provider } from "@saberhq/solana-contrib";
+import { TransactionEnvelope } from "@saberhq/solana-contrib";
 import type {
   ConfirmOptions,
-  Connection,
   Signer,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { sendAndConfirmTransaction, Transaction } from "@solana/web3.js";
 
 export interface TransactionInstructions {
   /**
@@ -45,31 +45,26 @@ export const executeTxInstructions = async (
   title: string,
   { instructions, signers }: TransactionInstructions,
   {
-    connection,
+    provider,
     payerSigner,
     options,
   }: {
-    connection: Connection;
+    provider: Provider;
     payerSigner: Signer;
     options?: ConfirmOptions;
   }
 ): Promise<string> => {
   console.log(`Running tx ${title}`);
-  const tx = new Transaction();
-  tx.add(...instructions);
-  const txSig = await sendAndConfirmTransaction(
-    connection,
-    tx,
-    [
-      // payer of the tx
-      payerSigner,
-      // initialize the swap
-      ...signers,
-    ],
-    options
-  );
-  console.log(`${title} done at tx: ${txSig}`);
-  return txSig;
+  const txEnv = new TransactionEnvelope(provider, instructions.slice(), [
+    // payer of the tx
+    payerSigner,
+    // initialize the swap
+    ...signers,
+  ]);
+
+  const sig = await txEnv.confirm(options);
+  console.log(`${title} done at tx: ${sig.signature}`);
+  return sig.signature;
 };
 
 export const mergeInstructions = (
