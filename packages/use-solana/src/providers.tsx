@@ -11,6 +11,7 @@ import {
 } from "./adapters";
 import { Coin98Adapter } from "./adapters/coin98";
 import { SecretKeyAdapter } from "./adapters/secret-key";
+import { SolflareAdapter } from "./adapters/solflare";
 import { SolflareExtensionWalletAdapter } from "./adapters/solflare-extension";
 import {
   COIN98,
@@ -99,7 +100,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     name: "Solflare",
     url: "https://solflare.com/provider",
     icon: SOLFLARE,
-    makeAdapter: Wallet,
+    makeAdapter: SolflareAdapter,
   },
   [WalletType.SolflareExtension]: {
     name: "Solflare Extension",
