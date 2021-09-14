@@ -7,7 +7,6 @@ import type {
   SimulatedTransactionResponse,
   Transaction,
 } from "@solana/web3.js";
-import { sendAndConfirmRawTransaction } from "@solana/web3.js";
 
 import type { Broadcaster } from ".";
 import {
@@ -42,24 +41,16 @@ export class SingleConnectionBroadcaster implements Broadcaster {
    */
   async broadcast(
     tx: Transaction,
-    confirm = false,
     opts: ConfirmOptions = this.opts
   ): Promise<PendingTransaction> {
     if (tx.signatures.length === 0) {
       throw new Error("Transaction must be signed before broadcasting.");
     }
     const rawTx = tx.serialize();
-    if (confirm) {
-      return new PendingTransaction(
-        this.sendConnection,
-        await sendAndConfirmRawTransaction(this.sendConnection, rawTx, opts)
-      );
-    } else {
-      return new PendingTransaction(
-        this.sendConnection,
-        await this.sendConnection.sendRawTransaction(rawTx, opts)
-      );
-    }
+    return new PendingTransaction(
+      this.sendConnection,
+      await this.sendConnection.sendRawTransaction(rawTx, opts)
+    );
   }
 
   async simulate(

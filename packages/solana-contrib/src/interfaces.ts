@@ -77,15 +77,13 @@ export interface Broadcaster {
   getRecentBlockhash(commitment?: Commitment): Promise<Blockhash>;
 
   /**
-   * Broadcasts the given transaction.
+   * Broadcasts a signed transaction to the connected Solana cluster.
    *
    * @param tx      The transaction to send.
-   * @param confirm If true, waits for the transaction to be confirmed.
    * @param opts    Transaction confirmation options.
    */
   broadcast: (
     tx: Transaction,
-    confirm?: boolean,
     opts?: ConfirmOptions
   ) => Promise<PendingTransaction>;
 
@@ -102,32 +100,9 @@ export interface Broadcaster {
 }
 
 /**
- * The network and wallet context used to send transactions paid for and signed
- * by the provider.
- *
- * This interface is based on Anchor, but includes more features.
+ * An interface that can sign transactions.
  */
-export interface Provider extends ReadonlyProvider {
-  /**
-   * Connection for reading data.
-   */
-  connection: Connection;
-
-  /**
-   * Broadcasts transactions.
-   */
-  broadcaster: Broadcaster;
-
-  /**
-   * Transaction confirmation options to use by default.
-   */
-  opts: ConfirmOptions;
-
-  /**
-   * The wallet used to pay for and sign all transactions.
-   */
-  wallet: Wallet;
-
+export interface TransactionSigner {
   /**
    * Signs the given transaction, paid for and signed by the provider's wallet.
    *
@@ -149,6 +124,34 @@ export interface Provider extends ReadonlyProvider {
     reqs: readonly SendTxRequest[],
     opts?: ConfirmOptions
   ) => Promise<Transaction[]>;
+}
+
+/**
+ * The network and wallet context used to send transactions paid for and signed
+ * by the provider.
+ *
+ * This interface is based on Anchor, but includes more features.
+ */
+export interface Provider extends ReadonlyProvider, TransactionSigner {
+  /**
+   * Connection for reading data.
+   */
+  connection: Connection;
+
+  /**
+   * Broadcasts transactions.
+   */
+  broadcaster: Broadcaster;
+
+  /**
+   * Transaction confirmation options to use by default.
+   */
+  opts: ConfirmOptions;
+
+  /**
+   * The wallet used to pay for and sign all transactions.
+   */
+  wallet: Wallet;
 
   /**
    * Sends the given transaction, paid for and signed by the provider's wallet.
@@ -168,7 +171,7 @@ export interface Provider extends ReadonlyProvider {
    * Similar to `send`, but for an array of transactions and signers.
    */
   sendAll: (
-    reqs: SendTxRequest[],
+    reqs: readonly SendTxRequest[],
     opts?: ConfirmOptions
   ) => Promise<PendingTransaction[]>;
 

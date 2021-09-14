@@ -171,20 +171,24 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     opts: ConfirmOptions = this.opts
   ): Promise<PendingTransaction> {
     const theTx = await this.sign(tx, signers, opts);
-    return this.broadcaster.broadcast(theTx, true, opts);
+    const pending = await this.broadcaster.broadcast(theTx, opts);
+    await pending.wait();
+    return pending;
   }
 
   /**
    * Similar to `send`, but for an array of transactions and signers.
    */
   async sendAll(
-    reqs: SendTxRequest[],
+    reqs: readonly SendTxRequest[],
     opts: ConfirmOptions = this.opts
   ): Promise<PendingTransaction[]> {
     const txs = await this.signAll(reqs, opts);
     return await Promise.all(
       txs.map(async (tx) => {
-        return await this.broadcaster.broadcast(tx, true, opts);
+        const pending = await this.broadcaster.broadcast(tx, opts);
+        await pending.wait();
+        return pending;
       })
     );
   }

@@ -73,7 +73,7 @@ export class TransactionEnvelope {
    */
   public async send(opts?: ConfirmOptions): Promise<PendingTransaction> {
     const signed = await this.provider.sign(this.build(), this.signers, opts);
-    return this.provider.broadcaster.broadcast(signed, false);
+    return this.provider.broadcaster.broadcast(signed, opts);
   }
 
   /**
