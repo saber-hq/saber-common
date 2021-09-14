@@ -9,12 +9,16 @@ import { TransactionReceipt } from "../transaction";
  * Transaction which may or may not be confirmed.
  */
 export class PendingTransaction {
-  receipt: TransactionReceipt | null = null;
+  private _receipt: TransactionReceipt | null = null;
 
   constructor(
     public readonly provider: ReadonlyProvider,
     public readonly signature: TransactionSignature
   ) {}
+
+  get receipt(): TransactionReceipt | null {
+    return this._receipt;
+  }
 
   /**
    * Waits for the confirmation of the transaction, via polling.
@@ -30,8 +34,8 @@ export class PendingTransaction {
       commitment: "confirmed",
     }
   ): Promise<TransactionReceipt> {
-    if (this.receipt) {
-      return this.receipt;
+    if (this._receipt) {
+      return this._receipt;
     }
     const receipt = await promiseRetry(
       async (retry) => {
@@ -56,6 +60,7 @@ export class PendingTransaction {
     if (!receipt) {
       throw new Error("transaction could not be confirmed");
     }
+    this._receipt = receipt;
     return receipt;
   }
 }
