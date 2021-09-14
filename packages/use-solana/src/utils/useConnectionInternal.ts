@@ -5,8 +5,8 @@ import type {
 } from "@saberhq/solana-contrib";
 import { DEFAULT_NETWORK_CONFIG_MAP } from "@saberhq/solana-contrib";
 import type { Commitment } from "@solana/web3.js";
-import { Connection, Keypair } from "@solana/web3.js";
-import { useEffect, useMemo } from "react";
+import { Connection } from "@solana/web3.js";
+import { useMemo } from "react";
 
 import { useLocalStorageState } from "./useLocalStorageState";
 
@@ -76,43 +76,6 @@ export const useConnectionInternal = ({
       }),
     [commitment, endpoint, endpointWs]
   );
-
-  // The websocket library solana/web3.js uses closes its websocket connection when the subscription list
-  // is empty after opening its first time, preventing subsequent subscriptions from receiving responses.
-  // This is a hack to prevent the list from every getting empty
-  useEffect(() => {
-    const id = connection.onAccountChange(Keypair.generate().publicKey, () => {
-      // noop
-    });
-    return () => {
-      void connection.removeAccountChangeListener(id);
-    };
-  }, [connection]);
-  useEffect(() => {
-    const id = sendConnection.onAccountChange(
-      Keypair.generate().publicKey,
-      () => {
-        // noop
-      }
-    );
-    return () => {
-      void sendConnection.removeAccountChangeListener(id);
-    };
-  }, [sendConnection]);
-
-  useEffect(() => {
-    const id = connection.onSlotChange(() => null);
-    return () => {
-      void connection.removeSlotChangeListener(id);
-    };
-  }, [connection]);
-
-  useEffect(() => {
-    const id = sendConnection.onSlotChange(() => null);
-    return () => {
-      void sendConnection.removeSlotChangeListener(id);
-    };
-  }, [sendConnection]);
 
   return {
     connection,
