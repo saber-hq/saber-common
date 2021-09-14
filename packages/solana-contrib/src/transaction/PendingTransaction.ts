@@ -1,8 +1,11 @@
-import type { Finality, TransactionSignature } from "@solana/web3.js";
+import type {
+  Connection,
+  Finality,
+  TransactionSignature,
+} from "@solana/web3.js";
 import promiseRetry from "promise-retry";
 import type { OperationOptions } from "retry";
 
-import type { ReadonlyProvider } from "../interfaces";
 import { TransactionReceipt } from "../transaction";
 
 /**
@@ -12,10 +15,15 @@ export class PendingTransaction {
   private _receipt: TransactionReceipt | null = null;
 
   constructor(
-    public readonly provider: ReadonlyProvider,
+    public readonly connection: Connection,
     public readonly signature: TransactionSignature
   ) {}
 
+  /**
+   * Gets the transaction receipt, if it has already been fetched.
+   *
+   * You probably want the async version of this function, `wait`.
+   */
   get receipt(): TransactionReceipt | null {
     return this._receipt;
   }
@@ -39,17 +47,14 @@ export class PendingTransaction {
     }
     const receipt = await promiseRetry(
       async (retry) => {
-        const result = await this.provider.connection.getTransaction(
-          this.signature,
-          {
-            commitment,
-          }
-        );
+        const result = await this.connection.getTransaction(this.signature, {
+          commitment,
+        });
         if (!result) {
           retry(new Error("Error fetching transaction"));
           return;
         }
-        return new TransactionReceipt(this.provider, this.signature, result);
+        return new TransactionReceipt(this.signature, result);
       },
       {
         retries: 5,

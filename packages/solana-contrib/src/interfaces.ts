@@ -1,4 +1,6 @@
 import type {
+  Blockhash,
+  Commitment,
   ConfirmOptions,
   Connection,
   KeyedAccountInfo,
@@ -7,8 +9,9 @@ import type {
   Signer,
   SimulatedTransactionResponse,
   Transaction,
-  TransactionSignature,
 } from "@solana/web3.js";
+
+import type { PendingTransaction } from ".";
 
 /**
  * Wallet interface for objects that can be used to sign provider transactions.
@@ -16,8 +19,21 @@ import type {
  * This interface comes from Anchor.
  */
 export interface Wallet {
+  /**
+   * Signs a transaction with the wallet.
+   * @param tx
+   */
   signTransaction(tx: Transaction): Promise<Transaction>;
+
+  /**
+   * Signs all transactions with the wallet.
+   * @param txs
+   */
   signAllTransactions(txs: Transaction[]): Promise<Transaction[]>;
+
+  /**
+   * The PublicKey of the wallet.
+   */
   publicKey: PublicKey;
 }
 
@@ -50,21 +66,82 @@ export interface ReadonlyProvider extends AccountInfoFetcher {
 }
 
 /**
+ * A Broadcaster broadcasts signed transactions to a node or set of nodes,
+ * returning the transaction signatures.
+ */
+export interface Broadcaster {
+  /**
+   * Fetch a recent blockhash from the cluster
+   * @param commitment
+   */
+  getRecentBlockhash(commitment?: Commitment): Promise<Blockhash>;
+
+  /**
+   * Broadcasts a signed transaction to the connected Solana cluster.
+   *
+   * @param tx      The transaction to send.
+   * @param opts    Transaction confirmation options.
+   */
+  broadcast: (
+    tx: Transaction,
+    opts?: ConfirmOptions
+  ) => Promise<PendingTransaction>;
+
+  /**
+   * Simulates the given transaction, returning emitted logs from execution.
+   *
+   * @param tx      The transaction to simulate.
+   * @param opts    Transaction confirmation options.
+   */
+  simulate(
+    tx: Transaction,
+    commitment?: Commitment
+  ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>>;
+}
+
+/**
+ * An interface that can sign transactions.
+ */
+export interface TransactionSigner {
+  /**
+   * Signs the given transaction, paid for and signed by the provider's wallet.
+   *
+   * @param tx      The transaction to sign.
+   * @param signers The set of signers in addition to the provdier wallet that
+   *                will sign the transaction.
+   * @param opts    Transaction confirmation options.
+   */
+  sign: (
+    tx: Transaction,
+    signers?: readonly (Signer | undefined)[],
+    opts?: ConfirmOptions
+  ) => Promise<Transaction>;
+
+  /**
+   * Similar to `sign`, but for an array of transactions and signers.
+   */
+  signAll: (
+    reqs: readonly SendTxRequest[],
+    opts?: ConfirmOptions
+  ) => Promise<Transaction[]>;
+}
+
+/**
  * The network and wallet context used to send transactions paid for and signed
  * by the provider.
  *
  * This interface is based on Anchor, but includes more features.
  */
-export interface Provider extends ReadonlyProvider {
+export interface Provider extends ReadonlyProvider, TransactionSigner {
   /**
    * Connection for reading data.
    */
   connection: Connection;
 
   /**
-   * Connection in which transactions are sent.
+   * Broadcasts transactions.
    */
-  sendConnection: Connection;
+  broadcaster: Broadcaster;
 
   /**
    * Transaction confirmation options to use by default.
@@ -86,17 +163,17 @@ export interface Provider extends ReadonlyProvider {
    */
   send: (
     tx: Transaction,
-    signers?: Array<Signer | undefined>,
+    signers?: (Signer | undefined)[],
     opts?: ConfirmOptions
-  ) => Promise<TransactionSignature>;
+  ) => Promise<PendingTransaction>;
 
   /**
    * Similar to `send`, but for an array of transactions and signers.
    */
   sendAll: (
-    reqs: Array<SendTxRequest>,
+    reqs: readonly SendTxRequest[],
     opts?: ConfirmOptions
-  ) => Promise<Array<TransactionSignature>>;
+  ) => Promise<PendingTransaction[]>;
 
   /**
    * Simulates the given transaction, returning emitted logs from execution.
@@ -108,7 +185,7 @@ export interface Provider extends ReadonlyProvider {
    */
   simulate: (
     tx: Transaction,
-    signers?: Array<Signer | undefined>,
+    signers?: (Signer | undefined)[],
     opts?: ConfirmOptions
   ) => Promise<RpcResponseAndContext<SimulatedTransactionResponse>>;
 }

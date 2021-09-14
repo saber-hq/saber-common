@@ -11,7 +11,7 @@ import type {
 import { Transaction } from "@solana/web3.js";
 
 import type { Provider } from "../interfaces";
-import { PendingTransaction } from "./PendingTransaction";
+import type { PendingTransaction } from "./PendingTransaction";
 import type { TransactionReceipt } from "./TransactionReceipt";
 
 export interface SerializableInstruction {
@@ -67,13 +67,13 @@ export class TransactionEnvelope {
   }
 
   /**
-   * Sends the transaction.
+   * Sends the transaction without confirming it.
    * @param opts
    * @returns
    */
   public async send(opts?: ConfirmOptions): Promise<PendingTransaction> {
-    const sig = await this.provider.send(this.build(), this.signers, opts);
-    return new PendingTransaction(this.provider, sig);
+    const signed = await this.provider.sign(this.build(), this.signers, opts);
+    return this.provider.broadcaster.broadcast(signed, opts);
   }
 
   /**
@@ -185,10 +185,9 @@ export class TransactionEnvelope {
       return [];
     }
     const provider = firstTX.provider;
-    const txSigs = await provider.sendAll(
+    return await provider.sendAll(
       txs.map((tx) => ({ tx: tx.build(), signers: tx.signers })),
       opts
     );
-    return txSigs.map((sig) => new PendingTransaction(provider, sig));
   }
 }
