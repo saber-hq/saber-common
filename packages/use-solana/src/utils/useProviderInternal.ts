@@ -65,14 +65,14 @@ export const useProviderInternal = ({
   const providerMut = useMemo(
     () =>
       wallet && connected && publicKey
-        ? new SolanaProvider(
+        ? SolanaProvider.load({
             connection,
             sendConnection,
-            wallet as ConnectedWallet,
-            {
+            wallet: wallet as ConnectedWallet,
+            opts: {
               commitment: commitmentMut,
-            }
-          )
+            },
+          })
         : null,
     [wallet, connected, publicKey, connection, sendConnection, commitmentMut]
   );

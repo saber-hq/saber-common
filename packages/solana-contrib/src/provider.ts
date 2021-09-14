@@ -7,13 +7,11 @@ import type {
   Signer,
   SimulatedTransactionResponse,
   Transaction,
-  TransactionSignature,
 } from "@solana/web3.js";
-import { sendAndConfirmRawTransaction } from "@solana/web3.js";
 
-import type { ReadonlyProvider } from ".";
+import type { Broadcaster, PendingTransaction, ReadonlyProvider } from ".";
+import { SingleConnectionBroadcaster } from "./broadcaster";
 import type { Provider, SendTxRequest, Wallet } from "./interfaces";
-import { sendAll, simulateTransactionWithCommitment } from "./utils";
 
 export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
   preflightCommitment: "recent",
@@ -70,11 +68,30 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
    */
   constructor(
     public readonly connection: Connection,
-    public readonly sendConnection: Connection,
+    public readonly broadcaster: Broadcaster,
     public readonly wallet: Wallet,
     public readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {
     super(connection, opts);
+  }
+
+  static load({
+    connection,
+    sendConnection,
+    wallet,
+    opts,
+  }: {
+    connection: Connection;
+    sendConnection: Connection;
+    wallet: Wallet;
+    opts: ConfirmOptions;
+  }): SolanaProvider {
+    return new SolanaProvider(
+      connection,
+      new SingleConnectionBroadcaster(sendConnection, opts),
+      wallet,
+      opts
+    );
   }
 
   /**
@@ -91,9 +108,9 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     opts: ConfirmOptions = this.opts
   ): Promise<Transaction> {
     tx.feePayer = this.wallet.publicKey;
-    tx.recentBlockhash = (
-      await this.sendConnection.getRecentBlockhash(opts.preflightCommitment)
-    ).blockhash;
+    tx.recentBlockhash = await this.broadcaster.getRecentBlockhash(
+      opts.preflightCommitment
+    );
 
     await this.wallet.signTransaction(tx);
     signers
@@ -112,7 +129,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     reqs: readonly SendTxRequest[],
     opts: ConfirmOptions = this.opts
   ): Promise<Transaction[]> {
-    const blockhash = await this.sendConnection.getRecentBlockhash(
+    const blockhash = await this.broadcaster.getRecentBlockhash(
       opts.preflightCommitment
     );
 
@@ -125,7 +142,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
       }
 
       tx.feePayer = this.wallet.publicKey;
-      tx.recentBlockhash = blockhash.blockhash;
+      tx.recentBlockhash = blockhash;
 
       signers
         .filter((s): s is Signer => s !== undefined)
@@ -152,17 +169,9 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     tx: Transaction,
     signers: (Signer | undefined)[] = [],
     opts: ConfirmOptions = this.opts
-  ): Promise<TransactionSignature> {
+  ): Promise<PendingTransaction> {
     const theTx = await this.sign(tx, signers, opts);
-    const rawTx = theTx.serialize();
-
-    const txId = await sendAndConfirmRawTransaction(
-      this.sendConnection,
-      rawTx,
-      opts
-    );
-
-    return txId;
+    return this.broadcaster.broadcast(theTx, true, opts);
   }
 
   /**
@@ -171,13 +180,13 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
   async sendAll(
     reqs: SendTxRequest[],
     opts: ConfirmOptions = this.opts
-  ): Promise<TransactionSignature[]> {
-    return await sendAll({
-      provider: this,
-      reqs,
-      opts,
-      confirm: true,
-    });
+  ): Promise<PendingTransaction[]> {
+    const txs = await this.signAll(reqs, opts);
+    return await Promise.all(
+      txs.map(async (tx) => {
+        return await this.broadcaster.broadcast(tx, true, opts);
+      })
+    );
   }
 
   /**
@@ -190,14 +199,10 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
    */
   async simulate(
     tx: Transaction,
-    signers?: Array<Signer | undefined>,
+    signers: (Signer | undefined)[] = [],
     opts: ConfirmOptions = this.opts
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     const signedTx = await this.sign(tx, signers, opts);
-    return await simulateTransactionWithCommitment(
-      this.connection,
-      signedTx,
-      opts.commitment
-    );
+    return await this.broadcaster.simulate(signedTx, opts.commitment);
   }
 }

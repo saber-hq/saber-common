@@ -5,6 +5,7 @@ import type {
   Transaction,
 } from "@solana/web3.js";
 
+import { SingleConnectionBroadcaster } from ".";
 import type { Provider, Wallet } from "./interfaces";
 import { SolanaProvider } from "./provider";
 
@@ -41,6 +42,10 @@ export class SignerWallet implements Wallet {
     connection: Connection,
     sendConnection?: Connection
   ): Provider {
-    return new SolanaProvider(connection, sendConnection ?? connection, this);
+    return new SolanaProvider(
+      connection,
+      new SingleConnectionBroadcaster(sendConnection ?? connection),
+      this
+    );
   }
 }

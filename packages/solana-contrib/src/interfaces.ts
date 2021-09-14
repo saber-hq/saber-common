@@ -1,4 +1,6 @@
 import type {
+  Blockhash,
+  Commitment,
   ConfirmOptions,
   Connection,
   KeyedAccountInfo,
@@ -7,8 +9,9 @@ import type {
   Signer,
   SimulatedTransactionResponse,
   Transaction,
-  TransactionSignature,
 } from "@solana/web3.js";
+
+import type { PendingTransaction } from ".";
 
 /**
  * Wallet interface for objects that can be used to sign provider transactions.
@@ -16,8 +19,21 @@ import type {
  * This interface comes from Anchor.
  */
 export interface Wallet {
+  /**
+   * Signs a transaction with the wallet.
+   * @param tx
+   */
   signTransaction(tx: Transaction): Promise<Transaction>;
+
+  /**
+   * Signs all transactions with the wallet.
+   * @param txs
+   */
   signAllTransactions(txs: Transaction[]): Promise<Transaction[]>;
+
+  /**
+   * The PublicKey of the wallet.
+   */
   publicKey: PublicKey;
 }
 
@@ -50,6 +66,42 @@ export interface ReadonlyProvider extends AccountInfoFetcher {
 }
 
 /**
+ * A Broadcaster broadcasts signed transactions to a node or set of nodes,
+ * returning the transaction signatures.
+ */
+export interface Broadcaster {
+  /**
+   * Fetch a recent blockhash from the cluster
+   * @param commitment
+   */
+  getRecentBlockhash(commitment?: Commitment): Promise<Blockhash>;
+
+  /**
+   * Broadcasts the given transaction.
+   *
+   * @param tx      The transaction to send.
+   * @param confirm If true, waits for the transaction to be confirmed.
+   * @param opts    Transaction confirmation options.
+   */
+  broadcast: (
+    tx: Transaction,
+    confirm?: boolean,
+    opts?: ConfirmOptions
+  ) => Promise<PendingTransaction>;
+
+  /**
+   * Simulates the given transaction, returning emitted logs from execution.
+   *
+   * @param tx      The transaction to simulate.
+   * @param opts    Transaction confirmation options.
+   */
+  simulate(
+    tx: Transaction,
+    commitment?: Commitment
+  ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>>;
+}
+
+/**
  * The network and wallet context used to send transactions paid for and signed
  * by the provider.
  *
@@ -62,9 +114,9 @@ export interface Provider extends ReadonlyProvider {
   connection: Connection;
 
   /**
-   * Connection in which transactions are sent.
+   * Broadcasts transactions.
    */
-  sendConnection: Connection;
+  broadcaster: Broadcaster;
 
   /**
    * Transaction confirmation options to use by default.
@@ -110,15 +162,15 @@ export interface Provider extends ReadonlyProvider {
     tx: Transaction,
     signers?: (Signer | undefined)[],
     opts?: ConfirmOptions
-  ) => Promise<TransactionSignature>;
+  ) => Promise<PendingTransaction>;
 
   /**
    * Similar to `send`, but for an array of transactions and signers.
    */
   sendAll: (
-    reqs: Array<SendTxRequest>,
+    reqs: SendTxRequest[],
     opts?: ConfirmOptions
-  ) => Promise<Array<TransactionSignature>>;
+  ) => Promise<PendingTransaction[]>;
 
   /**
    * Simulates the given transaction, returning emitted logs from execution.
@@ -130,7 +182,7 @@ export interface Provider extends ReadonlyProvider {
    */
   simulate: (
     tx: Transaction,
-    signers?: Array<Signer | undefined>,
+    signers?: (Signer | undefined)[],
     opts?: ConfirmOptions
   ) => Promise<RpcResponseAndContext<SimulatedTransactionResponse>>;
 }
