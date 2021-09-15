@@ -59,9 +59,8 @@ export const MintLayout = TokenMintLayout as Layout<{
  * @returns
  */
 export const deserializeAccount = (
-  address: PublicKey,
   data: Buffer
-): AccountInfo => {
+): Omit<AccountInfo, "address"> => {
   const accountInfo = TokenAccountLayout.decode(data);
 
   const mint = new PublicKey(accountInfo.mint);
@@ -101,7 +100,6 @@ export const deserializeAccount = (
   }
 
   return {
-    address,
     mint,
     owner,
     amount,
