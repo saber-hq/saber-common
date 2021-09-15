@@ -1,6 +1,9 @@
-import { PublicKeyLayout, Uint64Layout } from "@saberhq/token-utils";
-import type { Layout } from "buffer-layout";
-import * as BufferLayout from "buffer-layout";
+import {
+  PublicKeyLayout,
+  structLayout,
+  Uint64Layout,
+} from "@saberhq/token-utils";
+import * as BufferLayout from "@solana/buffer-layout";
 
 /**
  * Raw representation of fees.
@@ -19,7 +22,7 @@ export interface RawFees {
 /**
  * Layout for StableSwap fees
  */
-export const FeesLayout = BufferLayout.struct<RawFees>(
+export const FeesLayout = structLayout<RawFees>(
   [
     Uint64Layout("adminTradeFeeNumerator"),
     Uint64Layout("adminTradeFeeDenominator"),
@@ -36,7 +39,7 @@ export const FeesLayout = BufferLayout.struct<RawFees>(
 /**
  * Layout for stable swap state
  */
-export const StableSwapLayout: Layout<{
+export const StableSwapLayout = structLayout<{
   adminAccount: string;
   adminFeeAccountA: string;
   adminFeeAccountB: string;
@@ -51,7 +54,7 @@ export const StableSwapLayout: Layout<{
   startRampTs: number;
   stopRampTs: number;
   fees: RawFees;
-}> = BufferLayout.struct([
+}>([
   BufferLayout.u8("isInitialized"),
   BufferLayout.u8("isPaused"),
   BufferLayout.u8("nonce"),
