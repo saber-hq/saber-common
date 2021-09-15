@@ -1,8 +1,8 @@
 import type { u64 } from "@saberhq/token-utils";
-import { Uint64Layout } from "@saberhq/token-utils";
+import { structLayout, Uint64Layout } from "@saberhq/token-utils";
+import * as BufferLayout from "@solana/buffer-layout";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
 import { SYSVAR_CLOCK_PUBKEY } from "@solana/web3.js";
-import * as BufferLayout from "buffer-layout";
 
 import type { Fees, RawFees } from "../state";
 import { encodeFees, FeesLayout, ZERO_FEES } from "../state";
@@ -206,7 +206,7 @@ export const initializeSwapInstruction = ({
     { pubkey: config.tokenProgramID, isSigner: false, isWritable: false },
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
-  const dataLayout = BufferLayout.struct<{
+  const dataLayout = structLayout<{
     instruction: number;
     nonce: number;
     ampFactor: Buffer;

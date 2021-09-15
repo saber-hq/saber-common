@@ -69,14 +69,8 @@ export const makeExchangeInfo = ({
     poolMint?: Buffer;
   };
 }): IExchangeInfo => {
-  const swapAmountA = deserializeAccount(
-    swap.state.tokenA.reserve,
-    accounts.reserveA
-  ).amount;
-  const swapAmountB = deserializeAccount(
-    swap.state.tokenA.reserve,
-    accounts.reserveB
-  ).amount;
+  const swapAmountA = deserializeAccount(accounts.reserveA).amount;
+  const swapAmountB = deserializeAccount(accounts.reserveB).amount;
 
   const poolMintSupply = accounts.poolMint
     ? deserializeMint(accounts.poolMint).supply

@@ -37,11 +37,11 @@
   },
   "dependencies": {
     "@saberhq/token-utils": "^1.0.0",
+    "@solana/buffer-layout": "^3.0.0",
     "@solana/web3.js": "^1.25.0",
     "@types/bn.js": "^5.1.0",
     "@types/yargs": "^17.0.2",
     "bn.js": "^5.2.0",
-    "buffer-layout": "^1.2.2",
     "jsbi": "^3.2.3",
     "yargs": "^17.1.0"
   },

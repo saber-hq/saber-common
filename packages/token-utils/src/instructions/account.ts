@@ -1,12 +1,10 @@
 import type { Provider } from "@saberhq/solana-contrib";
 import { TransactionEnvelope } from "@saberhq/solana-contrib";
-import {
-  AccountLayout,
-  Token as SPLToken,
-  TOKEN_PROGRAM_ID,
-} from "@solana/spl-token";
+import { Token as SPLToken, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import type { PublicKey, Signer } from "@solana/web3.js";
 import { Keypair, SystemProgram } from "@solana/web3.js";
+
+import { TokenAccountLayout } from "../layout";
 
 export const createTokenAccount = async ({
   provider,
@@ -42,7 +40,7 @@ export const createTokenAccount = async ({
           fromPubkey: payer,
           newAccountPubkey: accountSigner.publicKey,
           lamports: balanceNeeded,
-          space: AccountLayout.span,
+          space: TokenAccountLayout.span,
           programId: TOKEN_PROGRAM_ID,
         }),
         SPLToken.createInitAccountInstruction(

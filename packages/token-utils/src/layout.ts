@@ -1,3 +1,5 @@
+import type { Layout } from "@solana/buffer-layout";
+import * as BufferLayout from "@solana/buffer-layout";
 import type { AccountInfo, MintInfo } from "@solana/spl-token";
 import {
   AccountLayout,
@@ -5,8 +7,37 @@ import {
   u64,
 } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
-import type { Layout } from "buffer-layout";
-import * as BufferLayout from "buffer-layout";
+
+/**
+ * Layout with decode/encode types.
+ */
+export type TypedLayout<T> = Omit<Layout, "decode" | "encode"> & {
+  decode: (data: Buffer) => T;
+  encode: (data: T, out: Buffer) => number;
+};
+
+/**
+ * Structure with decode/encode types.
+ */
+export type TypedStructure<T> = Omit<
+  BufferLayout.Structure,
+  "decode" | "encode"
+> &
+  TypedLayout<T>;
+
+/**
+ * Typed struct buffer layout
+ * @param fields
+ * @param property
+ * @param decodePrefixes
+ * @returns
+ */
+export const structLayout = <T extends unknown>(
+  fields: Layout[],
+  property?: string | undefined,
+  decodePrefixes?: boolean | undefined
+): TypedStructure<T> =>
+  BufferLayout.struct(fields, property, decodePrefixes) as TypedStructure<T>;
 
 /**
  * Layout for a public key
@@ -25,7 +56,7 @@ export const Uint64Layout = (property = "uint64"): Layout => {
 /**
  * Layout for a TokenAccount.
  */
-export const TokenAccountLayout = AccountLayout as Layout<{
+export const TokenAccountLayout = AccountLayout as TypedLayout<{
   mint: Buffer;
   owner: Buffer;
   amount: Buffer;
@@ -42,7 +73,7 @@ export const TokenAccountLayout = AccountLayout as Layout<{
 /**
  * Layout for a Mint.
  */
-export const MintLayout = TokenMintLayout as Layout<{
+export const MintLayout = TokenMintLayout as TypedLayout<{
   mintAuthorityOption: number;
   mintAuthority: Buffer;
   supply: Buffer;
@@ -59,9 +90,8 @@ export const MintLayout = TokenMintLayout as Layout<{
  * @returns
  */
 export const deserializeAccount = (
-  address: PublicKey,
   data: Buffer
-): AccountInfo => {
+): Omit<AccountInfo, "address"> => {
   const accountInfo = TokenAccountLayout.decode(data);
 
   const mint = new PublicKey(accountInfo.mint);
@@ -101,7 +131,6 @@ export const deserializeAccount = (
   }
 
   return {
-    address,
     mint,
     owner,
     amount,
