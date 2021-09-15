@@ -1,13 +1,11 @@
 import type { Provider } from "@saberhq/solana-contrib";
 import { TransactionEnvelope } from "@saberhq/solana-contrib";
 import type { u64 } from "@solana/spl-token";
-import {
-  MintLayout,
-  Token as SPLToken,
-  TOKEN_PROGRAM_ID,
-} from "@solana/spl-token";
+import { Token as SPLToken, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import type { Keypair, PublicKey, Signer } from "@solana/web3.js";
 import { SystemProgram } from "@solana/web3.js";
+
+import { MintLayout } from "../layout";
 
 /**
  * Creates instructions for initializing a mint.
