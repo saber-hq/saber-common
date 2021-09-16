@@ -1,9 +1,10 @@
 import type { Provider, ReadonlyProvider } from "@saberhq/solana-contrib";
 import {
+  DEFAULT_PROVIDER_OPTIONS,
   SolanaProvider,
   SolanaReadonlyProvider,
 } from "@saberhq/solana-contrib";
-import type { Commitment, Connection } from "@solana/web3.js";
+import type { Commitment, ConfirmOptions, Connection } from "@solana/web3.js";
 import { useMemo } from "react";
 
 import type { ConnectedWallet, WalletAdapter } from "../adapters/types";
@@ -40,9 +41,9 @@ export interface UseProviderArgs {
    */
   commitment?: Commitment;
   /**
-   * Commitment for the mutable provider.
+   * Confirm options for the mutable provider.
    */
-  commitmentMut?: Commitment;
+  confirmOptions?: ConfirmOptions;
 }
 
 export const useProviderInternal = ({
@@ -50,7 +51,7 @@ export const useProviderInternal = ({
   sendConnection = connection,
   wallet,
   commitment = "recent",
-  commitmentMut = "recent",
+  confirmOptions = DEFAULT_PROVIDER_OPTIONS,
 }: UseProviderArgs): UseProvider => {
   const provider = useMemo(
     () =>
@@ -69,12 +70,10 @@ export const useProviderInternal = ({
             connection,
             sendConnection,
             wallet: wallet as ConnectedWallet,
-            opts: {
-              commitment: commitmentMut,
-            },
+            opts: confirmOptions,
           })
         : null,
-    [wallet, connected, publicKey, connection, sendConnection, commitmentMut]
+    [wallet, connected, publicKey, connection, sendConnection, confirmOptions]
   );
 
   return {
