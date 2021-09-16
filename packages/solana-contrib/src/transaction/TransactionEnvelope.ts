@@ -52,7 +52,9 @@ export class TransactionEnvelope {
     t.recentBlockhash = "EETubP5AKHgjPAhzPAFcb8BAY1hMH639CWCFTqi3hq1k"; // Some stub
     t.feePayer = this.provider.wallet.publicKey;
     const str = t.serializeMessage().toString("base64");
-    return `https://explorer.solana.com/tx/inspector?cluster=${cluster}&message=${str}`;
+    return `https://explorer.solana.com/tx/inspector?cluster=${cluster}&message=${encodeURIComponent(
+      str
+    )}`;
   }
 
   /**
