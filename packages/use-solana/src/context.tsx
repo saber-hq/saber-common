@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import React from "react";
 import { createContainer } from "unstated-next";
 
+import type { UseSolanaError } from "./error";
+import { ErrorLevel } from "./error";
 import type {
   ConnectionArgs,
   ConnectionContext,
@@ -19,15 +21,33 @@ export interface UseSolana<T extends boolean = boolean>
 
 export interface UseSolanaArgs
   extends ConnectionArgs,
-    Pick<UseWalletArgs, "onConnect" | "onDisconnect"> {}
+    Partial<Pick<UseWalletArgs, "onConnect" | "onDisconnect">> {
+  /**
+   * Called when an error is thrown.
+   */
+  onError?: (err: UseSolanaError) => void;
+}
 
 /**
  * Provides Solana.
  * @returns
  */
 const useSolanaInternal = ({
-  onConnect,
-  onDisconnect,
+  onConnect = (wallet, provider) => {
+    alert(
+      `Connected to ${provider.name} wallet: ${wallet.publicKey.toString()}`
+    );
+  },
+  onDisconnect = (_wallet, provider) => {
+    alert(`Disconnected from ${provider.name} wallet`);
+  },
+  onError = (err) => {
+    if (err.level === ErrorLevel.WARN) {
+      console.warn(err);
+    } else {
+      console.error(err);
+    }
+  },
   ...connectionArgs
 }: UseSolanaArgs = {}): UseSolana => {
   const connectionCtx = useConnectionInternal(connectionArgs);
@@ -37,6 +57,7 @@ const useSolanaInternal = ({
     onDisconnect,
     network,
     endpoint,
+    onError,
   });
   const providerCtx = useProviderInternal({
     connection: connectionCtx.connection,
@@ -56,6 +77,7 @@ type ProviderProps = UseSolanaArgs & { children: ReactNode };
 
 /**
  * Provides a Solana SDK.
+ *
  * Note: ensure that `onConnect` and `onDisconnect` are wrapped in useCallback or are
  * statically defined, otherwise the wallet will keep re-rendering.
  * @returns

@@ -72,9 +72,9 @@ export class PhantomWalletAdapter
     await this._provider?.connect();
   };
 
-  disconnect(): void {
+  async disconnect(): Promise<void> {
     if (this._provider) {
-      void this._provider.disconnect();
+      await this._provider.disconnect();
     }
   }
 }
