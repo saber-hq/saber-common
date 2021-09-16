@@ -1,5 +1,6 @@
 import type { Provider, ReadonlyProvider } from "@saberhq/solana-contrib";
 import {
+  DEFAULT_PROVIDER_OPTIONS,
   SolanaProvider,
   SolanaReadonlyProvider,
 } from "@saberhq/solana-contrib";
@@ -50,10 +51,7 @@ export const useProviderInternal = ({
   sendConnection = connection,
   wallet,
   commitment = "recent",
-  confirmOptions = {
-    commitment: "confirmed",
-    preflightCommitment: "confirmed",
-  },
+  confirmOptions = DEFAULT_PROVIDER_OPTIONS,
 }: UseProviderArgs): UseProvider => {
   const provider = useMemo(
     () =>
