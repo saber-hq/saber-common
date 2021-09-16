@@ -75,16 +75,31 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     super(connection, opts);
   }
 
+  /**
+   * Creates a new SolanaProvider.
+   */
   static load({
     connection,
-    sendConnection,
+    sendConnection = connection,
     wallet,
     opts,
   }: {
+    /**
+     * Connection used for general reads
+     */
     connection: Connection;
-    sendConnection: Connection;
+    /**
+     * Connection used for sending transactions
+     */
+    sendConnection?: Connection;
+    /**
+     * Wallet used for signing transactions
+     */
     wallet: Wallet;
-    opts: ConfirmOptions;
+    /**
+     * Confirmation options
+     */
+    opts?: ConfirmOptions;
   }): SolanaProvider {
     return new SolanaProvider(
       connection,

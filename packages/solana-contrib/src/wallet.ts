@@ -1,11 +1,11 @@
 import type {
+  ConfirmOptions,
   Connection,
   PublicKey,
   Signer,
   Transaction,
 } from "@solana/web3.js";
 
-import { SingleConnectionBroadcaster } from ".";
 import type { Provider, Wallet } from "./interfaces";
 import { SolanaProvider } from "./provider";
 
@@ -40,12 +40,14 @@ export class SignerWallet implements Wallet {
    */
   createProvider(
     connection: Connection,
-    sendConnection?: Connection
+    sendConnection?: Connection,
+    opts?: ConfirmOptions
   ): Provider {
-    return new SolanaProvider(
+    return SolanaProvider.load({
       connection,
-      new SingleConnectionBroadcaster(sendConnection ?? connection),
-      this
-    );
+      sendConnection,
+      wallet: this,
+      opts,
+    });
   }
 }
