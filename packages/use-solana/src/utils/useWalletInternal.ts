@@ -4,6 +4,12 @@ import stringify from "fast-json-stable-stringify";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import type { ConnectedWallet, WalletAdapter } from "../adapters/types";
+import type { UseSolanaError } from "../error";
+import {
+  WalletActivateError,
+  WalletAutomaticConnectionError,
+  WalletDisconnectError,
+} from "../error";
 import type { WalletProviderInfo, WalletType } from "../providers";
 import { WALLET_PROVIDERS } from "../providers";
 import { useLocalStorageState } from "./useLocalStorageState";
@@ -42,14 +48,15 @@ export interface UseWallet<T extends boolean = boolean> {
 }
 
 export interface UseWalletArgs {
-  onConnect?: (
+  onConnect: (
     wallet: WalletAdapter<true>,
     provider: WalletProviderInfo
   ) => void;
-  onDisconnect?: (
+  onDisconnect: (
     wallet: WalletAdapter<false>,
     provider: WalletProviderInfo
   ) => void;
+  onError: (err: UseSolanaError) => void;
   network: Network;
   endpoint: string;
 }
@@ -64,6 +71,7 @@ export const useWalletInternal = ({
   onDisconnect,
   network,
   endpoint,
+  onError,
 }: UseWalletArgs): UseWallet<boolean> => {
   const [walletConfigStr, setWalletConfigStr] = useLocalStorageState<
     string | null
@@ -91,7 +99,7 @@ export const useWalletInternal = ({
     | readonly [undefined, undefined] = useMemo(() => {
     if (walletType) {
       const provider = WALLET_PROVIDERS[walletType];
-      console.log("New wallet", provider.url, network);
+      console.debug("New wallet", provider.url, network);
       return [provider, new provider.makeAdapter(provider.url, endpoint)];
     }
     return [undefined, undefined];
@@ -101,31 +109,40 @@ export const useWalletInternal = ({
     if (wallet && walletProviderInfo) {
       setTimeout(() => {
         void wallet.connect(walletArgs).catch((e) => {
-          console.warn(
-            `Error attempting to automatically connect to ${walletProviderInfo.name}`,
-            e
-          );
+          onError(new WalletAutomaticConnectionError(e, walletProviderInfo));
         });
       }, 500);
       wallet.on("connect", () => {
         if (wallet?.publicKey) {
           setConnected(true);
-          onConnect?.(wallet as ConnectedWallet, walletProviderInfo);
+          onConnect(wallet as ConnectedWallet, walletProviderInfo);
         }
       });
 
       wallet.on("disconnect", () => {
         setConnected(false);
-        onDisconnect?.(wallet as WalletAdapter<false>, walletProviderInfo);
+        onDisconnect(wallet as WalletAdapter<false>, walletProviderInfo);
       });
     }
 
     return () => {
       if (wallet && wallet.connected) {
-        void wallet.disconnect();
+        const disconnect = wallet.disconnect();
+        if (disconnect) {
+          disconnect.catch((e) => {
+            onError(new WalletDisconnectError(e, walletProviderInfo));
+          });
+        }
       }
     };
-  }, [onConnect, onDisconnect, wallet, walletArgs, walletProviderInfo]);
+  }, [
+    onConnect,
+    onDisconnect,
+    onError,
+    wallet,
+    walletArgs,
+    walletProviderInfo,
+  ]);
 
   const activate = useCallback(
     async (
@@ -138,11 +155,15 @@ export const useWalletInternal = ({
       });
       if (walletConfigStr === nextWalletConfigStr) {
         // reconnect
-        await wallet?.connect(nextWalletArgs);
+        try {
+          await wallet?.connect(nextWalletArgs);
+        } catch (e) {
+          onError(new WalletActivateError(e, nextWalletType, nextWalletArgs));
+        }
       }
       setWalletConfigStr(nextWalletConfigStr);
     },
-    [setWalletConfigStr, wallet, walletConfigStr]
+    [onError, setWalletConfigStr, wallet, walletConfigStr]
   );
 
   const disconnect = useCallback(() => {

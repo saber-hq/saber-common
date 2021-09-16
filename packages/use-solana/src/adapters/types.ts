@@ -12,7 +12,7 @@ export interface WalletAdapter<Connected extends boolean = boolean> {
   signTransaction: (transaction: Transaction) => Promise<Transaction>;
   signAllTransactions: (transaction: Transaction[]) => Promise<Transaction[]>;
   connect: (args?: unknown) => Promise<void>;
-  disconnect: () => void;
+  disconnect: () => void | Promise<void>;
   on(event: string, fn: () => void): this;
 }
 
