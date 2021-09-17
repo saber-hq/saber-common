@@ -14,8 +14,9 @@ import type {
   IdlInstruction,
   IdlType,
   IdlTypeDef,
-} from "@project-serum/anchor/dist/idl";
-import type { ProgramAccount } from "@project-serum/anchor/dist/program/namespace";
+  IdlTypeDefTyStruct,
+} from "@project-serum/anchor/dist/cjs/idl";
+import type { ProgramAccount } from "@project-serum/anchor/dist/cjs/program/namespace";
 import type {
   AccountMeta,
   Commitment,
@@ -166,16 +167,22 @@ export type AnchorProgram<
 
 export type AnchorError<T extends Idl> = NonNullable<T["errors"]>[number];
 
-type FieldsOfType<I extends IdlTypeDef> = NonNullable<
-  I["type"]["fields"]
->[number];
+type FieldsOfType<
+  I extends IdlTypeDef & {
+    type: IdlTypeDefTyStruct;
+  }
+> = I["type"]["fields"][number];
 
-type AnchorTypeDef<I extends IdlTypeDef, Defined> = {
-  [F in FieldsOfType<I>["name"]]: DecodeType<
-    (FieldsOfType<I> & { name: F })["type"],
-    Defined
-  >;
-};
+type AnchorTypeDef<I extends IdlTypeDef, Defined> = I extends {
+  type: IdlTypeDefTyStruct;
+}
+  ? {
+      [F in FieldsOfType<I>["name"]]: DecodeType<
+        (FieldsOfType<I> & { name: F })["type"],
+        Defined
+      >;
+    }
+  : string;
 
 type AnchorTypeDefs<T extends IdlTypeDef[], Defined> = {
   [K in T[number]["name"]]: AnchorTypeDef<T[number] & { name: K }, Defined>;
