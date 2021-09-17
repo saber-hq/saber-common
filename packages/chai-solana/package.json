@@ -23,7 +23,7 @@
     "src/"
   ],
   "dependencies": {
-    "@project-serum/anchor": "^0.15.0",
+    "@project-serum/anchor": "^0.16.0",
     "@saberhq/solana-contrib": "^1.2.0",
     "@saberhq/token-utils": "^1.2.0",
     "@solana/web3.js": "^1.27.0",
