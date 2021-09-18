@@ -180,17 +180,21 @@ type FieldsOfType<
   }
 > = I["type"]["fields"][number];
 
-type AnchorTypeDef<I extends { type: IdlTypeDefTyStruct }, Defined> = {
+type AnchorTypeDefStruct<I extends { type: IdlTypeDefTyStruct }, Defined> = {
   [F in FieldsOfType<I>["name"]]: DecodeType<
     (FieldsOfType<I> & { name: F })["type"],
     Defined
   >;
 };
 
+type AnchorTypeDef<I extends IdlTypeDef, Defined> = I extends {
+  type: IdlTypeDefTyStruct;
+}
+  ? AnchorTypeDefStruct<I, Defined>
+  : string;
+
 type AnchorTypeDefs<T extends IdlTypeDef[], Defined> = {
-  [K in T[number]["name"]]: T[number] extends { type: IdlTypeDefTyStruct }
-    ? AnchorTypeDef<T[number] & { name: K }, Defined>
-    : string;
+  [K in T[number]["name"]]: AnchorTypeDef<T[number] & { name: K }, Defined>;
 };
 
 export type AnchorDefined<
