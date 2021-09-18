@@ -174,24 +174,18 @@ export type AnchorProgram<
 
 export type AnchorError<T extends Idl> = NonNullable<T["errors"]>[number];
 
-type FieldsOfType<
-  I extends {
-    type: IdlTypeDefTyStruct;
-  }
-> = I["type"]["fields"][number];
+type FieldsOfType<I extends IdlTypeDef> = I extends {
+  type: IdlTypeDefTyStruct;
+}
+  ? NonNullable<I["type"]["fields"]>[number]
+  : never;
 
-type AnchorTypeDefStruct<I extends { type: IdlTypeDefTyStruct }, Defined> = {
+type AnchorTypeDef<I extends IdlTypeDef, Defined> = {
   [F in FieldsOfType<I>["name"]]: DecodeType<
     (FieldsOfType<I> & { name: F })["type"],
     Defined
   >;
 };
-
-type AnchorTypeDef<I extends IdlTypeDef, Defined> = I extends {
-  type: IdlTypeDefTyStruct;
-}
-  ? AnchorTypeDefStruct<I, Defined>
-  : string;
 
 type AnchorTypeDefs<T extends IdlTypeDef[], Defined> = {
   [K in T[number]["name"]]: AnchorTypeDef<T[number] & { name: K }, Defined>;
@@ -207,11 +201,10 @@ export type AnchorAccounts<T extends Idl, Defined> = AnchorTypeDefs<
   Defined
 >;
 
-export type AnchorState<T extends Idl, Defined> = NonNullable<
-  T["state"]
->["struct"] extends { type: IdlTypeDefTyStruct }
-  ? AnchorTypeDef<NonNullable<T["state"]>["struct"], Defined>
-  : never;
+export type AnchorState<T extends Idl, Defined> = AnchorTypeDef<
+  NonNullable<T["state"]>["struct"],
+  Defined
+>;
 
 export type AnchorTypes<
   T extends Idl,
