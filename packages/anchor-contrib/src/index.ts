@@ -89,7 +89,7 @@ type StateNamespace<R extends InstructionsParsed, S> = Omit<
 };
 
 type AccountsNamespace<A> = {
-  [K in keyof A]: AccountClient & {
+  [K in keyof A]: Omit<AccountClient, "fetch" | "all" | "associated"> & {
     /**
      * Returns a deserialized account.
      *
