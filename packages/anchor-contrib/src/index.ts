@@ -16,17 +16,18 @@ import type {
   IdlTypeDef,
   IdlTypeDefTyStruct,
 } from "@project-serum/anchor/dist/cjs/idl";
-import type { ProgramAccount } from "@project-serum/anchor/dist/cjs/program/namespace";
+import type {
+  AccountClient,
+  ProgramAccount,
+  StateClient,
+} from "@project-serum/anchor/dist/cjs/program/namespace";
 import type {
   AccountMeta,
-  Commitment,
   PublicKey,
-  Signer,
   Transaction,
   TransactionInstruction,
   TransactionSignature,
 } from "@solana/web3.js";
-import type EventEmitter from "eventemitter3";
 
 type InstructionsParsed = Record<
   string,
@@ -78,28 +79,34 @@ type InstructionNamespace<R extends InstructionsParsed> =
 type TransactionNamespace<R extends InstructionsParsed> =
   MakeInstructionsNamespace<R, Transaction>;
 
-type StateNamespace<R extends InstructionsParsed, S> = {
-  address: () => Promise<PublicKey>;
+type StateNamespace<R extends InstructionsParsed, S> = Omit<
+  StateClient,
+  "rpc" | "fetch" | "instruction"
+> & {
   rpc: RpcNamespace<R>;
   fetch: () => Promise<S>;
   instruction: InstructionNamespace<R>;
-  subscribe: (commitment?: Commitment) => EventEmitter;
-  unsubscribe: () => void;
 };
 
 type AccountsNamespace<A> = {
-  [K in keyof A]: {
+  [K in keyof A]: AccountClient & {
+    /**
+     * Returns a deserialized account.
+     *
+     * @param address The address of the account to fetch.
+     */
     fetch: (address: PublicKey) => Promise<A[K]>;
-    size: number;
+    /**
+     * Returns all instances of this account type for the program.
+     */
     all: (filter?: Buffer) => Promise<ProgramAccount<A[K]>[]>;
-    subscribe: (address: Address, commitment?: Commitment) => EventEmitter;
-    unsubscribe: (address: Address) => void;
-    createInstruction: (
-      signer: Signer,
-      sizeOverride?: number
-    ) => Promise<TransactionInstruction>;
+    /**
+     * @deprecated since version 14.0.
+     *
+     * Function returning the associated account. Args are keys to associate.
+     * Order matters.
+     */
     associated: (...args: PublicKey[]) => Promise<A[K]>;
-    associatedAddress: (...args: PublicKey[]) => Promise<PublicKey>;
   };
 };
 
