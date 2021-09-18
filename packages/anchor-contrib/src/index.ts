@@ -89,7 +89,7 @@ type StateNamespace<R extends InstructionsParsed, S> = Omit<
 };
 
 type AccountsNamespace<A> = {
-  [K in keyof A]: AccountClient & {
+  [K in keyof A]: Omit<AccountClient, "fetch" | "all" | "associated"> & {
     /**
      * Returns a deserialized account.
      *
@@ -175,24 +175,22 @@ export type AnchorProgram<
 export type AnchorError<T extends Idl> = NonNullable<T["errors"]>[number];
 
 type FieldsOfType<
-  I extends IdlTypeDef & {
+  I extends {
     type: IdlTypeDefTyStruct;
   }
 > = I["type"]["fields"][number];
 
-type AnchorTypeDef<I extends IdlTypeDef, Defined> = I extends {
-  type: IdlTypeDefTyStruct;
-}
-  ? {
-      [F in FieldsOfType<I>["name"]]: DecodeType<
-        (FieldsOfType<I> & { name: F })["type"],
-        Defined
-      >;
-    }
-  : string;
+type AnchorTypeDef<I extends { type: IdlTypeDefTyStruct }, Defined> = {
+  [F in FieldsOfType<I>["name"]]: DecodeType<
+    (FieldsOfType<I> & { name: F })["type"],
+    Defined
+  >;
+};
 
 type AnchorTypeDefs<T extends IdlTypeDef[], Defined> = {
-  [K in T[number]["name"]]: AnchorTypeDef<T[number] & { name: K }, Defined>;
+  [K in T[number]["name"]]: T[number] extends { type: IdlTypeDefTyStruct }
+    ? AnchorTypeDef<T[number] & { name: K }, Defined>
+    : string;
 };
 
 export type AnchorDefined<
@@ -205,10 +203,11 @@ export type AnchorAccounts<T extends Idl, Defined> = AnchorTypeDefs<
   Defined
 >;
 
-export type AnchorState<T extends Idl, Defined> = AnchorTypeDef<
-  NonNullable<T["state"]>["struct"],
-  Defined
->;
+export type AnchorState<T extends Idl, Defined> = NonNullable<
+  T["state"]
+>["struct"] extends { type: IdlTypeDefTyStruct }
+  ? AnchorTypeDef<NonNullable<T["state"]>["struct"], Defined>
+  : never;
 
 export type AnchorTypes<
   T extends Idl,
