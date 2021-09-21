@@ -1,4 +1,5 @@
 import type {
+  Commitment,
   ConfirmOptions,
   Connection,
   KeyedAccountInfo,
@@ -11,7 +12,12 @@ import type {
 
 import type { Broadcaster, PendingTransaction, ReadonlyProvider } from ".";
 import { SingleConnectionBroadcaster } from "./broadcaster";
-import type { Provider, SendTxRequest, Wallet } from "./interfaces";
+import type {
+  Provider,
+  SendTxRequest,
+  TransactionSigner,
+  Wallet,
+} from "./interfaces";
 
 export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
   preflightCommitment: "recent",
@@ -54,12 +60,96 @@ export class SolanaReadonlyProvider implements ReadonlyProvider {
 }
 
 /**
+ * Signs Solana transactions.
+ */
+export class SolanaTransactionSigner implements TransactionSigner {
+  constructor(
+    public readonly wallet: Wallet,
+    public readonly broadcaster: Broadcaster,
+    public readonly preflightCommitment: Commitment = "recent"
+  ) {}
+
+  get publicKey(): PublicKey {
+    return this.wallet.publicKey;
+  }
+
+  /**
+   * Sends the given transaction, paid for and signed by the provider's wallet.
+   *
+   * @param tx      The transaction to send.
+   * @param signers The set of signers in addition to the provdier wallet that
+   *                will sign the transaction.
+   * @param opts    Transaction confirmation options.
+   */
+  async sign(
+    tx: Transaction,
+    signers: readonly (Signer | undefined)[] = [],
+    opts: ConfirmOptions = {
+      preflightCommitment: this.preflightCommitment,
+    }
+  ): Promise<Transaction> {
+    tx.feePayer = this.wallet.publicKey;
+    tx.recentBlockhash = await this.broadcaster.getRecentBlockhash(
+      opts.preflightCommitment
+    );
+
+    await this.wallet.signTransaction(tx);
+    signers
+      .filter((s): s is Signer => s !== undefined)
+      .forEach((kp) => {
+        tx.partialSign(kp);
+      });
+
+    return tx;
+  }
+
+  /**
+   * Similar to `send`, but for an array of transactions and signers.
+   */
+  async signAll(
+    reqs: readonly SendTxRequest[],
+    opts: ConfirmOptions = {
+      preflightCommitment: this.preflightCommitment,
+    }
+  ): Promise<Transaction[]> {
+    const blockhash = await this.broadcaster.getRecentBlockhash(
+      opts.preflightCommitment
+    );
+
+    const txs = reqs.map((r) => {
+      const tx = r.tx;
+      let signers = r.signers;
+
+      if (signers === undefined) {
+        signers = [];
+      }
+
+      tx.feePayer = this.wallet.publicKey;
+      tx.recentBlockhash = blockhash;
+
+      signers
+        .filter((s): s is Signer => s !== undefined)
+        .forEach((kp) => {
+          tx.partialSign(kp);
+        });
+
+      return tx;
+    });
+
+    const signedTxs = await this.wallet.signAllTransactions(txs);
+    return signedTxs;
+  }
+}
+
+/**
  * The network and wallet context used to send transactions paid for and signed
  * by the provider.
  *
  * This implementation was taken from Anchor.
  */
 export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
+  public readonly signer: TransactionSigner;
+
   /**
    * @param connection The cluster connection where the program is deployed.
    * @param sendConnection The connection where transactions are sent to.
@@ -73,6 +163,11 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     public readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {
     super(connection, opts);
+    this.signer = new SolanaTransactionSigner(
+      wallet,
+      broadcaster,
+      opts.preflightCommitment
+    );
   }
 
   /**
@@ -117,75 +212,12 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
    *                will sign the transaction.
    * @param opts    Transaction confirmation options.
    */
-  async sign(
-    tx: Transaction,
-    signers: readonly (Signer | undefined)[] = [],
-    opts: ConfirmOptions = this.opts
-  ): Promise<Transaction> {
-    tx.feePayer = this.wallet.publicKey;
-    tx.recentBlockhash = await this.broadcaster.getRecentBlockhash(
-      opts.preflightCommitment
-    );
-
-    await this.wallet.signTransaction(tx);
-    signers
-      .filter((s): s is Signer => s !== undefined)
-      .forEach((kp) => {
-        tx.partialSign(kp);
-      });
-
-    return tx;
-  }
-
-  /**
-   * Similar to `send`, but for an array of transactions and signers.
-   */
-  async signAll(
-    reqs: readonly SendTxRequest[],
-    opts: ConfirmOptions = this.opts
-  ): Promise<Transaction[]> {
-    const blockhash = await this.broadcaster.getRecentBlockhash(
-      opts.preflightCommitment
-    );
-
-    const txs = reqs.map((r) => {
-      const tx = r.tx;
-      let signers = r.signers;
-
-      if (signers === undefined) {
-        signers = [];
-      }
-
-      tx.feePayer = this.wallet.publicKey;
-      tx.recentBlockhash = blockhash;
-
-      signers
-        .filter((s): s is Signer => s !== undefined)
-        .forEach((kp) => {
-          tx.partialSign(kp);
-        });
-
-      return tx;
-    });
-
-    const signedTxs = await this.wallet.signAllTransactions(txs);
-    return signedTxs;
-  }
-
-  /**
-   * Sends the given transaction, paid for and signed by the provider's wallet.
-   *
-   * @param tx      The transaction to send.
-   * @param signers The set of signers in addition to the provdier wallet that
-   *                will sign the transaction.
-   * @param opts    Transaction confirmation options.
-   */
   async send(
     tx: Transaction,
     signers: (Signer | undefined)[] = [],
     opts: ConfirmOptions = this.opts
   ): Promise<PendingTransaction> {
-    const theTx = await this.sign(tx, signers, opts);
+    const theTx = await this.signer.sign(tx, signers, opts);
     const pending = await this.broadcaster.broadcast(theTx, opts);
     await pending.wait();
     return pending;
@@ -198,7 +230,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     reqs: readonly SendTxRequest[],
     opts: ConfirmOptions = this.opts
   ): Promise<PendingTransaction[]> {
-    const txs = await this.signAll(reqs, opts);
+    const txs = await this.signer.signAll(reqs, opts);
     return await Promise.all(
       txs.map(async (tx) => {
         const pending = await this.broadcaster.broadcast(tx, opts);
@@ -221,7 +253,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     signers: (Signer | undefined)[] = [],
     opts: ConfirmOptions = this.opts
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
-    const signedTx = await this.sign(tx, signers, opts);
+    const signedTx = await this.signer.sign(tx, signers, opts);
     return await this.broadcaster.simulate(signedTx, opts.commitment);
   }
 }

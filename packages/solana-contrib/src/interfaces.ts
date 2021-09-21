@@ -103,6 +103,8 @@ export interface Broadcaster {
  * An interface that can sign transactions.
  */
 export interface TransactionSigner {
+  publicKey: PublicKey;
+
   /**
    * Signs the given transaction, paid for and signed by the provider's wallet.
    *
@@ -132,11 +134,16 @@ export interface TransactionSigner {
  *
  * This interface is based on Anchor, but includes more features.
  */
-export interface Provider extends ReadonlyProvider, TransactionSigner {
+export interface Provider extends ReadonlyProvider {
   /**
    * Connection for reading data.
    */
   connection: Connection;
+
+  /**
+   * Signs transactions.
+   */
+  signer: TransactionSigner;
 
   /**
    * Broadcasts transactions.
