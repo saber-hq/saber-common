@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import React from "react";
 import { createContainer } from "unstated-next";
 
+import type { WalletAdapter, WalletProviderInfo } from ".";
 import type { UseSolanaError } from "./error";
 import { ErrorLevel } from "./error";
 import type {
@@ -28,26 +29,36 @@ export interface UseSolanaArgs
   onError?: (err: UseSolanaError) => void;
 }
 
+const defaultOnConnect = (
+  wallet: WalletAdapter<true>,
+  provider: WalletProviderInfo
+) => {
+  alert(`Connected to ${provider.name} wallet: ${wallet.publicKey.toString()}`);
+};
+
+const defaultOnDisconnect = (
+  _wallet: WalletAdapter<false>,
+  provider: WalletProviderInfo
+) => {
+  alert(`Disconnected from ${provider.name} wallet`);
+};
+
+const defaultOnError = (err: UseSolanaError) => {
+  if (err.level === ErrorLevel.WARN) {
+    console.warn(err);
+  } else {
+    console.error(err);
+  }
+};
+
 /**
  * Provides Solana.
  * @returns
  */
 const useSolanaInternal = ({
-  onConnect = (wallet, provider) => {
-    alert(
-      `Connected to ${provider.name} wallet: ${wallet.publicKey.toString()}`
-    );
-  },
-  onDisconnect = (_wallet, provider) => {
-    alert(`Disconnected from ${provider.name} wallet`);
-  },
-  onError = (err) => {
-    if (err.level === ErrorLevel.WARN) {
-      console.warn(err);
-    } else {
-      console.error(err);
-    }
-  },
+  onConnect = defaultOnConnect,
+  onDisconnect = defaultOnDisconnect,
+  onError = defaultOnError,
   ...connectionArgs
 }: UseSolanaArgs = {}): UseSolana => {
   const connectionCtx = useConnectionInternal(connectionArgs);
