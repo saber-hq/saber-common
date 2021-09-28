@@ -52,7 +52,7 @@ export const getOrCreateATA = async ({
   payer?: PublicKey;
 }): Promise<Result> => {
   const address = await getATAAddress({ mint, owner });
-  if (await provider.connection.getAccountInfo(address)) {
+  if (await provider.getAccountInfo(address)) {
     return { address, instruction: null };
   } else {
     return {

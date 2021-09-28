@@ -171,22 +171,22 @@ export async function getMintInfo(
   provider: Provider,
   addr: PublicKey
 ): Promise<MintInfo> {
-  const depositorAccInfo = await provider.connection.getAccountInfo(addr);
+  const depositorAccInfo = await provider.getAccountInfo(addr);
   if (depositorAccInfo === null) {
     throw new Error("Failed to find token account");
   }
-  return deserializeMint(depositorAccInfo.data);
+  return deserializeMint(depositorAccInfo.accountInfo.data);
 }
 
 export async function getTokenAccount(
   provider: Provider,
   addr: PublicKey
 ): Promise<Omit<AccountInfo, "address">> {
-  const depositorAccInfo = await provider.connection.getAccountInfo(addr);
+  const depositorAccInfo = await provider.getAccountInfo(addr);
   if (depositorAccInfo === null) {
     throw new Error("Failed to find token account");
   }
-  return deserializeAccount(depositorAccInfo.data);
+  return deserializeAccount(depositorAccInfo.accountInfo.data);
 }
 
 export function sleep(ms: number): Promise<void> {
