@@ -21,7 +21,7 @@ jobs:
         id: cache-node-modules
         with:
           path: ./node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
       - name: Install Yarn dependencies
         run: yarn install
       - run: echo '//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}' > .npmrc
