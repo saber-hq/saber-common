@@ -1,8 +1,9 @@
 import type { Network } from "@saberhq/solana-contrib";
 import { NATIVE_MINT } from "@solana/spl-token";
-import type { TokenInfo } from "@solana/spl-token-registry";
 import { PublicKey } from "@solana/web3.js";
 import type { Token as UToken } from "@ubeswap/token-math";
+
+import type { TokenInfo } from "./tokenList";
 
 /**
  * Token information.
@@ -16,27 +17,27 @@ export class Token implements UToken<Token> {
     this.network = chainIdToNetwork(info.chainId) ?? "localnet";
   }
 
-  public get chainId(): number {
+  get chainId(): number {
     return this.info.chainId;
   }
 
-  public get decimals(): number {
+  get decimals(): number {
     return this.info.decimals;
   }
 
-  public get name(): string {
+  get name(): string {
     return this.info.name;
   }
 
-  public get symbol(): string {
+  get symbol(): string {
     return this.info.symbol;
   }
 
-  public get address(): string {
+  get address(): string {
     return this.mintAccount.toString();
   }
 
-  public get icon(): string | undefined {
+  get icon(): string | undefined {
     return this.info.logoURI;
   }
 
@@ -74,7 +75,7 @@ export class Token implements UToken<Token> {
 
       // optional
       name: opts.name ?? `Token ${mint.toString().slice(0, 4)}`,
-      symbol: opts.symbol ?? "TOK",
+      symbol: opts.symbol ?? mint.toString().slice(0, 5),
       chainId: opts.chainId ?? ChainId.Localnet,
     });
 }

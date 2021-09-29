@@ -4,6 +4,7 @@ export * from "./layout";
 export * from "./price";
 export * from "./token";
 export * from "./tokenAmount";
+export * from "./tokenList";
 
 // re-export token-math types
 // so consumers don't need to use them
