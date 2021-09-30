@@ -1,5 +1,5 @@
 import { u64 } from "@solana/spl-token";
-import type { BigintIsh, Fraction, Percent } from "@ubeswap/token-math";
+import type { BigintIsh, Percent } from "@ubeswap/token-math";
 import { TokenAmount as UTokenAmount, validateU64 } from "@ubeswap/token-math";
 
 import type { Token } from "./token";
@@ -48,16 +48,6 @@ export class TokenAmount extends UTokenAmount<Token> {
   reduceBy(percent: Percent): TokenAmount {
     const result = super.reduceBy(percent);
     return new TokenAmount(this.token, result.raw);
-  }
-
-  /**
-   * Divides this TokenAmount by a raw number.
-   * @param other
-   * @returns
-   */
-  divide(other: Fraction | BigintIsh): TokenAmount {
-    const result = super.divide(other).multiply(this.denominator);
-    return new TokenAmount(this.token, result.quotient);
   }
 
   /**
