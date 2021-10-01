@@ -6,6 +6,7 @@ import {
   LedgerWalletAdapter,
   MathWalletAdapter,
   PhantomWalletAdapter,
+  SlopeWalletAdapter,
   SolletExtensionAdapter,
   SolongWalletAdapter,
 } from "./adapters";
@@ -19,6 +20,7 @@ import {
   LEDGER,
   MATHWALLET,
   PHANTOM,
+  SLOPE,
   SOLFLARE,
   SOLLET,
 } from "./icons";
@@ -28,6 +30,7 @@ export enum WalletType {
   Ledger = "Ledger",
   MathWallet = "MathWallet",
   Phantom = "Phantom",
+  Slope = "Slope",
   Sollet = "Sollet",
   SolletExtension = "SolletExtension",
   Solflare = "Solflare",
@@ -109,6 +112,14 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     makeAdapter: SolflareExtensionWalletAdapter,
 
     isInstalled: () => window.solflare?.isSolflare === true,
+  },
+  [WalletType.Slope]: {
+    name: "Slope",
+    url: "https://www.slope.finance/",
+    icon: SLOPE,
+    makeAdapter: SlopeWalletAdapter,
+    isInstalled: () => window.Slope !== undefined,
+    isMobile: true,
   },
 };
 
