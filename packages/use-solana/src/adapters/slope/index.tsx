@@ -28,15 +28,32 @@ export class SlopeWalletAdapter extends EventEmitter implements WalletAdapter {
   public async signAllTransactions(
     transactions: Transaction[]
   ): Promise<Transaction[]> {
-    const result: Transaction[] = [];
-    for (let i = 0; i < transactions.length; i++) {
-      const transaction = transactions[i];
-      if (transaction) {
-        const signed = await this.signTransaction(transaction);
-        result.push(signed);
-      }
+    if (!window.Slope) {
+      throw new Error("Slope not found");
     }
-    return result;
+
+    const wallet = new window.Slope();
+    const messages: string[] = [];
+    transactions.map((transaction) => {
+      messages.push(bs58.encode(transaction.serializeMessage()));
+    });
+    const { msg, data } = await wallet.signAllTransactions(messages);
+
+    const length = transactions.length;
+    if (!data.publicKey || data.signatures?.length !== length) {
+      throw new Error(msg);
+    }
+
+    const publicKey = new PublicKey(data.publicKey);
+
+    for (let i = 0; i < length; i++) {
+      transactions[i]?.addSignature(
+        publicKey,
+        bs58.decode(data.signatures[i] || "")
+      );
+    }
+
+    return transactions;
   }
 
   get publicKey(): PublicKey {
@@ -68,6 +85,11 @@ export class SlopeWalletAdapter extends EventEmitter implements WalletAdapter {
     }
 
     if (window.Slope === undefined) {
+      window.open(
+        "https://www.slope.finance/",
+        "_blank",
+        "noopener noreferrer"
+      );
       throw new Error("Slope not installed");
     }
 
