@@ -13,8 +13,8 @@ jobs:
           node-version: 14.x
       - uses: actions/cache@v2
         with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          path: ./.yarn
+          key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
       - name: Install packages
         run: yarn install
       - name: Build
