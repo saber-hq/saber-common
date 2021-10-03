@@ -19,8 +19,8 @@ jobs:
           node-version: 14.x
       - uses: actions/cache@v2
         with:
-          path: ./.yarn
-          key: ${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+          path: ./.yarn/cache
+          key: ${{ runner.os }}-${{ hashFiles('.yarn/**/*.js') }}
       - name: Install packages
         run: yarn install
       - name: Build
