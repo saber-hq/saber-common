@@ -55,5 +55,30 @@ declare global {
         disconnect: () => void;
       };
     };
+    Slope?: {
+      new (): {
+        connect(): Promise<{
+          msg: string;
+          data: {
+            publicKey?: string;
+          };
+        }>;
+        disconnect(): Promise<{ msg: string }>;
+        signTransaction(message: string): Promise<{
+          msg: string;
+          data: {
+            publicKey?: string;
+            signature?: string;
+          };
+        }>;
+        signAllTransactions(messages: string[]): Promise<{
+          msg: string;
+          data: {
+            publicKey?: string;
+            signatures?: string[];
+          };
+        }>;
+      };
+    };
   }
 }
