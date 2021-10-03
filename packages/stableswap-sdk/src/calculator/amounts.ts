@@ -1,7 +1,7 @@
 import type { Token } from "@saberhq/token-utils";
 import { Fraction, ONE, TokenAmount, ZERO } from "@saberhq/token-utils";
 import JSBI from "jsbi";
-import { mapValues } from "lodash";
+import mapValues from "lodash.mapvalues";
 
 import type { IExchangeInfo } from "../entities/exchange";
 import type { Fees } from "../state/fees";

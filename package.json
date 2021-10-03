@@ -11,14 +11,21 @@
   },
   "devDependencies": {
     "@project-serum/anchor": "^0.16.2",
+    "@rushstack/eslint-patch": "^1.0.7",
+    "@saberhq/eslint-config": "*",
+    "@saberhq/eslint-config-react": "*",
     "@size-limit/file": "^5.0.5",
     "@size-limit/preset-small-lib": "^5.0.5",
     "@solana/spl-token-registry": "^0.2.270",
     "@solana/web3.js": "^1.29.2",
     "@types/bn.js": "^5.1.0",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.2",
     "@types/react": "^17.0.26",
     "bn.js": "^5.2.0",
     "eslint": "^7.32.0",
+    "eslint-import-resolver-node": "^0.3.6",
+    "eslint-plugin-import": "^2.24.2",
     "husky": ">=6",
     "jsbi": "^3.2.5",
     "lerna": "^4.0.0",
@@ -37,5 +44,6 @@
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "packageManager": "yarn@3.0.2"
 }

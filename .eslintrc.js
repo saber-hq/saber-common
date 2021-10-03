@@ -1,3 +1,5 @@
+require("@rushstack/eslint-patch/modern-module-resolution");
+
 module.exports = {
   env: {
     browser: true,
@@ -5,9 +7,11 @@ module.exports = {
     node: true,
     jest: true,
   },
+  settings: {
+    "import/resolver": "node",
+  },
   ignorePatterns: ["*.js", "packages/*/dist/**/*"],
   extends: ["@saberhq/eslint-config-react"],
-  settings: { react: { version: "detect" } },
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: "tsconfig.json",
