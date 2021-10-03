@@ -37,7 +37,7 @@ jobs:
           yarn lerna version --force-publish --no-git-tag-version --yes ${{ github.event.inputs.version }}
           # update yarn deps for version bump
           CI='' yarn
-          VERSION=$(node -e "console.log(require('./package.json').version);")
+          VERSION=$(node -e "console.log(require('./lerna.json').version);")
           git config user.name "GitHub Actions"
           git config user.email github-actions@github.com
           git commit -a -m "Release v$VERSION"
