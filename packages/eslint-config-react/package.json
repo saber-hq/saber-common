@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/eslint-config-react",
-  "version": "1.3.7",
+  "version": "1.3.8",
   "description": "Saber base React ESLint config",
   "keywords": [
     "eslint",
@@ -30,12 +30,13 @@
   "bugs": {
     "url": "https://github.com/saber-hq/saber-common/issues"
   },
+  "peerDependencies": {
+    "eslint": ">=7",
+    "eslint-plugin-import": "^2.24.2"
+  },
   "dependencies": {
-    "@saberhq/eslint-config": "^1.3.7",
+    "@saberhq/eslint-config": "^1.3.8",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0"
-  },
-  "peerDependencies": {
-    "eslint": ">=7"
   }
 }

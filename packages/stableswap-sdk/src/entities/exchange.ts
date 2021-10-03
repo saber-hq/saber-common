@@ -1,3 +1,4 @@
+import type { TokenInfo } from "@saberhq/token-utils";
 import {
   deserializeAccount,
   deserializeMint,
@@ -5,7 +6,6 @@ import {
   Token,
   TokenAmount,
 } from "@saberhq/token-utils";
-import type { TokenInfo } from "@solana/spl-token-registry";
 import type { Connection, PublicKey } from "@solana/web3.js";
 import type JSBI from "jsbi";
 
