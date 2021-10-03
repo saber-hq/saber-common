@@ -31,8 +31,6 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('.yarn/**/*.js') }}
       - name: Install Yarn dependencies
         run: yarn install
-      - run: |
-          echo 'npmAuthToken: "${NODE_AUTH_TOKEN}"' >> .yarnrc.yml
       - run: yarn build
       - name: Perform Git release
         run: |
@@ -45,8 +43,10 @@ jobs:
           git commit -a -m "Release v$VERSION"
           git tag "v$VERSION"
           git push origin HEAD --tags
-          git update-index --assume-unchanged .yarnrc.yml
       - name: Publish
-        run: yarn lerna publish --no-verify-access --yes from-package
+        run: |
+          echo 'npmAuthToken: "${NODE_AUTH_TOKEN}"' >> .yarnrc.yml
+          git update-index --assume-unchanged .yarnrc.yml
+          yarn lerna publish --no-verify-access --yes from-package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
