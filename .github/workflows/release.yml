@@ -34,7 +34,7 @@ jobs:
       - run: yarn build
       - name: Perform Git release
         run: |
-          yarn lerna version --force-publish --no-git-tag-version --yes ${{ github.event.inputs.version }}
+          yarn lerna version --force-publish --no-git-tag-version --conventional-commits --yes ${{ github.event.inputs.version }}
           # update yarn deps for version bump
           CI='' yarn
           VERSION=$(node -e "console.log(require('./lerna.json').version);")
