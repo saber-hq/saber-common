@@ -30,13 +30,13 @@
     "@solana/spl-token-registry": "^0.2.270",
     "@solana/web3.js": "^1.29.2",
     "@types/bn.js": "^5.1.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.1"
   },
   "peerDependencies": {
     "@solana/spl-token-registry": "^0.2.270",
     "@solana/web3.js": "^1.29.2",
     "bn.js": "^5.2",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.1"
   },
   "publishConfig": {
     "access": "public"

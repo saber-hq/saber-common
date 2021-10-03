@@ -27,7 +27,7 @@
     "eventemitter3": "^4.0.7",
     "fast-json-stable-stringify": "^2.1.0",
     "tiny-invariant": "^1.1.0",
-    "tslib": "^2.3.0",
+    "tslib": "^2.3.1",
     "unstated-next": "^1.1.0"
   },
   "peerDependencies": {

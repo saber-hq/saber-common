@@ -40,6 +40,6 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unused-imports": "^1.1.5",
-    "prettier": "^2.3.2"
+    "prettier": "^2.4.1"
   }
 }
