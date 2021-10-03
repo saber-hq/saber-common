@@ -6,6 +6,7 @@
     "target": "es6",
     "module": "commonjs",
     "importHelpers": true,
+    "types": [],
 
     "sourceMap": true,
     "declaration": true,

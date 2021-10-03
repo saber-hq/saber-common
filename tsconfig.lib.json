@@ -7,6 +7,7 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "importHelpers": true,
+    "types": [],
 
     "sourceMap": true,
     "declaration": true,
