@@ -3192,6 +3192,7 @@ __metadata:
     "@solana/spl-token-registry": ^0.2.270
     "@solana/web3.js": ^1.29.2
     bn.js: ^5.2
+    tslib: ^2.3.0
   languageName: unknown
   linkType: soft
 
