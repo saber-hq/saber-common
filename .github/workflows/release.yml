@@ -37,7 +37,8 @@ jobs:
       - name: Perform Git release
         run: |
           yarn lerna version --force-publish --no-git-tag-version --yes ${{ github.event.inputs.version }}
-          yarn
+          # update yarn deps for version bump
+          CI=false yarn
           VERSION=$(node -e "console.log(require('./package.json').version);")
           git config user.name "GitHub Actions"
           git config user.email github-actions@github.com
