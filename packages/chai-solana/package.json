@@ -3,7 +3,7 @@
   "version": "1.3.7",
   "description": "Solana Chai helpers",
   "author": "Ian Macalinao <ian@saber.so>",
-  "homepage": "https://github.com/saber-hq/use-solana#readme",
+  "homepage": "https://github.com/saber-hq/saber-common#readme",
   "license": "Apache-2.0",
   "scripts": {
     "build": "tsc",
@@ -12,10 +12,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saber-hq/solana-common.git"
+    "url": "git+https://github.com/saber-hq/saber-common.git"
   },
   "bugs": {
-    "url": "https://github.com/saber-hq/use-solana/issues"
+    "url": "https://github.com/saber-hq/saber-common/issues"
   },
   "main": "dist/index.js",
   "files": [

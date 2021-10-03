@@ -55,7 +55,6 @@
     "@types/yargs": "^17.0.3",
     "yargs": "^17.2.1"
   },
-  "resolutions": {},
   "files": [
     "dist/",
     "src/"
