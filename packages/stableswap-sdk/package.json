@@ -10,7 +10,7 @@
     "url": "https://github.com/saber-hq/saber-common.git"
   },
   "author": "Saber Team <team@saber.so>",
-  "version": "1.3.14",
+  "version": "1.3.15",
   "main": "dist/index.js",
   "license": "Apache-2.0",
   "scripts": {
@@ -46,8 +46,8 @@
     "jsbi": "^3.2.5"
   },
   "dependencies": {
-    "@saberhq/solana-contrib": "^1.3.14",
-    "@saberhq/token-utils": "^1.3.14",
+    "@saberhq/solana-contrib": "^1.3.15",
+    "@saberhq/token-utils": "^1.3.15",
     "@solana/buffer-layout": "^3.0.0",
     "@types/yargs": "^17.0.3",
     "b58": "^4.0.3",
