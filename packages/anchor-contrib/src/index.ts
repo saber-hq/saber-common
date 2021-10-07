@@ -79,15 +79,6 @@ type InstructionNamespace<R extends InstructionsParsed> =
 type TransactionNamespace<R extends InstructionsParsed> =
   MakeInstructionsNamespace<R, Transaction>;
 
-type StateNamespace<R extends InstructionsParsed, S> = Omit<
-  StateClient,
-  "rpc" | "fetch" | "instruction"
-> & {
-  rpc: RpcNamespace<R>;
-  fetch: () => Promise<S>;
-  instruction: InstructionNamespace<R>;
-};
-
 type AccountsNamespace<A> = {
   [K in keyof A]: Omit<AccountClient, "fetch" | "all" | "associated"> & {
     /**
@@ -166,7 +157,7 @@ export type AnchorProgram<
   "rpc" | "state" | "account" | "transaction" | "instruction"
 > & {
   rpc: RpcNamespace<RPCInstructions>;
-  state: StateNamespace<Methods, AnchorState<IDL, Defined>>;
+  state: StateClient<IDL>;
   account: AccountsNamespace<A>;
   transaction: TransactionNamespace<RPCInstructions & Methods>;
   instruction: InstructionNamespace<RPCInstructions & Methods>;
