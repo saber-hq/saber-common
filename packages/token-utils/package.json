@@ -27,7 +27,7 @@
     "src/"
   ],
   "devDependencies": {
-    "@solana/spl-token-registry": "^0.2.273",
+    "@solana/spl-token-registry": "^0.2.274",
     "@solana/web3.js": "^1.29.2",
     "@types/bn.js": "^5.1.0",
     "tslib": "^2.3.1"
