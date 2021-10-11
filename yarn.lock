@@ -3147,6 +3147,7 @@ __metadata:
     "@types/node": ^16.10.3
     "@types/react": ^17.0.27
     bn.js: ^5.2.0
+    buffer: ^6.0.3
     eslint: ^7.32.0
     eslint-import-resolver-node: ^0.3.6
     eslint-plugin-import: ^2.24.2
@@ -5112,7 +5113,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer@npm:6.0.3, buffer@npm:~6.0.3":
+"buffer@npm:6.0.3, buffer@npm:^6.0.3, buffer@npm:~6.0.3":
   version: 6.0.3
   resolution: "buffer@npm:6.0.3"
   dependencies:
