@@ -24,7 +24,7 @@
     "@types/react": "^17.0.27",
     "bn.js": "^5.2.0",
     "buffer": "^6.0.3",
-    "eslint": "^7.32.0",
+    "eslint": "^8.0.0",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-plugin-import": "^2.24.2",
     "husky": "^7.0.2",
