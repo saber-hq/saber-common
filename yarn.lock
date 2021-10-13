@@ -3066,6 +3066,7 @@ __metadata:
     "@project-serum/anchor": ^0.17.1-beta.1
     "@solana/web3.js": ^1.29.2
     eventemitter3: ^4.0.7
+    tslib: ^2.3.1
   peerDependencies:
     "@project-serum/anchor": ^0.16.2
     "@solana/web3.js": ^1.29.2
@@ -3096,7 +3097,6 @@ __metadata:
     "@solana/spl-token-registry": "*"
     "@solana/web3.js": ^1.29.2
     bn.js: ^5.2.0
-    tslib: ^2.3.0
   languageName: unknown
   linkType: soft
 
@@ -3204,6 +3204,7 @@ __metadata:
     jest: ^27.2.5
     jsbi: ^3.2.5
     lodash.mapvalues: ^4.6.0
+    tslib: ^2.3.1
     yargs: ^17.2.1
   peerDependencies:
     "@project-serum/anchor": ^0.16.2
@@ -3232,7 +3233,6 @@ __metadata:
     "@solana/spl-token-registry": ^0.2.270
     "@solana/web3.js": ^1.29.2
     bn.js: ^5.2
-    tslib: ^2.3.1
   languageName: unknown
   linkType: soft
 

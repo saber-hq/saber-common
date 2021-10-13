@@ -5,7 +5,8 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "importHelpers": true
   },
   "include": ["src/**/*.ts"]
 }

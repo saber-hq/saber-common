@@ -52,6 +52,7 @@
     "@types/yargs": "^17.0.3",
     "b58": "^4.0.3",
     "lodash.mapvalues": "^4.6.0",
+    "tslib": "^2.3.1",
     "yargs": "^17.2.1"
   },
   "files": [
