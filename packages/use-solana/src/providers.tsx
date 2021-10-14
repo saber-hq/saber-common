@@ -87,7 +87,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
   },
   [WalletType.Coin98]: {
     name: "Coin98",
-    url: "https://docs.coin98.com/products/coin98-wallet",
+    url: "https://wallet.coin98.com/",
     icon: COIN98,
     makeAdapter: Coin98Adapter,
     isInstalled: () => window.coin98 !== undefined,
