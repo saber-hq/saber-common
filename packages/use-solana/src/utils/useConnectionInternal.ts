@@ -20,6 +20,7 @@ export interface ConnectionContext {
   network: Network;
   setNetwork: (val: Network) => void;
   endpoint: string;
+  setEndpoints: (endpoints: Omit<NetworkConfig, "name">) => void;
 }
 
 const makeNetworkConfigMap = (
@@ -58,7 +59,9 @@ export const useConnectionInternal = ({
   );
   const configMap = makeNetworkConfigMap(networkConfigs);
   const config = configMap[network];
-  const { endpoint, endpointWs } = config;
+  const [{ endpoint, endpointWs }, setEndpoints] = useLocalStorageState<
+    Omit<NetworkConfig, "name">
+  >("use-solana/rpc-endpoint", config);
 
   const connection = useMemo(
     () =>
@@ -83,5 +86,6 @@ export const useConnectionInternal = ({
     network,
     setNetwork,
     endpoint,
+    setEndpoints,
   };
 };
