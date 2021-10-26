@@ -47,5 +47,5 @@
     "analyze": "size-limit --why"
   },
   "version": "0.0.0",
-  "packageManager": "yarn@3.0.2"
+  "packageManager": "yarn@3.1.0"
 }
