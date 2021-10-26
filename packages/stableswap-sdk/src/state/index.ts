@@ -10,6 +10,8 @@ export * from "./fees";
 export * from "./layout";
 
 export interface StableSwapState {
+  isPaused: boolean;
+
   /**
    * Mint account for pool token
    */
@@ -86,6 +88,7 @@ export const decodeSwap = (data: Buffer): StableSwapState => {
     },
     poolTokenMint,
     initialAmpFactor,
+    isPaused: stableSwapData.isPaused,
     targetAmpFactor,
     startRampTimestamp,
     stopRampTimestamp,
