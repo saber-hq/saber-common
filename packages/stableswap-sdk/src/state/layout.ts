@@ -43,17 +43,18 @@ export const StableSwapLayout = structLayout<{
   adminAccount: string;
   adminFeeAccountA: string;
   adminFeeAccountB: string;
+  fees: RawFees;
+  initialAmpFactor: Buffer;
   isInitialized: boolean;
+  isPaused: boolean;
+  mintA: string;
+  mintB: string;
+  startRampTs: number;
+  stopRampTs: number;
+  targetAmpFactor: Buffer;
   tokenAccountA: string;
   tokenAccountB: string;
   tokenPool: string;
-  mintA: string;
-  mintB: string;
-  initialAmpFactor: Buffer;
-  targetAmpFactor: Buffer;
-  startRampTs: number;
-  stopRampTs: number;
-  fees: RawFees;
 }>([
   BufferLayout.u8("isInitialized"),
   BufferLayout.u8("isPaused"),

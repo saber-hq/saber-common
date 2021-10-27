@@ -56,6 +56,7 @@ export interface InitializeSwapInstruction {
   nonce: number;
   ampFactor: u64;
   fees?: Fees;
+  isPaused?: boolean;
 }
 
 export interface SwapInstruction {
