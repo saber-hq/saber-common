@@ -69,6 +69,17 @@ export class TransactionEnvelope {
   }
 
   /**
+   * Simulates the transaction, without validating signers.
+   * @param opts
+   * @returns
+   */
+  public simulateUnchecked(
+    opts?: ConfirmOptions
+  ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
+    return this.provider.simulate(this.build(), [], opts);
+  }
+
+  /**
    * Sends the transaction without confirming it.
    * @param opts
    * @returns
