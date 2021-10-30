@@ -11,32 +11,45 @@ import type { TokenInfo } from "./tokenList";
 export class Token implements UToken<Token> {
   public readonly mintAccount: PublicKey;
   public readonly network: Network;
-  private mintAddress: string;
 
   constructor(public readonly info: TokenInfo) {
     this.mintAccount = new PublicKey(info.address);
     this.network = chainIdToNetwork(info.chainId) ?? "localnet";
-    this.mintAddress = info.address;
   }
 
+  /**
+   * The Base58 string representation of the mint address.
+   */
+  get address(): string {
+    return this.info.address;
+  }
+
+  /**
+   * The chain ID of the token.
+   */
   get chainId(): number {
     return this.info.chainId;
   }
 
+  /**
+   * Number of decimals of the token.
+   */
   get decimals(): number {
     return this.info.decimals;
   }
 
+  /**
+   * The name of the token.
+   */
   get name(): string {
     return this.info.name;
   }
 
+  /**
+   * The symbol of the token.
+   */
   get symbol(): string {
     return this.info.symbol;
-  }
-
-  get address(): string {
-    return this.mintAddress;
   }
 
   get icon(): string | undefined {
@@ -48,7 +61,7 @@ export class Token implements UToken<Token> {
   }
 
   toString(): string {
-    return `Token[mint=${this.mintAddress}, decimals=${this.decimals}, network=${this.network}]`;
+    return `Token[mint=${this.address}, decimals=${this.decimals}, network=${this.network}]`;
   }
 
   toJSON(): unknown {
