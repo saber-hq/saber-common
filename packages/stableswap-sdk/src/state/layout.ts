@@ -46,7 +46,7 @@ export const StableSwapLayout = structLayout<{
   fees: RawFees;
   initialAmpFactor: Buffer;
   isInitialized: boolean;
-  isPaused: boolean;
+  isPaused: 0 | 1;
   mintA: string;
   mintB: string;
   startRampTs: number;

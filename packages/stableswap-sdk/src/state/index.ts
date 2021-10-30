@@ -9,7 +9,13 @@ import { StableSwapLayout } from "./layout";
 export * from "./fees";
 export * from "./layout";
 
+/**
+ * State of a StableSwap, read from the swap account.
+ */
 export interface StableSwapState {
+  /**
+   * Whether or not the swap is paused.
+   */
   isPaused: boolean;
 
   /**
@@ -88,7 +94,7 @@ export const decodeSwap = (data: Buffer): StableSwapState => {
     },
     poolTokenMint,
     initialAmpFactor,
-    isPaused: stableSwapData.isPaused,
+    isPaused: !!stableSwapData.isPaused,
     targetAmpFactor,
     startRampTimestamp,
     stopRampTimestamp,
