@@ -9,7 +9,18 @@ import type { TokenInfo } from "./tokenList";
  * Token information.
  */
 export class Token implements UToken<Token> {
+  /**
+   * The mint PublicKey of the token.
+   *
+   * Avoid using this value to print it to a string, as base58
+   * strings are relatively slow to create since they require the use
+   * of hash functions.
+   */
   public readonly mintAccount: PublicKey;
+
+  /**
+   * The network that the Token is on.
+   */
   public readonly network: Network;
 
   constructor(public readonly info: TokenInfo) {
@@ -52,6 +63,9 @@ export class Token implements UToken<Token> {
     return this.info.symbol;
   }
 
+  /**
+   * The token's icon to render.
+   */
   get icon(): string | undefined {
     return this.info.logoURI;
   }
