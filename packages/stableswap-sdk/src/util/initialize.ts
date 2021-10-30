@@ -9,12 +9,11 @@ import {
   u64,
 } from "@saberhq/token-utils";
 import type {
-  PublicKey,
   Signer,
   TransactionInstruction,
   TransactionSignature,
 } from "@solana/web3.js";
-import { Keypair, SystemProgram } from "@solana/web3.js";
+import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 
 import { SWAP_PROGRAM_ID, ZERO_TS } from "../constants";
 import type {
@@ -118,6 +117,10 @@ export const loadSwapFromInitializeArgs = (
   initializeArgs: InitializeSwapInstruction
 ): StableSwap =>
   new StableSwap(initializeArgs.config, {
+    isInitialized: true,
+    nonce: initializeArgs.nonce,
+    futureAdminDeadline: ZERO_TS,
+    futureAdminAccount: PublicKey.default,
     adminAccount: initializeArgs.adminAccount,
 
     tokenA: initializeArgs.tokenA,
