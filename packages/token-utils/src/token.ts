@@ -17,6 +17,10 @@ export class Token implements UToken<Token> {
    * of hash functions.
    */
   public readonly mintAccount: PublicKey;
+
+  /**
+   * The network that the Token is on.
+   */
   public readonly network: Network;
 
   constructor(public readonly info: TokenInfo) {
@@ -59,6 +63,9 @@ export class Token implements UToken<Token> {
     return this.info.symbol;
   }
 
+  /**
+   * The token's icon to render.
+   */
   get icon(): string | undefined {
     return this.info.logoURI;
   }
