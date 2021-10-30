@@ -9,8 +9,24 @@ import { StableSwapLayout } from "./layout";
 export * from "./fees";
 export * from "./layout";
 
+/**
+ * State of a StableSwap, read from the swap account.
+ */
 export interface StableSwapState {
+  /**
+   * Whether or not the swap is initialized.
+   */
+  isInitialized: boolean;
+
+  /**
+   * Whether or not the swap is paused.
+   */
   isPaused: boolean;
+
+  /**
+   * Nonce used to generate the swap authority.
+   */
+  nonce: number;
 
   /**
    * Mint account for pool token
@@ -46,6 +62,16 @@ export interface StableSwapState {
   stopRampTimestamp: number;
 
   /**
+   * When the future admin can no longer become the admin, if applicable.
+   */
+  futureAdminDeadline: number;
+
+  /**
+   * The next admin.
+   */
+  futureAdminAccount: PublicKey;
+
+  /**
    * Fee schedule
    */
   fees: Fees;
@@ -75,6 +101,11 @@ export const decodeSwap = (data: Buffer): StableSwapState => {
   const stopRampTimestamp = stableSwapData.stopRampTs;
   const fees = decodeFees(stableSwapData.fees);
   return {
+    isInitialized: !!stableSwapData.isInitialized,
+    isPaused: !!stableSwapData.isPaused,
+    nonce: stableSwapData.nonce,
+    futureAdminDeadline: stableSwapData.futureAdminDeadline,
+    futureAdminAccount: new PublicKey(stableSwapData.futureAdminAccount),
     adminAccount,
     tokenA: {
       adminFeeAccount: adminFeeAccountA,
@@ -88,7 +119,6 @@ export const decodeSwap = (data: Buffer): StableSwapState => {
     },
     poolTokenMint,
     initialAmpFactor,
-    isPaused: stableSwapData.isPaused,
     targetAmpFactor,
     startRampTimestamp,
     stopRampTimestamp,

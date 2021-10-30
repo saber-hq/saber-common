@@ -40,21 +40,24 @@ export const FeesLayout = structLayout<RawFees>(
  * Layout for stable swap state
  */
 export const StableSwapLayout = structLayout<{
-  adminAccount: string;
-  adminFeeAccountA: string;
-  adminFeeAccountB: string;
-  fees: RawFees;
+  isInitialized: 0 | 1;
+  isPaused: 0 | 1;
+  nonce: number;
   initialAmpFactor: Buffer;
-  isInitialized: boolean;
-  isPaused: boolean;
-  mintA: string;
-  mintB: string;
+  targetAmpFactor: Buffer;
   startRampTs: number;
   stopRampTs: number;
-  targetAmpFactor: Buffer;
+  futureAdminDeadline: number;
+  futureAdminAccount: string;
+  adminAccount: string;
   tokenAccountA: string;
   tokenAccountB: string;
   tokenPool: string;
+  mintA: string;
+  mintB: string;
+  adminFeeAccountA: string;
+  adminFeeAccountB: string;
+  fees: RawFees;
 }>([
   BufferLayout.u8("isInitialized"),
   BufferLayout.u8("isPaused"),
