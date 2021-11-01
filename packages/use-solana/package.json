@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/use-solana",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "repository": "git@github.com:saber-hq/solana-common.git",
   "author": "Ian Macalinao <ian@saber.so>",
   "license": "Apache-2.0",
@@ -21,7 +21,7 @@
     "@ledgerhq/hw-transport": "^6.11.2",
     "@ledgerhq/hw-transport-webusb": "^6.11.2",
     "@project-serum/sol-wallet-adapter": "^0.2.6",
-    "@saberhq/solana-contrib": "^1.5.2",
+    "@saberhq/solana-contrib": "^1.6.0",
     "@types/bs58": "^4.0.1",
     "bs58": "^4.0.1",
     "eventemitter3": "^4.0.7",
