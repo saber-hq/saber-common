@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-export function useLocalStorageState<T>(
+export function usePersistedKVStore<T>(
   key: string,
   defaultState: T
 ): [T, (newState: T) => void] {

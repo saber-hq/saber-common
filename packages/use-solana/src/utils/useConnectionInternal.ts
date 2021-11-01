@@ -8,7 +8,7 @@ import type { Commitment } from "@solana/web3.js";
 import { Connection } from "@solana/web3.js";
 import { useMemo } from "react";
 
-import { useLocalStorageState } from "./useLocalStorageState";
+import { usePersistedKVStore } from "./usePersistedKVStore";
 
 export type PartialNetworkConfigMap = {
   [N in Network]?: Partial<NetworkConfig>;
@@ -53,13 +53,13 @@ export const useConnectionInternal = ({
   networkConfigs = DEFAULT_NETWORK_CONFIG_MAP,
   commitment = "recent",
 }: ConnectionArgs): ConnectionContext => {
-  const [network, setNetwork] = useLocalStorageState<Network>(
+  const [network, setNetwork] = usePersistedKVStore<Network>(
     "use-solana/network",
     defaultNetwork
   );
   const configMap = makeNetworkConfigMap(networkConfigs);
   const config = configMap[network];
-  const [{ endpoint, endpointWs }, setEndpoints] = useLocalStorageState<
+  const [{ endpoint, endpointWs }, setEndpoints] = usePersistedKVStore<
     Omit<NetworkConfig, "name">
   >("use-solana/rpc-endpoint", config);
 

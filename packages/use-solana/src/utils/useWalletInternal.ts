@@ -12,7 +12,7 @@ import {
 } from "../error";
 import type { WalletProviderInfo, WalletType } from "../providers";
 import { WALLET_PROVIDERS } from "../providers";
-import { useLocalStorageState } from "./useLocalStorageState";
+import { usePersistedKVStore } from "./usePersistedKVStore";
 
 /**
  * Wallet-related information.
@@ -73,7 +73,7 @@ export const useWalletInternal = ({
   endpoint,
   onError,
 }: UseWalletArgs): UseWallet<boolean> => {
-  const [walletConfigStr, setWalletConfigStr] = useLocalStorageState<
+  const [walletConfigStr, setWalletConfigStr] = usePersistedKVStore<
     string | null
   >("use-solana/wallet-config", null);
 
