@@ -12,7 +12,8 @@ import {
 } from "../error";
 import type { WalletProviderInfo, WalletType } from "../providers";
 import { WALLET_PROVIDERS } from "../providers";
-import { useLocalStorageState } from "./useLocalStorageState";
+import type { StorageAdapter } from "../storage";
+import { usePersistedKVStore } from "./usePersistedKVStore";
 
 /**
  * Wallet-related information.
@@ -59,6 +60,7 @@ export interface UseWalletArgs {
   onError: (err: UseSolanaError) => void;
   network: Network;
   endpoint: string;
+  storageAdapter: StorageAdapter;
 }
 
 interface WalletConfig {
@@ -72,10 +74,11 @@ export const useWalletInternal = ({
   network,
   endpoint,
   onError,
+  storageAdapter,
 }: UseWalletArgs): UseWallet<boolean> => {
-  const [walletConfigStr, setWalletConfigStr] = useLocalStorageState<
+  const [walletConfigStr, setWalletConfigStr] = usePersistedKVStore<
     string | null
-  >("use-solana/wallet-config", null);
+  >("use-solana/wallet-config", null, storageAdapter);
 
   const walletConfig: WalletConfig | null = useMemo(() => {
     try {
@@ -161,14 +164,14 @@ export const useWalletInternal = ({
           onError(new WalletActivateError(e, nextWalletType, nextWalletArgs));
         }
       }
-      setWalletConfigStr(nextWalletConfigStr);
+      await setWalletConfigStr(nextWalletConfigStr);
     },
     [onError, setWalletConfigStr, wallet, walletConfigStr]
   );
 
-  const disconnect = useCallback(() => {
+  const disconnect = useCallback(async () => {
     wallet?.disconnect();
-    setWalletConfigStr(null);
+    await setWalletConfigStr(null);
   }, [setWalletConfigStr, wallet]);
 
   return {

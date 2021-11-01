@@ -5,6 +5,7 @@ import { createContainer } from "unstated-next";
 import type { WalletAdapter, WalletProviderInfo } from ".";
 import type { UseSolanaError } from "./error";
 import { ErrorLevel } from "./error";
+import { LOCAL_STORAGE_ADAPTER } from "./storage";
 import type {
   ConnectionArgs,
   ConnectionContext,
@@ -21,8 +22,10 @@ export interface UseSolana<T extends boolean = boolean>
     UseProvider {}
 
 export interface UseSolanaArgs
-  extends ConnectionArgs,
-    Partial<Pick<UseWalletArgs, "onConnect" | "onDisconnect">> {
+  extends Omit<ConnectionArgs, "storageAdapter">,
+    Partial<
+      Pick<UseWalletArgs, "onConnect" | "onDisconnect" | "storageAdapter">
+    > {
   /**
    * Called when an error is thrown.
    */
@@ -59,9 +62,13 @@ const useSolanaInternal = ({
   onConnect = defaultOnConnect,
   onDisconnect = defaultOnDisconnect,
   onError = defaultOnError,
+  storageAdapter = LOCAL_STORAGE_ADAPTER,
   ...connectionArgs
 }: UseSolanaArgs = {}): UseSolana => {
-  const connectionCtx = useConnectionInternal(connectionArgs);
+  const connectionCtx = useConnectionInternal({
+    ...connectionArgs,
+    storageAdapter,
+  });
   const { network, endpoint } = connectionCtx;
   const walletCtx = useWalletInternal({
     onConnect,
@@ -69,6 +76,7 @@ const useSolanaInternal = ({
     network,
     endpoint,
     onError,
+    storageAdapter,
   });
   const providerCtx = useProviderInternal({
     connection: connectionCtx.connection,
