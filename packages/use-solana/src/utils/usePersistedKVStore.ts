@@ -1,35 +1,38 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+
+import type { StorageAdapter } from "../storage";
 
 export function usePersistedKVStore<T>(
   key: string,
-  defaultState: T
-): [T, (newState: T) => void] {
-  const [state, setState] = useState<T>((): T => {
-    // NOTE: Not sure if this is ok
-    if (typeof window !== "undefined") {
-      const storedState = localStorage.getItem(key);
+  defaultState: T,
+  storageAdapter: StorageAdapter
+): [T, (newState: T) => Promise<void>] {
+  const [state, setState] = useState<T>(defaultState);
+
+  useEffect(() => {
+    void (async () => {
+      const storedState = await storageAdapter.get(key);
       if (storedState) {
+        console.debug(`Restoring user settings for ${key}`);
         return JSON.parse(storedState) as T;
       }
-    }
-
-    return defaultState;
-  });
+    })();
+  }, [key, storageAdapter]);
 
   const setLocalStorageState = useCallback(
-    (newState: T) => {
+    async (newState: T | null) => {
       const changed = state !== newState;
       if (!changed) {
         return;
       }
-      setState(newState);
+      setState(newState ?? defaultState);
       if (newState === null) {
-        localStorage.removeItem(key);
+        await storageAdapter.remove(key);
       } else {
-        localStorage.setItem(key, JSON.stringify(newState));
+        await storageAdapter.set(key, JSON.stringify(newState));
       }
     },
-    [state, key]
+    [state, defaultState, storageAdapter, key]
   );
 
   return [state, setLocalStorageState];
