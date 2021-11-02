@@ -65,7 +65,7 @@ export const useConnectionInternal = ({
   const config = configMap[network];
   const [{ endpoint, endpointWs }, setEndpoints] = usePersistedKVStore<
     Omit<NetworkConfig, "name">
-  >("use-solana/rpc-endpoint", config, storageAdapter);
+  >(`use-solana/rpc-endpoint/${network}`, config, storageAdapter);
 
   const connection = useMemo(
     () =>
