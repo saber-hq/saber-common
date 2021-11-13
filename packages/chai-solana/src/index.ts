@@ -41,7 +41,7 @@ declare global {
 }
 
 export const chaiSolana: Chai.ChaiPlugin = (chai) => {
-  chai.use(chaiBN(BN));
+  chai.use(chaiBN(BN) as Chai.ChaiPlugin);
   chai.use(chaiAsPromised);
   chai.config.includeStack = true;
 

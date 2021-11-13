@@ -18,8 +18,8 @@
     "@saberhq/solana-contrib": "^1.6.2",
     "@solana/buffer-layout": "^3.0.0",
     "@solana/spl-token": "^0.1.8",
-    "@ubeswap/token-math": "^4.2.0",
-    "tiny-invariant": "^1.1.0",
+    "@ubeswap/token-math": "^4.3.0",
+    "tiny-invariant": "^1.2.0",
     "tslib": "^2.3.1"
   },
   "main": "dist/index.js",
@@ -28,14 +28,16 @@
     "src/"
   ],
   "devDependencies": {
-    "@solana/spl-token-registry": "^0.2.287",
+    "@solana/spl-token-registry": "^0.2.291",
     "@solana/web3.js": "^1.30.2",
-    "@types/bn.js": "^5.1.0"
+    "@types/bn.js": "^5.1.0",
+    "jsbi": "^4.1.0"
   },
   "peerDependencies": {
     "@solana/spl-token-registry": "^0.2.270",
     "@solana/web3.js": "^1.29.2",
-    "bn.js": "^5.2"
+    "bn.js": "^5.2",
+    "jsbi": "^3 || ^4"
   },
   "publishConfig": {
     "access": "public"

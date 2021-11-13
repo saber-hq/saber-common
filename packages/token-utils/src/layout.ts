@@ -32,7 +32,7 @@ export type TypedStructure<T> = Omit<
  * @param decodePrefixes
  * @returns
  */
-export const structLayout = <T extends unknown>(
+export const structLayout = <T>(
   fields: Layout[],
   property?: string | undefined,
   decodePrefixes?: boolean | undefined

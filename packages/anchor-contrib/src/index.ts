@@ -80,13 +80,22 @@ type TransactionNamespace<R extends InstructionsParsed> =
   MakeInstructionsNamespace<R, Transaction>;
 
 type AccountsNamespace<A> = {
-  [K in keyof A]: Omit<AccountClient, "fetch" | "all" | "associated"> & {
+  [K in keyof A]: Omit<
+    AccountClient,
+    "fetch" | "fetchNullable" | "all" | "associated"
+  > & {
     /**
      * Returns a deserialized account.
      *
      * @param address The address of the account to fetch.
      */
     fetch: (address: PublicKey) => Promise<A[K]>;
+    /**
+     * Returns a deserialized account, returning null if it doesn't exist.
+     *
+     * @param address The address of the account to fetch.
+     */
+    fetchNullable: (address: PublicKey) => Promise<A[K] | null>;
     /**
      * Returns all instances of this account type for the program.
      */
