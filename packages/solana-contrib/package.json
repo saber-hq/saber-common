@@ -27,12 +27,12 @@
     "@types/retry": "^0.12.1",
     "promise-retry": "^2.0.1",
     "retry": "^0.13.1",
-    "tiny-invariant": "^1.1.0",
+    "tiny-invariant": "^1.2.0",
     "tslib": "^2.3.1"
   },
   "devDependencies": {
     "@solana/web3.js": "^1.30.2",
-    "@types/node": "^16.11.6"
+    "@types/node": "^16.11.7"
   },
   "peerDependencies": {
     "@solana/web3.js": "^1.29.2"
