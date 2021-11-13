@@ -3200,7 +3200,7 @@ __metadata:
     b58: ^4.0.3
     bn.js: ^5.2.0
     jest: ^27.3.1
-    jsbi: ^3
+    jsbi: ^4.1.0
     lodash.mapvalues: ^4.6.0
     tslib: ^2.3.1
     yargs: ^17.2.1
@@ -9162,13 +9162,6 @@ __metadata:
   bin:
     js-yaml: bin/js-yaml.js
   checksum: c7830dfd456c3ef2c6e355cc5a92e6700ceafa1d14bba54497b34a99f0376cecbb3e9ac14d3e5849b426d5a5140709a66237a8c991c675431271c4ce5504151a
-  languageName: node
-  linkType: hard
-
-"jsbi@npm:^3":
-  version: 3.2.5
-  resolution: "jsbi@npm:3.2.5"
-  checksum: 642d1bb139ad1c1e96c4907eb159565e980a0d168487626b493d0d0b7b341da0e43001089d3b21703fe17b18a7a6c0f42c92026f71d54471ed0a0d1b3015ec0f
   languageName: node
   linkType: hard
 
