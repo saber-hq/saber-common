@@ -14,7 +14,6 @@
     "@solana/web3.js": "^1.30.2",
     "@types/node": "^16.11.7",
     "@types/react": "^17.0.34",
-    "@types/react-dom": "^17.0.11",
     "react": "^17.0.2"
   },
   "dependencies": {
@@ -32,7 +31,6 @@
   },
   "peerDependencies": {
     "@solana/web3.js": "^1.29.2",
-    "@types/react": "^17.0.26",
     "react": "^17.0.2"
   },
   "main": "dist/index.js",

@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@saberhq/eslint-config": "^1.7.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.27.0",
     "eslint-plugin-react-hooks": "^4.3.0"
   }
