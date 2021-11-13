@@ -3232,13 +3232,15 @@ __metadata:
     "@solana/spl-token-registry": ^0.2.291
     "@solana/web3.js": ^1.30.2
     "@types/bn.js": ^5.1.0
-    "@ubeswap/token-math": ^4.2.0
+    "@ubeswap/token-math": ^4.3.0
+    jsbi: ^4.1.0
     tiny-invariant: ^1.2.0
     tslib: ^2.3.1
   peerDependencies:
     "@solana/spl-token-registry": ^0.2.270
     "@solana/web3.js": ^1.29.2
     bn.js: ^5.2
+    jsbi: ^3 || ^4
   languageName: unknown
   linkType: soft
 
@@ -4145,18 +4147,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ubeswap/token-math@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "@ubeswap/token-math@npm:4.2.0"
+"@ubeswap/token-math@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "@ubeswap/token-math@npm:4.3.0"
   dependencies:
-    "@types/bn.js": ^5.1.0
     big.js: ^6.1.1
-    bn.js: ^5.2.0
     decimal.js-light: ^2.5.0
-    jsbi: ^3.2.3
-    tiny-invariant: ^1.1.0
+    tiny-invariant: ^1.2.0
     toformat: ^2.0.0
-  checksum: d563c4e90506611130708f99840be39916ba1bdd454f36c2beb50f1f818ae5bb61b4676a1363a088b3192be44c064877b1b4f31f6858c2fef88261d49f208759
+    tslib: ^2.3.1
+  peerDependencies:
+    bn.js: ^5.2.0
+    jsbi: ^3 || ^4
+  checksum: 492c8a8fc5542b7996057ae08220668728645d1fdb8b2a83a2d229ed4a84dd62a6d7aba01601118eb02f0a12e343d2042872154ee13ff76d081e3d3889b88f2f
   languageName: node
   linkType: hard
 
@@ -9148,7 +9151,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsbi@npm:^3, jsbi@npm:^3.2.3":
+"jsbi@npm:^3":
   version: 3.2.5
   resolution: "jsbi@npm:3.2.5"
   checksum: 642d1bb139ad1c1e96c4907eb159565e980a0d168487626b493d0d0b7b341da0e43001089d3b21703fe17b18a7a6c0f42c92026f71d54471ed0a0d1b3015ec0f
@@ -13231,13 +13234,6 @@ resolve@^2.0.0-next.3:
   version: 0.3.0
   resolution: "timsort@npm:0.3.0"
   checksum: 1a66cb897dacabd7dd7c91b7e2301498ca9e224de2edb9e42d19f5b17c4b6dc62a8d4cbc64f28be82aaf1541cb5a78ab49aa818f42a2989ebe049a64af731e2a
-  languageName: node
-  linkType: hard
-
-"tiny-invariant@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "tiny-invariant@npm:1.1.0"
-  checksum: 27d29bbb9e1d1d86e25766711c28ad91af6d67c87d561167077ac7fbce5212b97bbfe875e70bc369808e075748c825864c9b61f0e9f8652275ec86bcf4dcc924
   languageName: node
   linkType: hard
 
