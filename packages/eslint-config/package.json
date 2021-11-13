@@ -30,13 +30,14 @@
     "url": "https://github.com/saber-hq/saber-common/issues"
   },
   "peerDependencies": {
-    "eslint": ">=7",
-    "eslint-plugin-import": "^2.24.2"
+    "eslint": ">=7"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-node": "^0.3.6",
+    "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",

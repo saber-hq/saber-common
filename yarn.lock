@@ -3107,7 +3107,6 @@ __metadata:
     eslint-plugin-react-hooks: ^4.3.0
   peerDependencies:
     eslint: ">=7"
-    eslint-plugin-import: ^2.24.2
   languageName: unknown
   linkType: soft
 
@@ -3118,13 +3117,14 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.3.1
     "@typescript-eslint/parser": ^5.3.1
     eslint-config-prettier: ^8.3.0
+    eslint-import-resolver-node: ^0.3.6
+    eslint-plugin-import: ^2.24.2
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-simple-import-sort: ^7.0.0
     eslint-plugin-unused-imports: ^2.0.0
     prettier: ^2.4.1
   peerDependencies:
     eslint: ">=7"
-    eslint-plugin-import: ^2.24.2
   languageName: unknown
   linkType: soft
 
@@ -6797,7 +6797,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.25.3":
+"eslint-plugin-import@npm:^2.24.2, eslint-plugin-import@npm:^2.25.3":
   version: 2.25.3
   resolution: "eslint-plugin-import@npm:2.25.3"
   dependencies:
