@@ -61,6 +61,7 @@ export interface UseWalletArgs {
   network: Network;
   endpoint: string;
   storageAdapter: StorageAdapter;
+  autoReconnect: boolean;
 }
 
 interface WalletConfig {
@@ -75,6 +76,7 @@ export const useWalletInternal = ({
   endpoint,
   onError,
   storageAdapter,
+  autoReconnect = false,
 }: UseWalletArgs): UseWallet<boolean> => {
   const [walletConfigStr, setWalletConfigStr] = usePersistedKVStore<
     string | null
@@ -110,11 +112,13 @@ export const useWalletInternal = ({
 
   useEffect(() => {
     if (wallet && walletProviderInfo) {
-      setTimeout(() => {
-        void wallet.connect(walletArgs).catch((e) => {
-          onError(new WalletAutomaticConnectionError(e, walletProviderInfo));
-        });
-      }, 500);
+      if (autoReconnect) {
+        setTimeout(() => {
+          void wallet.connect(walletArgs).catch((e) => {
+            onError(new WalletAutomaticConnectionError(e, walletProviderInfo));
+          });
+        }, 500);
+      }
       wallet.on("connect", () => {
         if (wallet?.publicKey) {
           setConnected(true);
@@ -164,7 +168,7 @@ export const useWalletInternal = ({
           onError(new WalletActivateError(e, nextWalletType, nextWalletArgs));
         }
       }
-      await setWalletConfigStr(nextWalletConfigStr);
+        await setWalletConfigStr(nextWalletConfigStr);
     },
     [onError, setWalletConfigStr, wallet, walletConfigStr]
   );

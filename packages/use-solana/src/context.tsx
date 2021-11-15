@@ -70,6 +70,7 @@ const useSolanaInternal = ({
     storageAdapter,
   });
   const { network, endpoint } = connectionCtx;
+  const autoReconnect = false;
   const walletCtx = useWalletInternal({
     onConnect,
     onDisconnect,
@@ -77,6 +78,7 @@ const useSolanaInternal = ({
     endpoint,
     onError,
     storageAdapter,
+    autoReconnect,
   });
   const providerCtx = useProviderInternal({
     connection: connectionCtx.connection,
