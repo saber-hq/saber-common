@@ -36,14 +36,14 @@ const defaultOnConnect = (
   wallet: WalletAdapter<true>,
   provider: WalletProviderInfo
 ) => {
-  alert(`Connected to ${provider.name} wallet: ${wallet.publicKey.toString()}`);
+  console.log(`Connected to ${provider.name} wallet: ${wallet.publicKey.toString()}`);
 };
 
 const defaultOnDisconnect = (
   _wallet: WalletAdapter<false>,
   provider: WalletProviderInfo
 ) => {
-  alert(`Disconnected from ${provider.name} wallet`);
+  console.log(`Disconnected from ${provider.name} wallet`);
 };
 
 const defaultOnError = (err: UseSolanaError) => {
