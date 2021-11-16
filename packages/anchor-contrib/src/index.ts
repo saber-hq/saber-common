@@ -1,8 +1,11 @@
 import type {
+  AccountClient,
   Address,
   BN,
   Context as AnchorContext,
   Program as AProgram,
+  ProgramAccount,
+  StateClient,
 } from "@project-serum/anchor";
 import type {
   Idl,
@@ -15,12 +18,7 @@ import type {
   IdlType,
   IdlTypeDef,
   IdlTypeDefTyStruct,
-} from "@project-serum/anchor/dist/cjs/idl";
-import type {
-  AccountClient,
-  ProgramAccount,
-  StateClient,
-} from "@project-serum/anchor/dist/cjs/program/namespace";
+} from "@project-serum/anchor/dist/esm/idl";
 import type {
   AccountMeta,
   PublicKey,
@@ -28,6 +26,9 @@ import type {
   TransactionInstruction,
   TransactionSignature,
 } from "@solana/web3.js";
+
+export * from "./generateAccountParsers";
+export * from "./generateErrorMap";
 
 type InstructionsParsed = Record<
   string,
@@ -220,24 +221,6 @@ export type AnchorTypes<
   Instructions: MakeInstructions<T["instructions"], DEF>;
   Methods: MakeInstructions<NonNullable<T["state"]>["methods"], DEF>;
   Events: AnchorEvents<NonNullable<T["events"]>[number], DEF>;
-};
-
-type ErrorMap<T extends Idl> = {
-  [K in AnchorError<T>["name"]]: AnchorError<T> & { name: K };
-};
-
-/**
- * Generates the error mapping
- * @param idl
- * @returns
- */
-export const generateErrorMap = <T extends Idl>(idl: T): ErrorMap<T> => {
-  return (idl.errors?.reduce((acc, err) => {
-    return {
-      ...acc,
-      [err.name]: err,
-    };
-  }, {}) ?? {}) as ErrorMap<T>;
 };
 
 type AnchorEvent<T extends IdlEventField, Defined> = {
