@@ -76,7 +76,7 @@ export class TransactionEnvelope {
   public simulateUnchecked(
     opts?: ConfirmOptions
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
-    return this.provider.simulate(this.build(), [], opts);
+    return this.provider.simulate(this.build(), undefined, opts);
   }
 
   /**
