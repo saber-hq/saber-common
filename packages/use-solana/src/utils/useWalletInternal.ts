@@ -170,7 +170,7 @@ export const useWalletInternal = ({
   );
 
   const disconnect = useCallback(async () => {
-    wallet?.disconnect();
+    await wallet?.disconnect();
     await setWalletConfigStr(null);
   }, [setWalletConfigStr, wallet]);
 
