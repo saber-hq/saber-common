@@ -16,6 +16,11 @@ export type TokenExtensions = tokenRegistry.TokenExtensions & {
    * E.g. `wormhole-v1`, `wormhole-v2`, `allbridge`, `sollet`, `saber`.
    */
   readonly source?: string;
+
+  /*
+   ** Link to the source's website where you can acquire this token
+   */
+  readonly sourceUrl?: string;
   /**
    * The currency code of what this token represents, e.g. BTC, ETH, USD.
    */
