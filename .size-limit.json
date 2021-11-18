@@ -1,7 +1,7 @@
 [
   {
     "path": "packages/anchor-contrib/dist/index.js",
-    "limit": "1 KB",
+    "limit": "3 KB",
     "ignore": ["@project-serum/anchor", "@solana/web3.js"]
   },
   {
