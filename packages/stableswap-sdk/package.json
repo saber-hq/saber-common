@@ -10,7 +10,7 @@
     "url": "https://github.com/saber-hq/saber-common.git"
   },
   "author": "Saber Team <team@saber.so>",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "license": "Apache-2.0",
@@ -47,8 +47,8 @@
     "jsbi": "^3 || ^4"
   },
   "dependencies": {
-    "@saberhq/solana-contrib": "^1.7.1",
-    "@saberhq/token-utils": "^1.7.1",
+    "@saberhq/solana-contrib": "^1.7.2",
+    "@saberhq/token-utils": "^1.7.2",
     "@solana/buffer-layout": "^3.0.0",
     "b58": "^4.0.3",
     "lodash.mapvalues": "^4.6.0",
