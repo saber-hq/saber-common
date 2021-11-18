@@ -86,20 +86,24 @@ export class StableSwap {
     authority: PublicKey,
     programID: PublicKey = SWAP_PROGRAM_ID
   ): StableSwap {
-    const stableSwapData = StableSwapLayout.decode(swapAccountData);
-    if (!stableSwapData.isInitialized) {
-      throw new Error(`Invalid token swap state`);
+    try {
+      const stableSwapData = StableSwapLayout.decode(swapAccountData);
+      if (!stableSwapData.isInitialized) {
+        throw new Error(`Invalid token swap state`);
+      }
+      const state = decodeSwap(swapAccountData);
+      return new StableSwap(
+        {
+          swapAccount: swapAccount,
+          swapProgramID: programID,
+          tokenProgramID: TOKEN_PROGRAM_ID,
+          authority,
+        },
+        state
+      );
+    } catch (e) {
+      throw Error(e as string);
     }
-    const state = decodeSwap(swapAccountData);
-    return new StableSwap(
-      {
-        swapAccount: swapAccount,
-        swapProgramID: programID,
-        tokenProgramID: TOKEN_PROGRAM_ID,
-        authority,
-      },
-      state
-    );
   }
 
   /**
