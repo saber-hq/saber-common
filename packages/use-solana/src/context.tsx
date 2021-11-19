@@ -36,7 +36,9 @@ const defaultOnConnect = (
   wallet: WalletAdapter<true>,
   provider: WalletProviderInfo
 ) => {
-  console.log(`Connected to ${provider.name} wallet: ${wallet.publicKey.toString()}`);
+  console.log(
+    `Connected to ${provider.name} wallet: ${wallet.publicKey.toString()}`
+  );
 };
 
 const defaultOnDisconnect = (
