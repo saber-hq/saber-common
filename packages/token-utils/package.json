@@ -10,7 +10,7 @@
     "saber"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc -P tsconfig.esm.json",
     "clean": "rm -fr dist/",
     "prepublishOnly": "npm run build"
   },
@@ -22,7 +22,8 @@
     "tiny-invariant": "^1.2.0",
     "tslib": "^2.3.1"
   },
-  "main": "dist/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "files": [
     "dist/",
     "src/"

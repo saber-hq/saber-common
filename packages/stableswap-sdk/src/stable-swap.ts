@@ -218,6 +218,13 @@ export class StableSwap {
   }
 }
 
+/**
+ * Finds the swap authority address that is used to sign transactions on behalf of the swap.
+ *
+ * @param swapAccount
+ * @param swapProgramID
+ * @returns
+ */
 export const findSwapAuthorityKey = (
   swapAccount: PublicKey,
   swapProgramID: PublicKey = SWAP_PROGRAM_ID

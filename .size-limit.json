@@ -1,27 +1,31 @@
 [
   {
-    "path": "packages/anchor-contrib/dist/index.js",
+    "path": "packages/anchor-contrib/dist/esm/index.js",
     "limit": "3 KB",
-    "ignore": ["@project-serum/anchor", "@solana/web3.js"]
+    "ignore": ["@project-serum/anchor", "@solana/web3.js"],
+    "webpack": true
   },
   {
-    "path": "packages/solana-contrib/dist/index.js",
+    "path": "packages/solana-contrib/dist/esm/index.js",
     "limit": "10 KB",
-    "ignore": ["@solana/web3.js"]
+    "ignore": ["@solana/web3.js"],
+    "webpack": true
   },
   {
-    "path": "packages/token-utils/dist/index.js",
+    "path": "packages/token-utils/dist/esm/index.js",
     "limit": "50 KB",
     "ignore": [
       "@solana/spl-token",
       "@solana/web3.js",
       "bn.js",
       "@solana/spl-token-registry"
-    ]
+    ],
+    "webpack": true
   },
   {
-    "path": "packages/use-solana/dist/index.js",
+    "path": "packages/use-solana/dist/esm/index.js",
     "limit": "50 KB",
-    "ignore": ["@solana/spl-token", "@solana/web3.js", "bn.js"]
+    "ignore": ["@solana/spl-token", "@solana/web3.js", "bn.js"],
+    "webpack": true
   }
 ]

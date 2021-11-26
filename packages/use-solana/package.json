@@ -1,11 +1,13 @@
 {
   "name": "@saberhq/use-solana",
   "version": "1.7.4",
-  "repository": "git@github.com:saber-hq/solana-common.git",
+  "description": "Solana utilities for React applications.",
+  "homepage": "https://saber.so",
+  "repository": "git@github.com:saber-hq/saber-common.git",
   "author": "Ian Macalinao <ian@saber.so>",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc -P tsconfig.esm.json",
     "clean": "rm -fr dist/",
     "prepublishOnly": "npm run build"
   },
@@ -33,7 +35,8 @@
     "@solana/web3.js": "^1.29.2",
     "react": "^17.0.2"
   },
-  "main": "dist/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "files": [
     "dist/",
     "src/"
