@@ -1,5 +1,5 @@
 import { u64 } from "@solana/spl-token";
-import type { BigintIsh, Percent } from "@ubeswap/token-math";
+import type { BigintIsh, NumberFormat, Percent } from "@ubeswap/token-math";
 import {
   parseBigintIsh,
   TokenAmount as UTokenAmount,
@@ -71,8 +71,8 @@ export class TokenAmount extends UTokenAmount<Token> {
    * Formats the token amount with units and decimal adjustment, e.g. "100.42 SOL"
    * @returns
    */
-  formatUnits(): string {
-    return `${this.toExact()} ${this.token.symbol}`;
+  formatUnits(format: NumberFormat = { groupSeparator: "," }): string {
+    return `${this.toExact(format)} ${this.token.symbol}`;
   }
 
   /**
