@@ -157,10 +157,10 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
    * @param opts       Transaction confirmation options to use by default.
    */
   constructor(
-    public readonly connection: Connection,
+    public override readonly connection: Connection,
     public readonly broadcaster: Broadcaster,
     public readonly wallet: Wallet,
-    public readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
+    public override readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {
     super(connection, opts);
     this.signer = new SolanaTransactionSigner(

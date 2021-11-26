@@ -4,8 +4,13 @@
     "module": "ESNext",
     "jsx": "react",
     "moduleResolution": "node",
+
     "strict": true,
+    "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "forceConsistentCasingInFileNames": true,
+
     "esModuleInterop": true,
     "skipLibCheck": true,
     "preserveConstEnums": true,

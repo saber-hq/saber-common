@@ -38,19 +38,19 @@ export class TokenAmount extends UTokenAmount<Token> {
     return new TokenAmount(token, prev.raw);
   }
 
-  add(other: TokenAmount): TokenAmount {
+  override add(other: TokenAmount): TokenAmount {
     const result = super.add(other);
     return new TokenAmount(this.token, result.raw);
   }
-  subtract(other: TokenAmount): TokenAmount {
+  override subtract(other: TokenAmount): TokenAmount {
     const result = super.subtract(other);
     return new TokenAmount(this.token, result.raw);
   }
-  multiplyBy(percent: Percent): TokenAmount {
+  override multiplyBy(percent: Percent): TokenAmount {
     const result = super.multiplyBy(percent);
     return new TokenAmount(this.token, result.raw);
   }
-  reduceBy(percent: Percent): TokenAmount {
+  override reduceBy(percent: Percent): TokenAmount {
     const result = super.reduceBy(percent);
     return new TokenAmount(this.token, result.raw);
   }
@@ -78,7 +78,7 @@ export class TokenAmount extends UTokenAmount<Token> {
   /**
    * String representation of this token amount.
    */
-  toString(): string {
+  override toString(): string {
     return `TokenAmount[Token=(${this.token.toString()}), amount=${this.toExact()}`;
   }
 
