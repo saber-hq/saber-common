@@ -3,6 +3,27 @@ import type * as tokenRegistry from "@solana/spl-token-registry";
 import { Token } from "./token";
 
 /**
+ * Known origin chains.
+ */
+export const ORIGIN_CHAINS = [
+  "bitcoin",
+  "ethereum",
+  "terra",
+  "avalanche",
+  "binance",
+  "celo",
+  "polygon",
+  "fantom",
+  "polygon",
+  "heco",
+] as const;
+
+/**
+ * Known origin chains.
+ */
+export type OriginChain = typeof ORIGIN_CHAINS[number];
+
+/**
  * Token extensions with additional information.
  */
 export type TokenExtensions = tokenRegistry.TokenExtensions & {
@@ -25,6 +46,10 @@ export type TokenExtensions = tokenRegistry.TokenExtensions & {
    * The currency code of what this token represents, e.g. BTC, ETH, USD.
    */
   readonly currency?: string;
+  /**
+   * If this token is a bridged token, this is the chain that the asset originates from.
+   */
+  readonly originChain?: OriginChain;
 };
 
 /**
