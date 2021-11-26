@@ -1,16 +1,17 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "lib": ["es2015"],
-    "noEmit": false,
-    "target": "es6",
-    "module": "commonjs",
+    "lib": ["ES2015"],
+    "target": "ES2015",
+    "module": "CommonJS",
     "esModuleInterop": true,
     "importHelpers": true,
     "types": [],
 
+    "noEmit": false,
     "sourceMap": true,
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "inlineSources": true
   }
 }

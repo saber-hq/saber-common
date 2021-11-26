@@ -1,15 +1,6 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.lib.json",
   "compilerOptions": {
-    "lib": ["es2015", "DOM"],
-    "noEmit": false,
-    "target": "es6",
-    "module": "commonjs",
-    "importHelpers": true,
-    "types": [],
-
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true
+    "lib": ["ES2015", "DOM"]
   }
 }

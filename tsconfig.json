@@ -11,6 +11,7 @@
     "preserveConstEnums": true,
     "lib": ["es2015", "es2016", "dom"],
     "types": ["node", "jest"],
+    "importHelpers": true,
     "noEmit": true
   }
 }
