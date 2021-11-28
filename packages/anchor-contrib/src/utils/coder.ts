@@ -20,7 +20,7 @@ export type InstructionParsed = InstructionDisplay & {
  */
 export class SaberCoder<
   T extends {
-    AccountMap: Record<string, never>;
+    AccountMap: Record<string, object>;
     Events: Record<string, unknown>;
     IDL: Idl;
   }
