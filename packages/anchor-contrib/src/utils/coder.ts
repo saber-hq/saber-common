@@ -1,12 +1,15 @@
 import type { Idl } from "@project-serum/anchor";
 import { Coder, EventParser } from "@project-serum/anchor";
 import type { InstructionDisplay } from "@project-serum/anchor/dist/cjs/coder/instruction";
+import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
+import mapValues from "lodash.mapvalues";
 
-import type { ErrorMap } from "..";
 import type { AccountParsers } from "../generateAccountParsers";
 import { generateAccountParsersFromCoder } from "../generateAccountParsers";
+import type { ErrorMap } from "../generateErrorMap";
 import { generateErrorMap } from "../generateErrorMap";
+import { newProgram } from "./programs";
 
 /**
  * Formatted instruction with its name.
@@ -17,12 +20,15 @@ export type InstructionParsed = InstructionDisplay & {
 
 /**
  * Coder wrapper.
+ *
+ * Allows interacting with a program without a provider.
  */
 export class SaberCoder<
   T extends {
     AccountMap: Record<string, object>;
     Events: Record<string, unknown>;
     IDL: Idl;
+    Program: unknown;
   }
 > {
   /**
@@ -94,4 +100,48 @@ export class SaberCoder<
     }
     return { ...fmt, name: decoded.name };
   }
+
+  /**
+   * Gets a {@link Program} from a provider.
+   * @param provider
+   * @returns
+   */
+  getProgram(provider: SaberProvider): T["Program"] {
+    return newProgram(this.idl, this.address, provider);
+  }
 }
+
+/**
+ * Builds a map of coders from their IDLs and addresses.
+ *
+ * @param provider
+ * @param programs
+ * @returns
+ */
+export const buildCoderMap = <
+  P extends {
+    [K in keyof P]: {
+      AccountMap: Record<string, object>;
+      Events: Record<string, unknown>;
+      IDL: Idl;
+      Program: unknown;
+    };
+  }
+>(
+  idls: {
+    [K in keyof P]: Idl;
+  },
+  addresses: {
+    [K in keyof P]: PublicKey;
+  }
+): {
+  [K in keyof P]: SaberCoder<P[K]>;
+} => {
+  return mapValues(
+    idls,
+    <K extends keyof P>(idl: P[K]["IDL"], k: K) =>
+      new SaberCoder<P[K]>(addresses[k], idl)
+  ) as unknown as {
+    [K in keyof P]: SaberCoder<P[K]>;
+  };
+};
