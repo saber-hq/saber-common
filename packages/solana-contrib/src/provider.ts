@@ -8,6 +8,7 @@ import type {
   Signer,
   SimulatedTransactionResponse,
   Transaction,
+  TransactionInstruction,
 } from "@solana/web3.js";
 
 import type { Broadcaster, PendingTransaction, ReadonlyProvider } from ".";
@@ -18,6 +19,7 @@ import type {
   TransactionSigner,
   Wallet,
 } from "./interfaces";
+import { TransactionEnvelope } from "./transaction/TransactionEnvelope";
 
 export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
   preflightCommitment: "recent",
@@ -259,5 +261,88 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
       simTX = await this.signer.sign(tx, signers, opts);
     }
     return await this.broadcaster.simulate(simTX, opts.commitment);
+  }
+}
+
+/**
+ * Provider with utility functions.
+ */
+export interface AugmentedProvider extends Provider {
+  /**
+   * Creates a new transaction using this Provider.
+   * @param instructions
+   * @param signers
+   * @returns
+   */
+  newTX: (
+    instructions: (TransactionInstruction | null | undefined | boolean)[],
+    signers?: Signer[]
+  ) => TransactionEnvelope;
+}
+
+/**
+ * Wrapper for a Provider containing utility functions.
+ */
+export class SolanaAugmentedProvider implements AugmentedProvider {
+  constructor(public readonly provider: Provider) {}
+
+  get connection(): Connection {
+    return this.provider.connection;
+  }
+
+  get signer(): TransactionSigner {
+    return this.provider.signer;
+  }
+
+  get broadcaster(): Broadcaster {
+    return this.provider.broadcaster;
+  }
+
+  get opts(): ConfirmOptions {
+    return this.provider.opts;
+  }
+
+  get wallet(): Wallet {
+    return this.provider.wallet;
+  }
+
+  send(
+    tx: Transaction,
+    signers?: (Signer | undefined)[] | undefined,
+    opts?: ConfirmOptions | undefined
+  ): Promise<PendingTransaction> {
+    return this.provider.send(tx, signers, opts);
+  }
+
+  sendAll(
+    reqs: readonly SendTxRequest[],
+    opts?: ConfirmOptions | undefined
+  ): Promise<PendingTransaction[]> {
+    return this.provider.sendAll(reqs, opts);
+  }
+
+  simulate(
+    tx: Transaction,
+    signers?: (Signer | undefined)[] | undefined,
+    opts?: ConfirmOptions | undefined
+  ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
+    return this.provider.simulate(tx, signers, opts);
+  }
+
+  getAccountInfo(accountId: PublicKey): Promise<KeyedAccountInfo | null> {
+    return this.provider.getAccountInfo(accountId);
+  }
+
+  /**
+   * Creates a new transaction using this Provider.
+   * @param instructions
+   * @param signers
+   * @returns
+   */
+  newTX(
+    instructions: (TransactionInstruction | null | undefined | boolean)[],
+    signers: Signer[] = []
+  ): TransactionEnvelope {
+    return TransactionEnvelope.create(this, instructions, signers);
   }
 }

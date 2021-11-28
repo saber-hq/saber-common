@@ -1,6 +1,10 @@
-import type { Provider, ReadonlyProvider } from "@saberhq/solana-contrib";
+import type {
+  AugmentedProvider,
+  ReadonlyProvider,
+} from "@saberhq/solana-contrib";
 import {
   DEFAULT_PROVIDER_OPTIONS,
+  SolanaAugmentedProvider,
   SolanaProvider,
   SolanaReadonlyProvider,
 } from "@saberhq/solana-contrib";
@@ -20,7 +24,7 @@ export interface UseProvider {
   /**
    * {@link Provider} of the currently connected wallet.
    */
-  providerMut: Provider | null;
+  providerMut: AugmentedProvider | null;
 }
 
 export interface UseProviderArgs {
@@ -66,12 +70,14 @@ export const useProviderInternal = ({
   const providerMut = useMemo(
     () =>
       wallet && connected && publicKey
-        ? SolanaProvider.load({
-            connection,
-            sendConnection,
-            wallet: wallet as ConnectedWallet,
-            opts: confirmOptions,
-          })
+        ? new SolanaAugmentedProvider(
+            SolanaProvider.load({
+              connection,
+              sendConnection,
+              wallet: wallet as ConnectedWallet,
+              opts: confirmOptions,
+            })
+          )
         : null,
     [wallet, connected, publicKey, connection, sendConnection, confirmOptions]
   );
