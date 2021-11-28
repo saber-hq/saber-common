@@ -83,6 +83,15 @@ export class Token implements UToken<Token> {
   }
 
   /**
+   * Returns true if the given tag is present.
+   * @param tag The tag to check.
+   * @returns
+   */
+  hasTag(tag: string): boolean {
+    return !!this.info.tags?.includes(tag);
+  }
+
+  /**
    * Loads a token from a Mint.
    * @param mint
    * @param opts
