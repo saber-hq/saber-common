@@ -250,7 +250,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
    */
   async simulate(
     tx: Transaction,
-    signers: (Signer | undefined)[] = [],
+    signers: (Signer | undefined)[] | undefined,
     opts: ConfirmOptions = this.opts
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     const signedTx = await this.signer.sign(tx, signers, opts);
