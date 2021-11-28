@@ -11,7 +11,8 @@ import type {
   TransactionInstruction,
 } from "@solana/web3.js";
 
-import type { Broadcaster, PendingTransaction, ReadonlyProvider } from ".";
+import type { Broadcaster, ReadonlyProvider } from ".";
+import { PendingTransaction } from ".";
 import { SingleConnectionBroadcaster } from "./broadcaster";
 import type {
   Provider,
@@ -344,5 +345,17 @@ export class SolanaAugmentedProvider implements AugmentedProvider {
     signers: Signer[] = []
   ): TransactionEnvelope {
     return TransactionEnvelope.create(this, instructions, signers);
+  }
+
+  /**
+   * Requests an airdrop of tokens.
+   * @param amount
+   * @returns
+   */
+  async requestAirdrop(lamports: number): Promise<PendingTransaction> {
+    return new PendingTransaction(
+      this.connection,
+      await this.connection.requestAirdrop(this.wallet.publicKey, lamports)
+    );
   }
 }

@@ -32,7 +32,7 @@ export class PendingTransaction {
    * Waits for the confirmation of the transaction, via polling.
    * @returns
    */
-  public async wait(
+  async wait(
     {
       commitment = "confirmed",
       ...retryOpts
