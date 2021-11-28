@@ -25,10 +25,33 @@ export interface SerializableInstruction {
  */
 export class TransactionEnvelope {
   constructor(
+    /**
+     * Provider that will be sending the transaction.
+     */
     public readonly provider: Provider,
+    /**
+     * Instructions associated with the transaction.
+     */
     public readonly instructions: TransactionInstruction[],
+    /**
+     * Optional signers of the transaction.
+     */
     public readonly signers: Signer[] = []
   ) {}
+
+  /**
+   * Adds the given {@link TransactionInstruction}s to the {@link TransactionEnvelope}.
+   * @param instructions The instructions to add.
+   * @returns
+   */
+  addInstructions(
+    ...instructions: (TransactionInstruction | null | undefined | boolean)[]
+  ): TransactionEnvelope {
+    this.instructions.push(
+      ...instructions.filter((ix): ix is TransactionInstruction => !!ix)
+    );
+    return this;
+  }
 
   /**
    * Adds the given {@link Signer}s to the {@link TransactionEnvelope}.
