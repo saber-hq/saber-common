@@ -31,22 +31,6 @@ export class TransactionEnvelope {
   ) {}
 
   /**
-   * Creates a new {@link TransactionEnvelope}.
-   * @param provider
-   * @param instructions
-   * @param signers
-   * @returns
-   */
-  static create(
-    provider: Provider,
-    instructions: (TransactionInstruction | null | undefined | boolean)[],
-    signers: Signer[] = []
-  ): TransactionEnvelope {
-    const ixs = instructions.filter((ix): ix is TransactionInstruction => !!ix);
-    return new TransactionEnvelope(provider, ixs, signers);
-  }
-
-  /**
    * Adds the given {@link Signer}s to the {@link TransactionEnvelope}.
    * @param signers The signers to add.
    * @returns
@@ -83,7 +67,7 @@ export class TransactionEnvelope {
    * @param opts
    * @returns
    */
-  public simulate(
+  simulate(
     opts?: ConfirmOptions
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     return this.provider.simulate(this.build(), this.signers, opts);
@@ -94,7 +78,7 @@ export class TransactionEnvelope {
    * @param opts
    * @returns
    */
-  public simulateUnchecked(
+  simulateUnchecked(
     opts?: ConfirmOptions
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     return this.provider.simulate(this.build(), undefined, opts);
@@ -105,7 +89,7 @@ export class TransactionEnvelope {
    * @param opts
    * @returns
    */
-  public async send(opts?: ConfirmOptions): Promise<PendingTransaction> {
+  async send(opts?: ConfirmOptions): Promise<PendingTransaction> {
     const signed = await this.provider.signer.sign(
       this.build(),
       this.signers,
@@ -118,14 +102,14 @@ export class TransactionEnvelope {
    * Sends the transaction and waits for confirmation.
    * @param opts
    */
-  public async confirm(opts?: ConfirmOptions): Promise<TransactionReceipt> {
+  async confirm(opts?: ConfirmOptions): Promise<TransactionReceipt> {
     return (await this.send(opts)).wait();
   }
 
   /**
    * Combines the instructions/signers of the other envelope to create one large transaction.
    */
-  public combine(other: TransactionEnvelope): TransactionEnvelope {
+  combine(other: TransactionEnvelope): TransactionEnvelope {
     return new TransactionEnvelope(
       this.provider,
       [...this.instructions, ...other.instructions],
@@ -187,6 +171,22 @@ export class TransactionEnvelope {
       "=> Signers",
       this.signers.map((sg) => sg.publicKey.toString()).join("\n"),
     ].join("\n");
+  }
+
+  /**
+   * Creates a new {@link TransactionEnvelope}.
+   * @param provider
+   * @param instructions
+   * @param signers
+   * @returns
+   */
+  static create(
+    provider: Provider,
+    instructions: (TransactionInstruction | null | undefined | boolean)[],
+    signers: Signer[] = []
+  ): TransactionEnvelope {
+    const ixs = instructions.filter((ix): ix is TransactionInstruction => !!ix);
+    return new TransactionEnvelope(provider, ixs, signers);
   }
 
   /**
