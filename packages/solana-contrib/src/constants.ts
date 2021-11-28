@@ -1,6 +1,21 @@
 import type { Cluster } from "@solana/web3.js";
 
+/**
+ * A network: a Solana cluster or localnet.
+ */
 export type Network = Cluster | "localnet";
+
+/**
+ * Formats the network as a string.
+ * @param network
+ * @returns
+ */
+export const formatNetwork = (network: Network): string => {
+  if (network === "mainnet-beta") {
+    return "mainnet";
+  }
+  return network;
+};
 
 export type NetworkConfig = Readonly<{
   name: string;
