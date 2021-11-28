@@ -21,6 +21,12 @@ The best way to learn is by example. Some examples:
 | `@saberhq/token-utils`         | SPL Token arithmetic and types        | [![npm](https://img.shields.io/npm/v/@saberhq/token-utils.svg)](https://www.npmjs.com/package/@saberhq/token-utils)                 |
 | `@saberhq/use-solana`          | Solana React library                  | [![npm](https://img.shields.io/npm/v/@saberhq/use-solana.svg)](https://www.npmjs.com/package/@saberhq/use-solana)                   |
 
+## Release
+
+To release a new version of Saber Common, navigate to [the release action page](https://github.com/saber-hq/saber-common/actions/workflows/release.yml) and click "Run workflow".
+
+There, you may specify `patch`, `minor`, or `major`.
+
 ## License
 
 Apache 2.0
