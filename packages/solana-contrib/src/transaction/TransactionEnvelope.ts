@@ -42,9 +42,12 @@ export class TransactionEnvelope {
 
   /**
    * Builds a transaction from this envelope.
+   * @param feePayer Optional override for the fee payer.
    */
-  build(): Transaction {
-    return new Transaction().add(...this.instructions);
+  build(feePayer: PublicKey = this.provider.wallet.publicKey): Transaction {
+    const tx = new Transaction().add(...this.instructions);
+    tx.feePayer = feePayer;
+    return tx;
   }
 
   /**

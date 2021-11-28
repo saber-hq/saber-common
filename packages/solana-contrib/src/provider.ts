@@ -244,8 +244,9 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
    * Simulates the given transaction, returning emitted logs from execution.
    *
    * @param tx      The transaction to send.
-   * @param signers The set of signers in addition to the provdier wallet that
-   *                will sign the transaction.
+   * @param signers The set of signers in addition to the provider wallet that
+   *                will sign the transaction. If specified, the provider will
+   *                sign the transaction.
    * @param opts    Transaction confirmation options.
    */
   async simulate(
@@ -253,7 +254,10 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     signers: (Signer | undefined)[] | undefined,
     opts: ConfirmOptions = this.opts
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
-    const signedTx = await this.signer.sign(tx, signers, opts);
-    return await this.broadcaster.simulate(signedTx, opts.commitment);
+    let simTX = tx;
+    if (signers !== undefined) {
+      simTX = await this.signer.sign(tx, signers, opts);
+    }
+    return await this.broadcaster.simulate(simTX, opts.commitment);
   }
 }
