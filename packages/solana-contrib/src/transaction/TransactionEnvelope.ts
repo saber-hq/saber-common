@@ -14,6 +14,9 @@ import type { Provider } from "../interfaces";
 import type { PendingTransaction } from "./PendingTransaction";
 import type { TransactionReceipt } from "./TransactionReceipt";
 
+/**
+ * Instruction that can be serialized to JSON.
+ */
 export interface SerializableInstruction {
   programId: string;
   keys: (Omit<AccountMeta, "pubkey"> & { publicKey: string })[];
