@@ -101,7 +101,7 @@ export class TokenAmount extends UTokenAmount<Token> {
   } {
     return {
       _isTA: true,
-      mint: this.token.mintAccount.toString(),
+      mint: this.token.address,
       uiAmount: this.toExact(),
     };
   }

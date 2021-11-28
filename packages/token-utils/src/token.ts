@@ -107,13 +107,19 @@ export class Token implements UToken<Token> {
     });
 }
 
+/**
+ * Checks if two tokens are equal.
+ * @param a
+ * @param b
+ * @returns
+ */
 export const tokensEqual = (
   a: Token | undefined,
   b: Token | undefined
 ): boolean =>
   a !== undefined &&
   b !== undefined &&
-  a.mintAccount.equals(b.mintAccount) &&
+  a.address === b.address &&
   a.network === b.network;
 
 /**
