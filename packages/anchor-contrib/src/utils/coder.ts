@@ -23,7 +23,7 @@ export type InstructionParsed = InstructionDisplay & {
  *
  * Allows interacting with a program without a provider.
  */
-export class SaberCoder<
+export class SuperCoder<
   T extends {
     AccountMap: Record<string, object>;
     Events: Record<string, unknown>;
@@ -135,13 +135,13 @@ export const buildCoderMap = <
     [K in keyof P]: PublicKey;
   }
 ): {
-  [K in keyof P]: SaberCoder<P[K]>;
+  [K in keyof P]: SuperCoder<P[K]>;
 } => {
   return mapValues(
     idls,
     <K extends keyof P>(idl: P[K]["IDL"], k: K) =>
-      new SaberCoder<P[K]>(addresses[k], idl)
+      new SuperCoder<P[K]>(addresses[k], idl)
   ) as unknown as {
-    [K in keyof P]: SaberCoder<P[K]>;
+    [K in keyof P]: SuperCoder<P[K]>;
   };
 };
