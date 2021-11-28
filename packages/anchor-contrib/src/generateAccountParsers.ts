@@ -4,8 +4,8 @@ import { AccountsCoder } from "@project-serum/anchor";
 /**
  * Parsers associated with an IDL.
  */
-export type Parsers<A extends string, M extends { [K in A]: unknown }> = {
-  [K in A]: (data: Buffer) => M[K];
+export type AccountParsers<M extends Record<string, object>> = {
+  [K in keyof M]: (data: Buffer) => M[K];
 };
 
 /**
@@ -15,16 +15,32 @@ export type Parsers<A extends string, M extends { [K in A]: unknown }> = {
  *
  * @param idl The IDL.
  */
-export const generateAccountParsers = <
-  A extends string,
-  M extends { [K in A]: unknown }
->(
+export const generateAccountParsers = <M extends Record<string, object>>(
   idl: Idl
-): Parsers<A, M> => {
-  const coder = new AccountsCoder<A>(idl);
-  return (idl.accounts ?? []).reduce((parsers, account) => {
-    parsers[account.name as A] = (data: Buffer) =>
-      coder.decode<M[A]>(account.name as A, data);
+): AccountParsers<M> => {
+  const coder = new AccountsCoder<keyof M & string>(idl);
+  return generateAccountParsersFromCoder(
+    idl.accounts?.map((a) => a.name),
+    coder
+  );
+};
+
+/**
+ * Creates parsers for accounts.
+ *
+ * This is intended to be called once at initialization.
+ *
+ * @param idl The IDL.
+ */
+export const generateAccountParsersFromCoder = <
+  M extends Record<string, object>
+>(
+  accountNames: (keyof M)[] | undefined,
+  coder: AccountsCoder<keyof M & string>
+): AccountParsers<M> => {
+  return (accountNames ?? []).reduce((parsers, account) => {
+    parsers[account] = (data: Buffer) =>
+      coder.decode<M[keyof M]>(account as keyof M & string, data);
     return parsers;
-  }, {} as Parsers<A, M>);
+  }, {} as AccountParsers<M>);
 };

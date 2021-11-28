@@ -2,7 +2,7 @@ import type { Idl } from "@project-serum/anchor";
 
 import type { AnchorError } from ".";
 
-type ErrorMap<T extends Idl> = {
+export type ErrorMap<T extends Idl> = {
   [K in AnchorError<T>["name"]]: AnchorError<T> & { name: K };
 };
 

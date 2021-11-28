@@ -218,6 +218,8 @@ export type AnchorTypes<
   Instructions: MakeInstructions<T["instructions"], DEF>;
   Methods: MakeInstructions<NonNullable<T["state"]>["methods"], DEF>;
   Events: AnchorEvents<NonNullable<T["events"]>[number], DEF>;
+  AccountMap: AccountMap;
+  IDL: T;
 };
 
 type AnchorEvent<T extends IdlEventField, Defined> = {

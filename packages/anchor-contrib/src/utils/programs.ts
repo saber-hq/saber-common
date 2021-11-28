@@ -4,7 +4,7 @@ import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
 import type { PublicKey } from "@solana/web3.js";
 import mapValues from "lodash.mapvalues";
 
-import { makeAnchorProvider } from "./utils";
+import { makeAnchorProvider } from "./provider";
 
 /**
  * Builds a program from its IDL.
