@@ -30,7 +30,28 @@ export class TransactionEnvelope {
     public readonly signers: Signer[] = []
   ) {}
 
-  public addSigners(...signers: Signer[]): TransactionEnvelope {
+  /**
+   * Creates a new {@link TransactionEnvelope}.
+   * @param provider
+   * @param instructions
+   * @param signers
+   * @returns
+   */
+  static create(
+    provider: Provider,
+    instructions: (TransactionInstruction | null | undefined | boolean)[],
+    signers: Signer[] = []
+  ): TransactionEnvelope {
+    const ixs = instructions.filter((ix): ix is TransactionInstruction => !!ix);
+    return new TransactionEnvelope(provider, ixs, signers);
+  }
+
+  /**
+   * Adds the given {@link Signer}s to the {@link TransactionEnvelope}.
+   * @param signers The signers to add.
+   * @returns
+   */
+  addSigners(...signers: Signer[]): TransactionEnvelope {
     this.signers.push(...signers);
     return this;
   }
@@ -38,7 +59,7 @@ export class TransactionEnvelope {
   /**
    * Builds a transaction from this envelope.
    */
-  public build(): Transaction {
+  build(): Transaction {
     return new Transaction().add(...this.instructions);
   }
 
@@ -47,7 +68,7 @@ export class TransactionEnvelope {
    *
    * @returns URL
    */
-  public generateInspectLink(cluster: Cluster = "mainnet-beta"): string {
+  generateInspectLink(cluster: Cluster = "mainnet-beta"): string {
     const t = this.build();
     t.recentBlockhash = "EETubP5AKHgjPAhzPAFcb8BAY1hMH639CWCFTqi3hq1k"; // Some stub
     t.feePayer = this.provider.wallet.publicKey;
