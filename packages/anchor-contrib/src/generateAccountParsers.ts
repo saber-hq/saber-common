@@ -4,7 +4,7 @@ import { AccountsCoder } from "@project-serum/anchor";
 /**
  * Parsers associated with an IDL.
  */
-export type AccountParsers<M extends Record<string, object>> = {
+export type AccountParsers<M> = {
   [K in keyof M]: (data: Buffer) => M[K];
 };
 
@@ -32,9 +32,7 @@ export const generateAccountParsers = <M extends Record<string, object>>(
  *
  * @param idl The IDL.
  */
-export const generateAccountParsersFromCoder = <
-  M extends Record<string, object>
->(
+export const generateAccountParsersFromCoder = <M>(
   accountNames: (keyof M)[] | undefined,
   coder: AccountsCoder<keyof M & string>
 ): AccountParsers<M> => {

@@ -33,7 +33,7 @@ export const newProgram = <P>(
  * @param programs
  * @returns
  */
-export const newProgramMap = <P extends Record<string, unknown>>(
+export const newProgramMap = <P>(
   provider: SaberProvider,
   idls: {
     [K in keyof P]: Idl;
@@ -46,5 +46,7 @@ export const newProgramMap = <P extends Record<string, unknown>>(
 } => {
   return mapValues(idls, (idl, k: keyof P) =>
     newProgram(idl, addresses[k], provider)
-  );
+  ) as unknown as {
+    [K in keyof P]: P[K];
+  };
 };
