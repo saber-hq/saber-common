@@ -3,6 +3,7 @@ import { Coder, EventParser } from "@project-serum/anchor";
 import type { InstructionDisplay } from "@project-serum/anchor/dist/cjs/coder/instruction";
 import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
+import camelCase from "lodash.camelcase";
 import mapValues from "lodash.mapvalues";
 
 import type { AccountParsers } from "../generateAccountParsers";
@@ -61,7 +62,7 @@ export class SuperCoder<
     this.coder = new Coder(idl);
     this.eventParser = new EventParser(address, this.coder);
     this.accountParsers = generateAccountParsersFromCoder(
-      idl.accounts?.map((acc) => acc.name),
+      idl.accounts?.map((acc) => camelCase(acc.name)),
       this.coder.accounts
     );
     this.errorMap = generateErrorMap<T["IDL"]>(idl);

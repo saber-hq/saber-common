@@ -3119,8 +3119,10 @@ __metadata:
     "@project-serum/anchor": ^0.18.2
     "@saberhq/solana-contrib": ^1.10.1
     "@solana/web3.js": ^1.31.0
+    "@types/lodash.camelcase": ^4
     "@types/lodash.mapvalues": ^4.6.6
     eventemitter3: ^4.0.7
+    lodash.camelcase: ^4.3.0
     lodash.mapvalues: ^4.6.0
     tslib: ^2.3.1
   peerDependencies:
@@ -3665,6 +3667,15 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: e60b153664572116dfea673c5bda7778dbff150498f44f998e34b5886d8afc47f16799280e4b6e241c0472aef1bc36add771c569c68fc5125fc2ae519a3eb9ac
+  languageName: node
+  linkType: hard
+
+"@types/lodash.camelcase@npm:^4":
+  version: 4.3.6
+  resolution: "@types/lodash.camelcase@npm:4.3.6"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 4bd62ac2254088d91a39d1e1fd951fe37c4dd90901dbd70975a6ef1fecf03355483f699533f0f112401c84da8d5b4471fe2a798a9678af3f884075a987431486
   languageName: node
   linkType: hard
 
@@ -9119,6 +9130,13 @@ __metadata:
   version: 3.0.0
   resolution: "lodash._reinterpolate@npm:3.0.0"
   checksum: 06d2d5f33169604fa5e9f27b6067ed9fb85d51a84202a656901e5ffb63b426781a601508466f039c720af111b0c685d12f1a5c14ff8df5d5f27e491e562784b2
+  languageName: node
+  linkType: hard
+
+"lodash.camelcase@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "lodash.camelcase@npm:4.3.0"
+  checksum: cb9227612f71b83e42de93eccf1232feeb25e705bdb19ba26c04f91e885bfd3dd5c517c4a97137658190581d3493ea3973072ca010aab7e301046d90740393d1
   languageName: node
   linkType: hard
 

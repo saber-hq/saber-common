@@ -1,5 +1,6 @@
 import type { Idl } from "@project-serum/anchor";
 import { AccountsCoder } from "@project-serum/anchor";
+import camelCase from "lodash.camelcase";
 
 /**
  * Parsers associated with an IDL.
@@ -20,7 +21,7 @@ export const generateAccountParsers = <M extends Record<string, object>>(
 ): AccountParsers<M> => {
   const coder = new AccountsCoder<keyof M & string>(idl);
   return generateAccountParsersFromCoder(
-    idl.accounts?.map((a) => a.name),
+    idl.accounts?.map((a) => camelCase(a.name)),
     coder
   );
 };
