@@ -9,11 +9,8 @@ import type {
 } from "@solana/web3.js";
 
 import type { Broadcaster } from ".";
-import {
-  DEFAULT_PROVIDER_OPTIONS,
-  PendingTransaction,
-  simulateTransactionWithCommitment,
-} from ".";
+import { DEFAULT_PROVIDER_OPTIONS, PendingTransaction } from ".";
+import { simulateTransactionWithCommitment } from "./utils/simulateTransactionWithCommitment";
 
 /**
  * Broadcasts transactions to a single connection.
@@ -53,6 +50,12 @@ export class SingleConnectionBroadcaster implements Broadcaster {
     );
   }
 
+  /**
+   * Simulates a transaction with a commitment.
+   * @param tx
+   * @param commitment
+   * @returns
+   */
   async simulate(
     tx: Transaction,
     commitment: Commitment = "recent"
