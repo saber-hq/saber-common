@@ -19,9 +19,9 @@ export type AccountParsers<M> = {
 export const generateAccountParsers = <M extends Record<string, object>>(
   idl: Idl
 ): AccountParsers<M> => {
-  const coder = new AccountsCoder<keyof M & string>(idl);
+  const coder = new AccountsCoder(idl);
   return generateAccountParsersFromCoder(
-    idl.accounts?.map((a) => camelCase(a.name)),
+    idl.accounts?.map((a) => a.name),
     coder
   );
 };
@@ -34,12 +34,12 @@ export const generateAccountParsers = <M extends Record<string, object>>(
  * @param idl The IDL.
  */
 export const generateAccountParsersFromCoder = <M>(
-  accountNames: (keyof M)[] | undefined,
-  coder: AccountsCoder<keyof M & string>
+  accountNames: string[] | undefined,
+  coder: AccountsCoder
 ): AccountParsers<M> => {
   return (accountNames ?? []).reduce((parsers, account) => {
-    parsers[account] = (data: Buffer) =>
-      coder.decode<M[keyof M]>(account as keyof M & string, data);
+    parsers[camelCase(account) as keyof M] = (data: Buffer) =>
+      coder.decode<M[keyof M]>(account, data);
     return parsers;
   }, {} as AccountParsers<M>);
 };
