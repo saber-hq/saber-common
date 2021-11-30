@@ -1,7 +1,7 @@
 [
   {
     "path": "packages/anchor-contrib/dist/esm/index.js",
-    "limit": "6 KB",
+    "limit": "7 KB",
     "ignore": [
       "@project-serum/anchor",
       "@solana/web3.js",
