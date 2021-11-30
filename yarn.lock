@@ -3117,7 +3117,7 @@ __metadata:
   resolution: "@saberhq/anchor-contrib@workspace:packages/anchor-contrib"
   dependencies:
     "@project-serum/anchor": ^0.18.2
-    "@saberhq/solana-contrib": ^1.10.3
+    "@saberhq/solana-contrib": ^1.10.4
     "@solana/web3.js": ^1.31.0
     "@types/lodash.camelcase": ^4
     "@types/lodash.mapvalues": ^4.6.6
@@ -3136,8 +3136,8 @@ __metadata:
   resolution: "@saberhq/chai-solana@workspace:packages/chai-solana"
   dependencies:
     "@project-serum/anchor": ^0.18.2
-    "@saberhq/solana-contrib": ^1.10.3
-    "@saberhq/token-utils": ^1.10.3
+    "@saberhq/solana-contrib": ^1.10.4
+    "@saberhq/token-utils": ^1.10.4
     "@solana/spl-token-registry": ^0.2.467
     "@solana/web3.js": ^1.31.0
     "@types/chai": ^4.2.22
@@ -3162,7 +3162,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/eslint-config-react@workspace:packages/eslint-config-react"
   dependencies:
-    "@saberhq/eslint-config": ^1.10.3
+    "@saberhq/eslint-config": ^1.10.4
     eslint-plugin-jsx-a11y: ^6.5.1
     eslint-plugin-react: ^7.27.1
     eslint-plugin-react-hooks: ^4.3.0
@@ -3171,7 +3171,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/eslint-config@*, @saberhq/eslint-config@^1.10.3, @saberhq/eslint-config@workspace:packages/eslint-config":
+"@saberhq/eslint-config@*, @saberhq/eslint-config@^1.10.4, @saberhq/eslint-config@workspace:packages/eslint-config":
   version: 0.0.0-use.local
   resolution: "@saberhq/eslint-config@workspace:packages/eslint-config"
   dependencies:
@@ -3222,7 +3222,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/solana-contrib@^1.10.3, @saberhq/solana-contrib@^1.3.5, @saberhq/solana-contrib@workspace:packages/solana-contrib":
+"@saberhq/solana-contrib@^1.10.4, @saberhq/solana-contrib@^1.3.5, @saberhq/solana-contrib@workspace:packages/solana-contrib":
   version: 0.0.0-use.local
   resolution: "@saberhq/solana-contrib@workspace:packages/solana-contrib"
   dependencies:
@@ -3247,8 +3247,8 @@ __metadata:
     "@babel/preset-env": ^7.16.4
     "@babel/preset-typescript": ^7.16.0
     "@project-serum/anchor": ^0.18.2
-    "@saberhq/solana-contrib": ^1.10.3
-    "@saberhq/token-utils": ^1.10.3
+    "@saberhq/solana-contrib": ^1.10.4
+    "@saberhq/token-utils": ^1.10.4
     "@solana/buffer-layout": ^3.0.0
     "@solana/spl-token-registry": ^0.2.467
     "@solana/web3.js": ^1.31.0
@@ -3274,11 +3274,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/token-utils@^1.10.3, @saberhq/token-utils@workspace:packages/token-utils":
+"@saberhq/token-utils@^1.10.4, @saberhq/token-utils@workspace:packages/token-utils":
   version: 0.0.0-use.local
   resolution: "@saberhq/token-utils@workspace:packages/token-utils"
   dependencies:
-    "@saberhq/solana-contrib": ^1.10.3
+    "@saberhq/solana-contrib": ^1.10.4
     "@solana/buffer-layout": ^3.0.0
     "@solana/spl-token": ^0.1.8
     "@solana/spl-token-registry": ^0.2.467
