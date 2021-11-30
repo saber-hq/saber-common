@@ -366,10 +366,13 @@ export class SolanaAugmentedProvider implements AugmentedProvider {
    * @param amount
    * @returns
    */
-  async requestAirdrop(lamports: number): Promise<PendingTransaction> {
+  async requestAirdrop(
+    lamports: number,
+    to: PublicKey = this.wallet.publicKey
+  ): Promise<PendingTransaction> {
     return new PendingTransaction(
       this.connection,
-      await this.connection.requestAirdrop(this.wallet.publicKey, lamports)
+      await this.connection.requestAirdrop(to, lamports)
     );
   }
 
