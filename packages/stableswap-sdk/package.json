@@ -27,16 +27,16 @@
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-typescript": "^7.16.0",
     "@project-serum/anchor": "^0.18.2",
-    "@solana/spl-token-registry": "^0.2.467",
+    "@solana/spl-token-registry": "^0.2.654",
     "@solana/web3.js": "^1.31.0",
     "@types/bn.js": "^5.1.0",
     "@types/bs58": "^4.0.1",
     "@types/jest": "^27.0.3",
     "@types/lodash.mapvalues": "^4.6.6",
-    "@types/node": "^16.11.10",
+    "@types/node": "^16.11.11",
     "@types/yargs": "^17.0.7",
     "bn.js": "^5.2.0",
-    "jest": "^27.3.1",
+    "jest": "^27.4.3",
     "jsbi": "^4.1.0"
   },
   "peerDependencies": {
@@ -53,7 +53,7 @@
     "b58": "^4.0.3",
     "lodash.mapvalues": "^4.6.0",
     "tslib": "^2.3.1",
-    "yargs": "^17.2.1"
+    "yargs": "^17.3.0"
   },
   "files": [
     "dist/",
