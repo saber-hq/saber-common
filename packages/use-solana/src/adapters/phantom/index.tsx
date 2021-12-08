@@ -60,7 +60,7 @@ export class PhantomWalletAdapter
 
   connect = async (): Promise<void> => {
     if (!this._provider) {
-      window.open("https://phantom.app/", "_blank", "noopener noreferrer");
+      // window.open("https://phantom.app/", "_blank", "noopener noreferrer");
       throw new Error("Phantom not installed");
     }
     if (!this._provider.listeners("connect").length) {
