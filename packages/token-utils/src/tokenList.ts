@@ -1,6 +1,5 @@
-import type * as tokenRegistry from "@solana/spl-token-registry";
-
 import { Token } from "./token";
+import type * as tokenRegistry from "./vendor/splTokenRegistry";
 
 /**
  * Known origin chains.
