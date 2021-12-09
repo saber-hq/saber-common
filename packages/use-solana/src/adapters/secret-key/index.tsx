@@ -1,24 +1,41 @@
 import { SignerWallet } from "@saberhq/solana-contrib";
-import type { PublicKey, Transaction } from "@solana/web3.js";
+import type { SendTransactionOptions } from "@solana/wallet-adapter-base";
+import { BaseWalletAdapter } from "@solana/wallet-adapter-base";
+import type {
+  Connection,
+  PublicKey,
+  Transaction,
+  TransactionSignature,
+} from "@solana/web3.js";
 import { Keypair } from "@solana/web3.js";
-import EventEmitter from "eventemitter3";
 
-import type { WalletAdapter } from "../types";
 import { DEFAULT_PUBLIC_KEY } from "../types";
 
-export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
-  _wallet?: SignerWallet;
-  _publicKey?: PublicKey;
+export class SecretKeyAdapter extends BaseWalletAdapter {
+  _connecting: boolean;
+  _wallet: SignerWallet | null;
+  _publicKey: PublicKey | null;
 
   _connected: boolean;
 
   constructor() {
     super();
+    this._connecting = false;
+    this._wallet = null;
+    this._publicKey = null;
     this._connected = false;
+  }
+
+  get ready(): boolean {
+    return true;
   }
 
   get connected(): boolean {
     return this._connected;
+  }
+
+  get connecting(): boolean {
+    return this._connecting;
   }
 
   get autoApprove(): boolean {
@@ -47,6 +64,16 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
     return wallet.signTransaction(transaction);
   }
 
+  async sendTransaction(
+    transaction: Transaction,
+    connection: Connection,
+    options?: SendTransactionOptions
+  ): Promise<TransactionSignature> {
+    throw new Error("sendTransaction not implemented by SecretKeyAdapter");
+
+    return Promise.resolve();
+  }
+
   connect = (args?: unknown): Promise<void> => {
     const argsTyped = args as
       | {
@@ -62,17 +89,18 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
     );
     this._publicKey = this._wallet.publicKey;
     this._connected = true;
-    this.emit("connect", this.publicKey);
+    this.emit("connect");
     return Promise.resolve();
   };
 
-  disconnect(): void {
+  disconnect(): Promise<void> {
     if (this._wallet) {
-      this._wallet = undefined;
-      this._publicKey = undefined;
-      this._publicKey = undefined;
+      this._wallet = null;
+      this._publicKey = null;
       this._connected = false;
       this.emit("disconnect");
     }
+
+    return Promise.resolve();
   }
 }

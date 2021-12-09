@@ -8,10 +8,10 @@ import {
   SolanaProvider,
   SolanaReadonlyProvider,
 } from "@saberhq/solana-contrib";
+import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
+import type { Wallet } from "@solana/wallet-adapter-wallets";
 import type { Commitment, ConfirmOptions, Connection } from "@solana/web3.js";
 import { useMemo } from "react";
-
-import type { ConnectedWallet, WalletAdapter } from "../adapters/types";
 
 /**
  * Wallet-related information.
@@ -39,7 +39,7 @@ export interface UseProviderArgs {
   /**
    * Wallet.
    */
-  wallet?: WalletAdapter<boolean>;
+  wallet?: Wallet;
   /**
    * Commitment for the read-only provider.
    */
@@ -53,7 +53,6 @@ export interface UseProviderArgs {
 export const useProviderInternal = ({
   connection,
   sendConnection = connection,
-  wallet,
   commitment = "recent",
   confirmOptions = DEFAULT_PROVIDER_OPTIONS,
 }: UseProviderArgs): UseProvider => {
@@ -65,21 +64,30 @@ export const useProviderInternal = ({
     [commitment, connection]
   );
 
-  const connected = wallet?.connected;
-  const publicKey = wallet?.publicKey;
+  const { wallet, connected, publicKey } = useWallet();
+  const anchorWallet = useAnchorWallet();
+
   const providerMut = useMemo(
     () =>
       wallet && connected && publicKey
         ? new SolanaAugmentedProvider(
-            SolanaProvider.load({
-              connection,
-              sendConnection,
-              wallet: wallet as ConnectedWallet,
-              opts: confirmOptions,
-            })
-          )
+          SolanaProvider.load({
+            connection,
+            sendConnection,
+            wallet: anchorWallet,
+            opts: confirmOptions,
+          })
+        )
         : null,
-    [wallet, connected, publicKey, connection, sendConnection, confirmOptions]
+    [
+      wallet,
+      connected,
+      publicKey,
+      anchorWallet,
+      connection,
+      sendConnection,
+      confirmOptions,
+    ]
   );
 
   return {

@@ -1,59 +1,73 @@
+import type {
+  WalletAdapter,
+  WalletAdapterNetwork,
+  WalletError,
+} from "@solana/wallet-adapter-base";
+import {
+  ConnectionContext as SolanaConnectionContext,
+  useWallet,
+  WalletProvider as SolanaWalletProvider,
+} from "@solana/wallet-adapter-react";
+import type { Wallet } from "@solana/wallet-adapter-wallets";
+import {
+  getLedgerWallet,
+  getMathWallet,
+  getPhantomWallet,
+  getSolflareWallet,
+  getSolletWallet,
+} from "@solana/wallet-adapter-wallets";
+import type { ConnectionConfig } from "@solana/web3.js";
 import type { ReactNode } from "react";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { createContainer } from "unstated-next";
 
-import type { WalletAdapter, WalletProviderInfo } from ".";
-import type { UseSolanaError } from "./error";
-import { ErrorLevel } from "./error";
-import { LOCAL_STORAGE_ADAPTER } from "./storage";
+import type { WalletProvider } from "./providers";
 import type {
   ConnectionArgs,
   ConnectionContext,
 } from "./utils/useConnectionInternal";
 import { useConnectionInternal } from "./utils/useConnectionInternal";
+import { usePrevious } from "./utils/usePrevious";
 import type { UseProvider } from "./utils/useProviderInternal";
 import { useProviderInternal } from "./utils/useProviderInternal";
-import type { UseWallet, UseWalletArgs } from "./utils/useWalletInternal";
-import { useWalletInternal } from "./utils/useWalletInternal";
 
 export interface UseSolana<T extends boolean = boolean>
   extends ConnectionContext,
-    UseWallet<T>,
-    UseProvider {}
+    UseProvider {
+  config: ConnectionConfig;
+}
 
-export interface UseSolanaArgs
-  extends Omit<ConnectionArgs, "storageAdapter">,
-    Partial<
-      Pick<UseWalletArgs, "onConnect" | "onDisconnect" | "storageAdapter">
-    > {
+export interface UseSolanaArgs extends ConnectionArgs {
   /**
    * Called when an error is thrown.
    */
-  onError?: (err: UseSolanaError) => void;
+
+  /**
+   * @deprecated
+   */
+  onConnect?: (adapter: WalletAdapter, wallet: Wallet) => void;
+
+  /**
+   * @deprecated
+   *
+   */
+  onDisconnect?: (adapter: WalletAdapter, wallet: Wallet) => void;
+
+  onError?: (err: WalletError) => void;
 }
 
-const defaultOnConnect = (
-  wallet: WalletAdapter<true>,
-  provider: WalletProviderInfo
-) => {
+const defaultOnConnect = (adapter: WalletAdapter, wallet: Wallet) => {
   console.log(
-    `Connected to ${provider.name} wallet: ${wallet.publicKey.toString()}`
+    `Connected to ${wallet.name} wallet: ${adapter.publicKey?.toString() ?? ""}`
   );
 };
 
-const defaultOnDisconnect = (
-  _wallet: WalletAdapter<false>,
-  provider: WalletProviderInfo
-) => {
-  console.log(`Disconnected from ${provider.name} wallet`);
+const defaultOnDisconnect = (adapter: WalletAdapter, wallet: Wallet) => {
+  console.log(`Disconnected from ${wallet.name} wallet`);
 };
 
-const defaultOnError = (err: UseSolanaError) => {
-  if (err.level === ErrorLevel.WARN) {
-    console.warn(err);
-  } else {
-    console.error(err);
-  }
+const defaultOnError = (err: WalletError) => {
+  console.error(err);
 };
 
 /**
@@ -63,38 +77,55 @@ const defaultOnError = (err: UseSolanaError) => {
 const useSolanaInternal = ({
   onConnect = defaultOnConnect,
   onDisconnect = defaultOnDisconnect,
-  onError = defaultOnError,
-  storageAdapter = LOCAL_STORAGE_ADAPTER,
-  ...connectionArgs
+  connection,
+  sendConnection,
 }: UseSolanaArgs = {}): UseSolana => {
-  const connectionCtx = useConnectionInternal({
-    ...connectionArgs,
-    storageAdapter,
-  });
-  const { network, endpoint } = connectionCtx;
-  const walletCtx = useWalletInternal({
-    onConnect,
-    onDisconnect,
-    network,
-    endpoint,
-    onError,
-    storageAdapter,
-  });
+  const { wallet, adapter, connected, disconnecting, connecting } = useWallet();
   const providerCtx = useProviderInternal({
-    connection: connectionCtx.connection,
-    wallet: walletCtx.wallet,
+    connection,
+    wallet,
   });
 
+  // TODO: until merged into wallet-adapter
+  const previousConnected = usePrevious(connected);
+  const previousWallet = usePrevious(wallet);
+  const previousAdapter = usePrevious(adapter);
+
+  useEffect(() => {
+    if (!previousConnected && connected) {
+      if (adapter && wallet) {
+        onConnect(adapter, wallet);
+      }
+    }
+
+    if (previousConnected && !connected) {
+      if (previousAdapter && previousWallet) {
+        onDisconnect(previousAdapter, previousWallet);
+      }
+    }
+  }, [
+    wallet,
+    onConnect,
+    onDisconnect,
+    connected,
+    disconnecting,
+    adapter,
+    previousWallet,
+    previousAdapter,
+    previousConnected,
+  ]);
+
   return {
-    ...walletCtx,
-    ...connectionCtx,
     ...providerCtx,
   };
 };
 
 const Solana = createContainer(useSolanaInternal);
 
-type ProviderProps = UseSolanaArgs & { children: ReactNode };
+type ProviderProps = UseSolanaArgs & {
+  children: ReactNode;
+  wallets: WalletProvider[];
+};
 
 /**
  * Provides a Solana SDK.
@@ -105,10 +136,52 @@ type ProviderProps = UseSolanaArgs & { children: ReactNode };
  */
 export const SolanaProvider: React.FC<ProviderProps> = ({
   children,
+  networkConfigs,
+  defaultNetwork,
+  storageAdapter,
+  commitment,
+  wallets,
+  onError = defaultOnError,
   ...args
-}: ProviderProps) => (
-  <Solana.Provider initialState={args}>{children}</Solana.Provider>
-);
+}: ProviderProps) => {
+  const connectionCtx = useConnectionInternal({
+    networkConfigs,
+    defaultNetwork,
+    commitment,
+    storageAdapter,
+  });
+  const { connection } = connectionCtx;
+
+  const { network } = connectionCtx;
+
+  const defaultedWallets = useMemo(() => {
+    if (wallets) return wallets;
+
+    return [
+      getSolletWallet({ network: network as WalletAdapterNetwork }),
+      getPhantomWallet(),
+      getLedgerWallet(),
+      getMathWallet(),
+      getSolflareWallet(),
+      // getBitKeepWallet(),
+      // getBitpieWallet(),
+    ];
+  }, [network, wallets]);
+
+  return (
+    <SolanaConnectionContext.Provider value={{ connection }}>
+      <SolanaWalletProvider
+        wallets={defaultedWallets}
+        autoConnect
+        onError={onError}
+      >
+        <Solana.Provider initialState={{ ...connectionCtx }}>
+          {children}
+        </Solana.Provider>
+      </SolanaWalletProvider>
+    </SolanaConnectionContext.Provider>
+  );
+};
 
 /**
  * Fetches the loaded Solana SDK.

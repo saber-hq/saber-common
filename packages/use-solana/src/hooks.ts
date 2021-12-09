@@ -1,30 +1,21 @@
+import { useWallet } from "@solana/wallet-adapter-react";
+import type { Wallet } from "@solana/wallet-adapter-wallets";
 import type { Connection } from "@solana/web3.js";
 
-import type { ConnectedWallet } from "./adapters/types";
-import type { UseSolana } from "./context";
 import { useSolana } from "./context";
 import type { ConnectionContext } from "./utils/useConnectionInternal";
 
 /**
- * Gets the current Solana wallet.
- */
-export function useWallet(): UseSolana {
-  const context = useSolana();
-  if (!context) {
-    throw new Error("wallet not loaded");
-  }
-  return context;
-}
-
-/**
  * Gets the current Solana wallet, returning null if it is not connected.
  */
-export const useConnectedWallet = (): ConnectedWallet | null => {
-  const { wallet, connected } = useWallet();
-  if (!wallet?.connected || !connected || !wallet.publicKey) {
+export const useConnectedWallet = (): Wallet | null => {
+  const { wallet, connected, publicKey } = useWallet();
+
+  if (!wallet || !connected || !publicKey) {
     return null;
   }
-  return wallet as ConnectedWallet;
+
+  return wallet;
 };
 
 /**
