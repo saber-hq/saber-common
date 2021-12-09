@@ -32,5 +32,15 @@ module.exports = {
         argsIgnorePattern: "^_",
       },
     ],
+    // Enforce that private members are prefixed with an underscore
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        selector: "memberLike",
+        modifiers: ["private"],
+        format: ["camelCase"],
+        leadingUnderscore: "require",
+      },
+    ],
   },
 };
