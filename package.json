@@ -35,7 +35,8 @@
     "react": "^17.0.2",
     "size-limit": "^7.0.4",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.2"
+    "typedoc": "^0.22.10",
+    "typescript": "^4.5.3"
   },
   "scripts": {
     "build": "lerna run build",
@@ -44,7 +45,8 @@
     "lint:ci": "eslint . --max-warnings=0",
     "prepare": "husky install",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "docs:generate": "typedoc --excludePrivate --includeVersion --out docs/ packages/**/src/index.{ts,tsx}"
   },
   "version": "0.0.0",
   "packageManager": "yarn@3.1.1"
