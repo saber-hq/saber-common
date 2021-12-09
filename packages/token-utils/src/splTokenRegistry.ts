@@ -17,12 +17,12 @@ export enum ENV {
 /**
  * A token list.
  */
-export interface TokenList {
+export interface SPLTokenList {
   readonly name: string;
   readonly logoURI: string;
   readonly tags: { [tag: string]: TagDetails };
   readonly timestamp: string;
-  readonly tokens: TokenInfo[];
+  readonly tokens: SPLTokenInfo[];
 }
 
 /**
@@ -36,7 +36,7 @@ export interface TagDetails {
 /**
  * TokenExtensions.
  */
-export interface TokenExtensions {
+export interface SPLTokenExtensions {
   readonly website?: string;
   readonly bridgeContract?: string;
   readonly assetContract?: string;
@@ -58,7 +58,7 @@ export interface TokenExtensions {
 /**
  * TokenInfo.
  */
-export interface TokenInfo {
+export interface SPLTokenInfo {
   readonly chainId: number;
   readonly address: string;
   readonly name: string;
@@ -66,5 +66,5 @@ export interface TokenInfo {
   readonly symbol: string;
   readonly logoURI?: string;
   readonly tags?: string[];
-  readonly extensions?: TokenExtensions;
+  readonly extensions?: SPLTokenExtensions;
 }

@@ -1,5 +1,9 @@
+import type {
+  SPLTokenExtensions,
+  SPLTokenInfo,
+  SPLTokenList,
+} from "./splTokenRegistry";
 import { Token } from "./token";
-import type * as tokenRegistry from "./vendor/splTokenRegistry";
 
 /**
  * Known origin chains.
@@ -25,7 +29,7 @@ export type OriginChain = typeof ORIGIN_CHAINS[number];
 /**
  * Token extensions with additional information.
  */
-export type TokenExtensions = tokenRegistry.TokenExtensions & {
+export type TokenExtensions = SPLTokenExtensions & {
   /**
    * Mints of the underlying tokens that make up this token.
    * E.g. a Saber USDC-USDT LP token would use the USDC and USDT mints.
@@ -54,14 +58,14 @@ export type TokenExtensions = tokenRegistry.TokenExtensions & {
 /**
  * Token info.
  */
-export type TokenInfo = Omit<tokenRegistry.TokenInfo, "extensions"> & {
+export type TokenInfo = Omit<SPLTokenInfo, "extensions"> & {
   readonly extensions?: TokenExtensions;
 };
 
 /**
  * A list of tokens, based off of the Uniswap standard.
  */
-export type TokenList = Omit<tokenRegistry.TokenList, "tokens"> & {
+export type TokenList = Omit<SPLTokenList, "tokens"> & {
   readonly tokens: TokenInfo[];
 };
 
