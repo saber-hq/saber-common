@@ -110,12 +110,12 @@ type AccountsNamespace<A> = {
 
 type TypeMap = {
   publicKey: PublicKey;
-  u64: BN;
-  i64: BN;
-  u128: BN;
-  i128: BN;
+  bool: boolean;
+  string: string;
 } & {
   [K in "u8" | "i8" | "u16" | "i16" | "u32" | "i32"]: number;
+} & {
+  [K in "u64" | "i64" | "u128" | "i128"]: BN;
 };
 
 type DecodeType<T extends IdlType, Defined> = T extends keyof TypeMap
