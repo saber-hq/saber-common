@@ -29,13 +29,11 @@
     "src/"
   ],
   "devDependencies": {
-    "@solana/spl-token-registry": "^0.2.654",
     "@solana/web3.js": "^1.31.0",
     "@types/bn.js": "^5.1.0",
     "jsbi": "^4.1.0"
   },
   "peerDependencies": {
-    "@solana/spl-token-registry": "^0.2.270",
     "@solana/web3.js": "^1.29.2",
     "bn.js": "^5.2",
     "jsbi": "^3 || ^4"

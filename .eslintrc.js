@@ -10,7 +10,7 @@ module.exports = {
   settings: {
     "import/resolver": "node",
   },
-  ignorePatterns: ["*.js", "packages/*/dist/**/*"],
+  ignorePatterns: ["*.js"],
   extends: ["@saberhq/eslint-config-react"],
   parserOptions: {
     tsconfigRootDir: __dirname,

@@ -2,6 +2,7 @@ export * from "./ata";
 export * from "./instructions";
 export * from "./layout";
 export * from "./price";
+export * from "./splTokenRegistry";
 export * from "./token";
 export * from "./tokenAmount";
 export * from "./tokenList";

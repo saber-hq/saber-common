@@ -16,7 +16,6 @@
     "@saberhq/eslint-config-react": "*",
     "@size-limit/file": "^7.0.4",
     "@size-limit/webpack": "^7.0.4",
-    "@solana/spl-token-registry": "^0.2.654",
     "@solana/web3.js": "^1.31.0",
     "@types/bn.js": "^5.1.0",
     "@types/jest": "^27.0.3",

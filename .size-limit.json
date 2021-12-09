@@ -18,12 +18,7 @@
   {
     "path": "packages/token-utils/dist/esm/index.js",
     "limit": "50 KB",
-    "ignore": [
-      "@solana/spl-token",
-      "@solana/web3.js",
-      "bn.js",
-      "@solana/spl-token-registry"
-    ],
+    "ignore": ["@solana/spl-token", "@solana/web3.js", "bn.js"],
     "webpack": true
   },
   {

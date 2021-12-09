@@ -3138,7 +3138,6 @@ __metadata:
     "@project-serum/anchor": ^0.18.2
     "@saberhq/solana-contrib": ^1.10.5
     "@saberhq/token-utils": ^1.10.5
-    "@solana/spl-token-registry": ^0.2.654
     "@solana/web3.js": ^1.31.0
     "@types/chai": ^4.3.0
     "@types/chai-as-promised": ^7.1.4
@@ -3152,7 +3151,6 @@ __metadata:
     "@project-serum/anchor": ^0.17.0 || ^0.18.0
     "@saberhq/solana-contrib": ^1.3.17
     "@saberhq/token-utils": ^1.3.17
-    "@solana/spl-token-registry": "*"
     "@solana/web3.js": ^1.29.2
     bn.js: ^5.2.0
   languageName: unknown
@@ -3199,7 +3197,6 @@ __metadata:
     "@saberhq/eslint-config-react": "*"
     "@size-limit/file": ^7.0.4
     "@size-limit/webpack": ^7.0.4
-    "@solana/spl-token-registry": ^0.2.654
     "@solana/web3.js": ^1.31.0
     "@types/bn.js": ^5.1.0
     "@types/jest": ^27.0.3
@@ -3250,7 +3247,6 @@ __metadata:
     "@saberhq/solana-contrib": ^1.10.5
     "@saberhq/token-utils": ^1.10.5
     "@solana/buffer-layout": ^3.0.0
-    "@solana/spl-token-registry": ^0.2.654
     "@solana/web3.js": ^1.31.0
     "@types/bn.js": ^5.1.0
     "@types/bs58": ^4.0.1
@@ -3267,7 +3263,6 @@ __metadata:
     yargs: ^17.3.0
   peerDependencies:
     "@project-serum/anchor": ^0.17.0 || ^0.18.0
-    "@solana/spl-token-registry": "*"
     "@solana/web3.js": ">=1.29.2"
     bn.js: ">=5"
     jsbi: ^3 || ^4
@@ -3281,7 +3276,6 @@ __metadata:
     "@saberhq/solana-contrib": ^1.10.5
     "@solana/buffer-layout": ^3.0.0
     "@solana/spl-token": ^0.1.8
-    "@solana/spl-token-registry": ^0.2.654
     "@solana/web3.js": ^1.31.0
     "@types/bn.js": ^5.1.0
     "@ubeswap/token-math": ^4.3.1
@@ -3289,7 +3283,6 @@ __metadata:
     tiny-invariant: ^1.2.0
     tslib: ^2.3.1
   peerDependencies:
-    "@solana/spl-token-registry": ^0.2.270
     "@solana/web3.js": ^1.29.2
     bn.js: ^5.2
     jsbi: ^3 || ^4
@@ -3369,15 +3362,6 @@ __metadata:
   dependencies:
     buffer: ~6.0.3
   checksum: 72384aeff35ad6ae3bc1aed10be4f55205179d9eba6a3f0df9bf6bcb27613d6f661f6cb84691dd4dbc354f07bf9f7f8113ededceb1aee03b479e4a1847d86ae1
-  languageName: node
-  linkType: hard
-
-"@solana/spl-token-registry@npm:^0.2.654":
-  version: 0.2.654
-  resolution: "@solana/spl-token-registry@npm:0.2.654"
-  dependencies:
-    cross-fetch: 3.0.6
-  checksum: d22f419c91f2551bdd8a59353f8af999626e6ae1141c5674b2b976fc90163097d7a45351286a4dd9f1883c4bdec102c294c029b869a79cc46df02000ddb8cb37
   languageName: node
   linkType: hard
 
@@ -5683,15 +5667,6 @@ __metadata:
   version: 1.1.1
   resolution: "create-require@npm:1.1.1"
   checksum: a9a1503d4390d8b59ad86f4607de7870b39cad43d929813599a23714831e81c520bddf61bcdd1f8e30f05fd3a2b71ae8538e946eb2786dc65c2bbc520f692eff
-  languageName: node
-  linkType: hard
-
-"cross-fetch@npm:3.0.6":
-  version: 3.0.6
-  resolution: "cross-fetch@npm:3.0.6"
-  dependencies:
-    node-fetch: 2.6.1
-  checksum: fc855278c3bae191a00003eed618a40b48dfadf25ccf707ffdb173add97921f89ef459815bc5cbd20554de713da4f0a2c1258f83e60895efdeab5a7834c6e3b6
   languageName: node
   linkType: hard
 
