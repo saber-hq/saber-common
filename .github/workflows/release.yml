@@ -39,6 +39,7 @@ jobs:
         env:
           CI: ""
           YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+      - run: yarn docs:generate
       - name: Perform Git release
         run: |
           VERSION=$(node -e "console.log(require('./lerna.json').version);")
@@ -55,3 +56,8 @@ jobs:
           yarn lerna publish --no-verify-access --yes from-package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+      - name: Deploy docs
+        uses: JamesIves/github-pages-deploy-action@4.1.7
+        with:
+          branch: gh-pages
+          folder: docs
