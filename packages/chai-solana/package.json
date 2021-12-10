@@ -43,7 +43,7 @@
     "bn.js": "^5.2.0"
   },
   "devDependencies": {
-    "@project-serum/anchor": "^0.18.2",
+    "@project-serum/anchor": "^0.19.0",
     "@saberhq/solana-contrib": "^1.10.6",
     "@saberhq/token-utils": "^1.10.6",
     "@solana/web3.js": "^1.31.0",
