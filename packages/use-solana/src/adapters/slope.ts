@@ -1,9 +1,5 @@
-import type {
-  WalletAdapter,
-  WalletAdapterEvents,
-} from "@solana/wallet-adapter-base";
 import {
-  EventEmitter,
+  BaseMessageSignerWalletAdapter,
   WalletConnectionError,
   WalletDisconnectionError,
   WalletError,
@@ -18,7 +14,6 @@ import bs58 from "bs58";
 import invariant from "tiny-invariant";
 
 interface SlopeWallet {
-  autoApprove: boolean;
   connect(): Promise<{
     msg: string;
     data: {
@@ -40,6 +35,7 @@ interface SlopeWallet {
       signatures?: string[];
     };
   }>;
+  signMessage(message: Uint8Array): Promise<{ data: { signature: string } }>;
 }
 
 interface SlopeWindow extends Window {
@@ -55,10 +51,7 @@ export interface SlopeWalletAdapterConfig {
   pollCount?: number;
 }
 
-export class SlopeWalletAdapter
-  extends EventEmitter<WalletAdapterEvents>
-  implements Omit<WalletAdapter, "sendTransaction" | keyof EventEmitter>
-{
+export class SlopeWalletAdapter extends BaseMessageSignerWalletAdapter {
   private _connecting: boolean;
   private _wallet: SlopeWallet | null;
   private _publicKey: PublicKey | null;
@@ -84,10 +77,6 @@ export class SlopeWalletAdapter
 
   get connected(): boolean {
     return !!this._publicKey;
-  }
-
-  get autoApprove(): boolean {
-    return !!this._wallet?.autoApprove;
   }
 
   async connect(): Promise<void> {
@@ -221,6 +210,26 @@ export class SlopeWalletAdapter
         if (error instanceof WalletError) throw error;
         throw new WalletSignTransactionError(
           (error as { message?: string })?.message ?? "unknown",
+          error
+        );
+      }
+    } catch (error) {
+      this.emit("error", error as WalletError);
+      throw error;
+    }
+  }
+
+  async signMessage(message: Uint8Array): Promise<Uint8Array> {
+    try {
+      const wallet = this._wallet;
+      if (!wallet) throw new WalletNotConnectedError();
+
+      try {
+        const response = await wallet.signMessage(message);
+        return bs58.decode(response.data.signature);
+      } catch (error) {
+        throw new WalletSignTransactionError(
+          (error as { message?: string })?.message,
           error
         );
       }
