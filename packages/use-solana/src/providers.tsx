@@ -1,16 +1,18 @@
-import Wallet from "@project-serum/sol-wallet-adapter";
+import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
+import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
+import { SlopeWalletAdapter } from "@solana/wallet-adapter-slope";
+import { SolletWalletAdapter } from "@solana/wallet-adapter-sollet";
 import type React from "react";
 
 import type { WalletAdapterConstructor } from "./adapters";
 import {
   LedgerWalletAdapter,
   MathWalletAdapter,
-  PhantomWalletAdapter,
-  SlopeWalletAdapter,
+  SolanaWalletAdapter,
   SolletExtensionAdapter,
   SolongWalletAdapter,
 } from "./adapters";
-import { Coin98Adapter } from "./adapters/coin98";
 import { SecretKeyAdapter } from "./adapters/secret-key";
 import { SolflareAdapter } from "./adapters/solflare";
 import { SolflareExtensionWalletAdapter } from "./adapters/solflare-extension";
@@ -44,14 +46,20 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     name: "Sollet",
     url: "https://www.sollet.io",
     icon: SOLLET,
-    makeAdapter: Wallet,
+    makeAdapter: (provider: string, network: string) =>
+      new SolanaWalletAdapter(
+        new SolletWalletAdapter({
+          provider,
+          network: network as WalletAdapterNetwork,
+        })
+      ),
     isMobile: true,
   },
   [WalletType.SolletExtension]: {
     name: "Sollet Extension",
     url: "https://chrome.google.com/webstore/detail/sollet/fhmfendgdocmcbmfikdcogofphimnkno",
     icon: SOLLET,
-    makeAdapter: SolletExtensionAdapter,
+    makeAdapter: (name, endpoint) => new SolletExtensionAdapter(name, endpoint),
 
     isInstalled: () => window.sollet !== undefined,
   },
@@ -59,13 +67,13 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     name: "Ledger",
     url: "https://www.ledger.com",
     icon: LEDGER,
-    makeAdapter: LedgerWalletAdapter,
+    makeAdapter: () => new LedgerWalletAdapter(),
   },
   [WalletType.Solong]: {
     name: "Solong",
     url: "https://solongwallet.com/",
     icon: "https://raw.githubusercontent.com/solana-labs/oyster/main/assets/wallets/solong.png",
-    makeAdapter: SolongWalletAdapter,
+    makeAdapter: () => new SolongWalletAdapter(),
 
     isInstalled: () => window.solong !== undefined,
   },
@@ -73,7 +81,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     name: "Phantom",
     url: "https://www.phantom.app",
     icon: PHANTOM,
-    makeAdapter: PhantomWalletAdapter,
+    makeAdapter: () => new SolanaWalletAdapter(new PhantomWalletAdapter()),
 
     isInstalled: () => window.solana?.isPhantom === true,
   },
@@ -81,7 +89,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     name: "MathWallet",
     url: "https://www.mathwallet.org",
     icon: MATHWALLET,
-    makeAdapter: MathWalletAdapter,
+    makeAdapter: () => new MathWalletAdapter(),
     isInstalled: () => window.solana?.isMathWallet === true,
     isMobile: true,
   },
@@ -89,7 +97,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     name: "Coin98",
     url: "https://wallet.coin98.com/",
     icon: COIN98,
-    makeAdapter: Coin98Adapter,
+    makeAdapter: () => new SolanaWalletAdapter(new Coin98WalletAdapter()),
     isInstalled: () => window.coin98 !== undefined,
     isMobile: true,
   },
@@ -97,19 +105,19 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     name: "Secret Key",
     url: "https://solana.com/",
     icon: FILE,
-    makeAdapter: SecretKeyAdapter,
+    makeAdapter: () => new SecretKeyAdapter(),
   },
   [WalletType.Solflare]: {
     name: "Solflare",
     url: "https://solflare.com/provider",
     icon: SOLFLARE,
-    makeAdapter: SolflareAdapter,
+    makeAdapter: (provider, network) => new SolflareAdapter(provider, network),
   },
   [WalletType.SolflareExtension]: {
     name: "Solflare Extension",
     url: "https://solflare.com/",
     icon: SOLFLARE,
-    makeAdapter: SolflareExtensionWalletAdapter,
+    makeAdapter: () => new SolflareExtensionWalletAdapter(),
 
     isInstalled: () => window.solflare?.isSolflare === true,
   },
@@ -117,7 +125,7 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     name: "Slope",
     url: "https://www.slope.finance/",
     icon: SLOPE,
-    makeAdapter: SlopeWalletAdapter,
+    makeAdapter: () => new SolanaWalletAdapter(new SlopeWalletAdapter()),
     isInstalled: () => window.Slope !== undefined,
     isMobile: true,
   },

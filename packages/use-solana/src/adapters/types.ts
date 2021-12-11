@@ -17,7 +17,7 @@ export interface WalletAdapter<Connected extends boolean = boolean> {
 
 export type ConnectedWallet = WalletAdapter<true>;
 
-export type WalletAdapterConstructor = new (
+export type WalletAdapterConstructor = (
   providerUrl: string,
   endpoint: string
 ) => WalletAdapter;

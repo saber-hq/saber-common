@@ -104,7 +104,7 @@ export const useWalletInternal = ({
     if (walletType) {
       const provider = WALLET_PROVIDERS[walletType];
       console.debug("New wallet", provider.url, network);
-      const adapter = new provider.makeAdapter(provider.url, endpoint);
+      const adapter = provider.makeAdapter(provider.url, endpoint);
       return [provider, new WrappedWalletAdapter(adapter)];
     }
     return [undefined, undefined];
