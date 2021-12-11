@@ -6,8 +6,8 @@ import { PublicKey as SolanaPublicKey } from "@solana/web3.js";
  * @param pk
  * @returns
  */
-export const isPublicKey = (pk: unknown): pk is PublicKey => {
-  if (pk instanceof PublicKey) {
+export const isPublicKey = (pk: unknown): pk is SolanaPublicKey => {
+  if (pk instanceof SolanaPublicKey) {
     return true;
   }
 
@@ -16,7 +16,7 @@ export const isPublicKey = (pk: unknown): pk is PublicKey => {
   }
 
   try {
-    new PublicKey(pk as PublicKeyData);
+    new SolanaPublicKey(pk as PublicKeyData);
     return true;
   } catch (e) {
     return false;

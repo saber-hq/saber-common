@@ -12,7 +12,7 @@ export interface WalletAdapter<Connected extends boolean = boolean> {
   signAllTransactions: (transaction: Transaction[]) => Promise<Transaction[]>;
   connect: (args?: unknown) => Promise<void>;
   disconnect: () => void | Promise<void>;
-  on(event: string, fn: () => void): this;
+  on(event: "connect" | "disconnect", fn: () => void): void;
 }
 
 export type ConnectedWallet = WalletAdapter<true>;
@@ -72,12 +72,13 @@ export class WrappedWalletAdapter<Connected extends boolean = boolean>
     return this.adapter.connect(args);
   }
 
-  disconnect(): void | Promise<void> {
-    return this.adapter.disconnect();
+  async disconnect(): Promise<void> {
+    await this.adapter.disconnect();
+    this._prevPubkey = null;
+    this._publicKeyCached = null;
   }
 
-  on(event: string, fn: () => void): this {
+  on(event: "connect" | "disconnect", fn: () => void): void {
     this.adapter.on(event, fn);
-    return this;
   }
 }

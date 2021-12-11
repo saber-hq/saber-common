@@ -65,12 +65,8 @@ export class SolflareExtensionWalletAdapter
       window.open("https://solflare.com/", "_blank", "noopener");
       throw new Error("Solflare Extension not installed");
     }
-    if (!this._provider.listeners("connect").length) {
-      this._provider?.on("connect", this._handleConnect);
-    }
-    if (!this._provider.listeners("disconnect").length) {
-      this._provider?.on("disconnect", this._handleDisconnect);
-    }
+    this._provider?.on("connect", this._handleConnect);
+    this._provider?.on("disconnect", this._handleDisconnect);
     await this._provider?.connect();
   };
 

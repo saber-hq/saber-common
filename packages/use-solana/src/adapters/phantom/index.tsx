@@ -1,79 +1,51 @@
+import { PhantomWalletAdapter as SolanaPhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import type { PublicKey, Transaction } from "@solana/web3.js";
-import EventEmitter from "eventemitter3";
 
-import type { PhantomProvider } from "../../typings/window";
 import type { WalletAdapter } from "../types";
 
-export class PhantomWalletAdapter
-  extends EventEmitter
-  implements WalletAdapter
-{
-  constructor() {
-    super();
-  }
-
-  private get _provider(): PhantomProvider | undefined {
-    if (window?.solana?.isPhantom) {
-      return window.solana;
-    }
-    return undefined;
-  }
-
-  private _handleConnect = (...args: unknown[]) => {
-    this.emit("connect", ...args);
-  };
-
-  private _handleDisconnect = (...args: unknown[]) => {
-    this.emit("disconnect", ...args);
-  };
+export class PhantomWalletAdapter implements WalletAdapter {
+  private readonly _phantom: SolanaPhantomWalletAdapter =
+    new SolanaPhantomWalletAdapter();
 
   get connected(): boolean {
-    return this._provider?.isConnected || false;
+    return this._phantom.connected;
   }
 
   get autoApprove(): boolean {
-    return this._provider?.autoApprove || false;
+    return this._phantom.ready;
   }
 
   async signAllTransactions(
     transactions: Transaction[]
   ): Promise<Transaction[]> {
-    if (!this._provider) {
+    if (!this._phantom) {
       return transactions;
     }
 
-    return this._provider.signAllTransactions(transactions);
+    return this._phantom.signAllTransactions(transactions);
   }
 
   get publicKey(): PublicKey | null {
-    return this._provider?.publicKey ?? null;
+    return this._phantom.publicKey;
   }
 
   async signTransaction(transaction: Transaction): Promise<Transaction> {
-    if (!this._provider) {
+    if (!this._phantom) {
       return transaction;
     }
 
-    return this._provider.signTransaction(transaction);
+    return this._phantom.signTransaction(transaction);
   }
 
   connect = async (): Promise<void> => {
-    if (!this._provider) {
-      // window.open("https://phantom.app/", "_blank", "noopener noreferrer");
-      throw new Error("Phantom not installed");
-    }
-    if (!this._provider.listeners("connect").length) {
-      this._provider?.on("connect", this._handleConnect);
-    }
-    if (!this._provider.listeners("disconnect").length) {
-      this._provider?.on("disconnect", this._handleDisconnect);
-    }
-    await this._provider?.connect();
+    await this._phantom.connect();
   };
 
   async disconnect(): Promise<void> {
-    if (this._provider) {
-      await this._provider.disconnect();
-    }
+    await this._phantom.disconnect();
+  }
+
+  on(event: "connect" | "disconnect", fn: () => void): void {
+    this._phantom.on(event, fn);
   }
 }
