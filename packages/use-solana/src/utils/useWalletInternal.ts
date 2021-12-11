@@ -1,5 +1,5 @@
 import type { Network } from "@saberhq/solana-contrib";
-import type { PublicKey } from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 import stringify from "fast-json-stable-stringify";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -103,12 +103,23 @@ export const useWalletInternal = ({
     if (walletType) {
       const provider = WALLET_PROVIDERS[walletType];
       console.debug("New wallet", provider.url, network);
-      return [provider, new provider.makeAdapter(provider.url, endpoint)];
+      const adapter = new provider.makeAdapter(provider.url, endpoint);
+      return [
+        provider,
+        {
+          ...adapter,
+          publicKey: adapter.publicKey
+            ? new PublicKey(adapter.publicKey.toString())
+            : adapter.publicKey,
+        },
+      ];
     }
     return [undefined, undefined];
   }, [walletType, network, endpoint]);
 
   useEffect(() => {
+    let disabled = false;
+
     if (wallet && walletProviderInfo) {
       setTimeout(() => {
         void wallet.connect(walletArgs).catch((e) => {
@@ -116,13 +127,19 @@ export const useWalletInternal = ({
         });
       }, 500);
       wallet.on("connect", () => {
-        if (wallet?.publicKey) {
+        if (disabled) {
+          return;
+        }
+        if (wallet?.publicKey && !wallet.publicKey.equals(PublicKey.default)) {
           setConnected(true);
           onConnect(wallet as ConnectedWallet, walletProviderInfo);
         }
       });
 
       wallet.on("disconnect", () => {
+        if (disabled) {
+          return;
+        }
         setConnected(false);
         onDisconnect(wallet as WalletAdapter<false>, walletProviderInfo);
       });
@@ -137,6 +154,7 @@ export const useWalletInternal = ({
           });
         }
       }
+      disabled = true;
     };
   }, [
     onConnect,

@@ -47,7 +47,7 @@ export class PhantomWalletAdapter
   }
 
   get publicKey(): PublicKey {
-    return this._provider?.publicKey || DEFAULT_PUBLIC_KEY;
+    return this._provider?.publicKey ?? DEFAULT_PUBLIC_KEY;
   }
 
   async signTransaction(transaction: Transaction): Promise<Transaction> {
