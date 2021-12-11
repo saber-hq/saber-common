@@ -108,9 +108,10 @@ export const useWalletInternal = ({
         provider,
         {
           ...adapter,
-          publicKey: adapter.publicKey
-            ? new PublicKey(adapter.publicKey.toString())
-            : adapter.publicKey,
+          publicKey:
+            adapter.publicKey && !adapter.publicKey.equals(PublicKey.default)
+              ? new PublicKey(adapter.publicKey.toString())
+              : adapter.publicKey,
         },
       ];
     }
