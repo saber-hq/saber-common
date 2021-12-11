@@ -1,6 +1,6 @@
 import type { Network } from "@saberhq/solana-contrib";
+import { PublicKey } from "@saberhq/solana-contrib";
 import { NATIVE_MINT } from "@solana/spl-token";
-import { PublicKey } from "@solana/web3.js";
 import type { Token as UToken } from "@ubeswap/token-math";
 
 import type { TokenInfo } from "./tokenList";

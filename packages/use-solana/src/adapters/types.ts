@@ -1,8 +1,11 @@
-import type { Transaction } from "@solana/web3.js";
-import { PublicKey } from "@solana/web3.js";
+import { PublicKey } from "@saberhq/solana-contrib";
+import type {
+  PublicKey as SolanaPublicKey,
+  Transaction,
+} from "@solana/web3.js";
 
 export interface WalletAdapter<Connected extends boolean = boolean> {
-  publicKey: Connected extends true ? PublicKey : null;
+  publicKey: Connected extends true ? SolanaPublicKey : null;
   autoApprove: boolean;
   connected: Connected;
   signTransaction: (transaction: Transaction) => Promise<Transaction>;
@@ -23,11 +26,11 @@ export type WalletAdapterConstructor = new (
  * Wallet adapter wrapper with caching of the PublicKey built-in.
  */
 export class WrappedWalletAdapter<Connected extends boolean = boolean>
-  implements WalletAdapter<Connected>
+  implements Omit<WalletAdapter<Connected>, "publicKey">
 {
   constructor(public readonly adapter: WalletAdapter<Connected>) {}
 
-  private _prevPubkey: PublicKey | null = null;
+  private _prevPubkey: SolanaPublicKey | null = null;
   private _publicKeyCached: PublicKey | null = null;
 
   get publicKey(): Connected extends true ? PublicKey : null {
@@ -46,7 +49,7 @@ export class WrappedWalletAdapter<Connected extends boolean = boolean>
       this._publicKeyCached = new PublicKey(this.adapter.publicKey.toString());
       return this._publicKeyCached as Connected extends true ? PublicKey : null;
     }
-    return this.adapter.publicKey;
+    throw new Error("Invalid wallet connection state");
   }
 
   get autoApprove(): boolean {
