@@ -24,7 +24,16 @@
   {
     "path": "packages/use-solana/dist/esm/index.js",
     "limit": "50 KB",
-    "ignore": ["@solana/spl-token", "@solana/web3.js", "bn.js"],
+    "ignore": [
+      "@solana/spl-token",
+      "@solana/web3.js",
+      "bn.js",
+      "@solana/wallet-adapter-base",
+      "@solana/wallet-adapter-coin98",
+      "@solana/wallet-adapter-phantom",
+      "@solana/wallet-adapter-slope",
+      "@solana/wallet-adapter-sollet"
+    ],
     "webpack": true
   }
 ]
