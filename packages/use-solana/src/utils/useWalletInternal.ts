@@ -1,9 +1,10 @@
 import type { Network } from "@saberhq/solana-contrib";
-import { PublicKey } from "@solana/web3.js";
+import type { PublicKey } from "@solana/web3.js";
 import stringify from "fast-json-stable-stringify";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import type { ConnectedWallet, WalletAdapter } from "../adapters/types";
+import { WrappedWalletAdapter } from "../adapters/types";
 import type { UseSolanaError } from "../error";
 import {
   WalletActivateError,
@@ -104,18 +105,7 @@ export const useWalletInternal = ({
       const provider = WALLET_PROVIDERS[walletType];
       console.debug("New wallet", provider.url, network);
       const adapter = new provider.makeAdapter(provider.url, endpoint);
-      return [
-        provider,
-        {
-          ...adapter,
-          get publicKey(): PublicKey | null {
-            return adapter.publicKey &&
-              !adapter.publicKey.equals(PublicKey.default)
-              ? new PublicKey(adapter.publicKey.toString())
-              : null;
-          },
-        },
-      ];
+      return [provider, new WrappedWalletAdapter(adapter)];
     }
     return [undefined, undefined];
   }, [walletType, network, endpoint]);
@@ -129,7 +119,7 @@ export const useWalletInternal = ({
         void wallet.connect(walletArgs).catch((e) => {
           onError(new WalletAutomaticConnectionError(e, walletProviderInfo));
         });
-      }, 500);
+      }, 1_000);
       wallet.on("connect", () => {
         if (disabled) {
           return;
