@@ -27,11 +27,14 @@ export const isPublicKey = (pk: unknown): pk is PublicKey => {
  * PublicKey with caching of the string representation built-in.
  */
 export class PublicKey extends SolanaPublicKey {
+  private _base58: string | null = null;
+
   constructor(value: PublicKeyInitData) {
     super(value);
+    if (typeof value === "string") {
+      this._base58 = value;
+    }
   }
-
-  private _base58: string | null = null;
 
   /**
    * Return the base-58 representation of the public key
@@ -49,6 +52,11 @@ export class PublicKey extends SolanaPublicKey {
   override toString(): string {
     return this.toBase58();
   }
+
+  /**
+   * Default public key value. (All zeros)
+   */
+  static override default: PublicKey = new PublicKey(SolanaPublicKey.default);
 
   /**
    * Derive a public key from another key, a seed, and a program ID.
