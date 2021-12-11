@@ -108,10 +108,12 @@ export const useWalletInternal = ({
         provider,
         {
           ...adapter,
-          publicKey:
-            adapter.publicKey && !adapter.publicKey.equals(PublicKey.default)
+          get publicKey(): PublicKey | null {
+            return adapter.publicKey &&
+              !adapter.publicKey.equals(PublicKey.default)
               ? new PublicKey(adapter.publicKey.toString())
-              : adapter.publicKey,
+              : null;
+          },
         },
       ];
     }
@@ -132,7 +134,7 @@ export const useWalletInternal = ({
         if (disabled) {
           return;
         }
-        if (wallet?.publicKey && !wallet.publicKey.equals(PublicKey.default)) {
+        if (wallet.publicKey) {
           setConnected(true);
           onConnect(wallet as ConnectedWallet, walletProviderInfo);
         }
