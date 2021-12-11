@@ -1,10 +1,6 @@
 import type { Transaction } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
 
-export const DEFAULT_PUBLIC_KEY = new PublicKey(
-  "11111111111111111111111111111111"
-);
-
 export interface WalletAdapter<Connected extends boolean = boolean> {
   publicKey: Connected extends true ? PublicKey : null;
   autoApprove: boolean;

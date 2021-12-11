@@ -4,7 +4,6 @@ import * as bs58 from "bs58";
 import EventEmitter from "eventemitter3";
 
 import type { WalletAdapter } from "../types";
-import { DEFAULT_PUBLIC_KEY } from "../types";
 
 export class SlopeWalletAdapter extends EventEmitter implements WalletAdapter {
   _publicKey?: PublicKey;
@@ -56,8 +55,8 @@ export class SlopeWalletAdapter extends EventEmitter implements WalletAdapter {
     return transactions;
   }
 
-  get publicKey(): PublicKey {
-    return this._publicKey || DEFAULT_PUBLIC_KEY;
+  get publicKey(): PublicKey | null {
+    return this._publicKey ?? null;
   }
 
   async signTransaction(transaction: Transaction): Promise<Transaction> {

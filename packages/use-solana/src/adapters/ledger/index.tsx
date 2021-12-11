@@ -4,7 +4,6 @@ import type { PublicKey, Transaction } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
 import type { WalletAdapter } from "../types";
-import { DEFAULT_PUBLIC_KEY } from "../types";
 import { getPublicKey, getSolanaDerivationPath, signTransaction } from "./core";
 
 const DEFAULT_DERIVATION_PATH = getSolanaDerivationPath();
@@ -31,8 +30,8 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
     super();
   }
 
-  get publicKey(): PublicKey {
-    return this._publicKey || DEFAULT_PUBLIC_KEY;
+  get publicKey(): PublicKey | null {
+    return this._publicKey ?? null;
   }
 
   get connected(): boolean {

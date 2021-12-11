@@ -4,7 +4,6 @@ import EventEmitter from "eventemitter3";
 
 import type { MathWalletProvider } from "../../typings/window";
 import type { WalletAdapter } from "../types";
-import { DEFAULT_PUBLIC_KEY } from "../types";
 
 export class MathWalletAdapter extends EventEmitter implements WalletAdapter {
   _publicKey?: PublicKey;
@@ -41,8 +40,8 @@ export class MathWalletAdapter extends EventEmitter implements WalletAdapter {
     return undefined;
   }
 
-  get publicKey(): PublicKey {
-    return this._publicKey || DEFAULT_PUBLIC_KEY;
+  get publicKey(): PublicKey | null {
+    return this._publicKey ?? null;
   }
 
   async signTransaction(transaction: Transaction): Promise<Transaction> {

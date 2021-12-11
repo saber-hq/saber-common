@@ -4,7 +4,6 @@ import { Keypair } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
 import type { WalletAdapter } from "../types";
-import { DEFAULT_PUBLIC_KEY } from "../types";
 
 export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
   _wallet?: SignerWallet;
@@ -35,8 +34,8 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
     return wallet.signAllTransactions(transactions);
   }
 
-  get publicKey(): PublicKey {
-    return this._publicKey ?? DEFAULT_PUBLIC_KEY;
+  get publicKey(): PublicKey | null {
+    return this._publicKey ?? null;
   }
 
   async signTransaction(transaction: Transaction): Promise<Transaction> {

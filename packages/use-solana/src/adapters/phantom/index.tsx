@@ -3,7 +3,6 @@ import EventEmitter from "eventemitter3";
 
 import type { PhantomProvider } from "../../typings/window";
 import type { WalletAdapter } from "../types";
-import { DEFAULT_PUBLIC_KEY } from "../types";
 
 export class PhantomWalletAdapter
   extends EventEmitter
@@ -46,8 +45,8 @@ export class PhantomWalletAdapter
     return this._provider.signAllTransactions(transactions);
   }
 
-  get publicKey(): PublicKey {
-    return this._provider?.publicKey ?? DEFAULT_PUBLIC_KEY;
+  get publicKey(): PublicKey | null {
+    return this._provider?.publicKey ?? null;
   }
 
   async signTransaction(transaction: Transaction): Promise<Transaction> {

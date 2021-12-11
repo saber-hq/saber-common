@@ -3,7 +3,6 @@ import { PublicKey } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
 import type { WalletAdapter } from "../types";
-import { DEFAULT_PUBLIC_KEY } from "../types";
 
 export class SolongWalletAdapter extends EventEmitter implements WalletAdapter {
   _publicKey?: PublicKey;
@@ -47,8 +46,8 @@ export class SolongWalletAdapter extends EventEmitter implements WalletAdapter {
     }
   }
 
-  get publicKey(): PublicKey {
-    return this._publicKey || DEFAULT_PUBLIC_KEY;
+  get publicKey(): PublicKey | null {
+    return this._publicKey ?? null;
   }
 
   async signTransaction(transaction: Transaction): Promise<Transaction> {
