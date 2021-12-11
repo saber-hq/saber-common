@@ -119,9 +119,10 @@ export const useWalletInternal = ({
 
   useEffect(() => {
     let disabled = false;
+    let timeout: NodeJS.Timeout | null = null;
 
     if (wallet && walletProviderInfo) {
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         void wallet.connect(walletArgs).catch((e) => {
           onError(new WalletAutomaticConnectionError(e, walletProviderInfo));
         });
@@ -153,6 +154,9 @@ export const useWalletInternal = ({
             onError(new WalletDisconnectError(e, walletProviderInfo));
           });
         }
+      }
+      if (timeout) {
+        clearTimeout(timeout);
       }
       disabled = true;
     };
