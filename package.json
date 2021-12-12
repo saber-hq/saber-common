@@ -27,6 +27,7 @@
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.12",
     "@types/react": "^17.0.37",
+    "@types/source-map-support": "^0",
     "bn.js": "^5.2.0",
     "bs58": "^4.0.1",
     "buffer": "^6.0.3",
@@ -41,6 +42,7 @@
     "prettier": "^2.5.1",
     "react": "^17.0.2",
     "size-limit": "^7.0.4",
+    "source-map-support": "^0.5.21",
     "ts-node": "^10.4.0",
     "typedoc": "^0.22.10",
     "typescript": "^4.5.3"
