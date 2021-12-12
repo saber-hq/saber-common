@@ -1,13 +1,7 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.esm.json",
   "compilerOptions": {
-    "noEmit": false,
     "outDir": "dist/cjs/",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "inlineSources": true,
-    "importHelpers": true
-  },
-  "include": ["src/**/*.ts"]
+    "module": "CommonJS"
+  }
 }
