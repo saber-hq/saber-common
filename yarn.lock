@@ -3193,6 +3193,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/saber-common@workspace:."
   dependencies:
+    "@babel/core": ^7.16.0
+    "@babel/preset-env": ^7.16.4
+    "@babel/preset-typescript": ^7.16.0
     "@project-serum/anchor": ^0.19.0
     "@rushstack/eslint-patch": ^1.1.0
     "@saberhq/eslint-config": "*"
@@ -3200,6 +3203,8 @@ __metadata:
     "@size-limit/file": ^7.0.4
     "@size-limit/webpack": ^7.0.4
     "@solana/web3.js": ^1.31.0
+    "@types/babel__core": ^7
+    "@types/babel__preset-env": ^7
     "@types/bn.js": ^5.1.0
     "@types/bs58": ^4.0.1
     "@types/jest": ^27.0.3
@@ -3212,6 +3217,7 @@ __metadata:
     eslint-import-resolver-node: ^0.3.6
     eslint-plugin-import: ^2.25.3
     husky: ^7.0.4
+    jest: ^27.4.4
     jsbi: ^4.1.0
     lerna: ^4.0.0
     lint-staged: ^12.1.2
@@ -3245,21 +3251,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/stableswap-sdk@workspace:packages/stableswap-sdk"
   dependencies:
-    "@babel/core": ^7.16.0
-    "@babel/preset-env": ^7.16.4
-    "@babel/preset-typescript": ^7.16.0
     "@saberhq/solana-contrib": ^1.10.13
     "@saberhq/token-utils": ^1.10.13
     "@solana/buffer-layout": ^3.0.0
     "@solana/web3.js": ^1.31.0
     "@types/bn.js": ^5.1.0
-    "@types/bs58": ^4.0.1
-    "@types/jest": ^27.0.3
     "@types/lodash.mapvalues": ^4.6.6
     "@types/node": ^16.11.12
-    b58: ^4.0.3
     bn.js: ^5.2.0
-    jest: ^27.4.4
     jsbi: ^4.1.0
     lodash.mapvalues: ^4.6.0
     tslib: ^2.3.1
@@ -3516,6 +3515,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/babel__core@npm:^7":
+  version: 7.1.17
+  resolution: "@types/babel__core@npm:7.1.17"
+  dependencies:
+    "@babel/parser": ^7.1.0
+    "@babel/types": ^7.0.0
+    "@types/babel__generator": "*"
+    "@types/babel__template": "*"
+    "@types/babel__traverse": "*"
+  checksum: 0108efab8acb6a8e0aab6f8113d5ef1fc4b58d40737aa70a3ee83112959e0880e5548374e7edb562e4e837cde4ae47265348b04eb7e684283b0dea418d013420
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.0.0, @types/babel__core@npm:^7.1.14":
   version: 7.1.15
   resolution: "@types/babel__core@npm:7.1.15"
@@ -3535,6 +3547,13 @@ __metadata:
   dependencies:
     "@babel/types": ^7.0.0
   checksum: 0aa1881c47e3e471cabb9183ae42176591b168a6fe4714d205aec33a7e480d65a8a1ba7fcd9678337aadc34059dc5baa04841e5adfbbe67ae33bad79e7633b8e
+  languageName: node
+  linkType: hard
+
+"@types/babel__preset-env@npm:^7":
+  version: 7.9.2
+  resolution: "@types/babel__preset-env@npm:7.9.2"
+  checksum: a905ed92a3f602384966153e74a94790425e98af54e392a7fcfb5c5ded2f2a58c49a9fa64a0cb506fbffb8169ad25b56ea87983c812a4fb880f0716668c8c085
   languageName: node
   linkType: hard
 
@@ -4656,15 +4675,6 @@ __metadata:
   version: 2.2.0
   resolution: "axobject-query@npm:2.2.0"
   checksum: 96b8c7d807ca525f41ad9b286186e2089b561ba63a6d36c3e7d73dc08150714660995c7ad19cda05784458446a0793b45246db45894631e13853f48c1aa3117f
-  languageName: node
-  linkType: hard
-
-"b58@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "b58@npm:4.0.3"
-  dependencies:
-    base-x: ^3.0.2
-  checksum: a17b98b3ad8d0d68199841de01f935ee3709ec54f45fb7e60178df22e1378db629ee90deb0b3aeaf6511bdd6e853df3119e7f40be86f65ace29603294c9bde0d
   languageName: node
   linkType: hard
 

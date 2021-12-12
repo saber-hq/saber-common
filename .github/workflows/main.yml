@@ -35,6 +35,7 @@ jobs:
         run: yarn lint:ci
       - name: Build
         run: yarn build
+      - run: yarn test
       - run: yarn dlx @yarnpkg/doctor
       - name: Size
         run: yarn size
