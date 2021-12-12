@@ -3248,7 +3248,6 @@ __metadata:
     "@babel/core": ^7.16.0
     "@babel/preset-env": ^7.16.4
     "@babel/preset-typescript": ^7.16.0
-    "@project-serum/anchor": ^0.19.0
     "@saberhq/solana-contrib": ^1.10.13
     "@saberhq/token-utils": ^1.10.13
     "@solana/buffer-layout": ^3.0.0
@@ -3267,7 +3266,6 @@ __metadata:
     tslib: ^2.3.1
     yargs: ^17.3.0
   peerDependencies:
-    "@project-serum/anchor": ^0.17 || ^0.18 || ^0.19
     "@solana/web3.js": ">=1.29.2"
     bn.js: ">=5"
     jsbi: ^3 || ^4

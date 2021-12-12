@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "dist/esm/",
     "types": ["jest"],
-    "noEmit": false
+    "noEmit": true
   },
   "include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.ts"]
 }
