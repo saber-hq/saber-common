@@ -3210,7 +3210,7 @@ __metadata:
     "@types/jest": ^27.0.3
     "@types/node": ^16.11.12
     "@types/react": ^17.0.37
-    "@types/source-map-support": ^0
+    "@types/source-map-support": ^0.5.4
     bn.js: ^5.2.0
     bs58: ^4.0.1
     buffer: ^6.0.3
@@ -3883,7 +3883,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/source-map-support@npm:^0":
+"@types/source-map-support@npm:^0.5.4":
   version: 0.5.4
   resolution: "@types/source-map-support@npm:0.5.4"
   dependencies:
