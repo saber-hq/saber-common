@@ -3279,6 +3279,7 @@ __metadata:
   resolution: "@saberhq/token-utils@workspace:packages/token-utils"
   dependencies:
     "@saberhq/solana-contrib": ^1.10.13
+    "@saberhq/tsconfig": ^1.10.13
     "@solana/buffer-layout": ^3.0.0
     "@solana/spl-token": ^0.1.8
     "@solana/web3.js": ^1.31.0
@@ -3294,7 +3295,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/tsconfig@workspace:packages/tsconfig":
+"@saberhq/tsconfig@^1.10.13, @saberhq/tsconfig@workspace:packages/tsconfig":
   version: 0.0.0-use.local
   resolution: "@saberhq/tsconfig@workspace:packages/tsconfig"
   languageName: unknown

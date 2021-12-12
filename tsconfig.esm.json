@@ -1,8 +1,6 @@
 {
-  "extends": "./tsconfig.cjs.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "ES2015",
-    "module": "ESNext",
-    "moduleResolution": "node"
+    "noEmit": false
   }
 }

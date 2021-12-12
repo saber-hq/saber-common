@@ -29,9 +29,11 @@ jobs:
             ${{ runner.os }}-modules-
       - name: Install packages
         run: yarn install
-      - name: Build
-        run: yarn build
+      - name: Typecheck
+        run: yarn typecheck
       - name: Lint
         run: yarn lint:ci
+      - name: Build
+        run: yarn build
       - name: Size
         run: yarn size

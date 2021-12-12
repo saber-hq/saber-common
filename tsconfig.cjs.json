@@ -1,17 +1,6 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.esm.json",
   "compilerOptions": {
-    "lib": ["ES2015"],
-    "target": "ES2015",
-    "module": "CommonJS",
-    "esModuleInterop": true,
-    "importHelpers": true,
-    "types": [],
-
-    "noEmit": false,
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "inlineSources": true
+    "module": "CommonJS"
   }
 }

@@ -41,6 +41,7 @@
   },
   "scripts": {
     "build": "lerna run build",
+    "typecheck": "tsc",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",
     "lint:ci": "eslint . --max-warnings=0",

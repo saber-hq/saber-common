@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2015",
-    "module": "commonjs",
+    "module": "CommonJS",
     "strict": true,
     "strictFunctionTypes": true,
     "noImplicitOverride": true,

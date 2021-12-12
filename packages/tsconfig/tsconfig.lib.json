@@ -1,12 +1,22 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Saber Recommended TSConfig",
+  "display": "Saber Library TSConfig",
   "compilerOptions": {
+    // target
     "target": "ES2015",
     "module": "ESNext",
-    "jsx": "react",
     "moduleResolution": "node",
+    "lib": ["ES2015"],
 
+    // build
+    "types": [],
+    "esModuleInterop": true,
+    "preserveConstEnums": true,
+    "skipLibCheck": true,
+    "importHelpers": true,
+    "noEmit": true,
+
+    // linting
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -15,12 +25,10 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
 
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "preserveConstEnums": true,
-    "lib": ["es2015", "es2016", "dom"],
-    "types": [],
-    "importHelpers": true,
-    "noEmit": true
+    // sources
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true
   }
 }
