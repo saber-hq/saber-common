@@ -13,6 +13,7 @@ declare global {
     export interface TokenAmountComparer {
       (value: TokenAmount | BigintIsh, message?: string): void;
     }
+
     export interface TokenAmountAssertion {
       equal: TokenAmountComparer;
       equals: TokenAmountComparer;
@@ -31,6 +32,7 @@ declare global {
       // negative: BNBoolean;
       zero: () => void;
     }
+
     interface Assertion {
       eqAddress: (otherKey: Address, message?: string) => Assertion;
       eqAmount: (otherAmount: TokenAmount, message?: string) => Assertion;
