@@ -11,12 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-      - name: Use Node 14.x
-        uses: actions/setup-node@v2.5.0
-        with:
-          node-version: 14.x
+      - uses: actions/checkout@v2
       - name: Yarn Cache
         uses: actions/cache@v2
         with:
@@ -27,10 +22,10 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-modules-
-      - run: yarn install
-      - run: yarn build
-      - run: yarn typecheck
-      - run: yarn lint:ci
-      - run: yarn test
-      - run: yarn dlx @yarnpkg/doctor
-      - run: yarn size
+      - run: nix shell .#ci --command yarn install
+      - run: nix shell .#ci --command yarn build
+      - run: nix shell .#ci --command yarn typecheck
+      - run: nix shell .#ci --command yarn lint:ci
+      - run: nix shell .#ci --command yarn test
+      - run: nix shell .#ci --command yarn dlx @yarnpkg/doctor
+      - run: nix shell .#ci --command yarn size
