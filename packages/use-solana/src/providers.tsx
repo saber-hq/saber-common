@@ -4,7 +4,7 @@ import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import { SolletWalletAdapter } from "@solana/wallet-adapter-sollet";
 import type React from "react";
 
-import type { WalletAdapterConstructor } from "./adapters";
+import type { WalletAdapterBuilder } from "./adapters";
 import {
   LedgerWalletAdapter,
   MathWalletAdapter,
@@ -132,10 +132,16 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
 };
 
 export interface WalletProviderInfo {
-  name: string;
-  url: string;
+  /**
+   * Name of the wallet provider.
+   */
+  readonly name: string;
+  /**
+   * URL of the wallet provider.
+   */
+  readonly url: string;
   icon: string | React.FC<React.SVGProps<SVGSVGElement>>;
-  makeAdapter: WalletAdapterConstructor;
+  makeAdapter: WalletAdapterBuilder;
   isInstalled?: () => boolean;
   isMobile?: boolean;
 }
