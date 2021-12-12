@@ -3294,6 +3294,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@saberhq/tsconfig@workspace:packages/tsconfig":
+  version: 0.0.0-use.local
+  resolution: "@saberhq/tsconfig@workspace:packages/tsconfig"
+  languageName: unknown
+  linkType: soft
+
 "@saberhq/use-solana@workspace:packages/use-solana":
   version: 0.0.0-use.local
   resolution: "@saberhq/use-solana@workspace:packages/use-solana"

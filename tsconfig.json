@@ -1,22 +1,6 @@
 {
+  "extends": "./packages/tsconfig/tsconfig.lib.json",
   "compilerOptions": {
-    "target": "es6",
-    "module": "ESNext",
-    "jsx": "react",
-    "moduleResolution": "node",
-
-    "strict": true,
-    "noImplicitOverride": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "forceConsistentCasingInFileNames": true,
-
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "preserveConstEnums": true,
-    "lib": ["es2015", "es2016", "dom"],
-    "types": ["node", "jest"],
-    "importHelpers": true,
-    "noEmit": true
+    "types": ["node", "jest"]
   }
 }
