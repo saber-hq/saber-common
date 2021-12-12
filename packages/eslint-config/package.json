@@ -23,9 +23,6 @@
     "type": "git",
     "url": "git+https://github.com/saber-hq/saber-common.git"
   },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
   "bugs": {
     "url": "https://github.com/saber-hq/saber-common/issues"
   },

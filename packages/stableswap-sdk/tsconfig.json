@@ -1,18 +1,9 @@
 {
+  "extends": "../tsconfig/tsconfig.lib.json",
   "compilerOptions": {
-    "target": "ES2015",
-    "module": "commonjs",
-    "strict": true,
-    "strictFunctionTypes": true,
-    "noImplicitOverride": true,
-    "esModuleInterop": true,
-    "noUncheckedIndexedAccess": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "types": ["jest"],
-
-    "noEmit": true
+    "outDir": "dist/esm/",
+    "noEmit": false
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.ts"]
+  "include": ["src/"],
+  "exclude": ["**/*.test.ts"]
 }

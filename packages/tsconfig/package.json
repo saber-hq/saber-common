@@ -1,0 +1,20 @@
+{
+  "name": "@saberhq/tsconfig",
+  "description": "Saber TypeScript configurations.",
+  "version": "1.10.13",
+  "repository": "git@github.com:saber-hq/saber-common.git",
+  "author": "Ian Macalinao <ian@saber.so>",
+  "license": "Apache-2.0",
+  "keywords": [
+    "solana",
+    "saber",
+    "typescript"
+  ],
+  "files": [
+    "tsconfig.*.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "f9fd3fbd36a7a6dd6f5e9597af5309affe50ac0e"
+}

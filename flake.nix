@@ -13,5 +13,11 @@
       "x86_64-darwin"
     ] (system:
       let pkgs = import nixpkgs { inherit system; };
-      in { devShell = import ./shell.nix { inherit pkgs; }; });
+      in rec {
+        packages.ci = pkgs.buildEnv {
+          name = "ci";
+          paths = with pkgs; [ nodejs yarn ];
+        };
+        devShell = pkgs.mkShell { buildInputs = [ packages.ci ]; };
+      });
 }

@@ -34,4 +34,5 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Check flake
         run: nix flake check -v --show-trace --no-update-lock-file
+      - run: nix build .#ci
       - run: nix develop -c echo success
