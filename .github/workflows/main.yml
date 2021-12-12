@@ -27,16 +27,10 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-modules-
-      - name: Install packages
-        run: yarn install
-      - run: yarn lerna link
-      - name: Typecheck
-        run: yarn typecheck
-      - name: Lint
-        run: yarn lint:ci
-      - name: Build
-        run: yarn build
+      - run: yarn install
+      - run: yarn build
+      - run: yarn typecheck
+      - run: yarn lint:ci
       - run: yarn test
       - run: yarn dlx @yarnpkg/doctor
-      - name: Size
-        run: yarn size
+      - run: yarn size
