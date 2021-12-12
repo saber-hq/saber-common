@@ -24,6 +24,11 @@ export const isPublicKey = (pk: unknown): pk is SolanaPublicKey => {
 };
 
 /**
+ * A value that can be parsed into a {@link PublicKey}.
+ */
+export type PublicKeyIsh = PublicKeyInitData | SolanaPublicKey;
+
+/**
  * PublicKey with caching of the string representation built-in.
  */
 export class PublicKey extends SolanaPublicKey {
@@ -34,6 +39,20 @@ export class PublicKey extends SolanaPublicKey {
     if (typeof value === "string") {
       this._base58 = value;
     }
+  }
+
+  /**
+   * Parses a {@link PublicKey} from a value that is potentially a PublicKey.
+   * @returns
+   */
+  static from(value: PublicKeyIsh): PublicKey {
+    if (value instanceof PublicKey) {
+      return value;
+    }
+    if (value instanceof SolanaPublicKey) {
+      return new PublicKey(value.toBuffer());
+    }
+    return new PublicKey(value);
   }
 
   /**

@@ -1,4 +1,4 @@
-import type { Network } from "@saberhq/solana-contrib";
+import type { Network, PublicKeyIsh } from "@saberhq/solana-contrib";
 import { PublicKey } from "@saberhq/solana-contrib";
 import { NATIVE_MINT } from "@solana/spl-token";
 import type { Token as UToken } from "@ubeswap/token-math";
@@ -98,7 +98,7 @@ export class Token implements UToken<Token> {
    * @returns
    */
   static fromMint = (
-    mint: PublicKey | string,
+    mint: PublicKeyIsh,
     decimals: number,
     opts: Partial<Omit<TokenInfo, "address" | "decimals">> = {}
   ): Token =>
