@@ -15,7 +15,7 @@
   "module": "dist/esm/index.js",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "tsc -P tsconfig.build.json && tsc -P tsconfig.esm.json",
+    "build": "tsc && tsc -P tsconfig.cjs.json",
     "clean": "rm -rf dist",
     "test": "jest"
   },
