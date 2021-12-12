@@ -32,7 +32,6 @@
     "@types/jest": "^27.0.3",
     "@types/lodash.mapvalues": "^4.6.6",
     "@types/node": "^16.11.12",
-    "@types/yargs": "^17.0.7",
     "bn.js": "^5.2.0",
     "jest": "^27.4.4",
     "jsbi": "^4.1.0"
@@ -48,8 +47,7 @@
     "@solana/buffer-layout": "^3.0.0",
     "b58": "^4.0.3",
     "lodash.mapvalues": "^4.6.0",
-    "tslib": "^2.3.1",
-    "yargs": "^17.3.0"
+    "tslib": "^2.3.1"
   },
   "files": [
     "dist/",
