@@ -29,6 +29,7 @@ jobs:
             ${{ runner.os }}-modules-
       - name: Install packages
         run: yarn install
+      - run: yarn lerna link
       - name: Typecheck
         run: yarn typecheck
       - name: Lint
