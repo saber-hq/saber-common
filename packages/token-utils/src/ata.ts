@@ -1,8 +1,8 @@
+import { PublicKey } from "@saberhq/solana-contrib";
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-import { PublicKey } from "@solana/web3.js";
 
 /**
  * Gets an associated token account address.

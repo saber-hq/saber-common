@@ -6,6 +6,13 @@ import type { Token as UToken } from "@ubeswap/token-math";
 import type { TokenInfo } from "./tokenList";
 
 /**
+ * Magic value representing the raw, underlying Solana native asset.
+ */
+export const RAW_SOL_MINT = new PublicKey(
+  "RawSo11111111111111111111111111111111111112"
+);
+
+/**
  * Token information.
  */
 export class Token implements UToken<Token> {
@@ -26,6 +33,13 @@ export class Token implements UToken<Token> {
   constructor(public readonly info: TokenInfo) {
     this.mintAccount = new PublicKey(info.address);
     this.network = chainIdToNetwork(info.chainId) ?? "localnet";
+  }
+
+  /**
+   * If true, this token represents unwrapped, native, "raw" SOL.
+   */
+  get isRawSOL(): boolean {
+    return this.mintAccount.equals(RAW_SOL_MINT);
   }
 
   /**
@@ -136,13 +150,22 @@ export const tokensEqual = (
  */
 export type TokenMap = { [c in Network]: Token };
 
-const sol = {
-  address: NATIVE_MINT.toString(),
+const rawSol = {
+  address: RAW_SOL_MINT.toString(),
   name: "Solana",
   symbol: "SOL",
   decimals: 9,
   logoURI:
-    "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/solana/info/logo.png",
+    "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+};
+
+const wrappedSol = {
+  address: NATIVE_MINT.toString(),
+  name: "Wrapped SOL",
+  symbol: "SOL",
+  decimals: 9,
+  logoURI:
+    "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
 };
 
 /**
@@ -195,6 +218,13 @@ export const chainIdToNetwork = (env: ChainId): Network =>
   CHAIN_ID_TO_NETWORK[env];
 
 /**
- * Solana native token.
+ * Raw Solana token.
+ *
+ * This is a magic value. This is not a real token.
  */
-export const SOL: TokenMap = makeTokenForAllNetworks(sol);
+export const RAW_SOL: TokenMap = makeTokenForAllNetworks(rawSol);
+
+/**
+ * Wrapped Solana token.
+ */
+export const WRAPPED_SOL: TokenMap = makeTokenForAllNetworks(wrappedSol);

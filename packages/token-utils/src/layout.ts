@@ -1,3 +1,4 @@
+import { PublicKey } from "@saberhq/solana-contrib";
 import type { Layout } from "@solana/buffer-layout";
 import * as BufferLayout from "@solana/buffer-layout";
 import type { AccountInfo, MintInfo } from "@solana/spl-token";
@@ -6,7 +7,6 @@ import {
   MintLayout as TokenMintLayout,
   u64,
 } from "@solana/spl-token";
-import { PublicKey } from "@solana/web3.js";
 
 /**
  * Layout with decode/encode types.

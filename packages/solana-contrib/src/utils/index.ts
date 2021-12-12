@@ -1,3 +1,3 @@
 export * from "./instructions";
-export * from "./isPublicKey";
+export * from "./publicKey";
 export * from "./simulateTransactionWithCommitment";
