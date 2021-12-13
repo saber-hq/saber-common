@@ -1,44 +1,11 @@
 import type { Address } from "@project-serum/anchor";
 import { BN } from "@project-serum/anchor";
-import type { BigintIsh } from "@saberhq/token-utils";
 import { TokenAmount } from "@saberhq/token-utils";
 import { PublicKey } from "@solana/web3.js";
 import chaiAsPromised from "chai-as-promised";
 import chaiBN from "chai-bn";
 
 export * from "./utils";
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Chai {
-    export interface TokenAmountComparer {
-      (value: TokenAmount | BigintIsh, message?: string): void;
-    }
-    export interface TokenAmountAssertion {
-      equal: TokenAmountComparer;
-      equals: TokenAmountComparer;
-      eq: TokenAmountComparer;
-      // above: TokenAmountComparer;
-      // greaterThan: TokenAmountComparer;
-      // gt: TokenAmountComparer;
-      // gte: TokenAmountComparer;
-      // below: TokenAmountComparer;
-      // lessThan: TokenAmountComparer;
-      // lt: TokenAmountComparer;
-      // lte: TokenAmountComparer;
-      // least: TokenAmountComparer;
-      // most: TokenAmountComparer;
-      // closeTo: BNCloseTo;
-      // negative: BNBoolean;
-      zero: () => void;
-    }
-    interface Assertion {
-      eqAddress: (otherKey: Address, message?: string) => Assertion;
-      eqAmount: (otherAmount: TokenAmount, message?: string) => Assertion;
-      tokenAmount: TokenAmountAssertion;
-    }
-  }
-}
 
 export const chaiSolana: Chai.ChaiPlugin = (chai) => {
   chai.use(chaiBN(BN) as Chai.ChaiPlugin);
