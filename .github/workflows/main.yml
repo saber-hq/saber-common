@@ -42,5 +42,5 @@ jobs:
       - run: nix shell .#ci --command yarn typecheck
       - run: nix shell .#ci --command yarn lint:ci
       - run: nix shell .#ci --command yarn test
-      - run: nix shell .#ci --command yarn dlx @yarnpkg/doctor
+      - run: nix shell .#ci --command yarn doctor
       - run: nix shell .#ci --command yarn size
