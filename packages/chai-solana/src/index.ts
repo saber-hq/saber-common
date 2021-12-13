@@ -1,3 +1,5 @@
+import "./types";
+
 import type { Address } from "@project-serum/anchor";
 import { BN } from "@project-serum/anchor";
 import { TokenAmount } from "@saberhq/token-utils";
