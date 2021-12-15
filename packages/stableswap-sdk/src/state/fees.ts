@@ -74,19 +74,19 @@ export const encodeFees = (fees: Fees): RawFees => ({
 
 export const decodeFees = (raw: RawFees): Fees => ({
   adminTrade: new Percent(
-    u64.fromBuffer(raw.adminTradeFeeNumerator).toString(),
-    u64.fromBuffer(raw.adminTradeFeeDenominator).toString()
+    u64.fromBuffer(Buffer.from(raw.adminTradeFeeNumerator)).toString(),
+    u64.fromBuffer(Buffer.from(raw.adminTradeFeeDenominator)).toString()
   ),
   adminWithdraw: new Percent(
-    u64.fromBuffer(raw.adminWithdrawFeeNumerator).toString(),
-    u64.fromBuffer(raw.adminWithdrawFeeDenominator).toString()
+    u64.fromBuffer(Buffer.from(raw.adminWithdrawFeeNumerator)).toString(),
+    u64.fromBuffer(Buffer.from(raw.adminWithdrawFeeDenominator)).toString()
   ),
   trade: new Percent(
-    u64.fromBuffer(raw.tradeFeeNumerator).toString(),
-    u64.fromBuffer(raw.tradeFeeDenominator).toString()
+    u64.fromBuffer(Buffer.from(raw.tradeFeeNumerator)).toString(),
+    u64.fromBuffer(Buffer.from(raw.tradeFeeDenominator)).toString()
   ),
   withdraw: new Percent(
-    u64.fromBuffer(raw.withdrawFeeNumerator).toString(),
-    u64.fromBuffer(raw.withdrawFeeDenominator).toString()
+    u64.fromBuffer(Buffer.from(raw.withdrawFeeNumerator)).toString(),
+    u64.fromBuffer(Buffer.from(raw.withdrawFeeDenominator)).toString()
   ),
 });

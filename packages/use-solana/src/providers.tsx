@@ -1,6 +1,7 @@
 import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
+import { SlopeWalletAdapter } from "@solana/wallet-adapter-slope";
 import { SolletWalletAdapter } from "@solana/wallet-adapter-sollet";
 import type React from "react";
 
@@ -13,7 +14,6 @@ import {
   SolongWalletAdapter,
 } from "./adapters";
 import { SecretKeyAdapter } from "./adapters/secret-key";
-import { SlopeWalletAdapter } from "./adapters/slope";
 import { SolflareAdapter } from "./adapters/solflare";
 import { SolflareExtensionWalletAdapter } from "./adapters/solflare-extension";
 import {
