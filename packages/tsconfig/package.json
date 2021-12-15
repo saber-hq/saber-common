@@ -1,7 +1,7 @@
 {
   "name": "@saberhq/tsconfig",
   "description": "Saber TypeScript configurations.",
-  "version": "1.10.17",
+  "version": "1.11.0",
   "repository": "git@github.com:saber-hq/saber-common.git",
   "author": "Ian Macalinao <ian@saber.so>",
   "license": "Apache-2.0",
