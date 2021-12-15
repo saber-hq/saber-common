@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@saberhq/solana-contrib": "^1.10.17",
-    "@solana/buffer-layout": "^3.0.0",
+    "@solana/buffer-layout": "^4.0.0",
     "@solana/spl-token": "^0.1.8",
     "@ubeswap/token-math": "^4.4.1",
     "tiny-invariant": "^1.2.0",

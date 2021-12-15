@@ -47,7 +47,7 @@ export const createAdminRampAInstruction = ({
   ];
   const dataLayout = structLayout<{
     instruction: number;
-    targetAmp: u64;
+    targetAmp: Uint8Array;
     stopRampTS: number;
   }>([
     BufferLayout.u8("instruction"),
@@ -59,7 +59,7 @@ export const createAdminRampAInstruction = ({
     const encodeLength = dataLayout.encode(
       {
         instruction: AdminInstruction.RAMP_A,
-        targetAmp,
+        targetAmp: targetAmp.toBuffer(),
         stopRampTS: Math.floor(stopRamp.getTime() / 1000),
       },
       data

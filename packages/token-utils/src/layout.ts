@@ -8,22 +8,10 @@ import {
   u64,
 } from "@solana/spl-token";
 
-/**
- * Layout with decode/encode types.
- */
-export type TypedLayout<T> = Omit<Layout, "decode" | "encode"> & {
-  decode: (data: Buffer) => T;
-  encode: (data: T, out: Buffer) => number;
-};
-
-/**
- * Structure with decode/encode types.
- */
-export type TypedStructure<T> = Omit<
-  BufferLayout.Structure,
-  "decode" | "encode"
-> &
-  TypedLayout<T>;
+export {
+  Layout as TypedLayout,
+  Structure as TypedStructure,
+} from "@solana/buffer-layout";
 
 /**
  * Typed struct buffer layout
@@ -33,30 +21,30 @@ export type TypedStructure<T> = Omit<
  * @returns
  */
 export const structLayout = <T>(
-  fields: Layout[],
+  fields: Layout<T[keyof T]>[],
   property?: string | undefined,
   decodePrefixes?: boolean | undefined
-): TypedStructure<T> =>
-  BufferLayout.struct(fields, property, decodePrefixes) as TypedStructure<T>;
+): BufferLayout.Structure<T> =>
+  BufferLayout.struct<T>(fields, property, decodePrefixes);
 
 /**
  * Layout for a public key
  */
-export const PublicKeyLayout = (property = "publicKey"): Layout => {
+export const PublicKeyLayout = (property = "publicKey"): BufferLayout.Blob => {
   return BufferLayout.blob(32, property);
 };
 
 /**
  * Layout for a 64bit unsigned value
  */
-export const Uint64Layout = (property = "uint64"): Layout => {
+export const Uint64Layout = (property = "uint64"): BufferLayout.Blob => {
   return BufferLayout.blob(8, property);
 };
 
 /**
  * Layout for a TokenAccount.
  */
-export const TokenAccountLayout = AccountLayout as TypedLayout<{
+export const TokenAccountLayout = AccountLayout as Layout<{
   mint: Buffer;
   owner: Buffer;
   amount: Buffer;
@@ -73,7 +61,7 @@ export const TokenAccountLayout = AccountLayout as TypedLayout<{
 /**
  * Layout for a Mint.
  */
-export const MintLayout = TokenMintLayout as TypedLayout<{
+export const MintLayout = TokenMintLayout as Layout<{
   mintAuthorityOption: number;
   mintAuthority: Buffer;
   supply: Buffer;

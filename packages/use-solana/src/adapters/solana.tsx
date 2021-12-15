@@ -21,7 +21,7 @@ export class SolanaWalletAdapter implements WalletAdapter {
   }
 
   get autoApprove(): boolean {
-    return this.adapter.ready;
+    return false;
   }
 
   async signAllTransactions(

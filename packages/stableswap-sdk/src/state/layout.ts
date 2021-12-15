@@ -9,14 +9,14 @@ import * as BufferLayout from "@solana/buffer-layout";
  * Raw representation of fees.
  */
 export interface RawFees {
-  adminTradeFeeNumerator: Buffer;
-  adminTradeFeeDenominator: Buffer;
-  adminWithdrawFeeNumerator: Buffer;
-  adminWithdrawFeeDenominator: Buffer;
-  tradeFeeNumerator: Buffer;
-  tradeFeeDenominator: Buffer;
-  withdrawFeeNumerator: Buffer;
-  withdrawFeeDenominator: Buffer;
+  adminTradeFeeNumerator: Uint8Array;
+  adminTradeFeeDenominator: Uint8Array;
+  adminWithdrawFeeNumerator: Uint8Array;
+  adminWithdrawFeeDenominator: Uint8Array;
+  tradeFeeNumerator: Uint8Array;
+  tradeFeeDenominator: Uint8Array;
+  withdrawFeeNumerator: Uint8Array;
+  withdrawFeeDenominator: Uint8Array;
 }
 
 /**
@@ -43,20 +43,20 @@ export const StableSwapLayout = structLayout<{
   isInitialized: 0 | 1;
   isPaused: 0 | 1;
   nonce: number;
-  initialAmpFactor: Buffer;
-  targetAmpFactor: Buffer;
+  initialAmpFactor: Uint8Array;
+  targetAmpFactor: Uint8Array;
   startRampTs: number;
   stopRampTs: number;
   futureAdminDeadline: number;
-  futureAdminAccount: string;
-  adminAccount: string;
-  tokenAccountA: string;
-  tokenAccountB: string;
-  tokenPool: string;
-  mintA: string;
-  mintB: string;
-  adminFeeAccountA: string;
-  adminFeeAccountB: string;
+  futureAdminAccount: Uint8Array;
+  adminAccount: Uint8Array;
+  tokenAccountA: Uint8Array;
+  tokenAccountB: Uint8Array;
+  tokenPool: Uint8Array;
+  mintA: Uint8Array;
+  mintB: Uint8Array;
+  adminFeeAccountA: Uint8Array;
+  adminFeeAccountB: Uint8Array;
   fees: RawFees;
 }>([
   BufferLayout.u8("isInitialized"),

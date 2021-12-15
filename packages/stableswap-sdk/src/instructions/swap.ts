@@ -210,7 +210,7 @@ export const initializeSwapInstruction = ({
   const dataLayout = structLayout<{
     instruction: number;
     nonce: number;
-    ampFactor: Buffer;
+    ampFactor: Uint8Array;
     fees: RawFees;
   }>([
     BufferLayout.u8("instruction"),
@@ -249,7 +249,11 @@ export const swapInstruction = ({
   amountIn,
   minimumAmountOut,
 }: SwapInstruction): TransactionInstruction => {
-  const dataLayout = BufferLayout.struct([
+  const dataLayout = BufferLayout.struct<{
+    instruction: number;
+    amountIn: Uint8Array;
+    minimumAmountOut: Uint8Array;
+  }>([
     BufferLayout.u8("instruction"),
     Uint64Layout("amountIn"),
     Uint64Layout("minimumAmountOut"),
@@ -297,7 +301,12 @@ export const depositInstruction = ({
   tokenAmountB,
   minimumPoolTokenAmount,
 }: DepositInstruction): TransactionInstruction => {
-  const dataLayout = BufferLayout.struct([
+  const dataLayout = BufferLayout.struct<{
+    instruction: number;
+    tokenAmountA: Uint8Array;
+    tokenAmountB: Uint8Array;
+    minimumPoolTokenAmount: Uint8Array;
+  }>([
     BufferLayout.u8("instruction"),
     Uint64Layout("tokenAmountA"),
     Uint64Layout("tokenAmountB"),
@@ -349,7 +358,12 @@ export const withdrawInstruction = ({
   minimumTokenA,
   minimumTokenB,
 }: WithdrawInstruction): TransactionInstruction => {
-  const dataLayout = BufferLayout.struct([
+  const dataLayout = BufferLayout.struct<{
+    instruction: number;
+    poolTokenAmount: Uint8Array;
+    minimumTokenA: Uint8Array;
+    minimumTokenB: Uint8Array;
+  }>([
     BufferLayout.u8("instruction"),
     Uint64Layout("poolTokenAmount"),
     Uint64Layout("minimumTokenA"),
@@ -401,7 +415,11 @@ export const withdrawOneInstruction = ({
   poolTokenAmount,
   minimumTokenAmount,
 }: WithdrawOneInstruction): TransactionInstruction => {
-  const withdrawOneDataLayout = BufferLayout.struct([
+  const withdrawOneDataLayout = BufferLayout.struct<{
+    instruction: number;
+    poolTokenAmount: Uint8Array;
+    minimumTokenAmount: Uint8Array;
+  }>([
     BufferLayout.u8("instruction"),
     Uint64Layout("poolTokenAmount"),
     Uint64Layout("minimumTokenAmount"),
