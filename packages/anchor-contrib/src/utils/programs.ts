@@ -21,7 +21,7 @@ export const newProgram = <P>(
 ) => {
   return new Program(
     idl,
-    address,
+    address.toString(),
     makeAnchorProvider(provider)
   ) as unknown as P;
 };
