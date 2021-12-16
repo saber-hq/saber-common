@@ -32,7 +32,8 @@
       "@solana/wallet-adapter-coin98",
       "@solana/wallet-adapter-phantom",
       "@solana/wallet-adapter-slope",
-      "@solana/wallet-adapter-sollet"
+      "@solana/wallet-adapter-sollet",
+      "@solana/wallet-adapter-solflare"
     ],
     "webpack": true
   }
