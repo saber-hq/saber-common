@@ -111,7 +111,13 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     name: "Solflare",
     url: "https://solflare.com/provider",
     icon: SOLFLARE,
-    makeAdapter: (provider, network) => new SolflareAdapter(provider, network),
+    makeAdapter: (provider, network) =>
+      new SolanaWalletAdapter(
+        new SolflareAdapter({
+          provider,
+          network: network as WalletAdapterNetwork,
+        })
+      ),
   },
   [WalletType.SolflareExtension]: {
     name: "Solflare Extension",
