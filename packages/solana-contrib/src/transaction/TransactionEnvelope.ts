@@ -2,13 +2,12 @@ import type {
   AccountMeta,
   Cluster,
   ConfirmOptions,
-  PublicKey,
   RpcResponseAndContext,
   Signer,
   SimulatedTransactionResponse,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { Transaction } from "@solana/web3.js";
+import { PublicKey, Transaction } from "@solana/web3.js";
 
 import type { Provider } from "../interfaces";
 import type { PendingTransaction } from "./PendingTransaction";
@@ -24,12 +23,82 @@ export interface SerializableInstruction {
 }
 
 /**
+ * Stub of a recent blockhash that can be used to simulate transactions.
+ */
+export const RECENT_BLOCKHASH_STUB =
+  "GfVcyD4kkTrj4bKc7WA9sZCin9JDbdT4Zkd3EittNR1W";
+
+/**
+ * Builds a transaction with a fake `recentBlockhash` and `feePayer` for the purpose
+ * of simulating a sequence of instructions.
+ *
+ * @param cluster
+ * @param ixs
+ * @returns
+ */
+export const buildStubbedTransaction = (
+  cluster: Cluster,
+  ixs: TransactionInstruction[]
+): Transaction => {
+  const tx = new Transaction();
+  tx.recentBlockhash = RECENT_BLOCKHASH_STUB;
+
+  // random keys that have money in them
+  tx.feePayer =
+    cluster === "devnet"
+      ? new PublicKey("A2jaCHPzD6346348JoEym2KFGX9A7uRBw6AhCdX7gTWP")
+      : new PublicKey("9u9iZBWqGsp5hXBxkVZtBTuLSGNAG9gEQLgpuVw39ASg");
+  tx.instructions = ixs;
+  return tx;
+};
+
+/**
+ * Serializes a {@link Transaction} to base64 format without checking signatures.
+ * @param tx
+ * @returns
+ */
+export const serializeToBase64Unchecked = (tx: Transaction): string =>
+  tx
+    .serialize({
+      requireAllSignatures: false,
+      verifySignatures: false,
+    })
+    .toString("base64");
+
+/**
+ * Generates a link for inspecting the contents of a transaction.
+ *
+ * @returns URL
+ */
+export const generateInspectLinkFromBase64 = (
+  cluster: Cluster,
+  base64TX: string
+): string => {
+  return `https://explorer.solana.com/tx/inspector?cluster=${cluster}&message=${encodeURIComponent(
+    base64TX
+  )}`;
+};
+
+/**
+ * Generates a link for inspecting the contents of a transaction, not checking for
+ * or requiring valid signatures.
+ *
+ * @returns URL
+ */
+export const generateUncheckedInspectLink = (
+  cluster: Cluster,
+  tx: Transaction
+): string => {
+  return generateInspectLinkFromBase64(cluster, serializeToBase64Unchecked(tx));
+};
+
+/**
  * Contains a Transaction that is being built.
  */
 export class TransactionEnvelope {
   constructor(
     /**
-     * Provider that will be sending the transaction.
+     * Provider that will be sending the transaction as the fee payer.
      */
     public readonly provider: Provider,
     /**
@@ -83,11 +152,9 @@ export class TransactionEnvelope {
    */
   generateInspectLink(cluster: Cluster = "mainnet-beta"): string {
     const t = this.build();
-    t.recentBlockhash = "EETubP5AKHgjPAhzPAFcb8BAY1hMH639CWCFTqi3hq1k"; // Some stub
+    t.recentBlockhash = RECENT_BLOCKHASH_STUB;
     const str = t.serializeMessage().toString("base64");
-    return `https://explorer.solana.com/tx/inspector?cluster=${cluster}&message=${encodeURIComponent(
-      str
-    )}`;
+    return generateInspectLinkFromBase64(cluster, str);
   }
 
   /**
