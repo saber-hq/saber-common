@@ -36,8 +36,8 @@
     "jsbi": "^3 || ^4"
   },
   "dependencies": {
-    "@saberhq/solana-contrib": "^1.11.0",
-    "@saberhq/token-utils": "^1.11.0",
+    "@saberhq/solana-contrib": "workspace:*",
+    "@saberhq/token-utils": "workspace:*",
     "@solana/buffer-layout": "^4.0.0",
     "lodash.mapvalues": "^4.6.0",
     "tslib": "^2.3.1"
