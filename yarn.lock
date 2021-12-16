@@ -3327,7 +3327,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/solana-contrib@^1.11.0, @saberhq/solana-contrib@^1.3.5, @saberhq/solana-contrib@workspace:packages/solana-contrib":
+"@saberhq/solana-contrib@^1.11.0, @saberhq/solana-contrib@workspace:packages/solana-contrib":
   version: 0.0.0-use.local
   resolution: "@saberhq/solana-contrib@workspace:packages/solana-contrib"
   dependencies:
@@ -3399,8 +3399,7 @@ __metadata:
   dependencies:
     "@ledgerhq/hw-transport": ^6.19.0
     "@ledgerhq/hw-transport-webusb": ^6.19.0
-    "@project-serum/sol-wallet-adapter": ^0.2.6
-    "@saberhq/solana-contrib": ^1.3.5
+    "@saberhq/solana-contrib": ^1.11.0
     "@solana/wallet-adapter-base": ^0.8.0
     "@solana/wallet-adapter-coin98": ^0.4.0
     "@solana/wallet-adapter-phantom": ^0.8.0
