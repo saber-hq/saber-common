@@ -2,6 +2,7 @@ import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import { SlopeWalletAdapter } from "@solana/wallet-adapter-slope";
+import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
 import { SolletWalletAdapter } from "@solana/wallet-adapter-sollet";
 import type React from "react";
 
@@ -10,12 +11,10 @@ import {
   LedgerWalletAdapter,
   MathWalletAdapter,
   SolanaWalletAdapter,
-  SolletExtensionAdapter,
   SolongWalletAdapter,
 } from "./adapters";
 import { SecretKeyAdapter } from "./adapters/secret-key";
 import { SolflareAdapter } from "./adapters/solflare";
-import { SolflareExtensionWalletAdapter } from "./adapters/solflare-extension";
 import {
   COIN98,
   FILE,
@@ -56,10 +55,15 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     isMobile: true,
   },
   [WalletType.SolletExtension]: {
-    name: "Sollet Extension",
+    name: "Sollet (Extension)",
     url: "https://chrome.google.com/webstore/detail/sollet/fhmfendgdocmcbmfikdcogofphimnkno",
     icon: SOLLET,
-    makeAdapter: (name, endpoint) => new SolletExtensionAdapter(name, endpoint),
+    makeAdapter: (_provider: string, network: string) =>
+      new SolanaWalletAdapter(
+        new SolletWalletAdapter({
+          network: network as WalletAdapterNetwork,
+        })
+      ),
 
     isInstalled: () => window.sollet !== undefined,
   },
@@ -108,16 +112,22 @@ export const WALLET_PROVIDERS: { [W in WalletType]: WalletProviderInfo } = {
     makeAdapter: () => new SecretKeyAdapter(),
   },
   [WalletType.Solflare]: {
-    name: "Solflare",
+    name: "Solflare (Web)",
     url: "https://solflare.com/provider",
     icon: SOLFLARE,
-    makeAdapter: (provider, network) => new SolflareAdapter(provider, network),
+    makeAdapter: (provider, network) =>
+      new SolanaWalletAdapter(
+        new SolflareAdapter({
+          provider,
+          network: network as WalletAdapterNetwork,
+        })
+      ),
   },
   [WalletType.SolflareExtension]: {
-    name: "Solflare Extension",
+    name: "Solflare (Extension)",
     url: "https://solflare.com/",
     icon: SOLFLARE,
-    makeAdapter: () => new SolflareExtensionWalletAdapter(),
+    makeAdapter: () => new SolanaWalletAdapter(new SolflareWalletAdapter()),
 
     isInstalled: () => window.solflare?.isSolflare === true,
   },

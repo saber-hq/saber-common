@@ -1,8 +1,8 @@
-import Wallet from "@project-serum/sol-wallet-adapter";
+import { SolletWalletAdapter } from "@solana/wallet-adapter-sollet";
 import type { Transaction } from "@solana/web3.js";
 import invariant from "tiny-invariant";
 
-export class SolflareAdapter extends Wallet {
+export class SolflareAdapter extends SolletWalletAdapter {
   override signAllTransactions = async (
     txs: Transaction[]
   ): Promise<Transaction[]> => {
