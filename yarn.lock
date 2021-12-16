@@ -3405,6 +3405,7 @@ __metadata:
     "@solana/wallet-adapter-coin98": ^0.4.0
     "@solana/wallet-adapter-phantom": ^0.8.0
     "@solana/wallet-adapter-slope": ^0.4.0
+    "@solana/wallet-adapter-solflare": ^0.5.0
     "@solana/wallet-adapter-sollet": ^0.9.1
     "@solana/web3.js": ^1.31.0
     "@types/bs58": ^4.0.1
@@ -3548,6 +3549,16 @@ __metadata:
     "@solana/wallet-adapter-base": ^0.8.0
     "@solana/web3.js": ^1.20.0
   checksum: ccc65c9727183557e0ac850a97498f454116e9ad6d8191d084d5980c7bcb4e81218e1c43e640ca3d7159fc05513575b05dd88f52208f90a1ed552b45b15fcaff
+  languageName: node
+  linkType: hard
+
+"@solana/wallet-adapter-solflare@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@solana/wallet-adapter-solflare@npm:0.5.0"
+  peerDependencies:
+    "@solana/wallet-adapter-base": ^0.8.0
+    "@solana/web3.js": ^1.20.0
+  checksum: 3e566c6095464735920d1a8ac7672a5c2f61084738a30e41558626b1be7f775f7ddd5a06171969f459cc1d4161c618e7adb099cddddd8e4b9b232d4043baccbe
   languageName: node
   linkType: hard
 
