@@ -406,11 +406,13 @@ export const createInitializeStableSwapInstructionsRaw = async ({
 /**
  * Deploys a new StableSwap pool.
  */
-export const deployNewSwap = async (
-  args: Omit<InitializeNewStableSwapArgs, "connection"> & {
-    provider: Provider;
-  }
-): Promise<{
+export const deployNewSwap = async ({
+  enableLogging = false,
+  ...args
+}: Omit<InitializeNewStableSwapArgs, "connection"> & {
+  provider: Provider;
+  enableLogging?: boolean;
+}): Promise<{
   swap: StableSwap;
   initializeArgs: InitializeSwapInstruction;
   txSigs: {
@@ -423,11 +425,17 @@ export const deployNewSwap = async (
   const { txs } = result;
 
   const { signature: setupAccounts1 } = await txs.setupAccounts1.confirm();
-  console.log(`Set up accounts pt 1: ${setupAccounts1}`);
+  if (enableLogging) {
+    console.log(`Set up accounts pt 1: ${setupAccounts1}`);
+  }
   const { signature: setupAccounts2 } = await txs.setupAccounts2.confirm();
-  console.log(`Set up accounts pt 2: ${setupAccounts2}`);
+  if (enableLogging) {
+    console.log(`Set up accounts pt 2: ${setupAccounts2}`);
+  }
   const { signature: initializeSwap } = await txs.initializeSwap.confirm();
-  console.log(`Initialize swap: ${initializeSwap}`);
+  if (enableLogging) {
+    console.log(`Initialize swap: ${initializeSwap}`);
+  }
 
   return {
     ...result,
