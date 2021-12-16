@@ -17,8 +17,8 @@ import { simulateTransactionWithCommitment } from "./utils/simulateTransactionWi
  */
 export class SingleConnectionBroadcaster implements Broadcaster {
   constructor(
-    public readonly sendConnection: Connection,
-    public readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
+    readonly sendConnection: Connection,
+    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {}
 
   async getRecentBlockhash(

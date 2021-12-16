@@ -15,6 +15,11 @@ module.exports = {
     node: true,
   },
   rules: {
+    eqeqeq: "error",
+    "@typescript-eslint/explicit-member-accessibility": [
+      "error",
+      { accessibility: "no-public" },
+    ],
     "import/order": "off",
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",

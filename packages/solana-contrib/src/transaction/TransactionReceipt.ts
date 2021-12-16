@@ -14,17 +14,17 @@ export class TransactionReceipt {
     /**
      * Signature (id) of the transaction.
      */
-    public readonly signature: TransactionSignature,
+    readonly signature: TransactionSignature,
     /**
      * Raw response from web3.js
      */
-    public readonly response: TransactionResponse
+    readonly response: TransactionResponse
   ) {}
 
   /**
    * Gets the events associated with this transaction.
    */
-  public getEvents<E extends Event>(eventParser: EventParser<E>): readonly E[] {
+  getEvents<E extends Event>(eventParser: EventParser<E>): readonly E[] {
     const logs = this.response.meta?.logMessages;
     if (logs && logs.length > 0) {
       return eventParser(logs);
@@ -35,7 +35,7 @@ export class TransactionReceipt {
   /**
    * Prints the logs associated with this transaction.
    */
-  public printLogs(): void {
+  printLogs(): void {
     console.log(this.response.meta?.logMessages?.join("\n"));
   }
 
@@ -43,7 +43,7 @@ export class TransactionReceipt {
    * Gets the compute units used by the transaction.
    * @returns
    */
-  public get computeUnits(): number {
+  get computeUnits(): number {
     const logs = this.response.meta?.logMessages;
     invariant(logs, "no logs");
     const consumeLog = logs[logs.length - 2];

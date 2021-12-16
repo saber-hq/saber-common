@@ -9,7 +9,7 @@ export enum ErrorLevel {
  * Error thrown by the use-solana library.
  */
 export abstract class UseSolanaError extends Error {
-  public abstract readonly level: ErrorLevel;
+  abstract readonly level: ErrorLevel;
 
   constructor(name: string, message: string) {
     super(message);
@@ -23,8 +23,8 @@ export abstract class UseSolanaError extends Error {
 export abstract class UseSolanaDerivedError extends UseSolanaError {
   constructor(
     name: string,
-    public readonly description: string,
-    public readonly originalError: unknown
+    readonly description: string,
+    readonly originalError: unknown
   ) {
     super(
       name,
@@ -44,10 +44,7 @@ export abstract class UseSolanaDerivedError extends UseSolanaError {
 export class WalletAutomaticConnectionError extends UseSolanaDerivedError {
   level = ErrorLevel.WARN;
 
-  constructor(
-    originalError: unknown,
-    public readonly info: WalletProviderInfo
-  ) {
+  constructor(originalError: unknown, readonly info: WalletProviderInfo) {
     super(
       "WalletAutomaticConnectionError",
       `Error attempting to automatically connect to wallet ${info.name}`,
@@ -62,10 +59,7 @@ export class WalletAutomaticConnectionError extends UseSolanaDerivedError {
 export class WalletDisconnectError extends UseSolanaDerivedError {
   level = ErrorLevel.WARN;
 
-  constructor(
-    originalError: unknown,
-    public readonly info?: WalletProviderInfo
-  ) {
+  constructor(originalError: unknown, readonly info?: WalletProviderInfo) {
     super(
       "WalletDisconnectError",
       `Error disconnecting wallet ${info?.name ?? "(unknown)"}`,
@@ -82,8 +76,8 @@ export class WalletActivateError extends UseSolanaDerivedError {
 
   constructor(
     originalError: unknown,
-    public readonly walletType: WalletType,
-    public readonly walletArgs?: Record<string, unknown>
+    readonly walletType: WalletType,
+    readonly walletArgs?: Record<string, unknown>
   ) {
     super(
       "WalletActivateError",

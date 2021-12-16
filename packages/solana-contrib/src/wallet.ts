@@ -13,7 +13,7 @@ import { SolanaProvider } from "./provider";
  * Wallet based on a Signer.
  */
 export class SignerWallet implements Wallet {
-  constructor(public readonly signer: Signer) {}
+  constructor(readonly signer: Signer) {}
 
   get publicKey(): PublicKey {
     return this.signer.publicKey;

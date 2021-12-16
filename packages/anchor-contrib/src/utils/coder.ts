@@ -52,11 +52,11 @@ export class SuperCoder<
     /**
      * Program address.
      */
-    public readonly address: PublicKey,
+    readonly address: PublicKey,
     /**
      * Program IDL.
      */
-    public readonly idl: T["IDL"]
+    readonly idl: T["IDL"]
   ) {
     this.coder = new Coder(idl);
     this.eventParser = new EventParser(address, this.coder);

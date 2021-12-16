@@ -9,7 +9,7 @@ import type { WalletAdapter } from "./types";
 
 export class SolanaWalletAdapter implements WalletAdapter {
   constructor(
-    public readonly adapter: Omit<
+    readonly adapter: Omit<
       SignerWalletAdapter,
       "sendTransaction" | keyof EventEmitter
     > &
