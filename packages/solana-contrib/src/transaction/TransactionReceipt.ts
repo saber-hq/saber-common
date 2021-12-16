@@ -14,11 +14,11 @@ export class TransactionReceipt {
     /**
      * Signature (id) of the transaction.
      */
-    public readonly signature: TransactionSignature,
+    readonly signature: TransactionSignature,
     /**
      * Raw response from web3.js
      */
-    public readonly response: TransactionResponse
+    readonly response: TransactionResponse
   ) {}
 
   /**

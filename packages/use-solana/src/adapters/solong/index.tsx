@@ -23,7 +23,7 @@ export class SolongWalletAdapter extends EventEmitter implements WalletAdapter {
     return false;
   }
 
-  public async signAllTransactions(
+  async signAllTransactions(
     transactions: Transaction[]
   ): Promise<Transaction[]> {
     const solong = window.solong;

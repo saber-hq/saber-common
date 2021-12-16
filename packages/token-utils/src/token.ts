@@ -23,14 +23,14 @@ export class Token implements UToken<Token> {
    * strings are relatively slow to create since they require the use
    * of hash functions.
    */
-  public readonly mintAccount: PublicKey;
+  readonly mintAccount: PublicKey;
 
   /**
    * The network that the Token is on.
    */
-  public readonly network: Network;
+  readonly network: Network;
 
-  constructor(public readonly info: TokenInfo) {
+  constructor(readonly info: TokenInfo) {
     this.mintAccount = new PublicKey(info.address);
     this.network = chainIdToNetwork(info.chainId) ?? "localnet";
   }

@@ -100,15 +100,15 @@ export class TransactionEnvelope {
     /**
      * Provider that will be sending the transaction as the fee payer.
      */
-    public readonly provider: Provider,
+    readonly provider: Provider,
     /**
      * Instructions associated with the transaction.
      */
-    public readonly instructions: TransactionInstruction[],
+    readonly instructions: TransactionInstruction[],
     /**
      * Optional signers of the transaction.
      */
-    public readonly signers: Signer[] = []
+    readonly signers: Signer[] = []
   ) {}
 
   /**

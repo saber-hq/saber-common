@@ -24,9 +24,7 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
     return false;
   }
 
-  public signAllTransactions(
-    transactions: Transaction[]
-  ): Promise<Transaction[]> {
+  signAllTransactions(transactions: Transaction[]): Promise<Transaction[]> {
     const wallet = this._wallet;
     if (!wallet) {
       return Promise.resolve(transactions);

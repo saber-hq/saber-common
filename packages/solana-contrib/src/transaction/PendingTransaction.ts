@@ -15,8 +15,8 @@ export class PendingTransaction {
   private _receipt: TransactionReceipt | null = null;
 
   constructor(
-    public readonly connection: Connection,
-    public readonly signature: TransactionSignature
+    readonly connection: Connection,
+    readonly signature: TransactionSignature
   ) {}
 
   /**

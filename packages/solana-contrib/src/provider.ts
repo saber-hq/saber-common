@@ -38,8 +38,8 @@ export class SolanaReadonlyProvider implements ReadonlyProvider {
    * @param opts       Transaction confirmation options to use by default.
    */
   constructor(
-    public readonly connection: Connection,
-    public readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
+    readonly connection: Connection,
+    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {}
 
   /**
@@ -67,9 +67,9 @@ export class SolanaReadonlyProvider implements ReadonlyProvider {
  */
 export class SolanaTransactionSigner implements TransactionSigner {
   constructor(
-    public readonly wallet: Wallet,
-    public readonly broadcaster: Broadcaster,
-    public readonly preflightCommitment: Commitment = "recent"
+    readonly wallet: Wallet,
+    readonly broadcaster: Broadcaster,
+    readonly preflightCommitment: Commitment = "recent"
   ) {}
 
   get publicKey(): PublicKey {
@@ -151,7 +151,7 @@ export class SolanaTransactionSigner implements TransactionSigner {
  * This implementation was taken from Anchor.
  */
 export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
-  public readonly signer: TransactionSigner;
+  readonly signer: TransactionSigner;
 
   /**
    * @param connection The cluster connection where the program is deployed.
@@ -160,10 +160,10 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
    * @param opts       Transaction confirmation options to use by default.
    */
   constructor(
-    public override readonly connection: Connection,
-    public readonly broadcaster: Broadcaster,
-    public readonly wallet: Wallet,
-    public override readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
+    override readonly connection: Connection,
+    readonly broadcaster: Broadcaster,
+    readonly wallet: Wallet,
+    override readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {
     super(connection, opts);
     this.signer = new SolanaTransactionSigner(
@@ -299,7 +299,7 @@ export interface AugmentedProvider extends Provider {
  * Wrapper for a Provider containing utility functions.
  */
 export class SolanaAugmentedProvider implements AugmentedProvider {
-  constructor(public readonly provider: Provider) {}
+  constructor(readonly provider: Provider) {}
 
   get connection(): Connection {
     return this.provider.connection;

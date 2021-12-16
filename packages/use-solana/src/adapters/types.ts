@@ -28,7 +28,7 @@ export type WalletAdapterBuilder = (
 export class WrappedWalletAdapter<Connected extends boolean = boolean>
   implements Omit<WalletAdapter<Connected>, "publicKey">
 {
-  constructor(public readonly adapter: WalletAdapter<Connected>) {}
+  constructor(readonly adapter: WalletAdapter<Connected>) {}
 
   private _prevPubkey: SolanaPublicKey | null = null;
   private _publicKeyCached: PublicKey | null = null;

@@ -16,7 +16,7 @@ export class Price extends UPrice<Token> {
    * @param denominator
    * @param numerator
    */
-  public constructor(
+  constructor(
     baseCurrency: Token,
     quoteCurrency: Token,
     denominator: BigintIsh,
@@ -25,7 +25,7 @@ export class Price extends UPrice<Token> {
     super(baseCurrency, quoteCurrency, denominator, numerator);
   }
 
-  public override invert(): Price {
+  override invert(): Price {
     return new Price(
       this.quoteCurrency,
       this.baseCurrency,
@@ -34,7 +34,7 @@ export class Price extends UPrice<Token> {
     );
   }
 
-  public override multiply(other: Price): Price {
+  override multiply(other: Price): Price {
     invariant(
       this.quoteCurrency.equals(other.baseCurrency),
       `multiply token mismatch: ${this.quoteCurrency.toString()} !== ${other.baseCurrency.toString()}`

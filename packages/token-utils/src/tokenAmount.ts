@@ -22,7 +22,7 @@ export interface IFormatUint {
 
 export class TokenAmount extends UTokenAmount<Token> {
   // amount _must_ be raw, i.e. in the native representation
-  public constructor(token: Token, amount: BigintIsh) {
+  constructor(token: Token, amount: BigintIsh) {
     super(token, amount);
     validateU64(this.raw);
   }
@@ -33,7 +33,7 @@ export class TokenAmount extends UTokenAmount<Token> {
    * @param uiAmount
    * @returns
    */
-  public static parse(token: Token, uiAmount: string): TokenAmount {
+  static parse(token: Token, uiAmount: string): TokenAmount {
     const prev = UTokenAmount.parseFromString(token, uiAmount);
     return new TokenAmount(token, prev.raw);
   }

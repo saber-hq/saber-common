@@ -19,8 +19,8 @@ export class StableSwap {
    * @param state
    */
   constructor(
-    public readonly config: StableSwapConfig,
-    public readonly state: StableSwapState
+    readonly config: StableSwapConfig,
+    readonly state: StableSwapState
   ) {}
 
   /**
