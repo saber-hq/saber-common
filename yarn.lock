@@ -2076,15 +2076,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/devices@npm:^6.19.0":
-  version: 6.19.0
-  resolution: "@ledgerhq/devices@npm:6.19.0"
+"@ledgerhq/devices@npm:^6.20.0":
+  version: 6.20.0
+  resolution: "@ledgerhq/devices@npm:6.20.0"
   dependencies:
     "@ledgerhq/errors": ^6.10.0
     "@ledgerhq/logs": ^6.10.0
     rxjs: 6
     semver: ^7.3.5
-  checksum: a5a2e14e69993f08a4c53521f7a173e6e43b403cd50aeff60f701795e3c84f73a98ec4643e9ce863d94292e7d6b7e1563900d65d34799d3e256bce8637087473
+  checksum: 67246ffe6d6b95e3ec2f6ce2f02eeb138397911f7018c1055ec8ed103e9790b4f825754e2f0e64f554e90f698fec05e2c80abf2bf3ec3c0eecc490acf4c21ad7
   languageName: node
   linkType: hard
 
@@ -2095,26 +2095,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport-webusb@npm:^6.19.0":
-  version: 6.19.0
-  resolution: "@ledgerhq/hw-transport-webusb@npm:6.19.0"
+"@ledgerhq/hw-transport-webusb@npm:^6.20.0":
+  version: 6.20.0
+  resolution: "@ledgerhq/hw-transport-webusb@npm:6.20.0"
   dependencies:
-    "@ledgerhq/devices": ^6.19.0
+    "@ledgerhq/devices": ^6.20.0
     "@ledgerhq/errors": ^6.10.0
-    "@ledgerhq/hw-transport": ^6.19.0
+    "@ledgerhq/hw-transport": ^6.20.0
     "@ledgerhq/logs": ^6.10.0
-  checksum: 3be458bda0ca223b7ed7772a4cde7a06af3875a51f5dfd1d81eecf0b717b7f09fdd5949fce1983ba8665941d4dbb001572083f0ca1e14cb31f8224a49beaf1e6
+  checksum: 428544f11aee3e57c0160924e5b1b5d925e27f4090226d1f3a571a8520bf6e85fa8d3eabcec94f3665a05cf14ca08924b8f2273018b5cf2823c3b43fc3c99909
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport@npm:^6.19.0":
-  version: 6.19.0
-  resolution: "@ledgerhq/hw-transport@npm:6.19.0"
+"@ledgerhq/hw-transport@npm:^6.20.0":
+  version: 6.20.0
+  resolution: "@ledgerhq/hw-transport@npm:6.20.0"
   dependencies:
-    "@ledgerhq/devices": ^6.19.0
+    "@ledgerhq/devices": ^6.20.0
     "@ledgerhq/errors": ^6.10.0
     events: ^3.3.0
-  checksum: adfede7b58cbaef1c925342777dd1d22836b5bddab0e5c322ece90eb78cf6e556aa0ea4d811cbdfb51e6630f8333e53a7fab4e0a99515fc92c16ed40934fa772
+  checksum: 89ecfeba2b2e179a665325603d74c7aa85042d1268bbb6f0cd023e15510cda468a3f162ba9140134fe1c1f24832765fbe5a99f396caaa67b2a5914ea02ab07c4
   languageName: node
   linkType: hard
 
@@ -3153,9 +3153,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@project-serum/anchor@npm:^0.19.0":
-  version: 0.19.0
-  resolution: "@project-serum/anchor@npm:0.19.0"
+"@project-serum/anchor@npm:^0.19.1-beta.1":
+  version: 0.19.1-beta.1
+  resolution: "@project-serum/anchor@npm:0.19.1-beta.1"
   dependencies:
     "@project-serum/borsh": ^0.2.2
     "@solana/web3.js": ^1.17.0
@@ -3171,7 +3171,7 @@ __metadata:
     pako: ^2.0.3
     snake-case: ^3.0.4
     toml: ^3.0.0
-  checksum: 06c696e79724fee4700d9e32cf5f0ff661a46c59f5cfdf3134d8f32a7122b0d3ae8dcf19018e5163c806804d802fc4463dc9295332e8ce13138558fd58064cee
+  checksum: fc32f06d9760b2b20e36e9d6cee7ff56ef55ee8106e28a62da5b940923da44874dc0fdd695ebb66f0648f7783509f3c7a275d4561833af1cab77b13507a0dd34
   languageName: node
   linkType: hard
 
@@ -3210,7 +3210,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/anchor-contrib@workspace:packages/anchor-contrib"
   dependencies:
-    "@project-serum/anchor": ^0.19.0
+    "@project-serum/anchor": ^0.19.1-beta.1
     "@saberhq/solana-contrib": ^1.11.1
     "@solana/web3.js": ^1.31.0
     "@types/lodash.camelcase": ^4.3.6
@@ -3229,7 +3229,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/chai-solana@workspace:packages/chai-solana"
   dependencies:
-    "@project-serum/anchor": ^0.19.0
+    "@project-serum/anchor": ^0.19.1-beta.1
     "@saberhq/solana-contrib": ^1.11.1
     "@saberhq/token-utils": ^1.11.1
     "@solana/web3.js": ^1.31.0
@@ -3290,7 +3290,7 @@ __metadata:
     "@babel/core": ^7.16.5
     "@babel/preset-env": ^7.16.5
     "@babel/preset-typescript": ^7.16.5
-    "@project-serum/anchor": ^0.19.0
+    "@project-serum/anchor": ^0.19.1-beta.1
     "@rushstack/eslint-patch": ^1.1.0
     "@saberhq/eslint-config": "*"
     "@saberhq/eslint-config-react": "*"
@@ -3397,15 +3397,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/use-solana@workspace:packages/use-solana"
   dependencies:
-    "@ledgerhq/hw-transport": ^6.19.0
-    "@ledgerhq/hw-transport-webusb": ^6.19.0
+    "@ledgerhq/hw-transport": ^6.20.0
+    "@ledgerhq/hw-transport-webusb": ^6.20.0
     "@saberhq/solana-contrib": ^1.11.1
-    "@solana/wallet-adapter-base": ^0.8.0
+    "@solana/wallet-adapter-base": ^0.8.1
     "@solana/wallet-adapter-coin98": ^0.4.0
     "@solana/wallet-adapter-phantom": ^0.8.0
     "@solana/wallet-adapter-slope": ^0.4.0
     "@solana/wallet-adapter-solflare": ^0.5.0
-    "@solana/wallet-adapter-sollet": ^0.9.1
+    "@solana/wallet-adapter-sollet": ^0.9.2
     "@solana/web3.js": ^1.31.0
     "@types/bs58": ^4.0.1
     "@types/node": ^16.11.14
@@ -3504,14 +3504,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/wallet-adapter-base@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "@solana/wallet-adapter-base@npm:0.8.0"
+"@solana/wallet-adapter-base@npm:^0.8.1":
+  version: 0.8.1
+  resolution: "@solana/wallet-adapter-base@npm:0.8.1"
   dependencies:
     eventemitter3: ^4.0.7
   peerDependencies:
     "@solana/web3.js": ^1.20.0
-  checksum: 152671cab77f8e1429ef33bf52ed92e6de8482bd4277674a62a42c275e5aa83c6ea08cde7e36560575aa1de099c6ffd3386cd41010a2cad539b0c7b8b939dd4a
+  checksum: 015de74ca61df49715b005703a7371da3a9fb4e0ce2581973ef96431ee8fb61fc587d7b2a72e446620bb85a0024a77a4751a2ebcb39babc4a43165fabcfe4c40
   languageName: node
   linkType: hard
 
@@ -3561,15 +3561,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/wallet-adapter-sollet@npm:^0.9.1":
-  version: 0.9.1
-  resolution: "@solana/wallet-adapter-sollet@npm:0.9.1"
+"@solana/wallet-adapter-sollet@npm:^0.9.2":
+  version: 0.9.2
+  resolution: "@solana/wallet-adapter-sollet@npm:0.9.2"
   dependencies:
     "@project-serum/sol-wallet-adapter": ^0.2.6
   peerDependencies:
-    "@solana/wallet-adapter-base": ^0.8.0
+    "@solana/wallet-adapter-base": ^0.8.1
     "@solana/web3.js": ^1.20.0
-  checksum: 26f5e4936d50eb6714c6b10deb5cc8a43f9c6fccfc5d8217f342f1978fbd834ee1da83002b07f2783f3d3e317c2089673e13673bb50a55de5ac7aaa7b0d6ed1b
+  checksum: d794c3fe24d8721da08424e3a8c82f151191b21d24766cab9e2f1034eeb91b66bdad99fbb4678b875f5c0b41db590f162b9f92510c4273e2b038a6cb9b99feee
   languageName: node
   linkType: hard
 
