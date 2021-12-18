@@ -1,10 +1,18 @@
 import type { ReactNode } from "react";
 import React from "react";
-import { createContainer } from "unstated-next";
+import type { Container } from "unstated-next";
+import { createContainer, useContainer } from "unstated-next";
 
-import type { WalletAdapter, WalletProviderInfo } from ".";
+import type {
+  DefaultWalletType,
+  WalletAdapter,
+  WalletProviderInfo,
+  WalletTypeEnum,
+} from ".";
 import type { UseSolanaError } from "./error";
 import { ErrorLevel } from "./error";
+import type { UnknownWalletType, WalletProviderMap } from "./providers";
+import { DEFAULT_WALLET_PROVIDERS } from "./providers";
 import { LOCAL_STORAGE_ADAPTER } from "./storage";
 import type {
   ConnectionArgs,
@@ -16,15 +24,20 @@ import { useProviderInternal } from "./utils/useProviderInternal";
 import type { UseWallet, UseWalletArgs } from "./utils/useWalletInternal";
 import { useWalletInternal } from "./utils/useWalletInternal";
 
-export interface UseSolana<T extends boolean = boolean>
-  extends ConnectionContext,
-    UseWallet<T>,
+export interface UseSolana<
+  WalletType extends WalletTypeEnum<WalletType>,
+  Connected extends boolean = boolean
+> extends ConnectionContext,
+    UseWallet<WalletType, Connected>,
     UseProvider {}
 
-export interface UseSolanaArgs
+export interface UseSolanaArgs<WalletType extends WalletTypeEnum<WalletType>>
   extends Omit<ConnectionArgs, "storageAdapter">,
     Partial<
-      Pick<UseWalletArgs, "onConnect" | "onDisconnect" | "storageAdapter">
+      Pick<
+        UseWalletArgs<WalletType>,
+        "onConnect" | "onDisconnect" | "storageAdapter" | "walletProviders"
+      >
     > {
   /**
    * Called when an error is thrown.
@@ -60,25 +73,27 @@ const defaultOnError = (err: UseSolanaError) => {
  * Provides Solana.
  * @returns
  */
-const useSolanaInternal = ({
+const useSolanaInternal = <WalletType extends WalletTypeEnum<WalletType>>({
   onConnect = defaultOnConnect,
   onDisconnect = defaultOnDisconnect,
   onError = defaultOnError,
   storageAdapter = LOCAL_STORAGE_ADAPTER,
+  walletProviders = DEFAULT_WALLET_PROVIDERS as unknown as WalletProviderMap<WalletType>,
   ...connectionArgs
-}: UseSolanaArgs = {}): UseSolana => {
+}: UseSolanaArgs<WalletType> = {}): UseSolana<WalletType> => {
   const connectionCtx = useConnectionInternal({
     ...connectionArgs,
     storageAdapter,
   });
   const { network, endpoint } = connectionCtx;
-  const walletCtx = useWalletInternal({
+  const walletCtx = useWalletInternal<WalletType>({
     onConnect,
     onDisconnect,
     network,
     endpoint,
     onError,
     storageAdapter,
+    walletProviders,
   });
   const providerCtx = useProviderInternal({
     connection: connectionCtx.connection,
@@ -92,9 +107,13 @@ const useSolanaInternal = ({
   };
 };
 
-const Solana = createContainer(useSolanaInternal);
+const Solana = createContainer<
+  UseSolana<UnknownWalletType>,
+  UseSolanaArgs<UnknownWalletType>
+>(useSolanaInternal);
 
-type ProviderProps = UseSolanaArgs & { children: ReactNode };
+type ProviderProps<WalletType extends WalletTypeEnum<WalletType>> =
+  UseSolanaArgs<WalletType> & { children: ReactNode };
 
 /**
  * Provides a Solana SDK.
@@ -103,14 +122,22 @@ type ProviderProps = UseSolanaArgs & { children: ReactNode };
  * statically defined, otherwise the wallet will keep re-rendering.
  * @returns
  */
-export const SolanaProvider: React.FC<ProviderProps> = ({
+export const SolanaProvider = <
+  WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType
+>({
   children,
   ...args
-}: ProviderProps) => (
+}: ProviderProps<WalletType>) => (
   <Solana.Provider initialState={args}>{children}</Solana.Provider>
 );
 
 /**
  * Fetches the loaded Solana SDK.
  */
-export const useSolana = Solana.useContainer;
+export const useSolana = <WalletType extends WalletTypeEnum<WalletType>>() =>
+  useContainer(
+    Solana as unknown as Container<
+      UseSolana<WalletType>,
+      UseSolanaArgs<WalletType>
+    >
+  );

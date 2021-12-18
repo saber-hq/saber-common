@@ -1,5 +1,6 @@
 import type { Connection } from "@solana/web3.js";
 
+import type { DefaultWalletType, UnknownWalletType, WalletTypeEnum } from ".";
 import type { ConnectedWallet } from "./adapters/types";
 import type { UseSolana } from "./context";
 import { useSolana } from "./context";
@@ -8,8 +9,10 @@ import type { ConnectionContext } from "./utils/useConnectionInternal";
 /**
  * Gets the current Solana wallet.
  */
-export function useWallet(): UseSolana {
-  const context = useSolana();
+export function useWallet<
+  WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType
+>(): UseSolana<WalletType> {
+  const context = useSolana<WalletType>();
   if (!context) {
     throw new Error("wallet not loaded");
   }
@@ -20,7 +23,7 @@ export function useWallet(): UseSolana {
  * Gets the current Solana wallet, returning null if it is not connected.
  */
 export const useConnectedWallet = (): ConnectedWallet | null => {
-  const { wallet, connected } = useWallet();
+  const { wallet, connected } = useWallet<UnknownWalletType>();
   if (!wallet?.connected || !connected || !wallet.publicKey) {
     return null;
   }
@@ -32,7 +35,7 @@ export const useConnectedWallet = (): ConnectedWallet | null => {
  * @returns
  */
 export function useConnectionContext(): ConnectionContext {
-  const context = useSolana();
+  const context = useSolana<UnknownWalletType>();
   if (!context) {
     throw new Error("Not in context");
   }
