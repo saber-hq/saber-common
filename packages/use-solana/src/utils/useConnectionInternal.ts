@@ -63,25 +63,30 @@ export const useConnectionInternal = ({
   );
   const configMap = makeNetworkConfigMap(networkConfigs);
   const config = configMap[network];
-  const [{ endpoint, endpointWs }, setEndpoints] = usePersistedKVStore<
-    Omit<NetworkConfig, "name">
-  >(`use-solana/rpc-endpoint/${network}`, config, storageAdapter);
+  const [{ endpoint, endpointWs, ...connectionConfigArgs }, setEndpoints] =
+    usePersistedKVStore<Omit<NetworkConfig, "name">>(
+      `use-solana/rpc-endpoint/${network}`,
+      config,
+      storageAdapter
+    );
 
   const connection = useMemo(
     () =>
       new Connection(endpoint, {
-        commitment,
+        ...connectionConfigArgs,
+        commitment: connectionConfigArgs.commitment ?? commitment,
         wsEndpoint: endpointWs,
       }),
-    [commitment, endpoint, endpointWs]
+    [commitment, connectionConfigArgs, endpoint, endpointWs]
   );
   const sendConnection = useMemo(
     () =>
       new Connection(endpoint, {
-        commitment,
+        ...connectionConfigArgs,
+        commitment: connectionConfigArgs.commitment ?? commitment,
         wsEndpoint: endpointWs,
       }),
-    [commitment, endpoint, endpointWs]
+    [commitment, connectionConfigArgs, endpoint, endpointWs]
   );
 
   return {
