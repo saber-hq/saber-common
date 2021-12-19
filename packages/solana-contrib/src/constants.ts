@@ -1,4 +1,4 @@
-import type { Cluster } from "@solana/web3.js";
+import type { Cluster, ConnectionConfig } from "@solana/web3.js";
 
 /**
  * A network: a Solana cluster or localnet.
@@ -17,17 +17,19 @@ export const formatNetwork = (network: Network): string => {
   return network;
 };
 
-export type NetworkConfig = Readonly<{
-  name: string;
-  /**
-   * HTTP endpoint to connect to for this network.
-   */
-  endpoint: string;
-  /**
-   * Websocket endpoint to connect to for this network.
-   */
-  endpointWs?: string;
-}>;
+export type NetworkConfig = Readonly<
+  Omit<ConnectionConfig, "wsEndpoint"> & {
+    name: string;
+    /**
+     * HTTP endpoint to connect to for this network.
+     */
+    endpoint: string;
+    /**
+     * Websocket endpoint to connect to for this network.
+     */
+    endpointWs?: string;
+  }
+>;
 
 /**
  * Default configuration for all networks.
