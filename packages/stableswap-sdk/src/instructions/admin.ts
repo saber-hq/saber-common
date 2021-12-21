@@ -1,5 +1,5 @@
 import type { u64 } from "@saberhq/token-utils";
-import { structLayout, Uint64Layout } from "@saberhq/token-utils";
+import { Uint64Layout } from "@saberhq/token-utils";
 import * as BufferLayout from "@solana/buffer-layout";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
 import { SYSVAR_CLOCK_PUBKEY } from "@solana/web3.js";
@@ -45,7 +45,7 @@ export const createAdminRampAInstruction = ({
     { pubkey: adminAccount, isSigner: true, isWritable: false },
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
-  const dataLayout = structLayout<{
+  const dataLayout = BufferLayout.struct<{
     instruction: number;
     targetAmp: Uint8Array;
     stopRampTS: number;
@@ -88,7 +88,7 @@ export const createAdminStopRampAInstruction = ({
     { pubkey: adminAccount, isSigner: true, isWritable: false },
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
-  const dataLayout = structLayout<{
+  const dataLayout = BufferLayout.struct<{
     instruction: number;
   }>([BufferLayout.u8("instruction")]);
   let data = Buffer.alloc(dataLayout.span);
@@ -122,7 +122,7 @@ export const createAdminPauseInstruction = ({
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
   ];
-  const dataLayout = structLayout<{
+  const dataLayout = BufferLayout.struct<{
     instruction: number;
   }>([BufferLayout.u8("instruction")]);
   let data = Buffer.alloc(dataLayout.span);
@@ -156,7 +156,7 @@ export const createAdminUnpauseInstruction = ({
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
   ];
-  const dataLayout = structLayout<{
+  const dataLayout = BufferLayout.struct<{
     instruction: number;
   }>([BufferLayout.u8("instruction")]);
   let data = Buffer.alloc(dataLayout.span);
@@ -193,7 +193,7 @@ export const createAdminSetFeeAccountInstruction = ({
     { pubkey: adminAccount, isSigner: true, isWritable: false },
     { pubkey: tokenAccount, isSigner: false, isWritable: false },
   ];
-  const dataLayout = structLayout<{
+  const dataLayout = BufferLayout.struct<{
     instruction: number;
   }>([BufferLayout.u8("instruction")]);
   let data = Buffer.alloc(dataLayout.span);
@@ -228,7 +228,7 @@ export const createAdminApplyNewAdminInstruction = ({
     { pubkey: adminAccount, isSigner: true, isWritable: false },
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
-  const dataLayout = structLayout<{
+  const dataLayout = BufferLayout.struct<{
     instruction: number;
   }>([BufferLayout.u8("instruction")]);
   let data = Buffer.alloc(dataLayout.span);
@@ -266,7 +266,7 @@ export const createAdminCommitNewAdminInstruction = ({
     { pubkey: newAdminAccount, isSigner: true, isWritable: false },
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
-  const dataLayout = structLayout<{
+  const dataLayout = BufferLayout.struct<{
     instruction: number;
   }>([BufferLayout.u8("instruction")]);
   let data = Buffer.alloc(dataLayout.span);
@@ -302,7 +302,7 @@ export const createAdminSetNewFeesInstruction = ({
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
   ];
-  const dataLayout = structLayout<{
+  const dataLayout = BufferLayout.struct<{
     instruction: number;
     fees: RawFees;
   }>([BufferLayout.u8("instruction"), FeesLayout]);
