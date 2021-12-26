@@ -30,10 +30,12 @@
       "bn.js",
       "@solana/wallet-adapter-base",
       "@solana/wallet-adapter-coin98",
+      "@solana/wallet-adapter-mathwallet",
       "@solana/wallet-adapter-phantom",
       "@solana/wallet-adapter-slope",
+      "@solana/wallet-adapter-solflare",
       "@solana/wallet-adapter-sollet",
-      "@solana/wallet-adapter-solflare"
+      "@solana/wallet-adapter-solong"
     ],
     "webpack": true
   }
