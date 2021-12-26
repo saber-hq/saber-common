@@ -46,7 +46,7 @@ export interface UseWallet<T extends boolean = boolean> {
   /**
    * Disconnects the wallet and prevents auto-reconnect.
    */
-  disconnect: () => void;
+  disconnect: () => Promise<void>;
 }
 
 export interface UseWalletArgs {
