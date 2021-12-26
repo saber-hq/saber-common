@@ -10,9 +10,6 @@
   "homepage": "https://saber.so",
   "license": "Apache-2.0",
   "main": "lib/eslint-config.js",
-  "directories": {
-    "lib": "lib"
-  },
   "files": [
     "lib"
   ],
