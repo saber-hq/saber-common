@@ -4,8 +4,7 @@ import "chai-bn";
 import "chai-as-promised";
 
 import type { Address } from "@project-serum/anchor";
-import type { BigintIsh } from "@saberhq/token-utils";
-import type { TokenAmount } from "@solana/web3.js";
+import type { BigintIsh, TokenAmount } from "@saberhq/token-utils";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
