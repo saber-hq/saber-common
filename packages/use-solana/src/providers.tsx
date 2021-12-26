@@ -1,5 +1,6 @@
 import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
+import { MathWalletAdapter } from "@solana/wallet-adapter-mathwallet";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import { SlopeWalletAdapter } from "@solana/wallet-adapter-slope";
 import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
@@ -8,11 +9,7 @@ import { SolongWalletAdapter } from "@solana/wallet-adapter-solong";
 import type React from "react";
 
 import type { WalletAdapterBuilder } from "./adapters";
-import {
-  LedgerWalletAdapter,
-  MathWalletAdapter,
-  SolanaWalletAdapter,
-} from "./adapters";
+import { LedgerWalletAdapter, SolanaWalletAdapter } from "./adapters";
 import { SecretKeyAdapter } from "./adapters/secret-key";
 import { SolflareAdapter } from "./adapters/solflare";
 import {
@@ -101,7 +98,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     name: "MathWallet",
     url: "https://www.mathwallet.org",
     icon: MATHWALLET,
-    makeAdapter: () => new MathWalletAdapter(),
+    makeAdapter: () => new SolanaWalletAdapter(new MathWalletAdapter()),
     isInstalled: () => window.solana?.isMathWallet === true,
     isMobile: true,
   },

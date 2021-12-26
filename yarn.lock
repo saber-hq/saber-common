@@ -3402,6 +3402,7 @@ __metadata:
     "@saberhq/solana-contrib": ^1.11.3
     "@solana/wallet-adapter-base": ^0.8.1
     "@solana/wallet-adapter-coin98": ^0.4.0
+    "@solana/wallet-adapter-mathwallet": ^0.8.0
     "@solana/wallet-adapter-phantom": ^0.8.1
     "@solana/wallet-adapter-slope": ^0.4.0
     "@solana/wallet-adapter-solflare": ^0.5.0
@@ -3526,6 +3527,16 @@ __metadata:
     "@solana/wallet-adapter-base": ^0.8.0
     "@solana/web3.js": ^1.20.0
   checksum: 3f3f44cd961ffbabfd020d205c11a508a1e5624bd471b315a1a1c032cc44394bf0fd083049e8d3fe0e2af2baa0a01f6f7a4a46fdd13d89bc2b3c0e9b4ed7c7be
+  languageName: node
+  linkType: hard
+
+"@solana/wallet-adapter-mathwallet@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "@solana/wallet-adapter-mathwallet@npm:0.8.0"
+  peerDependencies:
+    "@solana/wallet-adapter-base": ^0.8.0
+    "@solana/web3.js": ^1.20.0
+  checksum: a58f482f15727c442a2724db7db0db869aa13cc86b324f3ca6935eb4e570339eb2d3e5d43acaa7ed3764ab11303bac3fc00922f61bc29b5e84d2496e34995bf3
   languageName: node
   linkType: hard
 

@@ -24,6 +24,7 @@
     "@saberhq/solana-contrib": "^1.11.3",
     "@solana/wallet-adapter-base": "^0.8.1",
     "@solana/wallet-adapter-coin98": "^0.4.0",
+    "@solana/wallet-adapter-mathwallet": "^0.8.0",
     "@solana/wallet-adapter-phantom": "^0.8.1",
     "@solana/wallet-adapter-slope": "^0.4.0",
     "@solana/wallet-adapter-solflare": "^0.5.0",
