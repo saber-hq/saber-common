@@ -31,8 +31,9 @@ export interface UseSolana<
     UseWallet<WalletType, Connected>,
     UseProvider {}
 
-export interface UseSolanaArgs<WalletType extends WalletTypeEnum<WalletType>>
-  extends Omit<ConnectionArgs, "storageAdapter">,
+export interface UseSolanaArgs<
+  WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType
+> extends Omit<ConnectionArgs, "storageAdapter">,
     Partial<
       Pick<
         UseWalletArgs<WalletType>,
