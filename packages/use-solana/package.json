@@ -14,8 +14,8 @@
   "devDependencies": {
     "@solana/web3.js": "^1.31.0",
     "@types/bs58": "^4.0.1",
-    "@types/node": "^16.11.15",
-    "@types/react": "^17.0.37",
+    "@types/node": "^16.11.17",
+    "@types/react": "^17.0.38",
     "react": "^17.0.2"
   },
   "dependencies": {
