@@ -1,4 +1,4 @@
-import type { WalletProviderInfo, WalletType } from ".";
+import type { WalletProviderInfo, WalletTypeEnum } from ".";
 
 export enum ErrorLevel {
   WARN = "warn",
@@ -71,17 +71,19 @@ export class WalletDisconnectError extends UseSolanaDerivedError {
 /**
  * Thrown when a wallet activation errors.
  */
-export class WalletActivateError extends UseSolanaDerivedError {
+export class WalletActivateError<
+  WalletType extends WalletTypeEnum<WalletType>
+> extends UseSolanaDerivedError {
   level = ErrorLevel.ERROR;
 
   constructor(
     originalError: unknown,
-    readonly walletType: WalletType,
+    readonly walletType: WalletType[keyof WalletType],
     readonly walletArgs?: Record<string, unknown>
   ) {
     super(
       "WalletActivateError",
-      `Error activating wallet ${walletType}`,
+      `Error activating wallet ${walletType as unknown as string}`,
       originalError
     );
   }

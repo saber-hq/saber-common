@@ -11,23 +11,29 @@ import {
   WalletAutomaticConnectionError,
   WalletDisconnectError,
 } from "../error";
-import type { WalletProviderInfo, WalletType } from "../providers";
-import { WALLET_PROVIDERS } from "../providers";
+import type {
+  WalletProviderInfo,
+  WalletProviderMap,
+  WalletTypeEnum,
+} from "../providers";
 import type { StorageAdapter } from "../storage";
 import { usePersistedKVStore } from "./usePersistedKVStore";
 
 /**
  * Wallet-related information.
  */
-export interface UseWallet<T extends boolean = boolean> {
+export interface UseWallet<
+  WalletType extends WalletTypeEnum<WalletType>,
+  Connected extends boolean = boolean
+> {
   /**
    * Wallet.
    */
-  wallet?: WalletAdapter<T>;
+  wallet?: WalletAdapter<Connected>;
   /**
    * Wallet public key.
    */
-  publicKey: T extends true ? PublicKey : undefined;
+  publicKey: Connected extends true ? PublicKey : undefined;
   /**
    * Information about the wallet used.
    */
@@ -35,12 +41,12 @@ export interface UseWallet<T extends boolean = boolean> {
   /**
    * Whether or not the wallet is connected.
    */
-  connected: T;
+  connected: Connected;
   /**
    * Activates a new wallet.
    */
   activate: (
-    walletType: WalletType,
+    walletType: WalletType[keyof WalletType],
     walletArgs?: Record<string, unknown>
   ) => Promise<void>;
   /**
@@ -49,7 +55,7 @@ export interface UseWallet<T extends boolean = boolean> {
   disconnect: () => Promise<void>;
 }
 
-export interface UseWalletArgs {
+export interface UseWalletArgs<WalletType extends WalletTypeEnum<WalletType>> {
   onConnect: (
     wallet: WalletAdapter<true>,
     provider: WalletProviderInfo
@@ -62,29 +68,33 @@ export interface UseWalletArgs {
   network: Network;
   endpoint: string;
   storageAdapter: StorageAdapter;
+  walletProviders: WalletProviderMap<WalletType>;
 }
 
-interface WalletConfig {
-  walletType: WalletType;
+interface WalletConfig<WalletType extends WalletTypeEnum<WalletType>> {
+  walletType: keyof WalletType;
   walletArgs: Record<string, unknown> | null;
 }
 
-export const useWalletInternal = ({
+export const useWalletInternal = <
+  WalletType extends WalletTypeEnum<WalletType>
+>({
   onConnect,
   onDisconnect,
   network,
   endpoint,
   onError,
   storageAdapter,
-}: UseWalletArgs): UseWallet<boolean> => {
+  walletProviders,
+}: UseWalletArgs<WalletType>): UseWallet<WalletType, boolean> => {
   const [walletConfigStr, setWalletConfigStr] = usePersistedKVStore<
     string | null
   >("use-solana/wallet-config", null, storageAdapter);
 
-  const walletConfig: WalletConfig | null = useMemo(() => {
+  const walletConfig: WalletConfig<WalletType> | null = useMemo(() => {
     try {
       return walletConfigStr
-        ? (JSON.parse(walletConfigStr) as WalletConfig)
+        ? (JSON.parse(walletConfigStr) as WalletConfig<WalletType>)
         : null;
     } catch (e) {
       console.warn("Error parsing wallet config", e);
@@ -102,13 +112,13 @@ export const useWalletInternal = ({
     | readonly [WalletProviderInfo, WalletAdapter]
     | readonly [undefined, undefined] = useMemo(() => {
     if (walletType) {
-      const provider = WALLET_PROVIDERS[walletType];
+      const provider = walletProviders[walletType];
       console.debug("New wallet", provider.url, network);
       const adapter = provider.makeAdapter(provider.url, endpoint);
       return [provider, new WrappedWalletAdapter(adapter)];
     }
     return [undefined, undefined];
-  }, [walletType, network, endpoint]);
+  }, [walletProviders, walletType, network, endpoint]);
 
   useEffect(() => {
     let disabled = false;
@@ -164,7 +174,7 @@ export const useWalletInternal = ({
 
   const activate = useCallback(
     async (
-      nextWalletType: WalletType,
+      nextWalletType: WalletType[keyof WalletType],
       nextWalletArgs?: Record<string, unknown>
     ): Promise<void> => {
       const nextWalletConfigStr = stringify({
@@ -176,7 +186,13 @@ export const useWalletInternal = ({
         try {
           await wallet?.connect(nextWalletArgs);
         } catch (e) {
-          onError(new WalletActivateError(e, nextWalletType, nextWalletArgs));
+          onError(
+            new WalletActivateError<WalletType>(
+              e,
+              nextWalletType,
+              nextWalletArgs
+            )
+          );
         }
       }
       await setWalletConfigStr(nextWalletConfigStr);
