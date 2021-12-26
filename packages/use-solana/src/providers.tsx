@@ -4,6 +4,7 @@ import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import { SlopeWalletAdapter } from "@solana/wallet-adapter-slope";
 import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
 import { SolletWalletAdapter } from "@solana/wallet-adapter-sollet";
+import { SolongWalletAdapter } from "@solana/wallet-adapter-solong";
 import type React from "react";
 
 import type { WalletAdapterBuilder } from "./adapters";
@@ -11,7 +12,6 @@ import {
   LedgerWalletAdapter,
   MathWalletAdapter,
   SolanaWalletAdapter,
-  SolongWalletAdapter,
 } from "./adapters";
 import { SecretKeyAdapter } from "./adapters/secret-key";
 import { SolflareAdapter } from "./adapters/solflare";
@@ -85,7 +85,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     name: "Solong",
     url: "https://solongwallet.com/",
     icon: "https://raw.githubusercontent.com/solana-labs/oyster/main/assets/wallets/solong.png",
-    makeAdapter: () => new SolongWalletAdapter(),
+    makeAdapter: () => new SolanaWalletAdapter(new SolongWalletAdapter()),
 
     isInstalled: () => window.solong !== undefined,
   },
