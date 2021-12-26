@@ -17,22 +17,29 @@ export const RAW_SOL_MINT = new PublicKey(
  */
 export class Token implements UToken<Token> {
   /**
+   * The network that the Token is on.
+   */
+  readonly network: Network;
+  private _mintAccount: PublicKey | null = null;
+
+  constructor(readonly info: TokenInfo) {
+    this.network = chainIdToNetwork(info.chainId) ?? "localnet";
+  }
+
+  /**
    * The mint PublicKey of the token.
    *
    * Avoid using this value to print it to a string, as base58
    * strings are relatively slow to create since they require the use
    * of hash functions.
    */
-  readonly mintAccount: PublicKey;
+  get mintAccount(): PublicKey {
+    if (this._mintAccount) {
+      return this._mintAccount;
+    }
 
-  /**
-   * The network that the Token is on.
-   */
-  readonly network: Network;
-
-  constructor(readonly info: TokenInfo) {
-    this.mintAccount = new PublicKey(info.address);
-    this.network = chainIdToNetwork(info.chainId) ?? "localnet";
+    this._mintAccount = new PublicKey(this.info.address);
+    return this._mintAccount;
   }
 
   /**
