@@ -25,7 +25,7 @@ import type { UseWallet, UseWalletArgs } from "./utils/useWalletInternal";
 import { useWalletInternal } from "./utils/useWalletInternal";
 
 export interface UseSolana<
-  WalletType extends WalletTypeEnum<WalletType>,
+  WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType,
   Connected extends boolean = boolean
 > extends ConnectionContext,
     UseWallet<WalletType, Connected>,
