@@ -135,6 +135,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     makeAdapter: () => new SolanaWalletAdapter(new SolflareWalletAdapter()),
 
     isInstalled: () => window.solflare?.isSolflare === true,
+    isMobile: true,
   },
   [DefaultWalletType.Slope]: {
     name: "Slope",
