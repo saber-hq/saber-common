@@ -5,10 +5,10 @@ import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
 import mapValues from "lodash.mapvalues";
 
+import type { ErrorMap } from "../errors";
+import { generateErrorMap } from "../errors";
 import type { AccountParsers } from "../generateAccountParsers";
 import { generateAccountParsersFromCoder } from "../generateAccountParsers";
-import type { ErrorMap } from "../generateErrorMap";
-import { generateErrorMap } from "../generateErrorMap";
 import { newProgram } from "./programs";
 
 /**

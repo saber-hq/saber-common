@@ -1,4 +1,5 @@
 import type { Idl } from "@project-serum/anchor";
+import type { IdlErrorCode } from "@project-serum/anchor/dist/esm/idl";
 
 import type { AnchorError } from ".";
 
@@ -19,3 +20,11 @@ export const generateErrorMap = <T extends Idl>(idl: T): ErrorMap<T> => {
     };
   }, {}) ?? {}) as ErrorMap<T>;
 };
+
+/**
+ * Returns a RegExp which matches the message of a program error.
+ * @param err
+ * @returns
+ */
+export const matchError = (err: IdlErrorCode): RegExp =>
+  new RegExp(`custom program error: 0x${err.code.toString(16)}`);
