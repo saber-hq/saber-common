@@ -85,16 +85,34 @@ export const printTXTable = (
   console.table(instructionTable);
 };
 
+/**
+ * Builds a transaction and estimates the size in bytes. This number is primrily
+ * to be used for checking to see if a transaction is too big and instructions
+ * need to be split. It may not be 100% accurate.
+ *
+ * This is used in expectTXTable and is useful for increasing efficiency in
+ * dapps that build large transactions.
+ *
+ * The max transaction size of a v1 Transaction in Solana is 1232 bytes.
+ * For info about Transaction v2: https://docs.solana.com/proposals/transactions-v2
+ *
+ * Returns 8888 if the transaction was too big.
+ * Returns 9999 if the transaction was unable to be built.
+ */
 export const estimateTransactionSize = (
   txEnvelope: TransactionEnvelope
 ): number => {
+  // Hide the console.error because txEnvelope.build() emits noisy errors as a
+  // side effect. There are use cases of estimateTransactionSize where we
+  // frequently build transactions that are likely too big.
   const oldConsoleError = console.error;
   console.error = () => {
     return;
   };
   try {
     const builtTx = txEnvelope.build();
-    builtTx.recentBlockhash = "MaryHadALittLeLambZNdhAUTrsLE1ydg6rmtvFEpKT"; // dummy blockhash
+    // dummy blockhash that is required for building the transaction
+    builtTx.recentBlockhash = "MaryHadALittLeLambZNdhAUTrsLE1ydg6rmtvFEpKT";
 
     const fs = getFakeSigner();
     builtTx.feePayer = fs.publicKey;

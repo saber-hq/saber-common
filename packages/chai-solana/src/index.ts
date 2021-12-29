@@ -7,8 +7,8 @@ import { PublicKey } from "@solana/web3.js";
 import chaiAsPromised from "chai-as-promised";
 import chaiBN from "chai-bn";
 
+export * from "./debugAccountOwners";
 export * from "./expectTXTable";
-export * from "./printAccountOwners";
 export * from "./utils";
 
 export const chaiSolana: Chai.ChaiPlugin = (chai) => {
