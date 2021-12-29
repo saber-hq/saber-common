@@ -8,6 +8,9 @@ import { Keypair, SystemProgram } from "@solana/web3.js";
  *
  * For details about how the table works, see documentation for expectTXTable
  * in @saberhq/chai-solana.
+ *
+ * This can be safely used in a browser since it is only parsing logs.
+ * For usage, see expectTXTable.
  */
 export const printTXTable = (
   tx: TransactionEnvelope,

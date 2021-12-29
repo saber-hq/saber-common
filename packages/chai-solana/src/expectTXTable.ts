@@ -6,7 +6,7 @@ import { expectTX } from "./utils";
 /**
  * expectTXTable is a drop in replacement for expectTX with a cool table output like:
  * ```
- *    872 example message(tests/awesomeTest.spec.ts:583:29)
+ *    872 example message (tests/awesomeTest.spec.ts:583:29)
  *    ┌─────┬───┬───┬───┬───────────┬──────┬─────┬──────┬───┐
  *    │index│iso│mar│cum│ programId │quota │used │ left │CPI│
  *    ├─────┼───┼───┼───┼───────────┼──────┼─────┼──────┼───┤
@@ -16,11 +16,12 @@ import { expectTX } from "./utils";
  * ```
  *
  * - **index**: the array index of the instruction within the transaction
- * - **iso**: the size of the instruction in isolation
+ * - **iso**: the isolated size of the instruction (marginal cost of only the instruction)
  * - **mar**: the marginal size cost of the instruction (when added to previous)
  * - **cum**: the cumulative size of the instructions up until that instruction
  * - **quota/used/left**: [BPF instruction compute unit info](https://docs.solana.com/developing/programming-model/runtime)
  * - **CPI**: [the maximum depth of CPI](https://docs.solana.com/developing/programming-model/calling-between-programs) (current limit in Solana is 4)
+ *
  * @param verbosity If "printLogs", will always print the logs of the simulation.
  * It's a string and not a boolean so you can easily search and comment it out if needed
  */
