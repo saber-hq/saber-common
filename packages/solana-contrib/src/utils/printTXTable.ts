@@ -1,7 +1,8 @@
 import type { Provider } from "@saberhq/solana-contrib";
-import { TransactionEnvelope } from "@saberhq/solana-contrib";
 import type { Signer, TransactionInstruction } from "@solana/web3.js";
 import { Keypair, SystemProgram } from "@solana/web3.js";
+
+import { TransactionEnvelope } from "..";
 
 /**
  * Takes in a simulation result of a transaction and prints it in a cool table.
