@@ -9,6 +9,7 @@ import type {
 } from "@solana/web3.js";
 import { PublicKey, Transaction } from "@solana/web3.js";
 
+import { printTXTable } from "..";
 import type { Provider } from "../interfaces";
 import type { PendingTransaction } from "./PendingTransaction";
 import type { TransactionReceipt } from "./TransactionReceipt";
@@ -177,6 +178,22 @@ export class TransactionEnvelope {
     opts?: ConfirmOptions
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     return this.provider.simulate(this.build(), undefined, opts);
+  }
+
+  /**
+   * Simulates the transaction and prints a fancy table in the console.
+   * @param opts
+   * @returns
+   */
+  simulateTable(
+    opts?: ConfirmOptions
+  ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
+    return this.simulate(opts).then((simulation) => {
+      if (simulation?.value?.logs) {
+        printTXTable(this, simulation.value.logs, "");
+      }
+      return simulation;
+    });
   }
 
   /**
