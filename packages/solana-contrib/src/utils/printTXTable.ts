@@ -1,7 +1,7 @@
-import type { Provider } from "@saberhq/solana-contrib";
 import type { Signer, TransactionInstruction } from "@solana/web3.js";
 import { Keypair, SystemProgram } from "@solana/web3.js";
 
+import type { Provider } from "..";
 import { TransactionEnvelope } from "..";
 
 /**
