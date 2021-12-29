@@ -181,7 +181,7 @@ export class TransactionEnvelope {
   }
 
   /**
-   * Simulates the transaction and prints  a fancy table in the console
+   * Simulates the transaction and prints a fancy table in the console.
    * @param opts
    * @returns
    */
