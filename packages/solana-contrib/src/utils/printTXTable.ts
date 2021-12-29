@@ -18,8 +18,10 @@ export const printTXTable = (
   transactionLogs: string[],
   message: string
 ) => {
-  console.log();
-  console.log(estimateTransactionSize(tx), message);
+  if (message) {
+    console.log();
+    console.log(estimateTransactionSize(tx), message);
+  }
 
   const computeUnitLogStack: string[] = [];
   const cpiLogStack: number[] = [];
