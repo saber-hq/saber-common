@@ -1,7 +1,7 @@
-import { expectTX } from "./utils";
 import type { TransactionEnvelope } from "@saberhq/solana-contrib";
 
 import { printTXTable } from "./printTXTable";
+import { expectTX } from "./utils";
 
 /**
  * expectTXTable is a drop in replacement for expectTX with a cool table output like:
