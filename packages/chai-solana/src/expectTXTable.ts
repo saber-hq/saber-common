@@ -1,6 +1,6 @@
 import type { TransactionEnvelope } from "@saberhq/solana-contrib";
+import { printTXTable } from "@saberhq/solana-contrib";
 
-import { printTXTable } from "./printTXTable";
 import { expectTX } from "./utils";
 
 /**
