@@ -1,4 +1,4 @@
-import { Provider as AnchorProvider } from "@project-serum/anchor";
+// import { Provider as AnchorProvider } from "@project-serum/anchor";
 import type { AccountInfo, Connection } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
 
@@ -11,13 +11,15 @@ import { PublicKey } from "@solana/web3.js";
  * - **addresses**: format in base58, and prints the owner in parentheses if the account exists
  * - **plain objects**: recursively converts
  *
- * If in the browser, provider must be specified.
+ * HINT: This function is mainly useful for the browser. If you are writing
+ * Rust integration tests, use debugAccountOwners from chai-solana instead, so
+ * that you don't have to pass in connection.
  *
  * Usage:
  * ```
- * // prints a clickable caller line number if you don't pass in a custom messae
- * await printAccountOwners(depositAccounts);
- * await printAccountOwners("your custom message", depositAccounts);
+ * await printAccountOwners(connection, depositAccounts);
+ * // using void is recommend in dapps to avoid slowing down the user experience
+ * void printAccountOwners(connection, depositAccounts);
  * ```
  *
  * Example output:
@@ -31,11 +33,11 @@ import { PublicKey } from "@solana/web3.js";
  * ```
  *
  * WARNING: This may break silently if web3 changes its api. This is only
- * intended for debugging purposes only.
+ * intended for debugging purposes only. But it should be safe to use in production.
  */
 export async function printAccountOwners(
-  plainObj: object,
-  connection?: Connection
+  connection: Connection,
+  plainObj: object
 ): Promise<void> {
   try {
     if (typeof plainObj !== "object") {
@@ -47,10 +49,16 @@ export async function printAccountOwners(
         const expectIndex = callStack.findIndex((l) =>
           l.includes(`at ${printAccountOwners.name}`)
         );
-        if (expectIndex > 0) {
+        // Only log the line number in Node.js
+        if (
+          expectIndex > 0 &&
+          typeof process !== "undefined" &&
+          typeof window === "undefined"
+        ) {
+          const maybeProcess: MaybeProcess = process;
           const targetLine = callStack[expectIndex + 1];
           if (targetLine) {
-            const cwd = process.cwd();
+            const cwd = maybeProcess.cwd?.() || "/";
             // get the part of targetLine after cwd
             const targetLineAfterCwd = targetLine.substring(
               targetLine.indexOf(cwd) + cwd.length
@@ -62,27 +70,30 @@ export async function printAccountOwners(
         }
       }
 
+      if (!connection) {
+        return;
+      }
+
       if (relativePath) {
         console.log(
           relativePath,
-          await _transformAccountOwners(
-            plainObj,
-            connection ?? AnchorProvider.env().connection
-          )
+          await _transformAccountOwners(plainObj, connection)
         );
       } else {
-        console.log(
-          await _transformAccountOwners(
-            plainObj,
-            connection ?? AnchorProvider.env().connection
-          )
-        );
+        console.log(await _transformAccountOwners(plainObj, connection));
       }
     }
   } catch (e) {
     console.error("Error in printAccountOwners:", e);
   }
 }
+
+/**
+ * Just in case some browser compilation doesn't polyfill a fake process
+ */
+type MaybeProcess = {
+  cwd?: () => string;
+};
 
 /**
  * This is a patched version of web3's getMultipleAccountsInfo.
@@ -97,25 +108,30 @@ async function gracefulGetMultipleAccountsInfo(
   connection: Connection,
   publicKeys: PublicKey[]
 ): ReturnType<Connection["getMultipleAccountsInfo"]> {
-  // To be honest, the web3 internals aren't going to change that much. And if
-  // they do, it'll be rare.
-  const unknownConection = connection as ConnectionWithGetMultipleAccounts;
-  const rpcRequest = unknownConection._rpcRequest;
-  if (typeof rpcRequest !== "function") {
-    console.error("_rpcRequest is not a function. Maybe web3 changed?");
+  try {
+    // To be honest, the web3 internals aren't going to change that much. And if
+    // they do, it'll be rare.
+    const unknownConection = connection as ConnectionWithGetMultipleAccounts;
+    const rpcRequest = unknownConection._rpcRequest;
+    if (typeof rpcRequest !== "function") {
+      console.error("_rpcRequest is not a function. Maybe web3 changed?");
+      return [];
+    }
+
+    const unsafeRes = await rpcRequest("getMultipleAccounts", [
+      publicKeys.map((key) => key.toBase58()),
+      { encoding: "base64", commitment: "processed" },
+    ]);
+
+    const value = unsafeRes?.result?.value;
+    if (value) {
+      return value;
+    }
+    return [];
+  } catch (e) {
+    console.error("Error in gracefulGetMultipleAccountsInfo:", e);
     return [];
   }
-
-  const unsafeRes = await rpcRequest("getMultipleAccounts", [
-    publicKeys.map((key) => key.toBase58()),
-    { encoding: "base64", commitment: "processed" },
-  ]);
-
-  const value = unsafeRes?.result?.value;
-  if (value) {
-    return value;
-  }
-  return [];
 }
 
 type PublicKeyBase58 = string;
