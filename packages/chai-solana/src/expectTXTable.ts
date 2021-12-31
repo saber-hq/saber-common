@@ -27,7 +27,7 @@ import { expectTX } from "./utils";
  */
 export const expectTXTable = (
   tx: TransactionEnvelope,
-  msg: string,
+  msg?: string,
   verbosity?: "printLogs"
 ): Chai.PromisedAssertion => {
   if (tx === null) {
@@ -63,7 +63,7 @@ export const expectTXTable = (
         printTXTable(
           tx,
           simulation.value.logs,
-          `${msg} ${relativePath ? ` (${relativePath})` : ""}`
+          `${msg ? msg + " " : ""}${relativePath ? `(${relativePath})` : ""}`
         );
       }
 
@@ -102,5 +102,5 @@ export const expectTXTable = (
       }
     });
 
-  return expectTX(tx, msg + (relativePath ? ` (${relativePath})` : ""));
+  return expectTX(tx, (msg || "") + (relativePath ? ` (${relativePath})` : ""));
 };
