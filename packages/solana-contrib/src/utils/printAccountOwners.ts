@@ -46,9 +46,19 @@ export async function printAccountOwners(
       let relativePath: string | undefined;
       const callStack = new Error().stack?.split("\n");
       if (callStack) {
-        const expectIndex = callStack.findIndex((l) =>
+        let expectIndex = callStack.findIndex((l) =>
           l.includes(`at ${printAccountOwners.name}`)
         );
+
+        // debugAccountOwners in chai-solana wraps printAccountOwners
+        // We need to get the caller of debugAccountOwners instead
+        const debugAccountOwnersIndex = callStack.findIndex((l) =>
+          l.includes(`at debugAccountOwners`)
+        );
+        if (debugAccountOwnersIndex > expectIndex) {
+          expectIndex = debugAccountOwnersIndex;
+        }
+
         // Only log the line number in Node.js
         if (
           expectIndex > 0 &&
