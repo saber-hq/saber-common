@@ -9,7 +9,6 @@ import {
 import type { Connection, PublicKey } from "@solana/web3.js";
 import type JSBI from "jsbi";
 
-import { decodeSwap } from "..";
 import { SWAP_PROGRAM_ID } from "../constants";
 import { StableSwap } from "../stable-swap";
 import type { Fees } from "../state/fees";
@@ -197,7 +196,7 @@ export const makeExchange = ({
  * @param tokenB
  * @returns
  */
- export const loadExchangeInfoFromSwapAccount = async (
+export const loadExchangeInfoFromSwapAccount = async (
   connection: Connection,
   swapAccount: PublicKey,
   tokenA: Token | undefined = undefined,
@@ -205,30 +204,26 @@ export const makeExchange = ({
 ): Promise<IExchangeInfo> => {
   // Consider moving this makeToken function to @saberhq/token-utils.
   const makeToken = async (address: PublicKey): Promise<Token> => {
-    const tokenAccountInfo = await connection.getAccountInfo(swap.tokenA.mint);
-    if (!tokenAccountInfo) {
-      throw new Error("Token Account Info not found.");
+    const mintAccountInfo = await connection.getAccountInfo(address);
+    if (!mintAccountInfo) {
+      throw new Error("Mint Account Info not found.");
     }
-    const mintInfo = deserializeMint(tokenAccountInfo.data);
+    const mintInfo = deserializeMint(mintAccountInfo.data);
     return Token.fromMint(address, mintInfo.decimals);
   };
 
-  const swapAccountInfo = await connection.getAccountInfo(swapAccount);
-  if (swapAccountInfo === null) {
-    throw new Error("No Swap Account Info found.");
-  }
-  const swap = decodeSwap(swapAccountInfo.data);
+  const stableSwap = await StableSwap.load(connection, swapAccount);
 
   const exchange = makeExchange({
     swapAccount,
-    lpToken: swap.poolTokenMint,
-    tokenA: tokenA ? tokenA : await makeToken(swap.tokenA.mint),
-    tokenB: tokenB ? tokenB : await makeToken(swap.tokenB.mint),
+    lpToken: stableSwap.state.poolTokenMint,
+    tokenA: tokenA ? tokenA : await makeToken(stableSwap.state.tokenA.mint),
+    tokenB: tokenB ? tokenB : await makeToken(stableSwap.state.tokenB.mint),
   });
 
   if (exchange === null) {
     throw new Error("Exchange could not be made.");
   }
-  const stableSwap = await StableSwap.loadFromExchange(connection, exchange);
+
   return await loadExchangeInfo(connection, exchange, stableSwap);
 };
