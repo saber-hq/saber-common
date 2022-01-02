@@ -12,7 +12,6 @@ module.exports = {
   ignorePatterns: ["*.js"],
   extends: ["@saberhq/eslint-config-react"],
   parserOptions: {
-    tsconfigRootDir: __dirname,
     project: "tsconfig.json",
   },
 };

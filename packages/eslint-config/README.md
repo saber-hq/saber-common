@@ -20,9 +20,8 @@ Then, in your `.eslintrc.js`, add:
 require("@rushstack/eslint-patch/modern-module-resolution");
 
 module.exports = {
-  extends: ["@saberhq/eslint-config-react"],
+  extends: ["@saberhq/eslint-config"],
   parserOptions: {
-    tsconfigRootDir: __dirname,
     project: "tsconfig.json",
   },
 };
