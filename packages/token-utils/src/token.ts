@@ -1,8 +1,10 @@
 import type { Network } from "@saberhq/solana-contrib";
 import { PublicKey } from "@saberhq/solana-contrib";
 import { NATIVE_MINT } from "@solana/spl-token";
+import type { Connection } from "@solana/web3.js";
 import type { Token as UToken } from "@ubeswap/token-math";
 
+import { deserializeMint } from ".";
 import type { TokenInfo } from "./tokenList";
 
 /**
@@ -235,3 +237,21 @@ export const RAW_SOL: TokenMap = makeTokenForAllNetworks(rawSol);
  * Wrapped Solana token.
  */
 export const WRAPPED_SOL: TokenMap = makeTokenForAllNetworks(wrappedSol);
+
+/**
+ * Create token from address
+ * @param connection
+ * @param address
+ * @returns
+ */
+export const makeToken = async (
+  connection: Connection,
+  address: PublicKey
+): Promise<Token> => {
+  const mintAccountInfo = await connection.getAccountInfo(address);
+  if (!mintAccountInfo) {
+    throw new Error("Mint Account Info not found.");
+  }
+  const mintInfo = deserializeMint(mintAccountInfo.data);
+  return Token.fromMint(address, mintInfo.decimals);
+};

@@ -2,6 +2,7 @@ import type { TokenInfo } from "@saberhq/token-utils";
 import {
   deserializeAccount,
   deserializeMint,
+  makeToken,
   parseBigintIsh,
   Token,
   TokenAmount,
@@ -202,16 +203,6 @@ export const loadExchangeInfoFromSwapAccount = async (
   tokenA: Token | undefined = undefined,
   tokenB: Token | undefined = undefined
 ): Promise<IExchangeInfo> => {
-  // Consider moving this makeToken function to @saberhq/token-utils.
-  const makeToken = async (address: PublicKey): Promise<Token> => {
-    const mintAccountInfo = await connection.getAccountInfo(address);
-    if (!mintAccountInfo) {
-      throw new Error("Mint Account Info not found.");
-    }
-    const mintInfo = deserializeMint(mintAccountInfo.data);
-    return Token.fromMint(address, mintInfo.decimals);
-  };
-
   const stableSwap = await StableSwap.load(connection, swapAccount);
 
   const exchange = makeExchange({

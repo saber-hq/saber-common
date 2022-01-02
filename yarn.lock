@@ -3349,7 +3349,7 @@ __metadata:
   resolution: "@saberhq/stableswap-sdk@workspace:packages/stableswap-sdk"
   dependencies:
     "@saberhq/solana-contrib": ^1.12.9
-    "@saberhq/token-utils": ^1.12.9
+    "@saberhq/token-utils": ^1.12.10
     "@solana/buffer-layout": ^4.0.0
     "@solana/web3.js": ^1.31.0
     "@types/bn.js": ^5.1.0
@@ -3366,7 +3366,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/token-utils@^1.12.9, @saberhq/token-utils@workspace:packages/token-utils":
+"@saberhq/token-utils@^1.12.10, @saberhq/token-utils@^1.12.9, @saberhq/token-utils@workspace:packages/token-utils":
   version: 0.0.0-use.local
   resolution: "@saberhq/token-utils@workspace:packages/token-utils"
   dependencies:

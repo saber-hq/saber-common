@@ -1,7 +1,7 @@
 {
   "name": "@saberhq/token-utils",
   "description": "Token-related math and transaction utilities for Solana.",
-  "version": "1.12.9",
+  "version": "1.12.10",
   "repository": "git@github.com:saber-hq/solana-common.git",
   "author": "Ian Macalinao <ian@saber.so>",
   "license": "Apache-2.0",
