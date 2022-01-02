@@ -22,7 +22,6 @@ jobs:
         uses: actions/setup-node@v2.5.1
         with:
           node-version: 14.x
-          registry-url: "https://registry.npmjs.org"
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
@@ -36,7 +35,7 @@ jobs:
       - name: Install Yarn dependencies
         run: yarn install
       - run: yarn build
-      - run: yarn lerna version --force-publish --no-git-tag-version --conventional-commits --yes ${{ github.event.inputs.version }}
+      - run: yarn lerna version --no-git-tag-version --conventional-commits --yes ${{ github.event.inputs.version }}
       - name: Update Yarn deps for version bump
         run: yarn install
         env:
