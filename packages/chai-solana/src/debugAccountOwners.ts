@@ -38,6 +38,6 @@ import { printAccountOwners } from "@saberhq/solana-contrib";
  * WARNING: This may break silently if web3 changes its api. This is only
  * intended for debugging purposes only.
  */
-export async function debugAccountOwners(plainObj: object): Promise<void> {
+export function debugAccountOwners(plainObj: object): Promise<void> {
   return printAccountOwners(AnchorProvider.env().connection, plainObj);
 }
