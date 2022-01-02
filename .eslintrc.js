@@ -1,3 +1,5 @@
+"use strict";
+
 require("@rushstack/eslint-patch/modern-module-resolution");
 
 module.exports = {
@@ -6,9 +8,6 @@ module.exports = {
     es2021: true,
     node: true,
     jest: true,
-  },
-  settings: {
-    "import/resolver": "node",
   },
   ignorePatterns: ["*.js"],
   extends: ["@saberhq/eslint-config-react"],
