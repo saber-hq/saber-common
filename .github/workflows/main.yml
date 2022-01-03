@@ -20,6 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/yarn
+      - run: yarn build
       - run: yarn typecheck
 
   test:
@@ -27,6 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/yarn
+      - run: yarn build
       - run: yarn test
 
   lint:
@@ -34,6 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/yarn
+      - run: yarn build
       - run: yarn lint:ci
 
   doctor:
