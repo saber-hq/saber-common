@@ -32,7 +32,7 @@ We recommend creating both a CommonJS and ESM build. For this, add the following
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
-    "outDir": "dist/cjs/"
+    "outDir": "dist/esm/"
   },
   "include": ["src/"]
 }
