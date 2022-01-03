@@ -153,7 +153,9 @@ export interface Provider extends ReadonlyProvider {
   /**
    * Transaction confirmation options to use by default.
    */
-  opts: ConfirmOptions;
+  opts: ConfirmOptions & {
+    useWaitV2?: boolean;
+  };
 
   /**
    * The wallet used to pay for and sign all transactions.
@@ -171,7 +173,9 @@ export interface Provider extends ReadonlyProvider {
   send: (
     tx: Transaction,
     signers?: (Signer | undefined)[],
-    opts?: ConfirmOptions
+    opts?: ConfirmOptions & {
+      useWaitV2?: boolean;
+    }
   ) => Promise<PendingTransaction>;
 
   /**
@@ -179,7 +183,9 @@ export interface Provider extends ReadonlyProvider {
    */
   sendAll: (
     reqs: readonly SendTxRequest[],
-    opts?: ConfirmOptions
+    opts?: ConfirmOptions & {
+      useWaitV2?: boolean;
+    }
   ) => Promise<PendingTransaction[]>;
 
   /**

@@ -214,7 +214,12 @@ export class TransactionEnvelope {
    * Sends the transaction and waits for confirmation.
    * @param opts
    */
-  async confirm(opts?: ConfirmOptions): Promise<TransactionReceipt> {
+  async confirm(
+    opts?: ConfirmOptions & { useWaitV2?: boolean }
+  ): Promise<TransactionReceipt> {
+    if (opts?.useWaitV2) {
+      return (await this.send(opts)).waitV2();
+    }
     return (await this.send(opts)).wait();
   }
 
@@ -328,7 +333,7 @@ export class TransactionEnvelope {
    */
   static async sendAll(
     txs: TransactionEnvelope[],
-    opts?: ConfirmOptions
+    opts?: ConfirmOptions & { useWaitV2?: boolean }
   ): Promise<PendingTransaction[]> {
     const firstTX = txs[0];
     if (!firstTX) {

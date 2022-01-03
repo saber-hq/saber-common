@@ -41,7 +41,7 @@ export class SignerWallet implements Wallet {
   createProvider(
     connection: Connection,
     sendConnection?: Connection,
-    opts?: ConfirmOptions
+    opts?: ConfirmOptions & { useWaitV2?: boolean }
   ): Provider {
     return SolanaProvider.load({
       connection,

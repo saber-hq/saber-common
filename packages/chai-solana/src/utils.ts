@@ -28,9 +28,9 @@ export const expectTX = (
       tx
         .then((tx) => {
           if (tx instanceof PendingTransaction) {
-            return tx.wait();
+            return tx.waitV2();
           } else if (tx) {
-            return tx.confirm();
+            return tx.confirm({ useWaitV2: true });
           } else {
             throw new Error("tx is null");
           }
@@ -40,12 +40,12 @@ export const expectTX = (
     ).eventually;
   }
   if (tx instanceof PendingTransaction) {
-    return expect(tx.wait().then(handleReceipt), msg).eventually;
+    return expect(tx.waitV2().then(handleReceipt), msg).eventually;
   } else {
     return expect(
       tx
         ?.send()
-        .then((res) => res.wait())
+        .then((res) => res.waitV2())
         .then(handleReceipt),
       msg
     ).eventually;

@@ -63,6 +63,55 @@ export class PendingTransaction {
       }
     );
     if (!receipt) {
+      throw new Error(
+        `transaction for ${this.signature} could not be confirmed`
+      );
+    }
+    this._receipt = receipt;
+    return receipt;
+  }
+
+  /**
+   * Waits for the confirmation of the transaction, via onSignature subscription.
+   * @returns
+   */
+  async waitV2(
+    {
+      commitment = "confirmed",
+      ...retryOpts
+    }: OperationOptions & {
+      commitment: Finality;
+    } = {
+      commitment: "confirmed",
+    }
+  ): Promise<TransactionReceipt> {
+    const receipt = await promiseRetry(
+      async (retry) => {
+        const { value } = await this.connection.confirmTransaction(
+          this.signature,
+          commitment
+        );
+        if (value.err) {
+          const error = value.err as Error;
+          retry(new Error(`Error confirming transaction: ${error.message}`));
+          return;
+        }
+        const resp = await this.connection.getTransaction(this.signature, {
+          commitment,
+        });
+        if (!resp) {
+          new Error(`Failed to fetch transaction for ${this.signature}`);
+          return;
+        }
+        return new TransactionReceipt(this.signature, resp);
+      },
+      {
+        retries: 3,
+        minTimeout: 500,
+        ...retryOpts,
+      }
+    );
+    if (!receipt) {
       throw new Error("transaction could not be confirmed");
     }
     this._receipt = receipt;

@@ -22,9 +22,12 @@ import type {
 } from "./interfaces";
 import { TransactionEnvelope } from "./transaction/TransactionEnvelope";
 
-export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
+export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions & {
+  useWaitV2?: boolean;
+} = {
   preflightCommitment: "recent",
   commitment: "recent",
+  useWaitV2: false,
 };
 
 /**
@@ -39,7 +42,9 @@ export class SolanaReadonlyProvider implements ReadonlyProvider {
    */
   constructor(
     readonly connection: Connection,
-    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
+    readonly opts: ConfirmOptions & {
+      useWaitV2?: boolean;
+    } = DEFAULT_PROVIDER_OPTIONS
   ) {}
 
   /**
@@ -163,7 +168,9 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     override readonly connection: Connection,
     readonly broadcaster: Broadcaster,
     readonly wallet: Wallet,
-    override readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
+    override readonly opts: ConfirmOptions & {
+      useWaitV2?: boolean;
+    } = DEFAULT_PROVIDER_OPTIONS
   ) {
     super(connection, opts);
     this.signer = new SolanaTransactionSigner(
@@ -197,7 +204,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     /**
      * Confirmation options
      */
-    opts?: ConfirmOptions;
+    opts?: ConfirmOptions & { useWaitV2?: boolean };
   }): SolanaProvider {
     return new SolanaProvider(
       connection,
@@ -218,11 +225,17 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
   async send(
     tx: Transaction,
     signers: (Signer | undefined)[] = [],
-    opts: ConfirmOptions = this.opts
+    opts: ConfirmOptions & {
+      useWaitV2?: boolean;
+    } = this.opts
   ): Promise<PendingTransaction> {
     const theTx = await this.signer.sign(tx, signers, opts);
     const pending = await this.broadcaster.broadcast(theTx, opts);
-    await pending.wait();
+    if (opts.useWaitV2) {
+      await pending.waitV2();
+    } else {
+      await pending.wait();
+    }
     return pending;
   }
 
@@ -231,13 +244,19 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
    */
   async sendAll(
     reqs: readonly SendTxRequest[],
-    opts: ConfirmOptions = this.opts
+    opts: ConfirmOptions & {
+      useWaitV2?: boolean;
+    } = this.opts
   ): Promise<PendingTransaction[]> {
     const txs = await this.signer.signAll(reqs, opts);
     return await Promise.all(
       txs.map(async (tx) => {
         const pending = await this.broadcaster.broadcast(tx, opts);
-        await pending.wait();
+        if (opts.useWaitV2) {
+          await pending.waitV2();
+        } else {
+          await pending.wait();
+        }
         return pending;
       })
     );
@@ -313,7 +332,9 @@ export class SolanaAugmentedProvider implements AugmentedProvider {
     return this.provider.broadcaster;
   }
 
-  get opts(): ConfirmOptions {
+  get opts(): ConfirmOptions & {
+    useWaitV2?: boolean;
+  } {
     return this.provider.opts;
   }
 
@@ -324,14 +345,22 @@ export class SolanaAugmentedProvider implements AugmentedProvider {
   send(
     tx: Transaction,
     signers?: (Signer | undefined)[] | undefined,
-    opts?: ConfirmOptions | undefined
+    opts?:
+      | (ConfirmOptions & {
+          useWaitV2?: boolean;
+        })
+      | undefined
   ): Promise<PendingTransaction> {
     return this.provider.send(tx, signers, opts);
   }
 
   sendAll(
     reqs: readonly SendTxRequest[],
-    opts?: ConfirmOptions | undefined
+    opts?:
+      | (ConfirmOptions & {
+          useWaitV2?: boolean;
+        })
+      | undefined
   ): Promise<PendingTransaction[]> {
     return this.provider.sendAll(reqs, opts);
   }
