@@ -10,7 +10,7 @@ import type { Connection, PublicKey } from "@solana/web3.js";
 import type JSBI from "jsbi";
 
 import { SWAP_PROGRAM_ID } from "../constants";
-import type { StableSwap } from "../stable-swap";
+import { StableSwap } from "../stable-swap";
 import type { Fees } from "../state/fees";
 import { loadProgramAccount } from "../util/account";
 
@@ -186,4 +186,52 @@ export const makeExchange = ({
     tokens: [new Token(tokenA), new Token(tokenB)],
   };
   return exchange;
+};
+
+/**
+ * Get exchange info from just the swap account.
+ * @param connection
+ * @param swapAccount
+ * @param tokenA
+ * @param tokenB
+ * @returns
+ */
+export const loadExchangeInfoFromSwapAccount = async (
+  connection: Connection,
+  swapAccount: PublicKey,
+  tokenA: Token | undefined = undefined,
+  tokenB: Token | undefined = undefined
+): Promise<IExchangeInfo | null> => {
+  const stableSwap = await StableSwap.load(connection, swapAccount);
+
+  const theTokenA =
+    tokenA ??
+    (await Token.load(connection, stableSwap.state.tokenA.mint))?.info;
+  if (!theTokenA) {
+    throw new Error(
+      `Token ${stableSwap.state.tokenA.mint.toString()} not found`
+    );
+  }
+
+  const theTokenB =
+    tokenB ??
+    (await Token.load(connection, stableSwap.state.tokenB.mint))?.info;
+  if (!theTokenB) {
+    throw new Error(
+      `Token ${stableSwap.state.tokenB.mint.toString()} not found`
+    );
+  }
+
+  const exchange = makeExchange({
+    swapAccount,
+    lpToken: stableSwap.state.poolTokenMint,
+    tokenA: theTokenA,
+    tokenB: theTokenB,
+  });
+
+  if (exchange === null) {
+    return null;
+  }
+
+  return await loadExchangeInfo(connection, exchange, stableSwap);
 };
