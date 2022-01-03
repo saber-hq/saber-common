@@ -23,24 +23,28 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-modules-
 
-      # Setup Nix
-      - uses: cachix/install-nix-action@v16
-        with:
-          install_url: https://nixos-nix-install-tests.cachix.org/serve/i6laym9jw3wg9mw6ncyrk6gjx4l34vvx/install
-          install_options: "--tarball-url-prefix https://nixos-nix-install-tests.cachix.org/serve"
-          extra_nix_config: |
-            experimental-features = nix-command flakes
-      - name: Setup Cachix
-        uses: cachix/cachix-action@v10
-        with:
-          name: saber
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - run: yarn install
+      - run: yarn build
+      - run: yarn typecheck
+      - run: yarn lint:ci
+      - run: yarn test
+      - run: yarn size
 
-      # Run build
-      - run: nix shell .#ci --command yarn install
-      - run: nix shell .#ci --command yarn build
-      - run: nix shell .#ci --command yarn typecheck
-      - run: nix shell .#ci --command yarn lint:ci
-      - run: nix shell .#ci --command yarn test
-      - run: nix shell .#ci --command yarn doctor
-      - run: nix shell .#ci --command yarn size
+  doctor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - name: Yarn Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-modules-
+
+      - run: yarn install
+      - run: yarn doctor
