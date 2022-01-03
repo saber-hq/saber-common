@@ -10,6 +10,7 @@ runs:
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
       run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      shell: bash
     - name: Yarn Cache
       uses: actions/cache@v2
       with:
@@ -18,3 +19,4 @@ runs:
         restore-keys: |
           ${{ runner.os }}-modules-
     - run: yarn install
+      shell: bash
