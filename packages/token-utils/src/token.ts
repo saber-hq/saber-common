@@ -1,8 +1,10 @@
 import type { Network } from "@saberhq/solana-contrib";
 import { PublicKey } from "@saberhq/solana-contrib";
 import { NATIVE_MINT } from "@solana/spl-token";
+import type { Connection } from "@solana/web3.js";
 import type { Token as UToken } from "@ubeswap/token-math";
 
+import { deserializeMint } from "./layout";
 import type { TokenInfo } from "./tokenList";
 
 /**
@@ -135,6 +137,26 @@ export class Token implements UToken<Token> {
       symbol: opts.symbol ?? mint.toString().slice(0, 5),
       chainId: opts.chainId ?? ChainId.Localnet,
     });
+
+  /**
+   * Loads a token from a Connection.
+   *
+   * @param connection
+   * @param mint
+   * @param info
+   */
+  static load = async (
+    connection: Connection,
+    mint: PublicKey,
+    info: Partial<Omit<TokenInfo, "address" | "decimals">> = {}
+  ): Promise<Token | null> => {
+    const mintAccountInfo = await connection.getAccountInfo(mint);
+    if (!mintAccountInfo) {
+      return null;
+    }
+    const mintInfo = deserializeMint(mintAccountInfo.data);
+    return Token.fromMint(mint, mintInfo.decimals, info);
+  };
 }
 
 /**
