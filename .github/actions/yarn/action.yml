@@ -1,10 +1,12 @@
-name: Yarn Cache
-description: Sets up the Yarn Cache and installs
+name: Yarn
+description: Sets up the Yarn, the Yarn Cache, and installs
 
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: "14"
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
       run: echo "::set-output name=dir::$(yarn config get cacheFolder)"

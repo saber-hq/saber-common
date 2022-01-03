@@ -10,6 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: ./actions/yarn-cache
       - run: yarn build
       - run: yarn size
@@ -17,23 +18,27 @@ jobs:
   typecheck:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./actions/yarn-cache
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/yarn
       - run: yarn typecheck
 
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./actions/yarn-cache
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/yarn
       - run: yarn test
 
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./actions/yarn-cache
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/yarn
       - run: yarn lint:ci
 
   doctor:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./actions/yarn-cache
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/yarn
       - run: yarn doctor
