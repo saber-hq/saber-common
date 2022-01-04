@@ -7,14 +7,9 @@ import type { TransactionError } from "@solana/web3.js";
 import { getTransactionInstructionError } from "./programErr";
 
 /**
- * Style of the log line.
- */
-export type LogStyle = "muted" | "info" | "success" | "warning";
-
-/**
  * A log entry.
  */
-export type LogEntry = {
+export type InstructionLogEntry = {
   /**
    * Stack depth.
    */
@@ -49,7 +44,7 @@ export type LogEntry = {
  * Logs of an instruction.
  */
 export interface InstructionLogs {
-  logs: LogEntry[];
+  logs: InstructionLogEntry[];
   failed: boolean;
 }
 
