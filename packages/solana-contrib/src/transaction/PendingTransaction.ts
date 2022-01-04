@@ -96,14 +96,7 @@ export class PendingTransaction {
           retry(new Error(`Error confirming transaction: ${error.message}`));
           return;
         }
-        const resp = await this.connection.getTransaction(this.signature, {
-          commitment,
-        });
-        if (!resp) {
-          new Error(`Failed to fetch transaction for ${this.signature}`);
-          return;
-        }
-        return new TransactionReceipt(this.signature, resp);
+        return new TransactionReceipt(this.signature);
       },
       {
         retries: 3,

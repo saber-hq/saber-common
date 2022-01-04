@@ -18,13 +18,14 @@ export class TransactionReceipt {
     /**
      * Raw response from web3.js
      */
-    readonly response: TransactionResponse
+    readonly response?: TransactionResponse
   ) {}
 
   /**
    * Gets the events associated with this transaction.
    */
   getEvents<E extends Event>(eventParser: EventParser<E>): readonly E[] {
+    invariant(this.response, "response not found");
     const logs = this.response.meta?.logMessages;
     if (logs && logs.length > 0) {
       return eventParser(logs);
@@ -36,6 +37,7 @@ export class TransactionReceipt {
    * Prints the logs associated with this transaction.
    */
   printLogs(): void {
+    invariant(this.response, "response not found");
     console.log(this.response.meta?.logMessages?.join("\n"));
   }
 
@@ -44,6 +46,7 @@ export class TransactionReceipt {
    * @returns
    */
   get computeUnits(): number {
+    invariant(this.response, "response not found");
     const logs = this.response.meta?.logMessages;
     invariant(logs, "no logs");
     const consumeLog = logs[logs.length - 2];
