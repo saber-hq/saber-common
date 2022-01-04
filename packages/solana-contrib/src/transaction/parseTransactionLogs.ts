@@ -3,6 +3,7 @@
  */
 
 import type { TransactionError } from "@solana/web3.js";
+import invariant from "tiny-invariant";
 
 import { getTransactionInstructionError } from "./programErr";
 
@@ -41,9 +42,10 @@ export type InstructionLogEntry = {
 );
 
 /**
- * Logs of an instruction.
+ * Logs of an individual instruction.
  */
 export interface InstructionLogs {
+  programAddress: string;
   logs: InstructionLogEntry[];
   failed: boolean;
 }
@@ -82,9 +84,11 @@ export const parseTransactionLogs = (
 
       if (matches.length > 0) {
         const programAddress = matches[0]?.[1];
+        invariant(programAddress, "program address");
 
         if (depth === 0) {
           prettyLogs.push({
+            programAddress,
             logs: [],
             failed: false,
           });

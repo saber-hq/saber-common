@@ -16,29 +16,26 @@ describe("parseTransactionLogs", () => {
 
     expect(result).toEqual([
       {
+        programAddress: "GAGEa8FYyJNgwULDNhCBEZzW6a8Zfhs6QRxTZ9XQy151",
         logs: [
           {
             type: "text",
             depth: 1,
             text: "Program log: Instruction: GaugeCommitVote",
-            style: "muted",
           },
           {
             type: "text",
             depth: 1,
             text: "Program log: Custom program error: 0x66",
-            style: "muted",
           },
           {
             type: "system",
             depth: 1,
             text: "Program GAGEa8FYyJNgwULDNhCBEZzW6a8Zfhs6QRxTZ9XQy151 consumed 2778 of 200000 compute units",
-            style: "muted",
           },
           {
             type: "programError",
             depth: 1,
-            style: "warning",
             text: "custom program error: 0x66",
           },
         ],
