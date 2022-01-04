@@ -17,11 +17,15 @@ export class ReadonlyAdapter implements WalletAdapter {
   }
 
   get publicKey(): PublicKey | null {
-    if (!process.env.LOCAL_PUBKEY) {
+    if (!process.env.LOCAL_PUBKEY && !process.env.REACT_APP_LOCAL_PUBKEY) {
       console.warn("LOCAL_PUBKEY not set");
       return null;
     }
-    return new PublicKey(process.env.LOCAL_PUBKEY);
+    return process.env.REACT_APP_LOCAL_PUBKEY
+      ? new PublicKey(process.env.REACT_APP_LOCAL_PUBKEY)
+      : process.env.LOCAL_PUBKEY
+      ? new PublicKey(process.env.LOCAL_PUBKEY)
+      : null;
   }
 
   signTransaction(_transaction: Transaction): Promise<Transaction> {
