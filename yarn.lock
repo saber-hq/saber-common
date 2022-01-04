@@ -3233,7 +3233,7 @@ __metadata:
     "@types/bn.js": ^5.1.0
     "@types/bs58": ^4.0.1
     "@types/jest": ^27.4.0
-    "@types/node": ^16.11.17
+    "@types/node": ^17.0.8
     "@types/react": ^17.0.38
     "@types/source-map-support": ^0.5.4
     "@yarnpkg/doctor": ^3.1.0
@@ -3939,6 +3939,13 @@ __metadata:
   version: 16.11.17
   resolution: "@types/node@npm:16.11.17"
   checksum: 86ed84f79450f6aba1a6ef09f8407c10076966c3cc7cc4eb3d35b8ae4f47817e525641396ef0a667fa0a88fcdf484f6182812c074601403083bdf3b5e1ac0313
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^17.0.8":
+  version: 17.0.8
+  resolution: "@types/node@npm:17.0.8"
+  checksum: f4cadeb9e602027520abc88c77142697e33cf6ac98bb02f8b595a398603cbd33df1f94d01c055c9f13cde0c8eaafc5e396ca72645458d42b4318b845bc7f1d0f
   languageName: node
   linkType: hard
 

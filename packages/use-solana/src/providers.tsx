@@ -9,7 +9,11 @@ import { SolongWalletAdapter } from "@solana/wallet-adapter-solong";
 import type React from "react";
 
 import type { WalletAdapterBuilder } from "./adapters";
-import { LedgerWalletAdapter, SolanaWalletAdapter } from "./adapters";
+import {
+  DebugAdapter,
+  LedgerWalletAdapter,
+  SolanaWalletAdapter,
+} from "./adapters";
 import { SecretKeyAdapter } from "./adapters/secret-key";
 import { SolflareAdapter } from "./adapters/solflare";
 import {
@@ -25,6 +29,7 @@ import {
 
 export enum DefaultWalletType {
   Coin98 = "Coin98",
+  Debug = "Debug",
   Ledger = "Ledger",
   MathWallet = "MathWallet",
   Phantom = "Phantom",
@@ -144,6 +149,13 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     makeAdapter: () => new SolanaWalletAdapter(new SlopeWalletAdapter()),
     isInstalled: () => window.Slope !== undefined,
     isMobile: true,
+  },
+  [DefaultWalletType.Debug]: {
+    name: "Debug",
+    url: "https://github.com/saber-hq/saber-common",
+    icon: "n/a",
+    makeAdapter: () => new DebugAdapter(),
+    isInstalled: () => !!process.env.LOCAL_PUBKEY,
   },
 };
 
