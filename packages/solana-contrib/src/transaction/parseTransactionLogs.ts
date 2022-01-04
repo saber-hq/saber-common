@@ -45,8 +45,17 @@ export type InstructionLogEntry = {
  * Logs of an individual instruction.
  */
 export interface InstructionLogs {
-  programAddress: string;
+  /**
+   * The program invoked, if it exists in the logs.
+   */
+  programAddress?: string;
+  /**
+   * Logs of the instruction.
+   */
   logs: InstructionLogEntry[];
+  /**
+   * Whether the instruction failed.
+   */
   failed: boolean;
 }
 
