@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.12 (2022-01-04)
+
+**Note:** Version bump only for package @saberhq/stableswap-sdk
+
+
+
+
+
 ## 1.12.11 (2022-01-04)
 
 **Note:** Version bump only for package @saberhq/stableswap-sdk
