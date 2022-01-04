@@ -3,7 +3,7 @@ import { PublicKey } from "@solana/web3.js";
 
 import type { WalletAdapter } from "./types";
 
-export class DebugAdapter implements WalletAdapter {
+export class ReadonlyAdapter implements WalletAdapter {
   get connected(): boolean {
     return true;
   }
@@ -13,7 +13,7 @@ export class DebugAdapter implements WalletAdapter {
   }
 
   signAllTransactions(_transactions: Transaction[]): Promise<Transaction[]> {
-    throw new Error("debug adapter cannot sign transactions");
+    throw new Error("readonly adapter cannot sign transactions");
   }
 
   get publicKey(): PublicKey | null {
@@ -25,7 +25,7 @@ export class DebugAdapter implements WalletAdapter {
   }
 
   signTransaction(_transaction: Transaction): Promise<Transaction> {
-    throw new Error("debug adapter cannot sign transactions");
+    throw new Error("readonly adapter cannot sign transactions");
   }
 
   connect = (): Promise<void> => {
@@ -37,11 +37,11 @@ export class DebugAdapter implements WalletAdapter {
   }
 
   on(_event: "connect" | "disconnect", _fn: () => void): void {
-    console.warn("no-op for debug adapter");
+    console.warn("no-op for readonly adapter");
   }
 
   private async _noop(): Promise<void> {
-    console.warn("no-op for debug adapter");
+    console.warn("no-op for readonly adapter");
     return Promise.resolve();
   }
 }
