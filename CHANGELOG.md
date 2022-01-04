@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.10 (2022-01-04)
+
+
+### Features
+
+* adds loadExchangeInfoFromSwapAccount ([02d8de7](https://github.com/saber-hq/saber-common/commit/02d8de778f0753e85313b23a12d13c23862ba296))
+
+
+
+
+
 ## 1.12.9 (2021-12-29)
 
 **Note:** Version bump only for package @saberhq/saber-common
