@@ -17,6 +17,16 @@ import type { SerializableInstruction } from "./utils";
 import { generateInspectLinkFromBase64, RECENT_BLOCKHASH_STUB } from "./utils";
 
 /**
+ * Options for simulating a transaction.
+ */
+export interface TXEnvelopeSimulateOptions extends ConfirmOptions {
+  /**
+   * Verify that the signers of the TX enveloper are valid.
+   */
+  verifySigners?: boolean;
+}
+
+/**
  * Contains a Transaction that is being built.
  */
 export class TransactionEnvelope {
@@ -87,20 +97,26 @@ export class TransactionEnvelope {
    * @returns
    */
   simulate(
-    opts?: ConfirmOptions
+    opts?: TXEnvelopeSimulateOptions
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
-    return this.provider.simulate(this.build(), this.signers, opts);
+    return this.provider.simulate(
+      this.build(),
+      opts?.verifySigners ? this.signers : undefined,
+      opts
+    );
   }
 
   /**
    * Simulates the transaction, without validating signers.
+   *
+   * @deprecated Use {@link TXEnvelope#simulate} instead.
    * @param opts
    * @returns
    */
   simulateUnchecked(
-    opts?: ConfirmOptions
+    opts?: TXEnvelopeSimulateOptions
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
-    return this.provider.simulate(this.build(), undefined, opts);
+    return this.simulate({ ...opts, verifySigners: true });
   }
 
   /**
@@ -109,7 +125,7 @@ export class TransactionEnvelope {
    * @returns
    */
   simulateTable(
-    opts?: ConfirmOptions
+    opts?: TXEnvelopeSimulateOptions
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     return this.simulate(opts).then((simulation) => {
       if (simulation?.value?.logs) {
