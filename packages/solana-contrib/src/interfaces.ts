@@ -186,7 +186,7 @@ export interface Provider extends ReadonlyProvider {
    * Simulates the given transaction, returning emitted logs from execution.
    *
    * @param tx      The transaction to send.
-   * @param signers The set of signers in addition to the provdier wallet that
+   * @param signers The set of signers in addition to the provider wallet that
    *                will sign the transaction.
    * @param opts    Transaction confirmation options.
    */

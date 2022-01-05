@@ -4,5 +4,6 @@
     "outDir": "dist/cjs/",
     "types": ["node"]
   },
-  "include": ["src/"]
+  "include": ["src/"],
+  "exclude": ["**/*.test.ts"]
 }

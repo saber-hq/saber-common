@@ -30,6 +30,7 @@
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
     "chai-bn": "^0.3.0",
+    "colors": "^1.4.0",
     "tslib": "^2.3.1"
   },
   "gitHead": "f9fd3fbd36a7a6dd6f5e9597af5309affe50ac0e",

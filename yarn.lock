@@ -3171,6 +3171,7 @@ __metadata:
     chai: ^4.3.4
     chai-as-promised: ^7.1.1
     chai-bn: ^0.3.0
+    colors: ^1.4.0
     jsbi: ^4.1.0
     tslib: ^2.3.1
   peerDependencies:
@@ -3263,6 +3264,7 @@ __metadata:
   resolution: "@saberhq/solana-contrib@workspace:packages/solana-contrib"
   dependencies:
     "@solana/web3.js": ^1.31.0
+    "@types/jest": ^27.4.0
     "@types/node": ^16.11.17
     "@types/promise-retry": ^1.1.3
     "@types/retry": ^0.12.1
@@ -6186,6 +6188,13 @@ __metadata:
   version: 2.0.16
   resolution: "colorette@npm:2.0.16"
   checksum: cd55596a3a2d1071c1a28eee7fd8a5387593ff1bd10a3e8d0a6221499311fe34a9f2b9272d77c391e0e003dcdc8934fb2f8d106e7ef1f7516f8060c901d41a27
+  languageName: node
+  linkType: hard
+
+"colors@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "colors@npm:1.4.0"
+  checksum: 98aa2c2418ad87dedf25d781be69dc5fc5908e279d9d30c34d8b702e586a0474605b3a189511482b9d5ed0d20c867515d22749537f7bc546256c6014f3ebdcec
   languageName: node
   linkType: hard
 
