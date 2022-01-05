@@ -6,7 +6,9 @@ import colors from "colors/safe";
  * Formats instruction logs to be printed to the console.
  * @param logs
  */
-export const formatInstructionLogs = (logs: readonly InstructionLogs[]) => {
+export const formatInstructionLogs = (
+  logs: readonly InstructionLogs[]
+): string =>
   logs
     .map((log, i) => {
       return [
@@ -37,4 +39,3 @@ export const formatInstructionLogs = (logs: readonly InstructionLogs[]) => {
       ].join("\n");
     })
     .join("\n");
-};

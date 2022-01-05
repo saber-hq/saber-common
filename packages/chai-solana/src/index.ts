@@ -9,6 +9,7 @@ import chaiBN from "chai-bn";
 
 export * from "./debugAccountOwners";
 export * from "./expectTXTable";
+export * from "./printInstructionLogs";
 export * from "./utils";
 
 export const chaiSolana: Chai.ChaiPlugin = (chai) => {
