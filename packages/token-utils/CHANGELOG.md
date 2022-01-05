@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.14 (2022-01-05)
+
+
+### Features
+
+* Improve transaction log parsing ([#442](https://github.com/saber-hq/solana-common/issues/442)) ([e4ba36f](https://github.com/saber-hq/solana-common/commit/e4ba36f8bcfde2576d50b20e717a12a251e140a6))
+
+
+
+
+
 ## 1.12.13 (2022-01-05)
 
 
