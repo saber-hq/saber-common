@@ -30,12 +30,14 @@ export const expectTXTable = (
   tx: TransactionEnvelope,
   msg?: string,
   {
-    verbosity,
+    verbosity = null,
+    formatLogs = true,
   }: {
-    verbosity: "printLogs" | null;
-    formatLogs: boolean;
+    verbosity?: "printLogs" | null;
+    formatLogs?: boolean;
   } = {
     verbosity: null,
+    formatLogs: true,
   }
 ): Chai.PromisedAssertion => {
   if (tx === null) {
@@ -78,9 +80,13 @@ export const expectTXTable = (
       const logs = simulation.value.logs;
       if (logs) {
         if (verbosity === "printLogs") {
-          const parsed = parseTransactionLogs(logs, simulation.value.err);
-          const fmt = formatInstructionLogs(parsed);
-          console.log(fmt);
+          if (formatLogs) {
+            const parsed = parseTransactionLogs(logs, simulation.value.err);
+            const fmt = formatInstructionLogs(parsed);
+            console.log(fmt);
+          } else {
+            console.log(logs.join("\n"));
+          }
         }
 
         if (simulation.value.err) {
