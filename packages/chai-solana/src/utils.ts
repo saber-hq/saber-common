@@ -6,7 +6,10 @@ import type {
   TransactionReceipt,
 } from "@saberhq/solana-contrib";
 import { PendingTransaction } from "@saberhq/solana-contrib";
+import { SendTransactionError } from "@solana/web3.js";
 import { assert, expect } from "chai";
+
+import { printSendTransactionError } from "./printInstructionLogs";
 
 export const expectTX = (
   tx:
@@ -44,7 +47,13 @@ export const expectTX = (
   } else {
     return expect(
       tx
-        ?.send()
+        ?.send({ printLogs: false })
+        .catch((err) => {
+          if (err instanceof SendTransactionError) {
+            printSendTransactionError(err);
+          }
+          throw err;
+        })
         .then((res) => res.wait())
         .then(handleReceipt),
       msg

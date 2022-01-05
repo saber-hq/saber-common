@@ -12,6 +12,13 @@ import type { Broadcaster } from ".";
 import { DEFAULT_PROVIDER_OPTIONS, PendingTransaction } from ".";
 import { simulateTransactionWithCommitment } from "./utils/simulateTransactionWithCommitment";
 
+export interface BroadcastOptions extends ConfirmOptions {
+  /**
+   * Prints the transaction logs as emitted by @solana/web3.js. Defaults to true.
+   */
+  printLogs?: boolean;
+}
+
 /**
  * Broadcasts transactions to a single connection.
  */
@@ -38,16 +45,37 @@ export class SingleConnectionBroadcaster implements Broadcaster {
    */
   async broadcast(
     tx: Transaction,
-    opts: ConfirmOptions = this.opts
+    { printLogs = true, ...opts }: BroadcastOptions = this.opts
   ): Promise<PendingTransaction> {
     if (tx.signatures.length === 0) {
       throw new Error("Transaction must be signed before broadcasting.");
     }
     const rawTx = tx.serialize();
-    return new PendingTransaction(
-      this.sendConnection,
-      await this.sendConnection.sendRawTransaction(rawTx, opts)
-    );
+
+    if (printLogs) {
+      return new PendingTransaction(
+        this.sendConnection,
+        await this.sendConnection.sendRawTransaction(rawTx, opts)
+      );
+    }
+
+    const oldConsoleError = console.error;
+    console.error = () => {
+      // do nothing
+    };
+
+    // hide the logs of TX errors if printLogs = false
+    try {
+      const result = new PendingTransaction(
+        this.sendConnection,
+        await this.sendConnection.sendRawTransaction(rawTx, opts)
+      );
+      console.error = oldConsoleError;
+      return result;
+    } catch (e) {
+      console.error = oldConsoleError;
+      throw e;
+    }
   }
 
   /**

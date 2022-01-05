@@ -5,6 +5,7 @@ import type {
   SimulatedTransactionResponse,
   Transaction,
 } from "@solana/web3.js";
+import { SendTransactionError } from "@solana/web3.js";
 
 /**
  * Copy of Connection.simulateTransaction that takes a commitment parameter.
@@ -50,7 +51,10 @@ export async function simulateTransactionWithCommitment(
     config,
   ]);
   if (res.error) {
-    throw new Error("failed to simulate transaction: " + res.error.message);
+    throw new SendTransactionError(
+      "failed to simulate transaction: " + res.error.message,
+      res.result.value.logs ?? undefined
+    );
   }
   return res.result;
 }

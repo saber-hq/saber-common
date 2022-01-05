@@ -184,14 +184,11 @@ const instructionsSize = (
 
   return estimateTransactionSize(instructionedTx);
 };
+
 let fakeSigner: Signer | undefined = undefined;
 const getFakeSigner = (): Signer => {
   if (!fakeSigner) {
-    const fakeSignerKp = Keypair.generate();
-    fakeSigner = {
-      publicKey: fakeSignerKp.publicKey,
-      secretKey: fakeSignerKp.secretKey,
-    };
+    fakeSigner = Keypair.generate();
   }
   return fakeSigner;
 };

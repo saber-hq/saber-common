@@ -9,6 +9,7 @@ import type {
 } from "@solana/web3.js";
 import { Transaction } from "@solana/web3.js";
 
+import type { BroadcastOptions } from "..";
 import { printTXTable } from "..";
 import type { Provider } from "../interfaces";
 import type { PendingTransaction } from "./PendingTransaction";
@@ -142,7 +143,7 @@ export class TransactionEnvelope {
    * @param opts
    * @returns
    */
-  async send(opts?: ConfirmOptions): Promise<PendingTransaction> {
+  async send(opts?: BroadcastOptions): Promise<PendingTransaction> {
     const signed = await this.provider.signer.sign(
       this.build(),
       this.signers,
@@ -155,7 +156,7 @@ export class TransactionEnvelope {
    * Sends the transaction and waits for confirmation.
    * @param opts
    */
-  async confirm(opts?: ConfirmOptions): Promise<TransactionReceipt> {
+  async confirm(opts?: BroadcastOptions): Promise<TransactionReceipt> {
     return (await this.send(opts)).wait();
   }
 
