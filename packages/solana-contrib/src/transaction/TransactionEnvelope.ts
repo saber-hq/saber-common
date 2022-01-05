@@ -116,7 +116,7 @@ export class TransactionEnvelope {
   simulateUnchecked(
     opts?: TXEnvelopeSimulateOptions
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
-    return this.simulate({ ...opts, verifySigners: true });
+    return this.simulate({ ...opts, verifySigners: false });
   }
 
   /**
