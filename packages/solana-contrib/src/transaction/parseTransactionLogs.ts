@@ -168,3 +168,41 @@ export const parseTransactionLogs = (
 
   return prettyLogs;
 };
+
+const buildPrefix = (depth: number) => {
+  const prefix = new Array(depth - 1).fill("\u00A0\u00A0").join("");
+  return prefix + "> ";
+};
+
+const formatLogEntryString = (entry: InstructionLogEntry) => {
+  switch (entry.type) {
+    case "success":
+      return `Program returned success`;
+    case "programError":
+      return `Program returned error: ${entry.text}`;
+    case "runtimeError":
+      return `Runtime error: ${entry.text}`;
+    case "system":
+      return entry.text;
+    case "text":
+      return entry.text;
+    case "cpi":
+      return `Invoking Unknown ${
+        entry.programAddress ? `(${entry.programAddress}) ` : ""
+      }Program`;
+  }
+};
+
+/**
+ * Formats a log entry to be printed out.
+ * @param entry
+ * @param prefix
+ * @returns
+ */
+export const formatLogEntry = (
+  entry: InstructionLogEntry,
+  prefix = false
+): string => {
+  const prefixString = prefix ? buildPrefix(entry.depth) : "";
+  return `${prefixString}${formatLogEntryString(entry)}`;
+};

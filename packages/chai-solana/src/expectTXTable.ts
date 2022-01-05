@@ -1,6 +1,7 @@
 import type { TransactionEnvelope } from "@saberhq/solana-contrib";
-import { printTXTable } from "@saberhq/solana-contrib";
+import { parseTransactionLogs, printTXTable } from "@saberhq/solana-contrib";
 
+import { formatInstructionLogs } from "./printInstructionLogs";
 import { expectTX } from "./utils";
 
 /**
@@ -28,7 +29,14 @@ import { expectTX } from "./utils";
 export const expectTXTable = (
   tx: TransactionEnvelope,
   msg?: string,
-  verbosity?: "printLogs"
+  {
+    verbosity,
+  }: {
+    verbosity: "printLogs" | null;
+    formatLogs: boolean;
+  } = {
+    verbosity: null,
+  }
 ): Chai.PromisedAssertion => {
   if (tx === null) {
     throw new Error();
@@ -67,8 +75,14 @@ export const expectTXTable = (
         );
       }
 
-      const logs = simulation?.value?.logs;
+      const logs = simulation.value.logs;
       if (logs) {
+        if (verbosity === "printLogs") {
+          const parsed = parseTransactionLogs(logs, simulation.value.err);
+          const fmt = formatInstructionLogs(parsed);
+          console.log(fmt);
+        }
+
         if (simulation.value.err) {
           let lastLine = "";
           for (let i = 0; i < logs.length; i++) {
@@ -91,8 +105,6 @@ export const expectTXTable = (
             }
           }
           console.log("   ", simulation.value.err);
-        } else if (verbosity === "printLogs" && logs) {
-          console.log(logs.join("\n"));
         }
       }
     })
