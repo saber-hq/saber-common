@@ -1,6 +1,6 @@
 import type { InstructionLogs } from "@saberhq/solana-contrib";
 import { formatLogEntry } from "@saberhq/solana-contrib";
-import * as colors from "colors/safe";
+import colors from "colors/safe";
 
 /**
  * Formats instruction logs to be printed to the console.
