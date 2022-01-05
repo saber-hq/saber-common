@@ -9,7 +9,11 @@ import type {
 } from "@solana/web3.js";
 
 import type { Broadcaster } from ".";
-import { DEFAULT_PROVIDER_OPTIONS, PendingTransaction } from ".";
+import {
+  DEFAULT_PROVIDER_OPTIONS,
+  PendingTransaction,
+  suppressConsoleErrorAsync,
+} from ".";
 import { simulateTransactionWithCommitment } from "./utils/simulateTransactionWithCommitment";
 
 export interface BroadcastOptions extends ConfirmOptions {
@@ -59,23 +63,13 @@ export class SingleConnectionBroadcaster implements Broadcaster {
       );
     }
 
-    const oldConsoleError = console.error;
-    console.error = () => {
-      // do nothing
-    };
-
-    // hide the logs of TX errors if printLogs = false
-    try {
-      const result = new PendingTransaction(
+    return await suppressConsoleErrorAsync(async () => {
+      // hide the logs of TX errors if printLogs = false
+      return new PendingTransaction(
         this.sendConnection,
         await this.sendConnection.sendRawTransaction(rawTx, opts)
       );
-      console.error = oldConsoleError;
-      return result;
-    } catch (e) {
-      console.error = oldConsoleError;
-      throw e;
-    }
+    });
   }
 
   /**
