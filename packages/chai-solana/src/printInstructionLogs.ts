@@ -7,7 +7,7 @@ import colors from "colors/safe";
  * Formats instruction logs to be printed to the console.
  * @param logs
  */
-export const formatInstructionLogs = (
+export const formatInstructionLogsForConsole = (
   logs: readonly InstructionLogs[]
 ): string =>
   logs
@@ -44,7 +44,7 @@ export const formatInstructionLogs = (
 export const printSendTransactionError = (err: SendTransactionError) => {
   try {
     const parsed = parseTransactionLogs(err.logs ?? null, err);
-    console.error(formatInstructionLogs(parsed));
+    console.error(formatInstructionLogsForConsole(parsed));
   } catch (e) {
     console.error(`Could not parse transaction error`, e);
     console.error("SendTransactionError", err);

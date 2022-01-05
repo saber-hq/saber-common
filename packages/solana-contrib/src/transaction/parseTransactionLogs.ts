@@ -206,3 +206,21 @@ export const formatLogEntry = (
   const prefixString = prefix ? buildPrefix(entry.depth) : "";
   return `${prefixString}${formatLogEntryString(entry)}`;
 };
+
+/**
+ * Formats instruction logs.
+ * @param logs
+ */
+export const formatInstructionLogs = (
+  logs: readonly InstructionLogs[]
+): string =>
+  logs
+    .map((log, i) => {
+      return [
+        `=> Instruction #${i}: ${
+          log.programAddress ? `Program ${log.programAddress}` : "System"
+        }`,
+        ...log.logs.map((entry) => formatLogEntry(entry, true)),
+      ].join("\n");
+    })
+    .join("\n");

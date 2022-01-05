@@ -1,7 +1,7 @@
 import type { TransactionEnvelope } from "@saberhq/solana-contrib";
 import { parseTransactionLogs, printTXTable } from "@saberhq/solana-contrib";
 
-import { formatInstructionLogs } from "./printInstructionLogs";
+import { formatInstructionLogsForConsole } from "./printInstructionLogs";
 import { expectTX } from "./utils";
 
 /**
@@ -92,7 +92,7 @@ export const expectTXTable = (
         ) {
           if (formatLogs) {
             const parsed = parseTransactionLogs(logs, simulation.value.err);
-            const fmt = formatInstructionLogs(parsed);
+            const fmt = formatInstructionLogsForConsole(parsed);
             console.log(fmt);
           } else {
             console.log(logs.join("\n"));
