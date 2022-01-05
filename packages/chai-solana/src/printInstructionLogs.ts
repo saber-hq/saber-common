@@ -1,12 +1,13 @@
 import type { InstructionLogs } from "@saberhq/solana-contrib";
-import { formatLogEntry } from "@saberhq/solana-contrib";
+import { formatLogEntry, parseTransactionLogs } from "@saberhq/solana-contrib";
+import type { SendTransactionError } from "@solana/web3.js";
 import colors from "colors/safe";
 
 /**
  * Formats instruction logs to be printed to the console.
  * @param logs
  */
-export const formatInstructionLogs = (
+export const formatInstructionLogsForConsole = (
   logs: readonly InstructionLogs[]
 ): string =>
   logs
@@ -39,3 +40,13 @@ export const formatInstructionLogs = (
       ].join("\n");
     })
     .join("\n");
+
+export const printSendTransactionError = (err: SendTransactionError) => {
+  try {
+    const parsed = parseTransactionLogs(err.logs ?? null, err);
+    console.error(formatInstructionLogsForConsole(parsed));
+  } catch (e) {
+    console.error(`Could not parse transaction error`, e);
+    console.error("SendTransactionError", err);
+  }
+};
