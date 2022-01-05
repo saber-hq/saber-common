@@ -23,7 +23,7 @@ export const formatInstructionLogs = (
           const entryStr = formatLogEntry(entry, true);
           switch (entry.type) {
             case "text":
-              return colors.gray(entryStr);
+              return colors.white(entryStr);
             case "cpi":
               return colors.cyan(entryStr);
             case "programError":
@@ -31,7 +31,7 @@ export const formatInstructionLogs = (
             case "runtimeError":
               return colors.red(entryStr);
             case "system":
-              return colors.gray(entryStr);
+              return colors.white(entryStr);
             case "success":
               return colors.green(entryStr);
           }
