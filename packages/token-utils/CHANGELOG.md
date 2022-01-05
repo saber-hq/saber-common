@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.13 (2022-01-05)
+
+
+### Bug Fixes
+
+* Fix readonly provider icon URL ([af911b3](https://github.com/saber-hq/solana-common/commit/af911b352c67d053e41640fa135d381f0badef3e))
+
+
+
+
+
 ## 1.12.12 (2022-01-04)
 
 **Note:** Version bump only for package @saberhq/token-utils
