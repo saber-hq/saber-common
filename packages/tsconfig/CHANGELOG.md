@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.17 (2022-01-05)
+
+
+### Bug Fixes
+
+* instruction logs should return a string ([9e288fb](https://github.com/saber-hq/saber-common/commit/9e288fb1811cd62759e0e9bb13fff1334013f086))
+
+
+
+
+
 ## 1.12.16 (2022-01-05)
 
 **Note:** Version bump only for package @saberhq/tsconfig
