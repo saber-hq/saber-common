@@ -33,7 +33,14 @@ export const expectTXTable = (
     verbosity = null,
     formatLogs = true,
   }: {
-    verbosity?: "printLogs" | null;
+    /**
+     * Logging verbosity.
+     *
+     * - `always` -- print logs whenever they exist
+     * - `error` -- print logs only if there is an error
+     * - `null` -- never print the full transaction logs
+     */
+    verbosity?: "always" | "error" | null;
     formatLogs?: boolean;
   } = {
     verbosity: null,
@@ -79,7 +86,10 @@ export const expectTXTable = (
 
       const logs = simulation.value.logs;
       if (logs) {
-        if (verbosity === "printLogs") {
+        if (
+          verbosity === "always" ||
+          (verbosity === "error" && simulation.value.err)
+        ) {
           if (formatLogs) {
             const parsed = parseTransactionLogs(logs, simulation.value.err);
             const fmt = formatInstructionLogs(parsed);
