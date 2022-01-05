@@ -1,8 +1,11 @@
-import type { Idl } from "@project-serum/anchor";
+import type { Accounts, Idl } from "@project-serum/anchor";
 import { Coder, EventParser } from "@project-serum/anchor";
 import type { InstructionDisplay } from "@project-serum/anchor/dist/cjs/coder/instruction";
+import type { IdlAccountItem } from "@project-serum/anchor/dist/cjs/idl";
+import InstructionNamespaceFactory from "@project-serum/anchor/dist/cjs/program/namespace/instruction";
 import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
-import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
+import type { PublicKey } from "@solana/web3.js";
+import { TransactionInstruction } from "@solana/web3.js";
 import mapValues from "lodash.mapvalues";
 
 import type { ErrorMap } from "../errors";
@@ -28,6 +31,13 @@ export class SuperCoder<
     AccountMap: Record<string, object>;
     Events: Record<string, unknown>;
     IDL: Idl;
+    Instructions: Record<
+      string,
+      {
+        accounts: IdlAccountItem[];
+        args: unknown[];
+      }
+    >;
     Program: unknown;
   }
 > {
@@ -86,6 +96,36 @@ export class SuperCoder<
   }
 
   /**
+   * Encodes a {@link TransactionInstruction}.
+   * @returns
+   */
+  encodeIX<
+    K extends keyof T["Instructions"] & string = keyof T["Instructions"] &
+      string,
+    I extends T["Instructions"][K] = T["Instructions"][K]
+  >(
+    name: K,
+    args: I["args"],
+    accounts: Accounts<I["accounts"][number]>
+  ): TransactionInstruction {
+    const idlIx = this.idl.instructions.find((ix) => ix.name === name);
+    if (!idlIx) {
+      throw new Error(`could not find ix: ${name}`);
+    }
+    const encoded = this.coder.instruction.encode(name, args);
+    const keys = InstructionNamespaceFactory.accountsArray(
+      accounts,
+      idlIx.accounts,
+      name
+    );
+    return new TransactionInstruction({
+      programId: this.address,
+      keys,
+      data: encoded,
+    });
+  }
+
+  /**
    * Parses a {@link TransactionInstruction}.
    * @returns
    */
@@ -124,6 +164,13 @@ export const buildCoderMap = <
       AccountMap: Record<string, object>;
       Events: Record<string, unknown>;
       IDL: Idl;
+      Instructions: Record<
+        string,
+        {
+          accounts: IdlAccountItem[];
+          args: unknown[];
+        }
+      >;
       Program: unknown;
     };
   }
