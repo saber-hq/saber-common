@@ -153,7 +153,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
   [DefaultWalletType.ReadOnly]: {
     name: "Debug",
     url: "https://github.com/saber-hq/saber-common",
-    icon: "https://commons.wikimedia.org/wiki/File:Magnifying_glass_icon.svg",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg",
     makeAdapter: () => new ReadonlyAdapter(),
     isInstalled: () =>
       !!process.env.LOCAL_PUBKEY || !!process.env.REACT_APP_PUBKEY,
