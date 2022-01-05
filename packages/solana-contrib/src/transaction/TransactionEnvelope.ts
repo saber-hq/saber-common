@@ -97,11 +97,13 @@ export class TransactionEnvelope {
    * @returns
    */
   simulate(
-    opts?: TXEnvelopeSimulateOptions
+    opts: TXEnvelopeSimulateOptions = {
+      verifySigners: true,
+    }
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     return this.provider.simulate(
       this.build(),
-      opts?.verifySigners ? this.signers : undefined,
+      opts.verifySigners ? this.signers : undefined,
       opts
     );
   }
@@ -114,7 +116,7 @@ export class TransactionEnvelope {
    * @returns
    */
   simulateUnchecked(
-    opts?: TXEnvelopeSimulateOptions
+    opts: ConfirmOptions
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     return this.simulate({ ...opts, verifySigners: false });
   }

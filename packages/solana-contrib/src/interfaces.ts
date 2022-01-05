@@ -95,7 +95,10 @@ export interface Broadcaster {
    */
   simulate(
     tx: Transaction,
-    commitment?: Commitment
+    opts: {
+      commitment?: Commitment;
+      verifySigners?: boolean;
+    }
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>>;
 }
 

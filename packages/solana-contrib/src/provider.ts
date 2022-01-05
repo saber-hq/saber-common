@@ -261,7 +261,10 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     if (signers !== undefined) {
       simTX = await this.signer.sign(tx, signers, opts);
     }
-    return await this.broadcaster.simulate(simTX, opts.commitment);
+    return await this.broadcaster.simulate(simTX, {
+      verifySigners: signers !== undefined,
+      commitment: opts.commitment,
+    });
   }
 }
 

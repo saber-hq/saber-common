@@ -58,9 +58,18 @@ export class SingleConnectionBroadcaster implements Broadcaster {
    */
   async simulate(
     tx: Transaction,
-    commitment: Commitment = "recent"
+    {
+      commitment = "recent",
+      verifySigners = true,
+    }: {
+      commitment?: Commitment;
+      verifySigners?: boolean;
+    } = {
+      commitment: "recent",
+      verifySigners: true,
+    }
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
-    if (tx.signatures.length === 0) {
+    if (verifySigners && tx.signatures.length === 0) {
       throw new Error("Transaction must be signed before simulating.");
     }
     return await simulateTransactionWithCommitment(
