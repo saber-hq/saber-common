@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.19 (2022-01-05)
+
+
+### Bug Fixes
+
+* Refactor and fix readonly provider ([#444](https://github.com/saber-hq/solana-common/issues/444)) ([de4c6ce](https://github.com/saber-hq/solana-common/commit/de4c6ce422969f82b928dc1f0559e9c86c8a94e4))
+
+
+
+
+
 ## 1.12.18 (2022-01-05)
 
 
