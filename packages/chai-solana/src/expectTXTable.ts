@@ -120,7 +120,7 @@ export const expectTXTable = (
               lastLine = curLine;
             }
           }
-          console.log("   ", simulation.value.err);
+          console.log("   ", JSON.stringify(simulation.value.err, null, 2));
         }
       }
     })
