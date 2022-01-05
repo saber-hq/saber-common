@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.18 (2022-01-05)
+
+
+### Features
+
+* Improve transaction error logs ([#443](https://github.com/saber-hq/saber-common/issues/443)) ([f967790](https://github.com/saber-hq/saber-common/commit/f967790753da80864ddefcb0a21009cd9c5ae992))
+
+
+
+
+
 ## 1.12.17 (2022-01-05)
 
 
