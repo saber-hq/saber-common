@@ -184,6 +184,7 @@ export const useWalletInternal = <
       if (walletConfigStr === nextWalletConfigStr) {
         // reconnect
         try {
+          console.log("wallet", wallet);
           await wallet?.connect(nextWalletArgs);
         } catch (e) {
           onError(
