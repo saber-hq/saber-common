@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.20 (2022-01-05)
+
+
+### Bug Fixes
+
+* change formatting of simulation error to be one line ([6c755fa](https://github.com/saber-hq/saber-common/commit/6c755fab9d28d481c28792dfd33ec8876654d987))
+
+
+
+
+
 ## 1.12.19 (2022-01-05)
 
 
