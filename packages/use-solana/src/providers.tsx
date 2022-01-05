@@ -9,11 +9,8 @@ import { SolongWalletAdapter } from "@solana/wallet-adapter-solong";
 import type React from "react";
 
 import type { WalletAdapterBuilder } from "./adapters";
-import {
-  LedgerWalletAdapter,
-  ReadonlyAdapter,
-  SolanaWalletAdapter,
-} from "./adapters";
+import { LedgerWalletAdapter, SolanaWalletAdapter } from "./adapters";
+import { ReadonlyAdapter } from "./adapters/readonly";
 import { SecretKeyAdapter } from "./adapters/secret-key";
 import { SolflareAdapter } from "./adapters/solflare";
 import {
@@ -156,7 +153,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     icon: "https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg",
     makeAdapter: () => new ReadonlyAdapter(),
     isInstalled: () =>
-      !!process.env.LOCAL_PUBKEY || !!process.env.REACT_APP_PUBKEY,
+      !!process.env.LOCAL_PUBKEY || !!process.env.REACT_APP_LOCAL_PUBKEY,
   },
 };
 
