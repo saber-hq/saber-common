@@ -32,9 +32,10 @@ export const printTXTable = (
   transactionLogs: string[],
   message: string
 ) => {
-  if (message) {
-    console.log();
+  if (message && message !== "") {
     console.log(estimateTransactionSize(tx), message);
+  } else {
+    console.log("Transaction size:", estimateTransactionSize(tx));
   }
 
   const computeUnitLogStack: string[] = [];
