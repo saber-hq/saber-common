@@ -243,3 +243,18 @@ export const SOLFLARE: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     </defs>
   </svg>
 );
+
+// https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg
+export const MAGNIFYING_GLASS: React.FC<React.SVGProps<SVGSVGElement>> = (
+  props
+) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="490" height="490" {...props}>
+    <path
+      fill="none"
+      stroke="#000"
+      strokeWidth="36"
+      strokeLinecap="round"
+      d="m280,278a153,153 0 1,0-2,2l170,170m-91-117 110,110-26,26-110-110"
+    />
+  </svg>
+);
