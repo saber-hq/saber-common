@@ -2026,6 +2026,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ledgerhq/hw-transport-webhid@npm:^6.11.2":
+  version: 6.20.0
+  resolution: "@ledgerhq/hw-transport-webhid@npm:6.20.0"
+  dependencies:
+    "@ledgerhq/devices": ^6.20.0
+    "@ledgerhq/errors": ^6.10.0
+    "@ledgerhq/hw-transport": ^6.20.0
+    "@ledgerhq/logs": ^6.10.0
+  checksum: 3d98e9a4a7144ad891873562d2d93b7f30b0c081121bb4b2531b42679903c3b5b748bffec965f12551b1b35df05f287d9fdff4c58b94e4d1cb94cff69c86e8ae
+  languageName: node
+  linkType: hard
+
 "@ledgerhq/hw-transport-webusb@npm:^6.20.0":
   version: 6.20.0
   resolution: "@ledgerhq/hw-transport-webusb@npm:6.20.0"
@@ -2038,7 +2050,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport@npm:^6.20.0":
+"@ledgerhq/hw-transport@npm:^6.11.2, @ledgerhq/hw-transport@npm:^6.20.0":
   version: 6.20.0
   resolution: "@ledgerhq/hw-transport@npm:6.20.0"
   dependencies:
@@ -3335,8 +3347,10 @@ __metadata:
     "@saberhq/solana-contrib": ^1.12.20
     "@solana/wallet-adapter-base": ^0.9.0
     "@solana/wallet-adapter-coin98": ^0.5.0
+    "@solana/wallet-adapter-ledger": ^0.9.0
     "@solana/wallet-adapter-mathwallet": ^0.9.0
     "@solana/wallet-adapter-phantom": ^0.9.0
+    "@solana/wallet-adapter-react": ^0.15.0
     "@solana/wallet-adapter-slope": ^0.5.0
     "@solana/wallet-adapter-solflare": ^0.6.0
     "@solana/wallet-adapter-sollet": ^0.10.1
@@ -3461,6 +3475,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@solana/wallet-adapter-ledger@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "@solana/wallet-adapter-ledger@npm:0.9.0"
+  dependencies:
+    "@ledgerhq/hw-transport": ^6.11.2
+    "@ledgerhq/hw-transport-webhid": ^6.11.2
+    "@solana/wallet-adapter-base": ^0.9.0
+    "@solana/web3.js": ^1.20.0
+    "@types/w3c-web-hid": ^1.0.2
+  checksum: 9525ce467d5ce477ac2d4d5eaf2de2fcb69d5ec1e2cd6842b81fb6650377cff8f76a65354240c1c5980711b668a3c3bc159daa180b0dd18dceabac7fd0d8a0e9
+  languageName: node
+  linkType: hard
+
 "@solana/wallet-adapter-mathwallet@npm:^0.9.0":
   version: 0.9.0
   resolution: "@solana/wallet-adapter-mathwallet@npm:0.9.0"
@@ -3478,6 +3505,17 @@ __metadata:
     "@solana/wallet-adapter-base": ^0.9.0
     "@solana/web3.js": ^1.20.0
   checksum: 3546b8415aeaf8ab776f272b2179921902dede9cba8e11a1a8fd1a72ef50eed65f0ebd29aa426261bd3e20f0f756fc228a79959af82ea40c190ba265e0c9381a
+  languageName: node
+  linkType: hard
+
+"@solana/wallet-adapter-react@npm:^0.15.0":
+  version: 0.15.0
+  resolution: "@solana/wallet-adapter-react@npm:0.15.0"
+  dependencies:
+    "@solana/wallet-adapter-base": ^0.9.0
+    "@solana/web3.js": ^1.20.0
+    react: ^17.0.2
+  checksum: f88b26ca4675d0b1f907f6bcecbd307e0b60592d06d4087cea188aeec88f2545afa8e1b72ff1b8c7cebb125d37ba3b990f754936c1f39e8223f7b95bd1c12dfc
   languageName: node
   linkType: hard
 
@@ -4070,6 +4108,13 @@ __metadata:
   version: 1.0.0
   resolution: "@types/treeify@npm:1.0.0"
   checksum: 1b2397030d13beee7f82b878ca80feeddb0d550a6b00d8be30082a370c0ac5985ecf7b9378cf93ea278ff00c3e900b416ae8d9379f2c7e8caecdece1dfc77380
+  languageName: node
+  linkType: hard
+
+"@types/w3c-web-hid@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@types/w3c-web-hid@npm:1.0.2"
+  checksum: 9abaa67ae239fa0ba77d9f8380618698fcfeb82973297ba18b526a629768d45e60a0505d64ccd8ec366f8f511abff7d82b408fd4f85da474dbf4c0018d373214
   languageName: node
   linkType: hard
 

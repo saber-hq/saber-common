@@ -1,3 +1,5 @@
+import { useConnection } from "@solana/wallet-adapter-react";
+import type { Connection } from "@solana/web3.js";
 import type { ReactNode } from "react";
 import React from "react";
 import type { Container } from "unstated-next";
@@ -15,10 +17,13 @@ import type { UnknownWalletType, WalletProviderMap } from "./providers";
 import { DEFAULT_WALLET_PROVIDERS } from "./providers";
 import { LOCAL_STORAGE_ADAPTER } from "./storage";
 import type {
-  ConnectionArgs,
-  ConnectionContext,
-} from "./utils/useConnectionInternal";
-import { useConnectionInternal } from "./utils/useConnectionInternal";
+  ConnectionConfigArgs,
+  ConnectionConfigContext,
+} from "./utils/SolanaConnectionProvider";
+import {
+  SolanaConnectionConfigContainer,
+  SolanaConnectionProvider,
+} from "./utils/SolanaConnectionProvider";
 import type { UseProvider } from "./utils/useProviderInternal";
 import { useProviderInternal } from "./utils/useProviderInternal";
 import type { UseWallet, UseWalletArgs } from "./utils/useWalletInternal";
@@ -27,13 +32,16 @@ import { useWalletInternal } from "./utils/useWalletInternal";
 export interface UseSolana<
   WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType,
   Connected extends boolean = boolean
-> extends ConnectionContext,
+> extends ConnectionConfigContext,
     UseWallet<WalletType, Connected>,
-    UseProvider {}
+    UseProvider {
+  connection: Connection;
+  sendConnection: Connection;
+}
 
 export interface UseSolanaArgs<
   WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType
-> extends Omit<ConnectionArgs, "storageAdapter">,
+> extends Omit<ConnectionConfigArgs, "storageAdapter">,
     Partial<
       Pick<
         UseWalletArgs<WalletType>,
@@ -80,13 +88,10 @@ const useSolanaInternal = <WalletType extends WalletTypeEnum<WalletType>>({
   onError = defaultOnError,
   storageAdapter = LOCAL_STORAGE_ADAPTER,
   walletProviders = DEFAULT_WALLET_PROVIDERS as unknown as WalletProviderMap<WalletType>,
-  ...connectionArgs
 }: UseSolanaArgs<WalletType> = {}): UseSolana<WalletType> => {
-  const connectionCtx = useConnectionInternal({
-    ...connectionArgs,
-    storageAdapter,
-  });
-  const { network, endpoint } = connectionCtx;
+  const { connection } = useConnection();
+  const connectionConfigCtx = SolanaConnectionConfigContainer.useContainer();
+  const { network, endpoint } = connectionConfigCtx;
   const walletCtx = useWalletInternal<WalletType>({
     onConnect,
     onDisconnect,
@@ -97,14 +102,16 @@ const useSolanaInternal = <WalletType extends WalletTypeEnum<WalletType>>({
     walletProviders,
   });
   const providerCtx = useProviderInternal({
-    connection: connectionCtx.connection,
+    connection,
     wallet: walletCtx.wallet,
   });
 
   return {
     ...walletCtx,
-    ...connectionCtx,
+    ...connectionConfigCtx,
     ...providerCtx,
+    connection,
+    sendConnection: connection,
   };
 };
 
@@ -127,9 +134,12 @@ export const SolanaProvider = <
   WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType
 >({
   children,
+  storageAdapter = LOCAL_STORAGE_ADAPTER,
   ...args
 }: ProviderProps<WalletType>) => (
-  <Solana.Provider initialState={args}>{children}</Solana.Provider>
+  <SolanaConnectionProvider storageAdapter={storageAdapter} {...args}>
+    <Solana.Provider initialState={args}>{children}</Solana.Provider>
+  </SolanaConnectionProvider>
 );
 
 /**
