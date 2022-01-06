@@ -1,10 +1,11 @@
+import { useConnection as useWalletAdapterConnection } from "@solana/wallet-adapter-react";
 import type { Connection } from "@solana/web3.js";
 
 import type { DefaultWalletType, UnknownWalletType, WalletTypeEnum } from ".";
 import type { ConnectedWallet } from "./adapters/types";
 import type { UseSolana } from "./context";
 import { useSolana } from "./context";
-import type { ConnectionContext } from "./utils/useConnectionInternal";
+import type { ConnectionConfigContext } from "./utils/SolanaConnectionProvider";
 
 /**
  * Gets the current Solana wallet.
@@ -34,7 +35,10 @@ export const useConnectedWallet = (): ConnectedWallet | null => {
  * Loads the connection context
  * @returns
  */
-export function useConnectionContext(): ConnectionContext {
+export function useConnectionContext(): ConnectionConfigContext & {
+  connection: Connection;
+  sendConnection: Connection;
+} {
   const context = useSolana<UnknownWalletType>();
   if (!context) {
     throw new Error("Not in context");
@@ -47,7 +51,7 @@ export function useConnectionContext(): ConnectionContext {
  * @returns
  */
 export function useConnection(): Connection {
-  return useConnectionContext().connection;
+  return useWalletAdapterConnection().connection;
 }
 
 /**
@@ -55,5 +59,5 @@ export function useConnection(): Connection {
  * @returns
  */
 export function useSendConnection(): Connection {
-  return useConnectionContext().sendConnection;
+  return useConnection();
 }

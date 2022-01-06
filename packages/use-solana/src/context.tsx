@@ -21,8 +21,8 @@ import type {
   ConnectionConfigContext,
 } from "./utils/SolanaConnectionProvider";
 import {
-  SolanaConnectionConfigContainer,
   SolanaConnectionProvider,
+  useConnectionConfig,
 } from "./utils/SolanaConnectionProvider";
 import type { UseProvider } from "./utils/useProviderInternal";
 import { useProviderInternal } from "./utils/useProviderInternal";
@@ -90,13 +90,10 @@ const useSolanaInternal = <WalletType extends WalletTypeEnum<WalletType>>({
   walletProviders = DEFAULT_WALLET_PROVIDERS as unknown as WalletProviderMap<WalletType>,
 }: UseSolanaArgs<WalletType> = {}): UseSolana<WalletType> => {
   const { connection } = useConnection();
-  const connectionConfigCtx = SolanaConnectionConfigContainer.useContainer();
-  const { network, endpoint } = connectionConfigCtx;
+  const connectionConfigCtx = useConnectionConfig();
   const walletCtx = useWalletInternal<WalletType>({
     onConnect,
     onDisconnect,
-    network,
-    endpoint,
     onError,
     storageAdapter,
     walletProviders,

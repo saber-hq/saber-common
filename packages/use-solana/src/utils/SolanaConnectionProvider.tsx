@@ -105,6 +105,9 @@ export const SolanaConnectionConfigContainer = createContainer<
   ConnectionConfigArgs
 >(useConnectionConfigInternal);
 
+export const { useContainer: useConnectionConfig } =
+  SolanaConnectionConfigContainer;
+
 interface Props extends ConnectionConfigArgs {
   children: React.ReactNode;
 }

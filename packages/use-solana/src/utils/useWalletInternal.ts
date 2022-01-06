@@ -1,4 +1,3 @@
-import type { Network } from "@saberhq/solana-contrib";
 import type { PublicKey } from "@solana/web3.js";
 import stringify from "fast-json-stable-stringify";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -17,6 +16,7 @@ import type {
   WalletTypeEnum,
 } from "../providers";
 import type { StorageAdapter } from "../storage";
+import { useConnectionConfig } from "./SolanaConnectionProvider";
 import { usePersistedKVStore } from "./usePersistedKVStore";
 
 /**
@@ -65,8 +65,6 @@ export interface UseWalletArgs<WalletType extends WalletTypeEnum<WalletType>> {
     provider: WalletProviderInfo
   ) => void;
   onError: (err: UseSolanaError) => void;
-  network: Network;
-  endpoint: string;
   storageAdapter: StorageAdapter;
   walletProviders: WalletProviderMap<WalletType>;
 }
@@ -81,12 +79,11 @@ export const useWalletInternal = <
 >({
   onConnect,
   onDisconnect,
-  network,
-  endpoint,
   onError,
   storageAdapter,
   walletProviders,
 }: UseWalletArgs<WalletType>): UseWallet<WalletType, boolean> => {
+  const { network, endpoint } = useConnectionConfig();
   const [walletConfigStr, setWalletConfigStr] = usePersistedKVStore<
     string | null
   >("use-solana/wallet-config", null, storageAdapter);
