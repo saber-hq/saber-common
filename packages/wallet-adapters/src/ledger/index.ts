@@ -59,7 +59,7 @@ export class LedgerWalletAdapter extends BaseSignerWalletAdapter {
     return this._readyState;
   }
 
-  async connect(): Promise<void> {
+  async connect(args?: { account?: number; change?: number }): Promise<void> {
     try {
       if (this.connected || this.connecting) return;
       if (this._readyState === WalletReadyState.Unsupported)
@@ -77,6 +77,10 @@ export class LedgerWalletAdapter extends BaseSignerWalletAdapter {
 
       let publicKey: PublicKey;
       try {
+        if (args) {
+          const { account, change } = args;
+          this._derivationPath = getDerivationPath(account, change);
+        }
         publicKey = await getPublicKey(transport, this._derivationPath);
       } catch (e) {
         const error = e as Error;
@@ -169,6 +173,10 @@ export class LedgerWalletAdapter extends BaseSignerWalletAdapter {
       this.emit("error", e as WalletError);
       throw e;
     }
+  }
+
+  private _setDervationPath(path: Buffer) {
+    this._derivationPath = path;
   }
 
   private _disconnected = () => {
