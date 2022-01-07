@@ -2026,6 +2026,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ledgerhq/hw-transport-webhid@npm:^6.11.2, @ledgerhq/hw-transport-webhid@npm:^6.20.0":
+  version: 6.20.0
+  resolution: "@ledgerhq/hw-transport-webhid@npm:6.20.0"
+  dependencies:
+    "@ledgerhq/devices": ^6.20.0
+    "@ledgerhq/errors": ^6.10.0
+    "@ledgerhq/hw-transport": ^6.20.0
+    "@ledgerhq/logs": ^6.10.0
+  checksum: 3d98e9a4a7144ad891873562d2d93b7f30b0c081121bb4b2531b42679903c3b5b748bffec965f12551b1b35df05f287d9fdff4c58b94e4d1cb94cff69c86e8ae
+  languageName: node
+  linkType: hard
+
 "@ledgerhq/hw-transport-webusb@npm:^6.20.0":
   version: 6.20.0
   resolution: "@ledgerhq/hw-transport-webusb@npm:6.20.0"
@@ -2038,7 +2050,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport@npm:^6.20.0":
+"@ledgerhq/hw-transport@npm:^6.11.2, @ledgerhq/hw-transport@npm:^6.20.0":
   version: 6.20.0
   resolution: "@ledgerhq/hw-transport@npm:6.20.0"
   dependencies:
@@ -3361,6 +3373,14 @@ __metadata:
 "@saberhq/wallet-adapters@workspace:packages/wallet-adapters":
   version: 0.0.0-use.local
   resolution: "@saberhq/wallet-adapters@workspace:packages/wallet-adapters"
+  dependencies:
+    "@ledgerhq/hw-transport": ^6.20.0
+    "@ledgerhq/hw-transport-webhid": ^6.20.0
+    "@ledgerhq/hw-transport-webusb": ^6.20.0
+    "@solana/wallet-adapter-base": ^0.9.0
+    "@solana/wallet-adapter-ledger": ^0.9.0
+    "@types/node": ^17.0.8
+    tslib: ^2.3.1
   languageName: unknown
   linkType: soft
 
@@ -3455,6 +3475,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@solana/wallet-adapter-base@npm:^0.9.1":
+  version: 0.9.1
+  resolution: "@solana/wallet-adapter-base@npm:0.9.1"
+  dependencies:
+    "@solana/web3.js": ^1.20.0
+    eventemitter3: ^4.0.0
+  checksum: 70caae045a19202d78e6fe3d548bc750d90aa7e13028dfa26c91a2902d8e4a5b2b4936012469212a1adea4d67b09623322a016df4480883ad11c1cdb379d6ecb
+  languageName: node
+  linkType: hard
+
 "@solana/wallet-adapter-coin98@npm:^0.5.0":
   version: 0.5.0
   resolution: "@solana/wallet-adapter-coin98@npm:0.5.0"
@@ -3464,6 +3494,19 @@ __metadata:
     "@types/bs58": ^4.0.1
     bs58: ^4.0.1
   checksum: e09ae35ee29c577b916b82d9149dde7e43bed7188234a58875b4d55c46eadae2e094e682388d9ec30e9ceb85fc4d770e49e9226402edba9482a227e0c0536e58
+  languageName: node
+  linkType: hard
+
+"@solana/wallet-adapter-ledger@npm:^0.9.0":
+  version: 0.9.1
+  resolution: "@solana/wallet-adapter-ledger@npm:0.9.1"
+  dependencies:
+    "@ledgerhq/hw-transport": ^6.11.2
+    "@ledgerhq/hw-transport-webhid": ^6.11.2
+    "@solana/wallet-adapter-base": ^0.9.1
+    "@solana/web3.js": ^1.20.0
+    "@types/w3c-web-hid": ^1.0.2
+  checksum: 6e68fc8c31dbcc8e90f5089cd2f9e8d63fa14fbfd5b4f3c2052cdc281483e5bbf5ff5923b4261b9c97cda992c72fc7e7129d78d08d116d5deb70a822cd740c3e
   languageName: node
   linkType: hard
 
@@ -4076,6 +4119,13 @@ __metadata:
   version: 1.0.0
   resolution: "@types/treeify@npm:1.0.0"
   checksum: 1b2397030d13beee7f82b878ca80feeddb0d550a6b00d8be30082a370c0ac5985ecf7b9378cf93ea278ff00c3e900b416ae8d9379f2c7e8caecdece1dfc77380
+  languageName: node
+  linkType: hard
+
+"@types/w3c-web-hid@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@types/w3c-web-hid@npm:1.0.2"
+  checksum: 9abaa67ae239fa0ba77d9f8380618698fcfeb82973297ba18b526a629768d45e60a0505d64ccd8ec366f8f511abff7d82b408fd4f85da474dbf4c0018d373214
   languageName: node
   linkType: hard
 
@@ -7508,7 +7558,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:^4.0.4, eventemitter3@npm:^4.0.7":
+"eventemitter3@npm:^4.0.0, eventemitter3@npm:^4.0.4, eventemitter3@npm:^4.0.7":
   version: 4.0.7
   resolution: "eventemitter3@npm:4.0.7"
   checksum: 1875311c42fcfe9c707b2712c32664a245629b42bb0a5a84439762dd0fd637fc54d078155ea83c2af9e0323c9ac13687e03cfba79b03af9f40c89b4960099374

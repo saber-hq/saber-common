@@ -134,3 +134,6 @@ temp/
 !.yarn/sdks
 
 docs/
+
+# Editor configs
+.editorconfig
