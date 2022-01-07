@@ -33,7 +33,7 @@ export class SingleConnectionBroadcaster implements Broadcaster {
   ) {}
 
   async getRecentBlockhash(
-    commitment: Commitment = "recent"
+    commitment: Commitment = "processed"
   ): Promise<Blockhash> {
     const result = await this.sendConnection.getRecentBlockhash(commitment);
     return result.blockhash;
@@ -81,13 +81,13 @@ export class SingleConnectionBroadcaster implements Broadcaster {
   async simulate(
     tx: Transaction,
     {
-      commitment = "recent",
+      commitment = "processed",
       verifySigners = true,
     }: {
       commitment?: Commitment;
       verifySigners?: boolean;
     } = {
-      commitment: "recent",
+      commitment: "processed",
       verifySigners: true,
     }
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
