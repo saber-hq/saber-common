@@ -23,8 +23,8 @@ import type {
 import { TransactionEnvelope } from "./transaction/TransactionEnvelope";
 
 export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
-  preflightCommitment: "recent",
-  commitment: "recent",
+  preflightCommitment: "processed",
+  commitment: "processed",
 };
 
 /**
@@ -69,7 +69,7 @@ export class SolanaTransactionSigner implements TransactionSigner {
   constructor(
     readonly wallet: Wallet,
     readonly broadcaster: Broadcaster,
-    readonly preflightCommitment: Commitment = "recent"
+    readonly preflightCommitment: Commitment = "processed"
   ) {}
 
   get publicKey(): PublicKey {

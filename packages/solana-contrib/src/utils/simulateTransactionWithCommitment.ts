@@ -13,7 +13,7 @@ import { SendTransactionError } from "@solana/web3.js";
 export async function simulateTransactionWithCommitment(
   connection: Connection,
   transaction: Transaction,
-  commitment: Commitment = "recent"
+  commitment: Commitment = "processed"
 ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
   const connectionInner = connection as Connection & {
     _disableBlockhashCaching: boolean;
