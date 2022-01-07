@@ -175,10 +175,6 @@ export class LedgerWalletAdapter extends BaseSignerWalletAdapter {
     }
   }
 
-  private _setDervationPath(path: Buffer) {
-    this._derivationPath = path;
-  }
-
   private _disconnected = () => {
     const transport = this._transport;
     if (transport) {
