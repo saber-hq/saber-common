@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.23 (2022-01-10)
+
+
+### Features
+
+* default to using anchor.so for transaction inspection links ([b89a178](https://github.com/saber-hq/saber-common/commit/b89a178a621078304c61fcc2a1e53ebb6768f4ae))
+
+
+
+
+
 ## 1.12.22 (2022-01-10)
 
 
