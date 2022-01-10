@@ -3084,9 +3084,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@project-serum/anchor@npm:^0.19.1-beta.1":
-  version: 0.19.1-beta.1
-  resolution: "@project-serum/anchor@npm:0.19.1-beta.1"
+"@project-serum/anchor@npm:^0.20.1":
+  version: 0.20.1
+  resolution: "@project-serum/anchor@npm:0.20.1"
   dependencies:
     "@project-serum/borsh": ^0.2.2
     "@solana/web3.js": ^1.17.0
@@ -3102,7 +3102,7 @@ __metadata:
     pako: ^2.0.3
     snake-case: ^3.0.4
     toml: ^3.0.0
-  checksum: fc32f06d9760b2b20e36e9d6cee7ff56ef55ee8106e28a62da5b940923da44874dc0fdd695ebb66f0648f7783509f3c7a275d4561833af1cab77b13507a0dd34
+  checksum: b5468690df330d72e4cc5461faf3afd43c0383da004d8dda46ba11dbb092c1c754a694e8dd3d9094617040417d38ec1cb486113cfeb4465ce8ff3f184202238f
   languageName: node
   linkType: hard
 
@@ -3141,7 +3141,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/anchor-contrib@workspace:packages/anchor-contrib"
   dependencies:
-    "@project-serum/anchor": ^0.19.1-beta.1
+    "@project-serum/anchor": ^0.20.1
     "@saberhq/solana-contrib": ^1.12.20
     "@solana/web3.js": ^1.31.0
     "@types/lodash.camelcase": ^4.3.6
@@ -3160,7 +3160,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/chai-solana@workspace:packages/chai-solana"
   dependencies:
-    "@project-serum/anchor": ^0.19.1-beta.1
+    "@project-serum/anchor": ^0.20.1
     "@saberhq/solana-contrib": ^1.12.20
     "@saberhq/token-utils": ^1.12.20
     "@solana/web3.js": ^1.31.0
@@ -3222,7 +3222,7 @@ __metadata:
     "@babel/core": ^7.16.7
     "@babel/preset-env": ^7.16.7
     "@babel/preset-typescript": ^7.16.7
-    "@project-serum/anchor": ^0.19.1-beta.1
+    "@project-serum/anchor": ^0.20.1
     "@rushstack/eslint-patch": ^1.1.0
     "@saberhq/eslint-config": "*"
     "@saberhq/eslint-config-react": "*"

@@ -46,7 +46,7 @@
     "jsbi": "*"
   },
   "devDependencies": {
-    "@project-serum/anchor": "^0.19.1-beta.1",
+    "@project-serum/anchor": "^0.20.1",
     "@saberhq/solana-contrib": "^1.12.20",
     "@saberhq/token-utils": "^1.12.20",
     "@solana/web3.js": "^1.31.0",
