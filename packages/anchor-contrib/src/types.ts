@@ -141,10 +141,18 @@ type MakeArgs<A extends IdlField[], Defined> = {
     : unknown;
 };
 
+type MakeNamedArgs<A extends IdlField, Defined> = {
+  [K in A["name"]]: DecodeType<(A & { name: K })["type"], Defined>;
+};
+
 type MakeInstructions<I extends IdlInstruction[], Defined> = {
   [K in I[number]["name"]]: {
     accounts: (I[number] & { name: K })["accounts"];
     args: MakeArgs<(I[number] & { name: K })["args"], Defined> & unknown[];
+    namedArgs: MakeNamedArgs<
+      (I[number] & { name: K })["args"][number],
+      Defined
+    >;
   };
 };
 

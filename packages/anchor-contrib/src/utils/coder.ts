@@ -21,26 +21,27 @@ export type InstructionParsed = InstructionDisplay & {
   name: string;
 };
 
+type CoderAnchorTypes = {
+  AccountMap: Record<string, object>;
+  Events: Record<string, unknown>;
+  IDL: Idl;
+  Instructions: Record<
+    string,
+    {
+      accounts: IdlAccountItem[];
+      args: unknown[];
+      namedArgs: Record<string, unknown>;
+    }
+  >;
+  Program: unknown;
+};
+
 /**
  * Coder wrapper.
  *
  * Allows interacting with a program without a provider.
  */
-export class SuperCoder<
-  T extends {
-    AccountMap: Record<string, object>;
-    Events: Record<string, unknown>;
-    IDL: Idl;
-    Instructions: Record<
-      string,
-      {
-        accounts: IdlAccountItem[];
-        args: unknown[];
-      }
-    >;
-    Program: unknown;
-  }
-> {
+export class SuperCoder<T extends CoderAnchorTypes> {
   /**
    * Underlying Coder.
    */
@@ -58,6 +59,11 @@ export class SuperCoder<
    */
   readonly errorMap: ErrorMap<T["IDL"]>;
 
+  /**
+   * Constructor.
+   * @param address
+   * @param idl
+   */
   constructor(
     /**
      * Program address.
@@ -160,19 +166,7 @@ export class SuperCoder<
  */
 export const buildCoderMap = <
   P extends {
-    [K in keyof P]: {
-      AccountMap: Record<string, object>;
-      Events: Record<string, unknown>;
-      IDL: Idl;
-      Instructions: Record<
-        string,
-        {
-          accounts: IdlAccountItem[];
-          args: unknown[];
-        }
-      >;
-      Program: unknown;
-    };
+    [K in keyof P]: CoderAnchorTypes;
   }
 >(
   idls: {
