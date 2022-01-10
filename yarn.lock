@@ -3171,7 +3171,7 @@ __metadata:
     chai: ^4.3.4
     chai-as-promised: ^7.1.1
     chai-bn: ^0.3.0
-    colors: ^1.4.0
+    colors: ^1.4.2
     jsbi: ^4.1.0
     tslib: ^2.3.1
   peerDependencies:
@@ -3248,7 +3248,7 @@ __metadata:
     jest: ^27.4.7
     jsbi: ^4.1.0
     lerna: ^4.0.0
-    lint-staged: ^12.1.5
+    lint-staged: ^12.1.7
     prettier: ^2.5.1
     react: ^17.0.2
     size-limit: ^7.0.5
@@ -6208,10 +6208,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"colors@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "colors@npm:1.4.0"
-  checksum: 98aa2c2418ad87dedf25d781be69dc5fc5908e279d9d30c34d8b702e586a0474605b3a189511482b9d5ed0d20c867515d22749537f7bc546256c6014f3ebdcec
+"colors@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "colors@npm:1.4.2"
+  checksum: 94d0d40efd6f807e459056a359ff09419ac4f193b47711bc84038fefea7be3f2a9418d07086ec488543122ef5b552fdc87b50a1d874c0cc54823aabb5e8640a5
   languageName: node
   linkType: hard
 
@@ -10003,9 +10003,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^12.1.5":
-  version: 12.1.5
-  resolution: "lint-staged@npm:12.1.5"
+"lint-staged@npm:^12.1.7":
+  version: 12.1.7
+  resolution: "lint-staged@npm:12.1.7"
   dependencies:
     cli-truncate: ^3.1.0
     colorette: ^2.0.16
@@ -10022,7 +10022,7 @@ __metadata:
     yaml: ^1.10.2
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: e4d64e97769faf45adad9898c843ed8ef495469fc3edef0b8daff834ddb504ab47e33579763f8d85cbba6db993bd5cd86ac0bcaf92f6fd7486d4fb9a5fe774c6
+  checksum: 3d0757706c8b0ca3f004bb2ffa89a9d5fc97ccdebfa4cde29a9636c661538780e194b99cbc5e4b8b89b13986187b33c97e009b09014511bbd45ee05ba557d0eb
   languageName: node
   linkType: hard
 
