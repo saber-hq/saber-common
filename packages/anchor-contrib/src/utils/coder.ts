@@ -125,7 +125,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
     I extends T["Instructions"][K] = T["Instructions"][K]
   >(
     name: K,
-    args: I["args"],
+    args: I["namedArgs"],
     accounts: Accounts<I["accounts"][number]>
   ): TransactionInstruction {
     const idlIx = this.idl.instructions.find((ix) => ix.name === name);
