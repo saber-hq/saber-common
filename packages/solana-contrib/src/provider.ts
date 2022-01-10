@@ -12,7 +12,11 @@ import type {
 } from "@solana/web3.js";
 
 import type { Broadcaster, ReadonlyProvider } from ".";
-import { PendingTransaction, SignerWallet } from ".";
+import {
+  MultipleConnectionBroadcaster,
+  PendingTransaction,
+  SignerWallet,
+} from ".";
 import { SingleConnectionBroadcaster } from "./broadcaster";
 import type {
   Provider,
@@ -175,6 +179,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
 
   /**
    * Creates a new SolanaProvider.
+   * @deprecated use {@link SolanaProvider.init}
    */
   static load({
     connection,
@@ -202,6 +207,40 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     return new SolanaProvider(
       connection,
       new SingleConnectionBroadcaster(sendConnection, opts),
+      wallet,
+      opts
+    );
+  }
+
+  /**
+   * Initializes a new SolanaProvider.
+   */
+  static init({
+    connection,
+    broadcastConnections = [connection],
+    wallet,
+    opts = DEFAULT_PROVIDER_OPTIONS,
+  }: {
+    /**
+     * Connection used for general reads
+     */
+    readonly connection: Connection;
+    /**
+     * Connections used for broadcasting transactions. Defaults to the read connection.
+     */
+    readonly broadcastConnections?: readonly Connection[];
+    /**
+     * Wallet used for signing transactions
+     */
+    readonly wallet: Wallet;
+    /**
+     * Confirmation options
+     */
+    readonly opts?: ConfirmOptions;
+  }): SolanaProvider {
+    return new SolanaProvider(
+      connection,
+      new MultipleConnectionBroadcaster(broadcastConnections, opts),
       wallet,
       opts
     );
