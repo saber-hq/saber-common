@@ -3333,14 +3333,14 @@ __metadata:
     "@ledgerhq/hw-transport": ^6.20.0
     "@ledgerhq/hw-transport-webusb": ^6.20.0
     "@saberhq/solana-contrib": ^1.12.20
-    "@solana/wallet-adapter-base": ^0.9.0
-    "@solana/wallet-adapter-coin98": ^0.5.0
-    "@solana/wallet-adapter-mathwallet": ^0.9.0
-    "@solana/wallet-adapter-phantom": ^0.9.0
-    "@solana/wallet-adapter-slope": ^0.5.0
-    "@solana/wallet-adapter-solflare": ^0.6.0
-    "@solana/wallet-adapter-sollet": ^0.10.1
-    "@solana/wallet-adapter-solong": ^0.9.0
+    "@solana/wallet-adapter-base": ^0.9.1
+    "@solana/wallet-adapter-coin98": ^0.5.1
+    "@solana/wallet-adapter-mathwallet": ^0.9.1
+    "@solana/wallet-adapter-phantom": ^0.9.1
+    "@solana/wallet-adapter-slope": ^0.5.1
+    "@solana/wallet-adapter-solflare": ^0.6.1
+    "@solana/wallet-adapter-sollet": ^0.10.2
+    "@solana/wallet-adapter-solong": ^0.9.1
     "@solana/web3.js": ^1.31.0
     "@types/bs58": ^4.0.1
     "@types/node": ^16.11.19
@@ -3439,88 +3439,88 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/wallet-adapter-base@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "@solana/wallet-adapter-base@npm:0.9.0"
+"@solana/wallet-adapter-base@npm:^0.9.1":
+  version: 0.9.1
+  resolution: "@solana/wallet-adapter-base@npm:0.9.1"
   dependencies:
     "@solana/web3.js": ^1.20.0
-    eventemitter3: ^4.0.7
-  checksum: e06788a5070412f25e38487e0549bd0bce33d1dcdede05a004775f781ae280c8300bdbc76450ddffa2c831bdce91bfbbdadaa0e8c6cc05e2c3bc7b4052591205
+    eventemitter3: ^4.0.0
+  checksum: 70caae045a19202d78e6fe3d548bc750d90aa7e13028dfa26c91a2902d8e4a5b2b4936012469212a1adea4d67b09623322a016df4480883ad11c1cdb379d6ecb
   languageName: node
   linkType: hard
 
-"@solana/wallet-adapter-coin98@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "@solana/wallet-adapter-coin98@npm:0.5.0"
+"@solana/wallet-adapter-coin98@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@solana/wallet-adapter-coin98@npm:0.5.1"
   dependencies:
-    "@solana/wallet-adapter-base": ^0.9.0
-    "@solana/web3.js": ^1.20.0
-    "@types/bs58": ^4.0.1
-    bs58: ^4.0.1
-  checksum: e09ae35ee29c577b916b82d9149dde7e43bed7188234a58875b4d55c46eadae2e094e682388d9ec30e9ceb85fc4d770e49e9226402edba9482a227e0c0536e58
-  languageName: node
-  linkType: hard
-
-"@solana/wallet-adapter-mathwallet@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "@solana/wallet-adapter-mathwallet@npm:0.9.0"
-  dependencies:
-    "@solana/wallet-adapter-base": ^0.9.0
-    "@solana/web3.js": ^1.20.0
-  checksum: 2e8e9468bf63d8b69a5034dff6999824293144c362e0c13ab4d943c7582ae45288c91b10329621ba1d91052f22faf433144416b29b1007b604ba9557451d8667
-  languageName: node
-  linkType: hard
-
-"@solana/wallet-adapter-phantom@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "@solana/wallet-adapter-phantom@npm:0.9.0"
-  dependencies:
-    "@solana/wallet-adapter-base": ^0.9.0
-    "@solana/web3.js": ^1.20.0
-  checksum: 3546b8415aeaf8ab776f272b2179921902dede9cba8e11a1a8fd1a72ef50eed65f0ebd29aa426261bd3e20f0f756fc228a79959af82ea40c190ba265e0c9381a
-  languageName: node
-  linkType: hard
-
-"@solana/wallet-adapter-slope@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "@solana/wallet-adapter-slope@npm:0.5.0"
-  dependencies:
-    "@solana/wallet-adapter-base": ^0.9.0
+    "@solana/wallet-adapter-base": ^0.9.1
     "@solana/web3.js": ^1.20.0
     "@types/bs58": ^4.0.1
-    bs58: ^4.0.1
-  checksum: fa1a916ef83411baf94019229266da57cdb365a33463711d4595d537446917b13bbcb523537edad096f062cd41db8e15b1f5476f808fdf68ffe98b2de34870ff
+    bs58: ^4.0.0
+  checksum: b9a86531491a540d56b653b8bb471e233efeffb216a8a27cbfe462038d18b9027a73de09eee267a607bab9b75fda634ae2a1973121d60c3ed00015e96e0d3f07
   languageName: node
   linkType: hard
 
-"@solana/wallet-adapter-solflare@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "@solana/wallet-adapter-solflare@npm:0.6.0"
+"@solana/wallet-adapter-mathwallet@npm:^0.9.1":
+  version: 0.9.1
+  resolution: "@solana/wallet-adapter-mathwallet@npm:0.9.1"
   dependencies:
-    "@solana/wallet-adapter-base": ^0.9.0
+    "@solana/wallet-adapter-base": ^0.9.1
     "@solana/web3.js": ^1.20.0
-  checksum: 845bd79f3ec5ab41bb1c22a26fca270961e945722d47a9dd903c650e16fe12428706583092c43ff99d1c12a58169ef5357d9536c2d0044a8f6a7ca2c56295d9a
+  checksum: 293b765019cfee4b6dd76dd4801d72c012bcb5b37b032e7fefd2a5eab2e34471aa2a52b23cf1361c4417e157063cc8287cbdb1ee64a901d451d7e0ef4924ef3f
   languageName: node
   linkType: hard
 
-"@solana/wallet-adapter-sollet@npm:^0.10.1":
-  version: 0.10.1
-  resolution: "@solana/wallet-adapter-sollet@npm:0.10.1"
+"@solana/wallet-adapter-phantom@npm:^0.9.1":
+  version: 0.9.1
+  resolution: "@solana/wallet-adapter-phantom@npm:0.9.1"
+  dependencies:
+    "@solana/wallet-adapter-base": ^0.9.1
+    "@solana/web3.js": ^1.20.0
+  checksum: 025e5a6fef15b7d05b86252387fada6b404ba1dff6367ab8ed54584b1a5d75be97852c0e86a6fa6fe485df386f22a662edb961cecc0ae1a695157df485fc7a02
+  languageName: node
+  linkType: hard
+
+"@solana/wallet-adapter-slope@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@solana/wallet-adapter-slope@npm:0.5.1"
+  dependencies:
+    "@solana/wallet-adapter-base": ^0.9.1
+    "@solana/web3.js": ^1.20.0
+    "@types/bs58": ^4.0.1
+    bs58: ^4.0.0
+  checksum: 51fda1129b74df8a62071240f1aefcc4e3357b0667ff3040753805bf1daffcb728dab7c09422de5c876b5aa1f0d63784af68389acb1ccd3faca941983d778a5a
+  languageName: node
+  linkType: hard
+
+"@solana/wallet-adapter-solflare@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "@solana/wallet-adapter-solflare@npm:0.6.1"
+  dependencies:
+    "@solana/wallet-adapter-base": ^0.9.1
+    "@solana/web3.js": ^1.20.0
+  checksum: bdb8c8cfb5372208dfff262dbd6d2950af9ad57eb79631b35521741f69d58dd6655d52d4c5983936f27480c2eac006737294f5e8bf671ecd1c35fd5735177574
+  languageName: node
+  linkType: hard
+
+"@solana/wallet-adapter-sollet@npm:^0.10.2":
+  version: 0.10.2
+  resolution: "@solana/wallet-adapter-sollet@npm:0.10.2"
   dependencies:
     "@project-serum/sol-wallet-adapter": ^0.2.6
-    "@solana/wallet-adapter-base": ^0.9.0
+    "@solana/wallet-adapter-base": ^0.9.1
     "@solana/web3.js": ^1.20.0
-  checksum: bdaf8a733be45906b71de7e082be403cb19172a229296cd92cddc001d71341e644bf80d841253da3064415b6d22ec9d221398edc72791c09eaf6ae6912b7cc62
+  checksum: 916d70dea251326782ebb3609f1b58969c3c8c62788f6e81b5ed1b04bf2ae822a12309790fb49367aa10d02fd0d90b23ba99e8af53d242dbf63d4fc3e1e9f1b9
   languageName: node
   linkType: hard
 
-"@solana/wallet-adapter-solong@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "@solana/wallet-adapter-solong@npm:0.9.0"
+"@solana/wallet-adapter-solong@npm:^0.9.1":
+  version: 0.9.1
+  resolution: "@solana/wallet-adapter-solong@npm:0.9.1"
   dependencies:
-    "@solana/wallet-adapter-base": ^0.9.0
+    "@solana/wallet-adapter-base": ^0.9.1
     "@solana/web3.js": ^1.20.0
-  checksum: f1ae0c4dbcfa2545de0836165cc35491e5a964746f403ec9db79467ed76660d85cd865f54423fe8bb694c9d677fb6e9fc5ae088a79e7623aa03eee345db7e2be
+  checksum: 22604c773bd7cf3b1ae56abf069fedc7a19f6caec72f9a28b2e883b53066b7f16b55d3a44d92a51008990d5b091dfdd1e729242c1d78d3bc9b98391d90497571
   languageName: node
   linkType: hard
 
@@ -7519,7 +7519,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:^4.0.4, eventemitter3@npm:^4.0.7":
+"eventemitter3@npm:^4.0.0, eventemitter3@npm:^4.0.4, eventemitter3@npm:^4.0.7":
   version: 4.0.7
   resolution: "eventemitter3@npm:4.0.7"
   checksum: 1875311c42fcfe9c707b2712c32664a245629b42bb0a5a84439762dd0fd637fc54d078155ea83c2af9e0323c9ac13687e03cfba79b03af9f40c89b4960099374
