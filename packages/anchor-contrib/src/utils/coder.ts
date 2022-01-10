@@ -1,5 +1,5 @@
 import type { Accounts, Idl } from "@project-serum/anchor";
-import { Coder, EventParser } from "@project-serum/anchor";
+import { AccountsCoder, Coder, EventParser } from "@project-serum/anchor";
 import type { InstructionDisplay } from "@project-serum/anchor/dist/cjs/coder/instruction";
 import type { IdlAccountItem } from "@project-serum/anchor/dist/cjs/idl";
 import InstructionNamespaceFactory from "@project-serum/anchor/dist/cjs/program/namespace/instruction";
@@ -58,6 +58,12 @@ export class SuperCoder<T extends CoderAnchorTypes> {
    * Mapping of error name to error details.
    */
   readonly errorMap: ErrorMap<T["IDL"]>;
+  /**
+   * Mapping of hex discriminator to the account name.
+   */
+  readonly discriminators: {
+    [hexDiscriminator: string]: string;
+  };
 
   /**
    * Constructor.
@@ -81,6 +87,14 @@ export class SuperCoder<T extends CoderAnchorTypes> {
       this.coder.accounts
     );
     this.errorMap = generateErrorMap<T["IDL"]>(idl);
+    this.discriminators = (
+      idl.accounts?.map((account) => ({
+        name: account.name,
+        discriminator: AccountsCoder.accountDiscriminator(
+          account.name
+        ).toString("hex"),
+      })) ?? []
+    ).reduce((acc, el) => ({ ...acc, [el.discriminator]: el.name }), {});
   }
 
   /**
