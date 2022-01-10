@@ -17,6 +17,7 @@ import {
   COIN98,
   FILE,
   LEDGER,
+  MAGNIFYING_GLASS,
   MATHWALLET,
   PHANTOM,
   SLOPE,
@@ -150,7 +151,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
   [DefaultWalletType.ReadOnly]: {
     name: "Debug",
     url: "https://github.com/saber-hq/saber-common",
-    icon: "https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg",
+    icon: MAGNIFYING_GLASS,
     makeAdapter: () => new ReadonlyAdapter(),
     isInstalled: () =>
       !!process.env.LOCAL_PUBKEY || !!process.env.REACT_APP_LOCAL_PUBKEY,

@@ -6,21 +6,36 @@ import { TransactionEnvelope } from "..";
 
 /**
  * Takes in a simulation result of a transaction and prints it in a cool table.
+ * ```
+ *    ┌─────┬───┬───┬───┬───────────┬──────┬─────┬──────┬───┐
+ *    │index│iso│mar│cum│ programId │quota │used │ left │CPI│
+ *    ├─────┼───┼───┼───┼───────────┼──────┼─────┼──────┼───┤
+ *    │  0  │298│281│464│'ATokenG..'│200000│24270│175730│ 1 │
+ *    │  1  │298│ 74│538│'ATokenG..'│178730│21270│157460│ 1 │
+ *    │  2  │298│ 74│612│'ATokenG..'│157460│27277│130183│ 1 │
+ *    │  3  │298│ 42│686│'ATokenG..'│130183│21270│108913│ 1 │
+ *    │  4  │338│265│951│'qExampL..'│108913│76289│ 32624│ 3 │
+ *    └─────┴───┴───┴───┴───────────┴──────┴─────┴──────┴───┘
+ * ```
  *
- * For details about how the table works, see documentation for expectTXTable
- * in @saberhq/chai-solana.
+ * - **index**: the array index of the instruction within the transaction
+ * - **iso**: the isolated size of the instruction (marginal cost of only the instruction)
+ * - **mar**: the marginal size cost of the instruction (when added to previous)
+ * - **cum**: the cumulative size of the instructions up until that instruction
+ * - **quota/used/left**: [BPF instruction compute unit info](https://docs.solana.com/developing/programming-model/runtime)
+ * - **CPI**: [the maximum depth of CPI](https://docs.solana.com/developing/programming-model/calling-between-programs) (current limit in Solana is 4)
  *
- * This can be safely used in a browser since it is only parsing logs.
- * For usage, see expectTXTable.
+ * Safe for browser usage. Can be conveniently run with txEnvelope.simulateTable()
  */
 export const printTXTable = (
   tx: TransactionEnvelope,
   transactionLogs: string[],
   message: string
 ) => {
-  if (message) {
-    console.log();
+  if (message && message !== "") {
     console.log(estimateTransactionSize(tx), message);
+  } else {
+    console.log("Transaction size:", estimateTransactionSize(tx));
   }
 
   const computeUnitLogStack: string[] = [];
