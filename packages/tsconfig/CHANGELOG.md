@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.22 (2022-01-10)
+
+
+### Features
+
+* adds hex discriminator mapping to account names ([9acef8e](https://github.com/saber-hq/saber-common/commit/9acef8e795c29ba40abee724d10d043c725076fc))
+
+
+
+
+
 ## 1.12.21 (2022-01-10)
 
 **Note:** Version bump only for package @saberhq/tsconfig

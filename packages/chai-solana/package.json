@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/chai-solana",
-  "version": "1.12.21",
+  "version": "1.12.22",
   "description": "Solana Chai helpers",
   "author": "Ian Macalinao <ian@saber.so>",
   "homepage": "https://github.com/saber-hq/saber-common#readme",
@@ -47,8 +47,8 @@
   },
   "devDependencies": {
     "@project-serum/anchor": "^0.20.1",
-    "@saberhq/solana-contrib": "^1.12.21",
-    "@saberhq/token-utils": "^1.12.21",
+    "@saberhq/solana-contrib": "^1.12.22",
+    "@saberhq/token-utils": "^1.12.22",
     "@solana/web3.js": "^1.31.0",
     "bn.js": "^5.2.0",
     "jsbi": "^4.1.0"
