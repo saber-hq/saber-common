@@ -66,9 +66,9 @@ export const generateInspectLinkFromBase64 = (
   cluster: Cluster,
   base64TX: string
 ): string => {
-  return `https://explorer.solana.com/tx/inspector?cluster=${cluster}&message=${encodeURIComponent(
-    base64TX
-  )}`;
+  return `https://${
+    cluster === "mainnet-beta" ? "" : `${cluster}.`
+  }anchor.so/tx/inspector?message=${encodeURIComponent(base64TX)}`;
 };
 
 /**
