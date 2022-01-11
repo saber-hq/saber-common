@@ -8,7 +8,7 @@ import type {
   TransactionInstruction,
 } from "@solana/web3.js";
 import { PACKET_DATA_SIZE, Transaction } from "@solana/web3.js";
-import { chunk } from "lodash";
+import chunk from "lodash.chunk";
 
 import type { BroadcastOptions } from "..";
 import { printTXTable } from "..";
