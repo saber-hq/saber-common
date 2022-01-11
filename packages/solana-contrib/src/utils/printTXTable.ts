@@ -1,4 +1,8 @@
-import type { Signer, TransactionInstruction } from "@solana/web3.js";
+import type {
+  Signer,
+  Transaction,
+  TransactionInstruction,
+} from "@solana/web3.js";
 import { Keypair, SystemProgram } from "@solana/web3.js";
 
 import type { Provider } from "..";
@@ -100,6 +104,20 @@ export const printTXTable = (
   console.table(instructionTable);
 };
 
+export class TXSizeEstimationError extends Error {
+  constructor(readonly underlyingError: unknown) {
+    super(`could not estimate transaction size`);
+    this.name = "TXSizeEstimationError";
+  }
+}
+
+export class EstimatedTXTooBigError extends Error {
+  constructor(readonly tx: Transaction, readonly underlyingError: unknown) {
+    super(`Transaction size too big to be estimated`);
+    this.name = "EstimatedTXTooBigError";
+  }
+}
+
 /**
  * Builds a transaction and estimates the size in bytes. This number is primrily
  * to be used for checking to see if a transaction is too big and instructions
@@ -117,36 +135,18 @@ export const printTXTable = (
 export const estimateTransactionSize = (
   txEnvelope: TransactionEnvelope
 ): number => {
-  // Hide the console.error because txEnvelope.build() emits noisy errors as a
-  // side effect. There are use cases of estimateTransactionSize where we
-  // frequently build transactions that are likely too big.
-  const oldConsoleError = console.error;
-  console.error = () => {
-    return;
-  };
-  try {
-    const builtTx = txEnvelope.build();
-    // dummy blockhash that is required for building the transaction
-    builtTx.recentBlockhash = "MaryHadALittLeLambZNdhAUTrsLE1ydg6rmtvFEpKT";
-
-    const fs = getFakeSigner();
-    builtTx.feePayer = fs.publicKey;
-    builtTx.sign(fs);
-
-    try {
-      const result = builtTx.serialize({ verifySignatures: false });
-      console.error = oldConsoleError;
-      return result.length;
-    } catch (e) {
-      console.error = oldConsoleError;
-      // console.error(e);
-      return 8888;
-    }
-  } catch (e) {
-    console.error = oldConsoleError;
-    console.error(e);
+  const result = txEnvelope.estimateSize();
+  if ("size" in result) {
+    return result.size;
+  }
+  if (result.error instanceof TXSizeEstimationError) {
+    console.error(
+      "Unknown error estimating transaction size",
+      result.error.underlyingError
+    );
     return 9999;
   }
+  return 8888;
 };
 
 /**

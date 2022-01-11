@@ -7,11 +7,16 @@ import type {
   SimulatedTransactionResponse,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { PACKET_DATA_SIZE, Transaction } from "@solana/web3.js";
+import { Keypair, PACKET_DATA_SIZE, Transaction } from "@solana/web3.js";
 import chunk from "lodash.chunk";
 
 import type { BroadcastOptions } from "..";
-import { printTXTable } from "..";
+import {
+  EstimatedTXTooBigError,
+  printTXTable,
+  suppressConsoleError,
+  TXSizeEstimationError,
+} from "..";
 import type { Provider } from "../interfaces";
 import type { PendingTransaction } from "./PendingTransaction";
 import type { TransactionReceipt } from "./TransactionReceipt";
@@ -79,6 +84,44 @@ export class TransactionEnvelope {
     const tx = new Transaction().add(...this.instructions);
     tx.feePayer = feePayer;
     return tx;
+  }
+
+  /**
+   * Builds a transaction and estimates the size in bytes. This number is primrily
+   * to be used for checking to see if a transaction is too big and instructions
+   * need to be split. It may not be 100% accurate.
+   *
+   * This is used in expectTXTable and is useful for increasing efficiency in
+   * dapps that build large transactions.
+   *
+   * The max transaction size of a v1 Transaction in Solana is 1232 bytes.
+   * For info about Transaction v2: https://docs.solana.com/proposals/transactions-v2
+   */
+  estimateSize():
+    | { size: number }
+    | {
+        error: EstimatedTXTooBigError | TXSizeEstimationError;
+      } {
+    return suppressConsoleError(() => {
+      try {
+        const builtTx = this.build();
+        // dummy blockhash that is required for building the transaction
+        builtTx.recentBlockhash = "MaryHadALittLeLambZNdhAUTrsLE1ydg6rmtvFEpKT";
+
+        const fs = getFakeSigner();
+        builtTx.feePayer = fs.publicKey;
+        builtTx.sign(fs);
+
+        try {
+          const result = builtTx.serialize({ verifySignatures: false });
+          return { size: result.length };
+        } catch (e) {
+          return { error: new EstimatedTXTooBigError(builtTx, e) };
+        }
+      } catch (e) {
+        return { error: new TXSizeEstimationError(e) };
+      }
+    });
   }
 
   /**
@@ -327,3 +370,14 @@ export class TransactionEnvelope {
     );
   }
 }
+
+let lazyFakeSigner: Signer | undefined = undefined;
+/**
+ * Fake signer used for simulating things. Generated lazily.
+ */
+const getFakeSigner = (): Signer => {
+  if (!lazyFakeSigner) {
+    lazyFakeSigner = Keypair.generate();
+  }
+  return lazyFakeSigner;
+};
