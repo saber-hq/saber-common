@@ -7,7 +7,8 @@ import type {
   SimulatedTransactionResponse,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { Transaction } from "@solana/web3.js";
+import { PACKET_DATA_SIZE, Transaction } from "@solana/web3.js";
+import chunk from "lodash.chunk";
 
 import type { BroadcastOptions } from "..";
 import { printTXTable } from "..";
@@ -78,6 +79,30 @@ export class TransactionEnvelope {
     const tx = new Transaction().add(...this.instructions);
     tx.feePayer = feePayer;
     return tx;
+  }
+
+  /**
+   * Partition a large transaction envelope into smaller transaction envelopes.
+   * @param cluster
+   * @returns
+   */
+  partition(
+    feePayer: PublicKey = this.provider.wallet.publicKey
+  ): TransactionEnvelope[] {
+    const serializedTx = this.build(feePayer).serialize({
+      requireAllSignatures: false,
+      verifySignatures: false,
+    });
+    if (serializedTx.length <= PACKET_DATA_SIZE) {
+      return [this];
+    }
+
+    // TODO(michael): This is very naive partitioning, we can do better!
+    const chunks = Math.floor(serializedTx.length / PACKET_DATA_SIZE) + 1;
+    const ixChunks = chunk(this.instructions, chunks);
+    return ixChunks.map(
+      (chunk) => new TransactionEnvelope(this.provider, chunk, this.signers)
+    );
   }
 
   /**
