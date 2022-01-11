@@ -112,8 +112,8 @@ export class TXSizeEstimationError extends Error {
 }
 
 export class EstimatedTXTooBigError extends Error {
-  constructor(readonly tx: Transaction, readonly underlyingError: unknown) {
-    super(`Transaction size too big to be estimated`);
+  constructor(readonly tx: Transaction, readonly size: number) {
+    super(`Transaction too large`);
     this.name = "EstimatedTXTooBigError";
   }
 }

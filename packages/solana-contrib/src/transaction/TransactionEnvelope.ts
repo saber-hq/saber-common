@@ -7,8 +7,7 @@ import type {
   SimulatedTransactionResponse,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { Keypair, PACKET_DATA_SIZE, Transaction } from "@solana/web3.js";
-import chunk from "lodash.chunk";
+import { PACKET_DATA_SIZE, Transaction } from "@solana/web3.js";
 
 import type { BroadcastOptions } from "..";
 import {
@@ -20,6 +19,7 @@ import {
 import type { Provider } from "../interfaces";
 import type { PendingTransaction } from "./PendingTransaction";
 import type { TransactionReceipt } from "./TransactionReceipt";
+import { calculateTxSizeUnsafe } from "./txSizer";
 import type { SerializableInstruction } from "./utils";
 import { generateInspectLinkFromBase64, RECENT_BLOCKHASH_STUB } from "./utils";
 
@@ -87,6 +87,20 @@ export class TransactionEnvelope {
   }
 
   /**
+   * Builds a transaction and estimates the size in bytes.
+   * Does not check to see if the transaction is too big.
+   *
+   * @returns Byte count
+   */
+  estimateSizeUnsafe(): number {
+    const builtTx = this.build();
+    // dummy blockhash that is required for building the transaction
+    builtTx.recentBlockhash = "MaryHadALittLeLambZNdhAUTrsLE1ydg6rmtvFEpKT";
+
+    return calculateTxSizeUnsafe(builtTx);
+  }
+
+  /**
    * Builds a transaction and estimates the size in bytes. This number is primrily
    * to be used for checking to see if a transaction is too big and instructions
    * need to be split. It may not be 100% accurate.
@@ -108,16 +122,11 @@ export class TransactionEnvelope {
         // dummy blockhash that is required for building the transaction
         builtTx.recentBlockhash = "MaryHadALittLeLambZNdhAUTrsLE1ydg6rmtvFEpKT";
 
-        const fs = getFakeSigner();
-        builtTx.feePayer = fs.publicKey;
-        builtTx.sign(fs);
-
-        try {
-          const result = builtTx.serialize({ verifySignatures: false });
-          return { size: result.length };
-        } catch (e) {
-          return { error: new EstimatedTXTooBigError(builtTx, e) };
+        const size = calculateTxSizeUnsafe(builtTx);
+        if (size > PACKET_DATA_SIZE) {
+          return { error: new EstimatedTXTooBigError(builtTx, size) };
         }
+        return { size };
       } catch (e) {
         return { error: new TXSizeEstimationError(e) };
       }
@@ -125,26 +134,81 @@ export class TransactionEnvelope {
   }
 
   /**
-   * Partition a large transaction envelope into smaller transaction envelopes.
+   * Partition a large {@link TransactionEnvelope} into smaller transaction envelopes.
+   * This relies on this envelope already having the correct number of signers.
+   *
    * @param cluster
    * @returns
    */
-  partition(
-    feePayer: PublicKey = this.provider.wallet.publicKey
-  ): TransactionEnvelope[] {
-    const serializedTx = this.build(feePayer).serialize({
-      requireAllSignatures: false,
-      verifySignatures: false,
-    });
-    if (serializedTx.length <= PACKET_DATA_SIZE) {
+  partition(): TransactionEnvelope[] {
+    const estimation = this.estimateSize();
+    if ("size" in estimation) {
       return [this];
     }
 
-    // TODO(michael): This is very naive partitioning, we can do better!
-    const chunks = Math.floor(serializedTx.length / PACKET_DATA_SIZE) + 1;
-    const ixChunks = chunk(this.instructions, chunks);
-    return ixChunks.map(
-      (chunk) => new TransactionEnvelope(this.provider, chunk, this.signers)
+    // empty partition should have no envelopes
+    if (this.instructions.length === 0) {
+      return [];
+    }
+
+    let lastTXEnv: TransactionEnvelope = new TransactionEnvelope(
+      this.provider,
+      this.instructions.slice(0, 1),
+      this._filterRequiredSigners(this.instructions.slice(0, 1))
+    );
+    let lastEstimation: number = lastTXEnv.estimateSizeUnsafe();
+
+    const txs: TransactionEnvelope[] = [];
+
+    this.instructions.forEach((ix, i) => {
+      if (lastEstimation > PACKET_DATA_SIZE) {
+        throw new Error(
+          `cannot construct a valid partition: instruction ${i} is too large`
+        );
+      }
+
+      const nextIXs = [...lastTXEnv.instructions, ix];
+      const nextSigners = this._filterRequiredSigners(nextIXs);
+
+      const nextTXEnv = new TransactionEnvelope(
+        this.provider,
+        nextIXs,
+        nextSigners
+      );
+      const nextEstimation = lastTXEnv.estimateSizeUnsafe();
+
+      // move to next tx envelope if too big
+      if (lastEstimation > PACKET_DATA_SIZE) {
+        txs.push(lastTXEnv);
+        lastTXEnv = new TransactionEnvelope(
+          this.provider,
+          [ix],
+          this._filterRequiredSigners([ix])
+        );
+        lastEstimation = nextTXEnv.estimateSizeUnsafe();
+      } else {
+        lastTXEnv = nextTXEnv;
+        lastEstimation = nextEstimation;
+      }
+    });
+
+    txs.push(lastTXEnv);
+
+    return txs;
+  }
+
+  /**
+   * Filters the required signers for a list of instructions.
+   * @param ixs
+   * @returns
+   */
+  private _filterRequiredSigners(ixs: TransactionInstruction[]): Signer[] {
+    // filter out the signers required for the transaction
+    const requiredSigners = ixs.flatMap((ix) =>
+      ix.keys.filter((k) => k.isSigner).map((k) => k.pubkey)
+    );
+    return this.signers.filter((s) =>
+      requiredSigners.find((rs) => rs.equals(s.publicKey))
     );
   }
 
@@ -370,14 +434,3 @@ export class TransactionEnvelope {
     );
   }
 }
-
-let lazyFakeSigner: Signer | undefined = undefined;
-/**
- * Fake signer used for simulating things. Generated lazily.
- */
-const getFakeSigner = (): Signer => {
-  if (!lazyFakeSigner) {
-    lazyFakeSigner = Keypair.generate();
-  }
-  return lazyFakeSigner;
-};
