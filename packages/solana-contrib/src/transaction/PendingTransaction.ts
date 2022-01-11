@@ -9,6 +9,20 @@ import type { OperationOptions } from "retry";
 import { TransactionReceipt } from "../transaction";
 
 /**
+ * Options for awaiting a transaction confirmation.
+ */
+export interface TransactionWaitOptions extends OperationOptions {
+  /**
+   * Commitment of the transaction. Defaults to `confirmed`.
+   */
+  readonly commitment?: Finality;
+  /**
+   * Whether or not to use websockets for awaiting confirmation. Defaults to `false`.
+   */
+  readonly useWebsocket?: boolean;
+}
+
+/**
  * Transaction which may or may not be confirmed.
  */
 export class PendingTransaction {
@@ -32,19 +46,32 @@ export class PendingTransaction {
    * Waits for the confirmation of the transaction, via polling.
    * @returns
    */
-  async wait(
-    {
-      commitment = "confirmed",
-      ...retryOpts
-    }: OperationOptions & {
-      commitment: Finality;
-    } = {
-      commitment: "confirmed",
-    }
-  ): Promise<TransactionReceipt> {
+  async wait({
+    commitment = "confirmed",
+    useWebsocket = false,
+    ...retryOpts
+  }: TransactionWaitOptions = {}): Promise<TransactionReceipt> {
     if (this._receipt) {
       return this._receipt;
     }
+    if (useWebsocket) {
+      await this.awaitSignatureConfirmation(commitment);
+      return await this.pollForReceipt({ commitment });
+    }
+    return await this.pollForReceipt({ commitment, ...retryOpts });
+  }
+
+  /**
+   * Fetches the TransactionReceipt via polling.
+   * @returns
+   */
+  async pollForReceipt({
+    commitment = "confirmed",
+    ...retryOpts
+  }: Omit<
+    TransactionWaitOptions,
+    "useWebsocket"
+  > = {}): Promise<TransactionReceipt> {
     const receipt = await promiseRetry(
       async (retry) => {
         const result = await this.connection.getTransaction(this.signature, {
@@ -67,5 +94,22 @@ export class PendingTransaction {
     }
     this._receipt = receipt;
     return receipt;
+  }
+
+  /**
+   * Awaits the confirmation of the transaction, via onSignature subscription.
+   * @returns
+   */
+  async awaitSignatureConfirmation(
+    commitment: Finality = "confirmed"
+  ): Promise<TransactionSignature> {
+    const { value } = await this.connection.confirmTransaction(
+      this.signature,
+      commitment
+    );
+    if (value.err) {
+      throw value.err;
+    }
+    return this.signature;
   }
 }
