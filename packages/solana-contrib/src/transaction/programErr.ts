@@ -4,7 +4,10 @@
 
 import type { TransactionError } from "@solana/web3.js";
 
-const instructionErrorMessage: Map<string, string> = new Map([
+/**
+ * Solana error messages built-in.
+ */
+export const BUILTIN_SOLANA_ERROR_MESSAGES: Map<string, string> = new Map([
   ["GenericError", "generic instruction error"],
   ["InvalidArgument", "invalid program argument"],
   ["InvalidInstructionData", "invalid instruction data"],
@@ -128,15 +131,15 @@ function getInstructionError(error: unknown): string {
   let value: string | null = null;
 
   if (typeof error === "string") {
-    const message = instructionErrorMessage.get(error);
+    const message = BUILTIN_SOLANA_ERROR_MESSAGES.get(error);
     if (message) {
       return message;
     }
   } else if ("Custom" in (error as Record<string, string>)) {
-    out = instructionErrorMessage.get("Custom");
+    out = BUILTIN_SOLANA_ERROR_MESSAGES.get("Custom");
     value = (error as { Custom: string })["Custom"];
   } else if ("BorshIoError" in (error as Record<string, string>)) {
-    out = instructionErrorMessage.get("BorshIoError");
+    out = BUILTIN_SOLANA_ERROR_MESSAGES.get("BorshIoError");
     value = (error as { BorshIoError: string })["BorshIoError"];
   }
 
