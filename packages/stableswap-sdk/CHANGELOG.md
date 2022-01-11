@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.24 (2022-01-11)
+
+
+### Features
+
+* Add partition helper for transaction envelope ([#457](https://github.com/saber-hq/saber-common/issues/457)) ([d2053cb](https://github.com/saber-hq/saber-common/commit/d2053cb71f78da7253dec7d5cc88e6a5f855c41b))
+
+
+
+
+
 ## 1.12.23 (2022-01-10)
 
 
