@@ -88,13 +88,13 @@ export class TransactionEnvelope {
    */
   partition(
     feePayer: PublicKey = this.provider.wallet.publicKey
-  ): TransactionEnvelope | TransactionEnvelope[] {
+  ): TransactionEnvelope[] {
     const serializedTx = this.build(feePayer).serialize({
       requireAllSignatures: false,
       verifySignatures: false,
     });
     if (serializedTx.length <= PACKET_DATA_SIZE) {
-      return this;
+      return [this];
     }
 
     // TODO(michael): This is very naive partitioning, we can do better!
