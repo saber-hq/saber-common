@@ -3265,10 +3265,11 @@ __metadata:
   dependencies:
     "@solana/web3.js": ^1.31.0
     "@types/jest": ^27.4.0
-    "@types/lodash": ^4.14.178
+    "@types/lodash.chunk": ^4
     "@types/node": ^16.11.19
     "@types/promise-retry": ^1.1.3
     "@types/retry": ^0.12.1
+    lodash.chunk: ^4.2.0
     promise-retry: ^2.0.1
     retry: ^0.13.1
     tiny-invariant: ^1.2.0
@@ -3873,6 +3874,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.chunk@npm:^4":
+  version: 4.2.6
+  resolution: "@types/lodash.chunk@npm:4.2.6"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 18afe616730bc28de1280939923e2433ca70334f409d132917ddb2e513ad4a796053ef6282546be9601bce88eac3fe3ec595137eae87d65a728eca5acaea6066
+  languageName: node
+  linkType: hard
+
 "@types/lodash.mapvalues@npm:^4.6.6":
   version: 4.6.6
   resolution: "@types/lodash.mapvalues@npm:4.6.6"
@@ -3896,7 +3906,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.175, @types/lodash@npm:^4.14.178":
+"@types/lodash@npm:^4.14.175":
   version: 4.14.178
   resolution: "@types/lodash@npm:4.14.178"
   checksum: a69a04a60bfc5257c3130a554b4efa0c383f0141b7b3db8ab7cf07ad2a46ea085fce66d0242da41da7e5647b133d5dfb2c15add9cbed8d7fef955e4a1e5b3128
@@ -10129,6 +10139,13 @@ __metadata:
   version: 4.3.0
   resolution: "lodash.camelcase@npm:4.3.0"
   checksum: cb9227612f71b83e42de93eccf1232feeb25e705bdb19ba26c04f91e885bfd3dd5c517c4a97137658190581d3493ea3973072ca010aab7e301046d90740393d1
+  languageName: node
+  linkType: hard
+
+"lodash.chunk@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "lodash.chunk@npm:4.2.0"
+  checksum: 6286c6d06814fbeda502164015c42ef53a9194e6ebaac52ec2b41e83344aefe7bc3d94fdfec525adcd2c66cefdf05dc333b6a1128e4de739797342315c17cbc7
   languageName: node
   linkType: hard
 
