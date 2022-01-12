@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.26 (2022-01-12)
+
+
+### Bug Fixes
+
+* fix incorrect size estiamtion ([398baab](https://github.com/saber-hq/saber-common/commit/398baab48279bb117aeef0a83133fe421df120b7))
+
+
+
+
+
 ## 1.12.25 (2022-01-12)
 
 
