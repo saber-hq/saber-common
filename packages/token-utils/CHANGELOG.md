@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.25 (2022-01-12)
+
+
+### Features
+
+* adds buildPartition ([de14b72](https://github.com/saber-hq/solana-common/commit/de14b725a94398050593daa3ae0b7b6939acbd63))
+
+
+
+
+
 ## 1.12.24 (2022-01-11)
 
 
