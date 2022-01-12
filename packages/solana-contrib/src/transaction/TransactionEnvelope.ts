@@ -134,10 +134,23 @@ export class TransactionEnvelope {
   }
 
   /**
-   * Partition a large {@link TransactionEnvelope} into smaller transaction envelopes.
+   * Partition a large {@link TransactionEnvelope} into smaller, valid {@link Transaction}s.
    * This relies on this envelope already having the correct number of signers.
    *
-   * @param cluster
+   * @param feePayer Optional fee payer override.
+   * @returns A list of {@link Transaction}s.
+   */
+  buildPartition(
+    feePayer: PublicKey = this.provider.wallet.publicKey
+  ): Transaction[] {
+    const partition = this.partition();
+    return partition.map((env) => env.build(feePayer));
+  }
+
+  /**
+   * Partition a large {@link TransactionEnvelope} into smaller, valid transaction envelopes which can be built.
+   * This relies on this envelope already having the correct number of signers.
+   *
    * @returns
    */
   partition(): TransactionEnvelope[] {
