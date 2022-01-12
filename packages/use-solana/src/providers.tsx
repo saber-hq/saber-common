@@ -96,6 +96,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     makeAdapter: () => new SolanaWalletAdapter(new PhantomWalletAdapter()),
 
     isInstalled: () => window.solana?.isPhantom === true,
+    isMobile: true,
   },
   [DefaultWalletType.MathWallet]: {
     name: "MathWallet",
