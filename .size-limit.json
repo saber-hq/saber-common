@@ -30,6 +30,7 @@
       "bn.js",
       "@solana/wallet-adapter-base",
       "@solana/wallet-adapter-coin98",
+      "@solana/wallet-adapter-clover",
       "@solana/wallet-adapter-mathwallet",
       "@solana/wallet-adapter-phantom",
       "@solana/wallet-adapter-slope",
