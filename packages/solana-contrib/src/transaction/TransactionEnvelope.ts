@@ -184,7 +184,7 @@ export class TransactionEnvelope {
         nextIXs,
         nextSigners
       );
-      const nextEstimation = lastTXEnv.estimateSizeUnsafe();
+      const nextEstimation = nextTXEnv.estimateSizeUnsafe();
 
       // move to next tx envelope if too big
       if (nextEstimation > PACKET_DATA_SIZE) {
