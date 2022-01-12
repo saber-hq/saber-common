@@ -174,13 +174,11 @@ export class TransactionEnvelope {
     this.instructions.slice(1).forEach((ix, i) => {
       if (lastEstimation > PACKET_DATA_SIZE) {
         throw new Error(
-          `cannot construct a valid partition: instruction ${i} is too large`
+          `cannot construct a valid partition: instruction ${i} is too large (${lastEstimation} > ${PACKET_DATA_SIZE})`
         );
       }
-      //
       const nextIXs = [...lastTXEnv.instructions, ix];
       const nextSigners = this._filterRequiredSigners(nextIXs);
-      //
       const nextTXEnv = new TransactionEnvelope(
         this.provider,
         nextIXs,
