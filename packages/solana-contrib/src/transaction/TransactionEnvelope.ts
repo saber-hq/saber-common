@@ -170,19 +170,17 @@ export class TransactionEnvelope {
       this._filterRequiredSigners(this.instructions.slice(0, 1))
     );
     let lastEstimation: number = lastTXEnv.estimateSizeUnsafe();
-
     const txs: TransactionEnvelope[] = [];
-
-    this.instructions.forEach((ix, i) => {
+    this.instructions.slice(1).forEach((ix, i) => {
       if (lastEstimation > PACKET_DATA_SIZE) {
         throw new Error(
           `cannot construct a valid partition: instruction ${i} is too large`
         );
       }
-
+      //
       const nextIXs = [...lastTXEnv.instructions, ix];
       const nextSigners = this._filterRequiredSigners(nextIXs);
-
+      //
       const nextTXEnv = new TransactionEnvelope(
         this.provider,
         nextIXs,
@@ -191,20 +189,20 @@ export class TransactionEnvelope {
       const nextEstimation = lastTXEnv.estimateSizeUnsafe();
 
       // move to next tx envelope if too big
-      if (lastEstimation > PACKET_DATA_SIZE) {
+      if (nextEstimation > PACKET_DATA_SIZE) {
         txs.push(lastTXEnv);
+        const nextIXs = [ix];
         lastTXEnv = new TransactionEnvelope(
           this.provider,
-          [ix],
-          this._filterRequiredSigners([ix])
+          nextIXs,
+          this._filterRequiredSigners(nextIXs)
         );
-        lastEstimation = nextTXEnv.estimateSizeUnsafe();
+        lastEstimation = lastTXEnv.estimateSizeUnsafe();
       } else {
         lastTXEnv = nextTXEnv;
         lastEstimation = nextEstimation;
       }
     });
-
     txs.push(lastTXEnv);
 
     return txs;
