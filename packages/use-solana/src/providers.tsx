@@ -1,4 +1,5 @@
 import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { CloverWalletAdapter } from "@solana/wallet-adapter-clover";
 import { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
 import { MathWalletAdapter } from "@solana/wallet-adapter-mathwallet";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
@@ -6,7 +7,6 @@ import { SlopeWalletAdapter } from "@solana/wallet-adapter-slope";
 import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
 import { SolletWalletAdapter } from "@solana/wallet-adapter-sollet";
 import { SolongWalletAdapter } from "@solana/wallet-adapter-solong";
-import { CloverWalletAdapter } from "@solana/wallet-adapter-clover"
 import type React from "react";
 
 import type { WalletAdapterBuilder } from "./adapters";
@@ -15,6 +15,7 @@ import { ReadonlyAdapter } from "./adapters/readonly";
 import { SecretKeyAdapter } from "./adapters/secret-key";
 import { SolflareAdapter } from "./adapters/solflare";
 import {
+  CLOVER,
   COIN98,
   FILE,
   LEDGER,
@@ -24,7 +25,6 @@ import {
   SLOPE,
   SOLFLARE,
   SOLLET,
-  CLOVER,
 } from "./icons";
 
 export enum DefaultWalletType {
