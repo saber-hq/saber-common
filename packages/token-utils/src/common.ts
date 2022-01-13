@@ -14,7 +14,7 @@ import {
 } from "@solana/web3.js";
 import type BN from "bn.js";
 
-import { deserializeAccount, deserializeMint, Token } from ".";
+import { deserializeAccount, deserializeMint, MintLayout, Token } from ".";
 
 export * as token from "./token";
 
@@ -75,8 +75,10 @@ export async function createMintInstructions(
     SystemProgram.createAccount({
       fromPubkey: provider.wallet.publicKey,
       newAccountPubkey: mint,
-      space: 82,
-      lamports: await provider.connection.getMinimumBalanceForRentExemption(82),
+      space: MintLayout.span,
+      lamports: await provider.connection.getMinimumBalanceForRentExemption(
+        MintLayout.span
+      ),
       programId: TOKEN_PROGRAM_ID,
     }),
     SPLToken.createInitMintInstruction(
