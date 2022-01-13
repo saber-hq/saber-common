@@ -4,7 +4,7 @@
 
 import type { Provider } from "@saberhq/solana-contrib";
 import type { AccountInfo, MintInfo } from "@solana/spl-token";
-import { Token, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { Token as SPLToken, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import type { TransactionInstruction } from "@solana/web3.js";
 import {
   Keypair,
@@ -14,7 +14,7 @@ import {
 } from "@solana/web3.js";
 import type BN from "bn.js";
 
-import { deserializeAccount, deserializeMint } from ".";
+import { deserializeAccount, deserializeMint, Token } from ".";
 
 export * as token from "./token";
 
@@ -46,6 +46,25 @@ export async function createMint(
   return mint.publicKey;
 }
 
+/**
+ * Creates a Token.
+ *
+ * @param provider
+ * @param authority The mint authority.
+ * @param decimals Number of decimals.
+ * @returns
+ */
+export async function createToken(
+  provider: Provider,
+  authority?: PublicKey,
+  decimals = 6
+): Promise<Token> {
+  return Token.fromMint(
+    await createMint(provider, authority, decimals),
+    decimals
+  );
+}
+
 export async function createMintInstructions(
   provider: Provider,
   authority: PublicKey,
@@ -60,7 +79,7 @@ export async function createMintInstructions(
       lamports: await provider.connection.getMinimumBalanceForRentExemption(82),
       programId: TOKEN_PROGRAM_ID,
     }),
-    Token.createInitMintInstruction(
+    SPLToken.createInitMintInstruction(
       TOKEN_PROGRAM_ID,
       mint,
       decimals,
@@ -99,13 +118,13 @@ export async function createMintAndVault(
       ),
       programId: TOKEN_PROGRAM_ID,
     }),
-    Token.createInitAccountInstruction(
+    SPLToken.createInitAccountInstruction(
       TOKEN_PROGRAM_ID,
       mint.publicKey,
       vault.publicKey,
       owner
     ),
-    Token.createMintToInstruction(
+    SPLToken.createMintToInstruction(
       TOKEN_PROGRAM_ID,
       mint.publicKey,
       vault.publicKey,
@@ -136,7 +155,7 @@ export async function createTokenAccountInstrs(
       lamports,
       programId: TOKEN_PROGRAM_ID,
     }),
-    Token.createInitAccountInstruction(
+    SPLToken.createInitAccountInstruction(
       TOKEN_PROGRAM_ID,
       mint,
       newAccountPubkey,
@@ -173,7 +192,7 @@ export async function getMintInfo(
 ): Promise<MintInfo> {
   const depositorAccInfo = await provider.getAccountInfo(addr);
   if (depositorAccInfo === null) {
-    throw new Error("Failed to find token account");
+    throw new Error("Failed to find token mint account");
   }
   return deserializeMint(depositorAccInfo.accountInfo.data);
 }
