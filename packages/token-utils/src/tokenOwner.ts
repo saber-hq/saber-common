@@ -67,6 +67,23 @@ export class TokenOwner {
   }
 
   /**
+   * Mints tokens to a token account.
+   * @param amount Amount of tokens to transfer.
+   * @param to Token account to transfer to.
+   * @returns The transaction instruction.
+   */
+  mintTo(amount: TokenAmount, to: PublicKey): TransactionInstruction {
+    return SPLToken.createMintToInstruction(
+      TOKEN_PROGRAM_ID,
+      amount.token.mintAccount,
+      to,
+      this.owner,
+      [],
+      amount.toU64()
+    );
+  }
+
+  /**
    * Creates an associated token account instruction.
    * @param mint Mint of the ATA.
    * @param payer Payer to create the ATA. Defaults to the owner.
