@@ -150,7 +150,6 @@ export const assertTXSuccess = (
 ): Chai.PromisedAssertion => {
   return expectTXTable(tx, msg, {
     verbosity: "error",
-    formatLogs: true,
   }).to.be.fulfilled;
 };
 
@@ -165,8 +164,5 @@ export const assertTXThrows = (
   err: IdlErrorCode,
   msg?: string
 ): Chai.PromisedAssertion => {
-  return expectTXTable(tx, msg, {
-    verbosity: "error",
-    formatLogs: true,
-  }).to.be.rejectedWith(matchError(err));
+  return expectTXTable(tx, msg).to.be.rejectedWith(matchError(err));
 };
