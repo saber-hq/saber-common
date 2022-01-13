@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.27 (2022-01-13)
+
+
+### Bug Fixes
+
+* don't print error logs if error was expected ([3442cd4](https://github.com/saber-hq/saber-common/commit/3442cd4a05f152be8538b46886a2bf1c7aad612f))
+
+
+
+
+
 ## 1.12.26 (2022-01-12)
 
 
