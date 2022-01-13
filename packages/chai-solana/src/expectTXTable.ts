@@ -1,3 +1,5 @@
+import type { IdlErrorCode } from "@project-serum/anchor/dist/cjs/idl";
+import { matchError } from "@saberhq/anchor-contrib";
 import type { TransactionEnvelope } from "@saberhq/solana-contrib";
 import { parseTransactionLogs, printTXTable } from "@saberhq/solana-contrib";
 
@@ -134,4 +136,37 @@ export const expectTXTable = (
     });
 
   return expectTX(tx, (msg || "") + (relativePath ? ` (${relativePath})` : ""));
+};
+
+/**
+ * Assert that a transaction is successful.
+ * @param tx
+ * @param msg
+ * @returns
+ */
+export const assertTXSuccess = (
+  tx: TransactionEnvelope,
+  msg?: string
+): Chai.PromisedAssertion => {
+  return expectTXTable(tx, msg, {
+    verbosity: "error",
+    formatLogs: true,
+  }).to.be.fulfilled;
+};
+
+/**
+ * Assert that a transaction will throw the given error.
+ * @param tx
+ * @param msg
+ * @returns
+ */
+export const assertTXThrows = (
+  tx: TransactionEnvelope,
+  err: IdlErrorCode,
+  msg?: string
+): Chai.PromisedAssertion => {
+  return expectTXTable(tx, msg, {
+    verbosity: "error",
+    formatLogs: true,
+  }).to.be.rejectedWith(matchError(err));
 };
