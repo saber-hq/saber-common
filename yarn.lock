@@ -3201,7 +3201,7 @@ __metadata:
     "@solana/web3.js": ^1.31.0
     "@types/lodash.camelcase": ^4.3.6
     "@types/lodash.mapvalues": ^4.6.6
-    bn.js: ^5
+    bn.js: ^5.2.0
     eventemitter3: ^4.0.7
     lodash.camelcase: ^4.3.0
     lodash.mapvalues: ^4.6.0
@@ -5626,7 +5626,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bn.js@npm:^5, bn.js@npm:^5.0.0, bn.js@npm:^5.1.0, bn.js@npm:^5.1.2, bn.js@npm:^5.2.0":
+"bn.js@npm:^5.0.0, bn.js@npm:^5.1.0, bn.js@npm:^5.1.2, bn.js@npm:^5.2.0":
   version: 5.2.0
   resolution: "bn.js@npm:5.2.0"
   checksum: 6117170393200f68b35a061ecbf55d01dd989302e7b3c798a3012354fa638d124f0b2f79e63f77be5556be80322a09c40339eda6413ba7468524c0b6d4b4cb7a
