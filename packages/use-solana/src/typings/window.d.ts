@@ -55,6 +55,11 @@ declare global {
         disconnect: () => void;
       };
     };
+    clover_solana?: {
+      signAllTransactions?: (txs: Transaction[]) => Promise<Transaction[]>;
+      signTransaction: (tx: Transaction) => Promise<Transaction>;
+      getAccount: () => Promise<string>;
+    };
     Slope?: {
       new (): {
         connect(): Promise<{

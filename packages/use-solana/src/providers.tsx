@@ -1,4 +1,5 @@
 import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { CloverWalletAdapter } from "@solana/wallet-adapter-clover";
 import { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
 import { MathWalletAdapter } from "@solana/wallet-adapter-mathwallet";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
@@ -14,6 +15,7 @@ import { ReadonlyAdapter } from "./adapters/readonly";
 import { SecretKeyAdapter } from "./adapters/secret-key";
 import { SolflareAdapter } from "./adapters/solflare";
 import {
+  CLOVER,
   COIN98,
   FILE,
   LEDGER,
@@ -26,6 +28,7 @@ import {
 } from "./icons";
 
 export enum DefaultWalletType {
+  Clover = "Clover",
   Coin98 = "Coin98",
   Ledger = "Ledger",
   MathWallet = "MathWallet",
@@ -113,6 +116,13 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     makeAdapter: () => new SolanaWalletAdapter(new Coin98WalletAdapter()),
     isInstalled: () => window.coin98 !== undefined,
     isMobile: true,
+  },
+  [DefaultWalletType.Clover]: {
+    name: "Clover",
+    url: "https://clover.finance",
+    icon: CLOVER,
+    makeAdapter: () => new SolanaWalletAdapter(new CloverWalletAdapter()),
+    isInstalled: () => window.clover_solana !== undefined,
   },
   [DefaultWalletType.SecretKey]: {
     name: "Secret Key",
