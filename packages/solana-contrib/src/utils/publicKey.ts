@@ -1,5 +1,6 @@
 import type { PublicKeyData } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
+import BN from "bn.js";
 
 export { PublicKey } from "@solana/web3.js";
 
@@ -13,7 +14,7 @@ export const isPublicKey = (pk: unknown): pk is PublicKey => {
     return true;
   }
 
-  if (typeof pk !== "object" || Array.isArray(pk)) {
+  if (typeof pk !== "object" || Array.isArray(pk) || BN.isBN(pk)) {
     return false;
   }
 
