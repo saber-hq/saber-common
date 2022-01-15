@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.28 (2022-01-15)
+
+
+### Bug Fixes
+
+* isPublicKey should not allow BNs to be public keys ([0fae87b](https://github.com/saber-hq/solana-common/commit/0fae87bd9f8c91c97fb643db047ebe12ed8ef4c5))
+
+
+
+
+
 ## 1.12.27 (2022-01-13)
 
 
