@@ -58,7 +58,8 @@
     "size": "size-limit",
     "analyze": "size-limit --why",
     "docs:generate": "typedoc --excludePrivate --includeVersion --out docs/ packages/**/src/index.{ts,tsx}",
-    "test": "jest **/*.test.ts"
+    "test": "jest **/*.test.ts",
+    "doctor:packages": "yarn doctor packages/"
   },
   "version": "0.0.0",
   "packageManager": "yarn@3.1.1"
