@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.30 (2022-01-16)
+
+
+### Features
+
+* Adds TransactionEnvelope.pack ([#460](https://github.com/saber-hq/saber-common/issues/460)) ([45f9cba](https://github.com/saber-hq/saber-common/commit/45f9cba57b83bfc1e62fe826ef0503522a37f6db))
+
+
+
+
+
 ## 1.12.29 (2022-01-15)
 
 **Note:** Version bump only for package @saberhq/use-solana
