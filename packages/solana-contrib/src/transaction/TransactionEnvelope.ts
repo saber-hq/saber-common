@@ -8,6 +8,7 @@ import type {
   TransactionInstruction,
 } from "@solana/web3.js";
 import { PACKET_DATA_SIZE, Transaction } from "@solana/web3.js";
+import invariant from "tiny-invariant";
 
 import type { BroadcastOptions } from "..";
 import {
@@ -22,6 +23,24 @@ import type { TransactionReceipt } from "./TransactionReceipt";
 import { calculateTxSizeUnsafe } from "./txSizer";
 import type { SerializableInstruction } from "./utils";
 import { generateInspectLinkFromBase64, RECENT_BLOCKHASH_STUB } from "./utils";
+
+/**
+ * Filters the required signers for a list of instructions.
+ * @param ixs
+ * @returns
+ */
+const filterRequiredSigners = (
+  ixs: TransactionInstruction[],
+  signers: Signer[]
+): Signer[] => {
+  // filter out the signers required for the transaction
+  const requiredSigners = ixs.flatMap((ix) =>
+    ix.keys.filter((k) => k.isSigner).map((k) => k.pubkey)
+  );
+  return signers.filter((s) =>
+    requiredSigners.find((rs) => rs.equals(s.publicKey))
+  );
+};
 
 /**
  * Options for simulating a transaction.
@@ -212,13 +231,7 @@ export class TransactionEnvelope {
    * @returns
    */
   private _filterRequiredSigners(ixs: TransactionInstruction[]): Signer[] {
-    // filter out the signers required for the transaction
-    const requiredSigners = ixs.flatMap((ix) =>
-      ix.keys.filter((k) => k.isSigner).map((k) => k.pubkey)
-    );
-    return this.signers.filter((s) =>
-      requiredSigners.find((rs) => rs.equals(s.publicKey))
-    );
+    return filterRequiredSigners(ixs, this.signers);
   }
 
   /**
@@ -408,6 +421,55 @@ export class TransactionEnvelope {
    */
   static combineAll(...txs: TransactionEnvelope[]): TransactionEnvelope {
     return txs.reduce((acc, tx) => acc.combine(tx));
+  }
+
+  /**
+   * Takes a list of {@link TransactionEnvelope}s and combines them if they
+   * are able to be combined under the maximum TX size limit.
+   *
+   * @param txs
+   * @returns
+   */
+  static pack(...txs: readonly TransactionEnvelope[]): TransactionEnvelope[] {
+    if (txs.length === 0) {
+      return [];
+    }
+    const [first, ...rest] = txs;
+    invariant(first);
+
+    const { provider } = first;
+
+    let lastTXEnv: TransactionEnvelope = first;
+    let lastEstimation: number = lastTXEnv.estimateSizeUnsafe();
+    const partition: TransactionEnvelope[] = [];
+
+    rest.forEach((addedTX, i) => {
+      if (lastEstimation > PACKET_DATA_SIZE) {
+        throw new Error(
+          `cannot construct a valid partition: instruction ${i} is too large (${lastEstimation} > ${PACKET_DATA_SIZE})`
+        );
+      }
+      const nextIXs = [...lastTXEnv.instructions, ...addedTX.instructions];
+      const nextSigners = filterRequiredSigners(nextIXs, [
+        ...lastTXEnv.signers,
+        ...addedTX.signers,
+      ]);
+      const nextTXEnv = new TransactionEnvelope(provider, nextIXs, nextSigners);
+      const nextEstimation = nextTXEnv.estimateSizeUnsafe();
+
+      // move to next tx envelope if too big
+      if (nextEstimation > PACKET_DATA_SIZE) {
+        partition.push(lastTXEnv);
+        lastTXEnv = addedTX;
+        lastEstimation = lastTXEnv.estimateSizeUnsafe();
+      } else {
+        lastTXEnv = nextTXEnv;
+        lastEstimation = nextEstimation;
+      }
+    });
+    partition.push(lastTXEnv);
+
+    return partition;
   }
 
   /**
