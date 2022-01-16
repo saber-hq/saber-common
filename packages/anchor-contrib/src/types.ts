@@ -97,7 +97,9 @@ type AccountsNamespace<A> = {
     /**
      * Returns all instances of this account type for the program.
      */
-    all: (filter?: Buffer) => Promise<ProgramAccount<A[K]>[]>;
+    all: (
+      ...args: Parameters<AccountClient["all"]>
+    ) => Promise<ProgramAccount<A[K]>[]>;
     /**
      * @deprecated since version 14.0.
      *
