@@ -63,6 +63,16 @@ export interface ReadonlyProvider extends AccountInfoFetcher {
    * Connection for reading data.
    */
   connection: Connection;
+
+  /**
+   * Read-only wallet for use with Anchor programs.
+   */
+  wallet: Wallet;
+
+  /**
+   * Transaction confirmation options to use by default.
+   */
+  opts: ConfirmOptions;
 }
 
 /**

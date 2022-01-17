@@ -1,5 +1,5 @@
 import { Provider as AnchorProvider } from "@project-serum/anchor";
-import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
+import type { ReadonlyProvider as SaberProvider } from "@saberhq/solana-contrib";
 import { SolanaProvider } from "@saberhq/solana-contrib";
 
 /**
