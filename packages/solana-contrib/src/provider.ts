@@ -10,6 +10,7 @@ import type {
   Transaction,
   TransactionInstruction,
 } from "@solana/web3.js";
+import { SystemProgram } from "@solana/web3.js";
 
 import type { Broadcaster, ReadonlyProvider } from ".";
 import {
@@ -31,20 +32,33 @@ export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
   commitment: "processed",
 };
 
+export const DEFAULT_READONLY_PUBLIC_KEY: PublicKey = SystemProgram.programId;
+
 /**
  * Provider that can only read.
  */
 export class SolanaReadonlyProvider implements ReadonlyProvider {
   /**
    * @param connection The cluster connection where the program is deployed.
-   * @param sendConnection The connection where transactions are sent to.
-   * @param wallet     The wallet used to pay for and sign all transactions.
    * @param opts       Transaction confirmation options to use by default.
+   * @param publicKey  Optional public key of read-only wallet.
    */
   constructor(
     readonly connection: Connection,
-    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
-  ) {}
+    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS,
+    readonly publicKey: PublicKey = DEFAULT_READONLY_PUBLIC_KEY
+  ) {
+    this.wallet = {
+      ...this.wallet,
+      publicKey,
+    };
+  }
+
+  wallet: Wallet = {
+    signTransaction: Promise.resolve.bind(Promise),
+    signAllTransactions: Promise.resolve.bind(Promise),
+    publicKey: DEFAULT_READONLY_PUBLIC_KEY,
+  };
 
   /**
    * Gets
@@ -166,7 +180,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
   constructor(
     override readonly connection: Connection,
     readonly broadcaster: Broadcaster,
-    readonly wallet: Wallet,
+    override readonly wallet: Wallet,
     override readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {
     super(connection, opts);
