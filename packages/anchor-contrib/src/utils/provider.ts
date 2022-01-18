@@ -1,6 +1,24 @@
 import { Provider as AnchorProvider } from "@project-serum/anchor";
-import type { ReadonlyProvider as SaberProvider } from "@saberhq/solana-contrib";
+import type {
+  Provider as SaberProvider,
+  ReadonlyProvider as ReadonlySaberProvider,
+} from "@saberhq/solana-contrib";
 import { SolanaProvider } from "@saberhq/solana-contrib";
+
+/**
+ * Creates a readonly Saber Provider from an Anchor provider.
+ * @param anchorProvider The Anchor provider.
+ * @returns
+ */
+export const makeReadonlySaberProvider = (
+  anchorProvider: AnchorProvider
+): ReadonlySaberProvider => {
+  return SolanaProvider.load({
+    connection: anchorProvider.connection,
+    wallet: anchorProvider.wallet,
+    opts: anchorProvider.opts,
+  });
+};
 
 /**
  * Creates a Saber Provider from an Anchor provider.
