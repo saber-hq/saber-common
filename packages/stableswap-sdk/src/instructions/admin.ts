@@ -1,13 +1,19 @@
 import type { u64 } from "@saberhq/token-utils";
-import { Uint64Layout } from "@saberhq/token-utils";
 import * as BufferLayout from "@solana/buffer-layout";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
 
 import type { StableSwapState } from "../state";
 import type { Fees } from "../state/fees";
 import { encodeFees, ZERO_FEES } from "../state/fees";
-import type { RawFees } from "../state/layout";
-import { FeesLayout } from "../state/layout";
+import {
+  ApplyNewAdminIXLayout,
+  PauseIXLayout,
+  RampAIXLayout,
+  SetFeeAccountIXLayout,
+  SetNewFeesIXLayout,
+  StopRampAIXLayout,
+  UnpauseIXLayout,
+} from ".";
 import type { StableSwapConfig } from "./common";
 import { buildInstruction } from "./common";
 
@@ -43,27 +49,15 @@ export const createAdminRampAInstruction = ({
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
   ];
-  const dataLayout = BufferLayout.struct<{
-    instruction: number;
-    targetAmp: Uint8Array;
-    stopRampTS: number;
-  }>([
-    BufferLayout.u8("instruction"),
-    Uint64Layout("targetAmp"),
-    BufferLayout.ns64("stopRampTS"),
-  ]);
-  let data = Buffer.alloc(dataLayout.span);
-  {
-    const encodeLength = dataLayout.encode(
-      {
-        instruction: AdminInstruction.RAMP_A,
-        targetAmp: targetAmp.toBuffer(),
-        stopRampTS: Math.floor(stopRamp.getTime() / 1000),
-      },
-      data
-    );
-    data = data.slice(0, encodeLength);
-  }
+  const data = Buffer.alloc(RampAIXLayout.span);
+  RampAIXLayout.encode(
+    {
+      instruction: AdminInstruction.RAMP_A,
+      targetAmp: targetAmp.toBuffer(),
+      stopRampTS: Math.floor(stopRamp.getTime() / 1_000),
+    },
+    data
+  );
   return buildInstruction({
     config,
     keys,
@@ -85,19 +79,14 @@ export const createAdminStopRampAInstruction = ({
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
   ];
-  const dataLayout = BufferLayout.struct<{
-    instruction: number;
-  }>([BufferLayout.u8("instruction")]);
-  let data = Buffer.alloc(dataLayout.span);
-  {
-    const encodeLength = dataLayout.encode(
-      {
-        instruction: AdminInstruction.STOP_RAMP_A,
-      },
-      data
-    );
-    data = data.slice(0, encodeLength);
-  }
+  let data = Buffer.alloc(StopRampAIXLayout.span);
+  const encodeLength = StopRampAIXLayout.encode(
+    {
+      instruction: AdminInstruction.STOP_RAMP_A,
+    },
+    data
+  );
+  data = data.slice(0, encodeLength);
   return buildInstruction({
     config,
     keys,
@@ -119,19 +108,13 @@ export const createAdminPauseInstruction = ({
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
   ];
-  const dataLayout = BufferLayout.struct<{
-    instruction: number;
-  }>([BufferLayout.u8("instruction")]);
-  let data = Buffer.alloc(dataLayout.span);
-  {
-    const encodeLength = dataLayout.encode(
-      {
-        instruction: AdminInstruction.PAUSE,
-      },
-      data
-    );
-    data = data.slice(0, encodeLength);
-  }
+  const data = Buffer.alloc(PauseIXLayout.span);
+  PauseIXLayout.encode(
+    {
+      instruction: AdminInstruction.PAUSE,
+    },
+    data
+  );
   return buildInstruction({
     config,
     keys,
@@ -153,19 +136,13 @@ export const createAdminUnpauseInstruction = ({
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
   ];
-  const dataLayout = BufferLayout.struct<{
-    instruction: number;
-  }>([BufferLayout.u8("instruction")]);
-  let data = Buffer.alloc(dataLayout.span);
-  {
-    const encodeLength = dataLayout.encode(
-      {
-        instruction: AdminInstruction.UNPAUSE,
-      },
-      data
-    );
-    data = data.slice(0, encodeLength);
-  }
+  const data = Buffer.alloc(UnpauseIXLayout.span);
+  UnpauseIXLayout.encode(
+    {
+      instruction: AdminInstruction.UNPAUSE,
+    },
+    data
+  );
   return buildInstruction({
     config,
     keys,
@@ -190,19 +167,13 @@ export const createAdminSetFeeAccountInstruction = ({
     { pubkey: adminAccount, isSigner: true, isWritable: false },
     { pubkey: tokenAccount, isSigner: false, isWritable: false },
   ];
-  const dataLayout = BufferLayout.struct<{
-    instruction: number;
-  }>([BufferLayout.u8("instruction")]);
-  let data = Buffer.alloc(dataLayout.span);
-  {
-    const encodeLength = dataLayout.encode(
-      {
-        instruction: AdminInstruction.SET_FEE_ACCOUNT,
-      },
-      data
-    );
-    data = data.slice(0, encodeLength);
-  }
+  const data = Buffer.alloc(SetFeeAccountIXLayout.span);
+  SetFeeAccountIXLayout.encode(
+    {
+      instruction: AdminInstruction.SET_FEE_ACCOUNT,
+    },
+    data
+  );
   return buildInstruction({
     config,
     keys,
@@ -224,19 +195,13 @@ export const createAdminApplyNewAdminInstruction = ({
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
   ];
-  const dataLayout = BufferLayout.struct<{
-    instruction: number;
-  }>([BufferLayout.u8("instruction")]);
-  let data = Buffer.alloc(dataLayout.span);
-  {
-    const encodeLength = dataLayout.encode(
-      {
-        instruction: AdminInstruction.APPLY_NEW_ADMIN,
-      },
-      data
-    );
-    data = data.slice(0, encodeLength);
-  }
+  const data = Buffer.alloc(ApplyNewAdminIXLayout.span);
+  ApplyNewAdminIXLayout.encode(
+    {
+      instruction: AdminInstruction.APPLY_NEW_ADMIN,
+    },
+    data
+  );
   return buildInstruction({
     config,
     keys,
@@ -264,16 +229,13 @@ export const createAdminCommitNewAdminInstruction = ({
   const dataLayout = BufferLayout.struct<{
     instruction: number;
   }>([BufferLayout.u8("instruction")]);
-  let data = Buffer.alloc(dataLayout.span);
-  {
-    const encodeLength = dataLayout.encode(
-      {
-        instruction: AdminInstruction.COMMIT_NEW_ADMIN,
-      },
-      data
-    );
-    data = data.slice(0, encodeLength);
-  }
+  const data = Buffer.alloc(dataLayout.span);
+  dataLayout.encode(
+    {
+      instruction: AdminInstruction.COMMIT_NEW_ADMIN,
+    },
+    data
+  );
   return buildInstruction({
     config,
     keys,
@@ -297,21 +259,14 @@ export const createAdminSetNewFeesInstruction = ({
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
   ];
-  const dataLayout = BufferLayout.struct<{
-    instruction: number;
-    fees: RawFees;
-  }>([BufferLayout.u8("instruction"), FeesLayout]);
-  let data = Buffer.alloc(dataLayout.span);
-  {
-    const encodeLength = dataLayout.encode(
-      {
-        instruction: AdminInstruction.SET_NEW_FEES, // InitializeSwap instruction
-        fees: encodeFees(fees),
-      },
-      data
-    );
-    data = data.slice(0, encodeLength);
-  }
+  const data = Buffer.alloc(SetNewFeesIXLayout.span);
+  SetNewFeesIXLayout.encode(
+    {
+      instruction: AdminInstruction.SET_NEW_FEES, // InitializeSwap instruction
+      fees: encodeFees(fees),
+    },
+    data
+  );
   return buildInstruction({
     config,
     keys,

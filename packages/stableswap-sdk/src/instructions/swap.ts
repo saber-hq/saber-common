@@ -1,13 +1,21 @@
 import type { u64 } from "@saberhq/token-utils";
-import { Uint64Layout } from "@saberhq/token-utils";
-import * as BufferLayout from "@solana/buffer-layout";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
 
 import type { Fees, RawFees } from "../state";
-import { encodeFees, FeesLayout, ZERO_FEES } from "../state";
+import { encodeFees, ZERO_FEES } from "../state";
 import type { StableSwapConfig } from "./common";
 import { buildInstruction } from "./common";
+import {
+  DepositIXLayout,
+  InitializeSwapIXLayout,
+  SwapIXLayout,
+  WithdrawIXLayout,
+  WithdrawOneIXLayout,
+} from "./layouts";
 
+/**
+ * Instruction enum.
+ */
 export enum StableSwapInstruction {
   INITIALIZE = 0,
   SWAP = 1,
@@ -172,7 +180,7 @@ export interface WithdrawOneInstruction {
   minimumTokenAmount: u64;
 }
 
-export const initializeSwapInstruction = ({
+export const initializeSwapInstructionRaw = ({
   config,
   adminAccount,
   tokenA: {
@@ -189,8 +197,10 @@ export const initializeSwapInstruction = ({
   destinationPoolTokenAccount,
   nonce,
   ampFactor,
-  fees = ZERO_FEES,
-}: InitializeSwapInstruction): TransactionInstruction => {
+  fees,
+}: Omit<InitializeSwapInstruction, "fees"> & {
+  fees: RawFees;
+}): TransactionInstruction => {
   const keys = [
     { pubkey: config.swapAccount, isSigner: false, isWritable: false },
     { pubkey: config.authority, isSigner: false, isWritable: false },
@@ -205,35 +215,28 @@ export const initializeSwapInstruction = ({
     { pubkey: destinationPoolTokenAccount, isSigner: false, isWritable: true },
     { pubkey: config.tokenProgramID, isSigner: false, isWritable: false },
   ];
-  const dataLayout = BufferLayout.struct<{
-    instruction: number;
-    nonce: number;
-    ampFactor: Uint8Array;
-    fees: RawFees;
-  }>([
-    BufferLayout.u8("instruction"),
-    BufferLayout.u8("nonce"),
-    Uint64Layout("ampFactor"),
-    FeesLayout,
-  ]);
-  let data = Buffer.alloc(dataLayout.span);
-  {
-    const encodeLength = dataLayout.encode(
-      {
-        instruction: StableSwapInstruction.INITIALIZE, // InitializeSwap instruction
-        nonce,
-        ampFactor: ampFactor.toBuffer(),
-        fees: encodeFees(fees),
-      },
-      data
-    );
-    data = data.slice(0, encodeLength);
-  }
+  const data = Buffer.alloc(InitializeSwapIXLayout.span);
+  InitializeSwapIXLayout.encode(
+    {
+      instruction: StableSwapInstruction.INITIALIZE, // InitializeSwap instruction
+      nonce,
+      ampFactor: ampFactor.toBuffer(),
+      fees,
+    },
+    data
+  );
   return buildInstruction({
     config,
     keys,
     data,
   });
+};
+
+export const initializeSwapInstruction = ({
+  fees = ZERO_FEES,
+  ...args
+}: InitializeSwapInstruction): TransactionInstruction => {
+  return initializeSwapInstructionRaw({ ...args, fees: encodeFees(fees) });
 };
 
 export const swapInstruction = ({
@@ -247,18 +250,8 @@ export const swapInstruction = ({
   amountIn,
   minimumAmountOut,
 }: SwapInstruction): TransactionInstruction => {
-  const dataLayout = BufferLayout.struct<{
-    instruction: number;
-    amountIn: Uint8Array;
-    minimumAmountOut: Uint8Array;
-  }>([
-    BufferLayout.u8("instruction"),
-    Uint64Layout("amountIn"),
-    Uint64Layout("minimumAmountOut"),
-  ]);
-
-  const data = Buffer.alloc(dataLayout.span);
-  dataLayout.encode(
+  const data = Buffer.alloc(SwapIXLayout.span);
+  SwapIXLayout.encode(
     {
       instruction: StableSwapInstruction.SWAP, // Swap instruction
       amountIn: amountIn.toBuffer(),
@@ -266,7 +259,6 @@ export const swapInstruction = ({
     },
     data
   );
-
   const keys = [
     { pubkey: config.swapAccount, isSigner: false, isWritable: false },
     { pubkey: config.authority, isSigner: false, isWritable: false },
@@ -298,19 +290,8 @@ export const depositInstruction = ({
   tokenAmountB,
   minimumPoolTokenAmount,
 }: DepositInstruction): TransactionInstruction => {
-  const dataLayout = BufferLayout.struct<{
-    instruction: number;
-    tokenAmountA: Uint8Array;
-    tokenAmountB: Uint8Array;
-    minimumPoolTokenAmount: Uint8Array;
-  }>([
-    BufferLayout.u8("instruction"),
-    Uint64Layout("tokenAmountA"),
-    Uint64Layout("tokenAmountB"),
-    Uint64Layout("minimumPoolTokenAmount"),
-  ]);
-  const data = Buffer.alloc(dataLayout.span);
-  dataLayout.encode(
+  const data = Buffer.alloc(DepositIXLayout.span);
+  DepositIXLayout.encode(
     {
       instruction: StableSwapInstruction.DEPOSIT, // Deposit instruction
       tokenAmountA: tokenAmountA.toBuffer(),
@@ -319,7 +300,6 @@ export const depositInstruction = ({
     },
     data
   );
-
   const keys = [
     { pubkey: config.swapAccount, isSigner: false, isWritable: false },
     { pubkey: config.authority, isSigner: false, isWritable: false },
@@ -354,20 +334,8 @@ export const withdrawInstruction = ({
   minimumTokenA,
   minimumTokenB,
 }: WithdrawInstruction): TransactionInstruction => {
-  const dataLayout = BufferLayout.struct<{
-    instruction: number;
-    poolTokenAmount: Uint8Array;
-    minimumTokenA: Uint8Array;
-    minimumTokenB: Uint8Array;
-  }>([
-    BufferLayout.u8("instruction"),
-    Uint64Layout("poolTokenAmount"),
-    Uint64Layout("minimumTokenA"),
-    Uint64Layout("minimumTokenB"),
-  ]);
-
-  const data = Buffer.alloc(dataLayout.span);
-  dataLayout.encode(
+  const data = Buffer.alloc(WithdrawIXLayout.span);
+  WithdrawIXLayout.encode(
     {
       instruction: StableSwapInstruction.WITHDRAW, // Withdraw instruction
       poolTokenAmount: poolTokenAmount.toBuffer(),
@@ -410,18 +378,8 @@ export const withdrawOneInstruction = ({
   poolTokenAmount,
   minimumTokenAmount,
 }: WithdrawOneInstruction): TransactionInstruction => {
-  const withdrawOneDataLayout = BufferLayout.struct<{
-    instruction: number;
-    poolTokenAmount: Uint8Array;
-    minimumTokenAmount: Uint8Array;
-  }>([
-    BufferLayout.u8("instruction"),
-    Uint64Layout("poolTokenAmount"),
-    Uint64Layout("minimumTokenAmount"),
-  ]);
-
-  const data = Buffer.alloc(withdrawOneDataLayout.span);
-  withdrawOneDataLayout.encode(
+  const data = Buffer.alloc(WithdrawOneIXLayout.span);
+  WithdrawOneIXLayout.encode(
     {
       instruction: StableSwapInstruction.WITHDRAW_ONE, // Withdraw instruction
       poolTokenAmount: poolTokenAmount.toBuffer(),
