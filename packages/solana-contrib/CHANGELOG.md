@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.31 (2022-01-18)
+
+**Note:** Version bump only for package @saberhq/solana-contrib
+
+
+
+
+
 ## 1.12.30 (2022-01-16)
 
 
