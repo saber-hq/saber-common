@@ -2,7 +2,6 @@ import type { u64 } from "@saberhq/token-utils";
 import { Uint64Layout } from "@saberhq/token-utils";
 import * as BufferLayout from "@solana/buffer-layout";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
-import { SYSVAR_CLOCK_PUBKEY } from "@solana/web3.js";
 
 import type { StableSwapState } from "../state";
 import type { Fees } from "../state/fees";
@@ -43,7 +42,6 @@ export const createAdminRampAInstruction = ({
   const keys = [
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
-    { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
   const dataLayout = BufferLayout.struct<{
     instruction: number;
@@ -86,7 +84,6 @@ export const createAdminStopRampAInstruction = ({
   const keys = [
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
-    { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
   const dataLayout = BufferLayout.struct<{
     instruction: number;
@@ -226,7 +223,6 @@ export const createAdminApplyNewAdminInstruction = ({
   const keys = [
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
-    { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
   const dataLayout = BufferLayout.struct<{
     instruction: number;
@@ -264,7 +260,6 @@ export const createAdminCommitNewAdminInstruction = ({
     { pubkey: config.swapAccount, isSigner: false, isWritable: true },
     { pubkey: adminAccount, isSigner: true, isWritable: false },
     { pubkey: newAdminAccount, isSigner: false, isWritable: false },
-    { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
   const dataLayout = BufferLayout.struct<{
     instruction: number;
