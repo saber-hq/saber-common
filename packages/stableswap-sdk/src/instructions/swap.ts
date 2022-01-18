@@ -2,7 +2,6 @@ import type { u64 } from "@saberhq/token-utils";
 import { Uint64Layout } from "@saberhq/token-utils";
 import * as BufferLayout from "@solana/buffer-layout";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
-import { SYSVAR_CLOCK_PUBKEY } from "@solana/web3.js";
 
 import type { Fees, RawFees } from "../state";
 import { encodeFees, FeesLayout, ZERO_FEES } from "../state";
@@ -205,7 +204,6 @@ export const initializeSwapInstruction = ({
     { pubkey: poolTokenMint, isSigner: false, isWritable: true },
     { pubkey: destinationPoolTokenAccount, isSigner: false, isWritable: true },
     { pubkey: config.tokenProgramID, isSigner: false, isWritable: false },
-    { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
   const dataLayout = BufferLayout.struct<{
     instruction: number;
@@ -279,7 +277,6 @@ export const swapInstruction = ({
     { pubkey: userDestination, isSigner: false, isWritable: true },
     { pubkey: adminDestination, isSigner: false, isWritable: true },
     { pubkey: config.tokenProgramID, isSigner: false, isWritable: false },
-    { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
   return buildInstruction({
     config,
@@ -334,7 +331,6 @@ export const depositInstruction = ({
     { pubkey: poolTokenMint, isSigner: false, isWritable: true },
     { pubkey: poolTokenAccount, isSigner: false, isWritable: true },
     { pubkey: config.tokenProgramID, isSigner: false, isWritable: false },
-    { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
   return buildInstruction({
     config,
@@ -394,7 +390,6 @@ export const withdrawInstruction = ({
     { pubkey: adminFeeAccountA, isSigner: false, isWritable: true },
     { pubkey: adminFeeAccountB, isSigner: false, isWritable: true },
     { pubkey: config.tokenProgramID, isSigner: false, isWritable: false },
-    { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
   return buildInstruction({
     config,
@@ -446,7 +441,6 @@ export const withdrawOneInstruction = ({
     { pubkey: destinationAccount, isSigner: false, isWritable: true },
     { pubkey: adminDestinationAccount, isSigner: false, isWritable: true },
     { pubkey: config.tokenProgramID, isSigner: false, isWritable: false },
-    { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
   ];
   return buildInstruction({
     config,
