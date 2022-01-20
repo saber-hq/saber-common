@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.33 (2022-01-20)
+
+
+### Bug Fixes
+
+* clean up discriminator list ([eac5a58](https://github.com/saber-hq/saber-common/commit/eac5a58a595edb2cbdbca91cb7ea633663e09548))
+
+
+
+
+
 ## 1.12.32 (2022-01-18)
 
 **Note:** Version bump only for package @saberhq/tsconfig
