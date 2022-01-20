@@ -1,28 +1,31 @@
 import type {
   Cluster,
   ConfirmOptions,
-  PublicKey,
   RpcResponseAndContext,
   Signer,
   SimulatedTransactionResponse,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { PACKET_DATA_SIZE, Transaction } from "@solana/web3.js";
+import { PACKET_DATA_SIZE, PublicKey, Transaction } from "@solana/web3.js";
 import invariant from "tiny-invariant";
 
-import type { BroadcastOptions } from "..";
+import type { BroadcastOptions } from "../broadcaster";
+import type { Provider } from "../interfaces";
 import {
   EstimatedTXTooBigError,
   printTXTable,
   suppressConsoleError,
   TXSizeEstimationError,
-} from "..";
-import type { Provider } from "../interfaces";
+} from "../utils";
 import type { PendingTransaction } from "./PendingTransaction";
 import type { TransactionReceipt } from "./TransactionReceipt";
 import { calculateTxSizeUnsafe } from "./txSizer";
 import type { SerializableInstruction } from "./utils";
 import { generateInspectLinkFromBase64, RECENT_BLOCKHASH_STUB } from "./utils";
+
+const ASSOCIATED_TOKEN_PROGRAM_ID = new PublicKey(
+  "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+);
 
 /**
  * Filters the required signers for a list of instructions.
@@ -503,5 +506,33 @@ export class TransactionEnvelope {
       txs.map((tx) => ({ tx: tx.build(), signers: tx.signers })),
       opts
     );
+  }
+
+  /**
+   * Deduplicate ATA instructions inside the transaction envelope.
+   */
+  dedupeATAIXs(): TransactionEnvelope {
+    if (this.instructions.length === 0) {
+      return this;
+    }
+
+    const seenATAs = new Set<string>();
+    const instructions = this.instructions
+      .map((ix) => {
+        const programId = ix.programId;
+        if (programId.equals(ASSOCIATED_TOKEN_PROGRAM_ID)) {
+          const ataKey = ix.keys[1]?.pubkey.toString();
+          if (!ataKey) {
+            throw new Error("ATA key does not exist on ATA instruction");
+          }
+          if (seenATAs.has(ataKey)) {
+            return null;
+          }
+          seenATAs.add(ataKey);
+        }
+        return ix;
+      })
+      .filter((ix): ix is TransactionInstruction => !!ix);
+    return new TransactionEnvelope(this.provider, instructions, this.signers);
   }
 }
