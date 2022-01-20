@@ -1,6 +1,9 @@
 import type { Idl } from "@project-serum/anchor";
 import { Program } from "@project-serum/anchor";
-import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
+import type {
+  Provider as SaberProvider,
+  ReadonlyProvider as ReadonlySaberProvider,
+} from "@saberhq/solana-contrib";
 import type { PublicKey } from "@solana/web3.js";
 import mapValues from "lodash.mapvalues";
 
@@ -17,7 +20,7 @@ import { makeAnchorProvider } from "./provider";
 export const newProgram = <P>(
   idl: Idl,
   address: PublicKey,
-  provider: SaberProvider
+  provider: SaberProvider | ReadonlySaberProvider
 ) => {
   return new Program(
     idl,
@@ -34,7 +37,7 @@ export const newProgram = <P>(
  * @returns
  */
 export const newProgramMap = <P>(
-  provider: SaberProvider,
+  provider: SaberProvider | ReadonlySaberProvider,
   idls: {
     [K in keyof P]: Idl;
   },
