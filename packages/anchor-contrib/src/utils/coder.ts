@@ -98,20 +98,17 @@ export class SuperCoder<T extends CoderAnchorTypes> {
       this.coder.accounts
     );
     this.errorMap = generateErrorMap<T["IDL"]>(idl);
-    this.discriminators = (
-      idl.accounts?.map((account) => ({
-        name: account.name,
-        discriminator: AccountsCoder.accountDiscriminator(
-          account.name
-        ).toString("hex"),
-      })) ?? []
-    ).reduce((acc, el) => ({ ...acc, [el.discriminator]: el.name }), {});
-    this.discriminatorsByAccount = (
+
+    const discriminatorList =
       idl.accounts?.map((account) => ({
         name: account.name,
         discriminator: AccountsCoder.accountDiscriminator(account.name),
-      })) ?? []
-    ).reduce(
+      })) ?? [];
+    this.discriminators = discriminatorList.reduce(
+      (acc, el) => ({ ...acc, [el.discriminator.toString("hex")]: el.name }),
+      {}
+    );
+    this.discriminatorsByAccount = discriminatorList.reduce(
       (acc, el) => ({ ...acc, [el.name]: el.discriminator }),
       {} as { [K in keyof T["AccountMap"]]: Buffer }
     );
