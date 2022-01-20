@@ -1,7 +1,7 @@
 {
   "name": "@saberhq/token-utils",
   "description": "Token-related math and transaction utilities for Solana.",
-  "version": "1.12.33",
+  "version": "1.12.34",
   "repository": "git@github.com:saber-hq/solana-common.git",
   "author": "Ian Macalinao <ian@saber.so>",
   "license": "Apache-2.0",
@@ -15,7 +15,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@saberhq/solana-contrib": "^1.12.33",
+    "@saberhq/solana-contrib": "^1.12.34",
     "@solana/buffer-layout": "^4.0.0",
     "@solana/spl-token": "^0.1.8",
     "@ubeswap/token-math": "^4.4.1",
@@ -29,7 +29,7 @@
     "src/"
   ],
   "devDependencies": {
-    "@saberhq/tsconfig": "^1.12.33",
+    "@saberhq/tsconfig": "^1.12.34",
     "@solana/web3.js": "^1.31.0",
     "@types/bn.js": "^5.1.0",
     "jsbi": "^4.1.0"
