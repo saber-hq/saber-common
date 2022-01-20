@@ -1,10 +1,15 @@
 import type { Accounts, Idl } from "@project-serum/anchor";
-import { AccountsCoder, Coder, EventParser } from "@project-serum/anchor";
+import {
+  AccountsCoder,
+  Coder,
+  EventParser,
+  utils,
+} from "@project-serum/anchor";
 import type { InstructionDisplay } from "@project-serum/anchor/dist/cjs/coder/instruction";
 import type { IdlAccountItem } from "@project-serum/anchor/dist/cjs/idl";
 import InstructionNamespaceFactory from "@project-serum/anchor/dist/cjs/program/namespace/instruction";
 import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
-import type { PublicKey } from "@solana/web3.js";
+import type { GetProgramAccountsFilter, PublicKey } from "@solana/web3.js";
 import { TransactionInstruction } from "@solana/web3.js";
 import mapValues from "lodash.mapvalues";
 
@@ -64,6 +69,12 @@ export class SuperCoder<T extends CoderAnchorTypes> {
   readonly discriminators: {
     [hexDiscriminator: string]: string;
   };
+  /**
+   * Mapping of hex discriminator to the account name.
+   */
+  readonly discriminatorsByAccount: {
+    [K in keyof T["AccountMap"]]: Buffer;
+  };
 
   /**
    * Constructor.
@@ -95,6 +106,33 @@ export class SuperCoder<T extends CoderAnchorTypes> {
         ).toString("hex"),
       })) ?? []
     ).reduce((acc, el) => ({ ...acc, [el.discriminator]: el.name }), {});
+    this.discriminatorsByAccount = (
+      idl.accounts?.map((account) => ({
+        name: account.name,
+        discriminator: AccountsCoder.accountDiscriminator(account.name),
+      })) ?? []
+    ).reduce(
+      (acc, el) => ({ ...acc, [el.name]: el.discriminator }),
+      {} as { [K in keyof T["AccountMap"]]: Buffer }
+    );
+  }
+
+  /**
+   * Creates a {@link GetProgramAccountsFilter} for the given account.
+   */
+  makeGPAFilter(
+    account: keyof T["AccountMap"],
+    ...filters: GetProgramAccountsFilter[]
+  ): GetProgramAccountsFilter[] {
+    return [
+      {
+        memcmp: {
+          offset: 0,
+          bytes: utils.bytes.bs58.encode(this.discriminatorsByAccount[account]),
+        },
+      },
+      ...filters,
+    ];
   }
 
   /**
