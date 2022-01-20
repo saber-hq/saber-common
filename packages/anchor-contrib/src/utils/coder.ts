@@ -73,7 +73,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
    * Mapping of hex discriminator to the account name.
    */
   readonly discriminatorsByAccount: {
-    [K in keyof T["AccountMap"]]: Buffer;
+    [K in NonNullable<T["IDL"]["accounts"]>[number]["name"]]: Buffer;
   };
 
   /**
@@ -110,7 +110,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
     );
     this.discriminatorsByAccount = discriminatorList.reduce(
       (acc, el) => ({ ...acc, [el.name]: el.discriminator }),
-      {} as { [K in keyof T["AccountMap"]]: Buffer }
+      {} as { [K in NonNullable<T["IDL"]["accounts"]>[number]["name"]]: Buffer }
     );
   }
 
@@ -118,7 +118,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
    * Creates a {@link GetProgramAccountsFilter} for the given account.
    */
   makeGPAFilter(
-    account: keyof T["AccountMap"],
+    account: NonNullable<T["IDL"]["accounts"]>[number]["name"],
     ...filters: GetProgramAccountsFilter[]
   ): GetProgramAccountsFilter[] {
     return [
