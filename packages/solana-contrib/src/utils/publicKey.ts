@@ -10,11 +10,19 @@ export { PublicKey } from "@solana/web3.js";
  * @returns
  */
 export const isPublicKey = (pk: unknown): pk is PublicKey => {
+  if (!pk) {
+    return false;
+  }
+
   if (pk instanceof PublicKey) {
     return true;
   }
 
-  if (typeof pk !== "object" || Array.isArray(pk) || BN.isBN(pk)) {
+  if (
+    typeof pk !== "object" ||
+    Array.isArray(pk) ||
+    ("constructor" in pk && BN.isBN(pk))
+  ) {
     return false;
   }
 
