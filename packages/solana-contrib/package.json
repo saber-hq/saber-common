@@ -32,7 +32,7 @@
     "tslib": "^2.3.1"
   },
   "devDependencies": {
-    "@solana/web3.js": "^1.31.0",
+    "@solana/web3.js": "^1.32.0",
     "@types/bn.js": "^5.1.0",
     "@types/jest": "^27.4.0",
     "@types/node": "^16.11.21",

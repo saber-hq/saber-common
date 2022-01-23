@@ -23,7 +23,7 @@
     "node": ">=12.x"
   },
   "devDependencies": {
-    "@solana/web3.js": "^1.31.0",
+    "@solana/web3.js": "^1.32.0",
     "@types/bn.js": "^5.1.0",
     "@types/lodash.mapvalues": "^4.6.6",
     "@types/node": "^16.11.21",
