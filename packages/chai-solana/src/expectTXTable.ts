@@ -135,7 +135,7 @@ export const expectTXTable = (
       }
     });
 
-  return expectTX(tx, (msg || "") + (relativePath ? ` (${relativePath})` : ""));
+  return expectTX(tx, (msg ?? "") + (relativePath ? ` (${relativePath})` : ""));
 };
 
 /**
@@ -148,9 +148,7 @@ export const assertTXSuccess = (
   tx: TransactionEnvelope,
   msg?: string
 ): Chai.PromisedAssertion => {
-  return expectTXTable(tx, msg, {
-    verbosity: "error",
-  }).to.be.fulfilled;
+  return expectTX(tx, msg).to.be.fulfilled;
 };
 
 /**
@@ -164,5 +162,5 @@ export const assertTXThrows = (
   err: IdlErrorCode,
   msg?: string
 ): Chai.PromisedAssertion => {
-  return expectTXTable(tx, msg).to.be.rejectedWith(matchError(err));
+  return expectTX(tx, msg).to.be.rejectedWith(matchError(err));
 };
