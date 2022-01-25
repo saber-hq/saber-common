@@ -41,7 +41,7 @@ export const makeSaberProvider = (
  * @returns
  */
 export const makeAnchorProvider = (
-  saberProvider: SaberProvider | ReadonlySaberProvider
+  saberProvider: ReadonlySaberProvider
 ): AnchorProvider => {
   return new AnchorProvider(
     saberProvider.connection,
