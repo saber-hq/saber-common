@@ -41,7 +41,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@project-serum/anchor": "^0.17 || ^0.18 || ^0.19",
+    "@project-serum/anchor": ">=0.17",
     "@solana/web3.js": "^1.29.2",
     "bn.js": "^5.2.0",
     "jsbi": "*"
