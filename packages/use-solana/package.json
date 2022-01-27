@@ -15,7 +15,7 @@
     "@solana/web3.js": "^1.32.0",
     "@types/bn.js": "^5.1.0",
     "@types/bs58": "^4.0.1",
-    "@types/node": "^17.0.11",
+    "@types/node": "^17.0.12",
     "@types/react": "^17.0.38",
     "bn.js": "^5.2.0",
     "react": "^17.0.2"

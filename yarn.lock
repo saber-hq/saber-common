@@ -3302,9 +3302,9 @@ __metadata:
     "@types/chai-as-promised": ^7.1.4
     "@types/promise-retry": ^1.1.3
     bn.js: ^5.2.0
-    chai: ^4.3.4
+    chai: ^4.3.6
     chai-as-promised: ^7.1.1
-    chai-bn: ^0.3.0
+    chai-bn: ^0.3.1
     colors: ^1.4.0
     jsbi: ^4.1.0
     tslib: ^2.3.1
@@ -3366,7 +3366,7 @@ __metadata:
     "@types/bn.js": ^5.1.0
     "@types/bs58": ^4.0.1
     "@types/jest": ^27.4.0
-    "@types/node": ^17.0.11
+    "@types/node": ^17.0.12
     "@types/react": ^17.0.38
     "@types/source-map-support": ^0.5.4
     "@yarnpkg/doctor": ^3.1.0
@@ -3380,7 +3380,7 @@ __metadata:
     jest: ^27.4.7
     jsbi: ^4.1.0
     lerna: ^4.0.0
-    lint-staged: ^12.3.1
+    lint-staged: ^12.3.2
     prettier: ^2.5.1
     react: ^17.0.2
     size-limit: ^7.0.5
@@ -3398,7 +3398,7 @@ __metadata:
     "@solana/web3.js": ^1.32.0
     "@types/bn.js": ^5.1.0
     "@types/jest": ^27.4.0
-    "@types/node": ^17.0.11
+    "@types/node": ^17.0.12
     "@types/promise-retry": ^1.1.3
     "@types/retry": ^0.12.1
     bn.js: ^5.2.0
@@ -3422,7 +3422,7 @@ __metadata:
     "@solana/web3.js": ^1.32.0
     "@types/bn.js": ^5.1.0
     "@types/lodash.mapvalues": ^4.6.6
-    "@types/node": ^17.0.11
+    "@types/node": ^17.0.12
     bn.js: ^5.2.0
     jsbi: ^4.1.0
     lodash.mapvalues: ^4.6.0
@@ -3480,7 +3480,7 @@ __metadata:
     "@solana/web3.js": ^1.32.0
     "@types/bn.js": ^5.1.0
     "@types/bs58": ^4.0.1
-    "@types/node": ^17.0.11
+    "@types/node": ^17.0.12
     "@types/react": ^17.0.38
     bn.js: ^5.2.0
     bs58: ^4.0.1
@@ -4118,10 +4118,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^17.0.11":
-  version: 17.0.11
-  resolution: "@types/node@npm:17.0.11"
-  checksum: 46bed84a9ff900ab004da3cb473b851cc33c6d50262f7cb58457ed557c0546153baa51e5220a6103b7f46af84b2e27115103d83adb08c7420f672e71c9996cca
+"@types/node@npm:^17.0.12":
+  version: 17.0.12
+  resolution: "@types/node@npm:17.0.12"
+  checksum: f7e4c384b72648550391c2c8bd42560dfccf5b7a0506fb5842f326f8b176286be279dd63f62af621fe6d409d474ea5d312855061f512132e999f4e902a22e4db
   languageName: node
   linkType: hard
 
@@ -6067,27 +6067,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai-bn@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "chai-bn@npm:0.3.0"
+"chai-bn@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "chai-bn@npm:0.3.1"
   peerDependencies:
     bn.js: ^5.0.0
     chai: ^4.0.0
-  checksum: 2a5f3d48e1f068c1e8a1cbd8f64e7f9183a490ea62347f1ea73949cca0f556c499945bfd74f5a82ba9e93d144fca422200adabc0acd83392fbf46de3b652f2f2
+  checksum: 316a82b98df2a1e66edeee0e835fd7b418c3b5e1794b69264eb76be65d1ecea1f3a9ce2f1f94ec7f0f6964c579c2986999d7bcab98d30f9160ec753b4fdfd692
   languageName: node
   linkType: hard
 
-"chai@npm:^4.3.4":
-  version: 4.3.4
-  resolution: "chai@npm:4.3.4"
+"chai@npm:^4.3.6":
+  version: 4.3.6
+  resolution: "chai@npm:4.3.6"
   dependencies:
     assertion-error: ^1.1.0
     check-error: ^1.0.2
     deep-eql: ^3.0.1
     get-func-name: ^2.0.0
+    loupe: ^2.3.1
     pathval: ^1.1.1
     type-detect: ^4.0.5
-  checksum: 772c522b3bfe3fcf0e0e74edfe584cd886b0e85a73126dec750095300e023d4e1ec6d40e3c35a80d2bd8f33dca46c42767a36f5f50f32dca6fa31c88b5f49ab8
+  checksum: acff93fd537f96d4a4d62dd83810285dffcfccb5089e1bf2a1205b28ec82d93dff551368722893cf85004282df10ee68802737c33c90c5493957ed449ed7ce71
   languageName: node
   linkType: hard
 
@@ -10207,9 +10208,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^12.3.1":
-  version: 12.3.1
-  resolution: "lint-staged@npm:12.3.1"
+"lint-staged@npm:^12.3.2":
+  version: 12.3.2
+  resolution: "lint-staged@npm:12.3.2"
   dependencies:
     cli-truncate: ^3.1.0
     colorette: ^2.0.16
@@ -10226,7 +10227,7 @@ __metadata:
     yaml: ^1.10.2
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 53e4a0e6021221f8d712397996d4a10374f2ee287a0d62dab2e84ddd1e06f5cc4cb42ac909337c52feba20a13f89bfefe7939683003ccedc04ac6ec20fd65651
+  checksum: 35cab689dfc967ff95afeeaa7be7d1e19a131f36eeac9ac1d80240e0b20108286ce04f2d6bdf0b77fdf58db3ca5313bcbf2667dc6017335e604ff455caf69e33
   languageName: node
   linkType: hard
 
@@ -10419,6 +10420,15 @@ __metadata:
     currently-unhandled: ^0.4.1
     signal-exit: ^3.0.0
   checksum: 750e12defde34e8cbf263c2bff16f028a89b56e022ad6b368aa7c39495b5ac33f2349a8d00665a9b6d25c030b376396524d8a31eb0dde98aaa97956d7324f927
+  languageName: node
+  linkType: hard
+
+"loupe@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "loupe@npm:2.3.1"
+  dependencies:
+    get-func-name: ^2.0.0
+  checksum: 11b4c4c9eb271b60d4d85e2ef344135d9043575e105045d1e08f10c0eca4b753df4dcfd9e1c0cbf7e19b25556dee6da16633005c47b9a925e293867c66b79f45
   languageName: node
   linkType: hard
 
