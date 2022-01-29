@@ -28,6 +28,10 @@ To release a new version of Saber Common, navigate to [the release action page](
 
 There, you may specify `patch`, `minor`, or `major`.
 
+## Join Us
+
+We're looking for contributors! Reach out to team@saber.so or message **michaelhly** on [Keybase](https://keybase.io/) with any questions.
+
 ## License
 
 Apache 2.0
