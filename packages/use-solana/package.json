@@ -31,7 +31,7 @@
     "@solana/wallet-adapter-phantom": "^0.9.3",
     "@solana/wallet-adapter-slope": "^0.5.3",
     "@solana/wallet-adapter-solflare": "^0.6.3",
-    "@solana/wallet-adapter-sollet": "^0.10.4",
+    "@solana/wallet-adapter-sollet": "^0.11.0",
     "@solana/wallet-adapter-solong": "^0.9.3",
     "bs58": "^4.0.1",
     "eventemitter3": "^4.0.7",
