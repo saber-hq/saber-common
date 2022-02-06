@@ -6,10 +6,30 @@ import type {
   TransactionReceipt,
 } from "@saberhq/solana-contrib";
 import { PendingTransaction } from "@saberhq/solana-contrib";
-import { SendTransactionError } from "@solana/web3.js";
+import type { SendTransactionError } from "@solana/web3.js";
 import { assert, expect } from "chai";
 
 import { printSendTransactionError } from "./printInstructionLogs";
+
+const processTX = async (
+  tx: TransactionEnvelope | PendingTransaction | null
+): Promise<TransactionReceipt> => {
+  if (tx instanceof PendingTransaction) {
+    return await tx.wait();
+  } else if (tx) {
+    try {
+      const pending = await tx.send({ printLogs: false });
+      return await pending.wait();
+    } catch (err) {
+      if (err && err instanceof Error && "logs" in err) {
+        printSendTransactionError(err as SendTransactionError);
+      }
+      throw err;
+    }
+  } else {
+    throw new Error("tx is null");
+  }
+};
 
 export const expectTX = (
   tx:
@@ -27,37 +47,12 @@ export const expectTX = (
   };
 
   if (tx && "then" in tx) {
-    return expect(
-      tx
-        .then((tx) => {
-          if (tx instanceof PendingTransaction) {
-            return tx.wait();
-          } else if (tx) {
-            return tx.confirm();
-          } else {
-            throw new Error("tx is null");
-          }
-        })
-        .then(handleReceipt),
-      msg
-    ).eventually;
+    return expect(tx.then(processTX).then(handleReceipt), msg).eventually;
   }
   if (tx instanceof PendingTransaction) {
     return expect(tx.wait().then(handleReceipt), msg).eventually;
   } else {
-    return expect(
-      tx
-        ?.send({ printLogs: false })
-        .catch((err) => {
-          if (err instanceof SendTransactionError) {
-            printSendTransactionError(err);
-          }
-          throw err;
-        })
-        .then((res) => res.wait())
-        .then(handleReceipt),
-      msg
-    ).eventually;
+    return expect(processTX(tx).then(handleReceipt), msg).eventually;
   }
 };
 
