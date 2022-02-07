@@ -535,4 +535,15 @@ export class TransactionEnvelope {
       .filter((ix): ix is TransactionInstruction => !!ix);
     return new TransactionEnvelope(this.provider, instructions, this.signers);
   }
+
+  /**
+   * Get an instruction from the transaction envelope by index.
+   */
+  getInstruction(index: number): TransactionInstruction {
+    const ix = this.instructions[index];
+    if (!ix) {
+      throw new Error(`No instruction found at index ${index}`);
+    }
+    return ix;
+  }
 }
