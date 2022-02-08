@@ -148,8 +148,11 @@ export class Token implements UToken<Token> {
   static load = async (
     connection: Connection,
     mint: PublicKey,
-    info: Partial<Omit<TokenInfo, "address" | "decimals">> = {}
+    info: Partial<Omit<TokenInfo, "address">> = {}
   ): Promise<Token | null> => {
+    if (typeof info.decimals === "number") {
+      return Token.fromMint(mint, info.decimals, info);
+    }
     const mintAccountInfo = await connection.getAccountInfo(mint);
     if (!mintAccountInfo) {
       return null;

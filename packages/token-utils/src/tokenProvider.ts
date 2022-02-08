@@ -8,7 +8,7 @@ import { SolanaAugmentedProvider } from "@saberhq/solana-contrib";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { Keypair } from "@solana/web3.js";
 
-import type { TokenAmount } from ".";
+import type { TokenAmount, TokenInfo } from ".";
 import { getATAAddresses, SPLToken } from ".";
 import { getATAAddress } from "./ata";
 import { createMintInstructions, DEFAULT_TOKEN_DECIMALS } from "./common";
@@ -190,5 +190,17 @@ export class TokenAugmentedProvider
     owner?: PublicKey;
   }) {
     return await getOrCreateATAs({ provider: this.provider, mints, owner });
+  }
+
+  /**
+   * Loads a token from the blockchain, only if the decimals are not provided.
+   * @param mint
+   * @returns
+   */
+  async loadToken(
+    mint: PublicKey,
+    info: Partial<Omit<TokenInfo, "address">> = {}
+  ): Promise<Token | null> {
+    return Token.load(this.provider.connection, mint, info);
   }
 }
