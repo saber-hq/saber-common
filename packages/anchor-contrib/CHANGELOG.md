@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.40 (2022-02-08)
+
+
+### Bug Fixes
+
+* **token-utils:** ensure mint keypair signer is included in mint creation ([f9b840b](https://github.com/saber-hq/saber-common/commit/f9b840b28bc7b88da25cb22a0228b10328639438))
+
+
+
+
+
 ## 1.12.39 (2022-02-08)
 
 
