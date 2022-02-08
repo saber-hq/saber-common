@@ -5,6 +5,7 @@ import type {
   TransactionEnvelope,
 } from "@saberhq/solana-contrib";
 import { SolanaAugmentedProvider } from "@saberhq/solana-contrib";
+import type { MintInfo } from "@solana/spl-token";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { Keypair } from "@solana/web3.js";
 
@@ -13,6 +14,8 @@ import { getATAAddresses, SPLToken } from ".";
 import { getATAAddress } from "./ata";
 import { createMintInstructions, DEFAULT_TOKEN_DECIMALS } from "./common";
 import { getOrCreateATA, getOrCreateATAs } from "./instructions/ata";
+import type { TokenAccountData } from "./layout";
+import { deserializeAccount, deserializeMint } from "./layout";
 import { Token } from "./token";
 
 /**
@@ -251,5 +254,47 @@ export class TokenAugmentedProvider
     });
     txEnv.prepend(toATA.instruction);
     return txEnv;
+  }
+
+  /**
+   * Fetches a mint.
+   * @param address
+   * @returns
+   */
+  async fetchMint(address: PublicKey): Promise<MintInfo | null> {
+    const accountInfo = await this.getAccountInfo(address);
+    if (accountInfo === null) {
+      return null;
+    }
+    return deserializeMint(accountInfo.accountInfo.data);
+  }
+
+  /**
+   * Fetches a token account.
+   * @param address
+   * @returns
+   */
+  async fetchTokenAccount(
+    address: PublicKey
+  ): Promise<TokenAccountData | null> {
+    const tokenAccountInfo = await this.getAccountInfo(address);
+    if (tokenAccountInfo === null) {
+      return null;
+    }
+    return deserializeAccount(tokenAccountInfo.accountInfo.data);
+  }
+
+  /**
+   * Fetches an ATA.
+   * @param mint
+   * @param owner
+   * @returns
+   */
+  async fetchATA(
+    mint: PublicKey,
+    owner: PublicKey = this.walletKey
+  ): Promise<TokenAccountData | null> {
+    const taAddress = await getATAAddress({ mint, owner });
+    return await this.fetchTokenAccount(taAddress);
   }
 }

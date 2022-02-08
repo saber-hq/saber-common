@@ -3,7 +3,7 @@
  */
 
 import type { Provider } from "@saberhq/solana-contrib";
-import type { AccountInfo, MintInfo } from "@solana/spl-token";
+import type { MintInfo } from "@solana/spl-token";
 import { Token as SPLToken, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import type { TransactionInstruction } from "@solana/web3.js";
 import {
@@ -15,6 +15,7 @@ import {
 import type BN from "bn.js";
 
 import { deserializeAccount, deserializeMint, MintLayout, Token } from ".";
+import type { TokenAccountData } from "./layout";
 
 export * as token from "./token";
 
@@ -207,7 +208,7 @@ export async function getMintInfo(
 export async function getTokenAccount(
   provider: Provider,
   addr: PublicKey
-): Promise<Omit<AccountInfo, "address">> {
+): Promise<TokenAccountData> {
   const depositorAccInfo = await provider.getAccountInfo(addr);
   if (depositorAccInfo === null) {
     throw new Error("Failed to find token account");
