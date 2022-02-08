@@ -203,4 +203,53 @@ export class TokenAugmentedProvider
   ): Promise<Token | null> {
     return Token.load(this.provider.connection, mint, info);
   }
+
+  /**
+   * Mints tokens to a token account.
+   * @param mint
+   * @returns
+   */
+  mintToAccount({
+    amount,
+    destination,
+  }: {
+    amount: TokenAmount;
+    destination: PublicKey;
+  }): TransactionEnvelope {
+    return this.newTX([
+      SPLToken.createMintToInstruction(
+        TOKEN_PROGRAM_ID,
+        amount.token.mintAccount,
+        destination,
+        this.walletKey,
+        [],
+        amount.toU64()
+      ),
+    ]);
+  }
+
+  /**
+   * Mints tokens to the ATA of the `to` account.
+   * @param amount The amount of tokens to mint.
+   * @param to The owner of the ATA that may be created.
+   * @returns
+   */
+  async mintTo({
+    amount,
+    to,
+  }: {
+    amount: TokenAmount;
+    to: PublicKey;
+  }): Promise<TransactionEnvelope> {
+    const toATA = await this.getOrCreateATA({
+      mint: amount.token.mintAccount,
+      owner: to,
+    });
+    const txEnv = this.mintToAccount({
+      amount,
+      destination: toATA.address,
+    });
+    txEnv.prepend(toATA.instruction);
+    return txEnv;
+  }
 }
