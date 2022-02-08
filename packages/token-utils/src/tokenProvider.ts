@@ -7,6 +7,7 @@ import type {
 import { SolanaAugmentedProvider } from "@saberhq/solana-contrib";
 import type { MintInfo } from "@solana/spl-token";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import type { Signer } from "@solana/web3.js";
 import { Keypair } from "@solana/web3.js";
 
 import type { TokenAmount, TokenInfo } from ".";
@@ -37,7 +38,7 @@ export class TokenAugmentedProvider
     authority = this.walletKey,
     decimals = DEFAULT_TOKEN_DECIMALS,
   }: {
-    mintKP?: Keypair;
+    mintKP?: Signer;
     authority?: PublicKey;
     decimals?: number;
   } = {}): Promise<{ token: Token; tx: TransactionEnvelope }> {
@@ -49,7 +50,7 @@ export class TokenAugmentedProvider
     );
     return {
       token: Token.fromMint(mintKP.publicKey, decimals),
-      tx: this.newTX(instructions),
+      tx: this.newTX(instructions, [mintKP]),
     };
   }
 
@@ -122,7 +123,7 @@ export class TokenAugmentedProvider
     authority = this.walletKey,
     decimals = DEFAULT_TOKEN_DECIMALS,
   }: {
-    mintKP?: Keypair;
+    mintKP?: Signer;
     authority?: PublicKey;
     decimals?: number;
   } = {}): Promise<Token> {
