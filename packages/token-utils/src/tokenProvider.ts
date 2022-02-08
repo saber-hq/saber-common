@@ -236,10 +236,10 @@ export class TokenAugmentedProvider
    */
   async mintTo({
     amount,
-    to,
+    to = this.walletKey,
   }: {
     amount: TokenAmount;
-    to: PublicKey;
+    to?: PublicKey;
   }): Promise<TransactionEnvelope> {
     const toATA = await this.getOrCreateATA({
       mint: amount.token.mintAccount,
