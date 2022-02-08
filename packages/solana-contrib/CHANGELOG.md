@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.38 (2022-02-08)
+
+
+### Bug Fixes
+
+* **token-utils:** more defaults on TokenAugmentedProvider ([ac72367](https://github.com/saber-hq/saber-common/commit/ac72367f2981aa2b997f136f1285af05e5a60380))
+
+
+
+
+
 ## 1.12.37 (2022-02-06)
 
 **Note:** Version bump only for package @saberhq/solana-contrib
