@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.39 (2022-02-08)
+
+
+### Features
+
+* **token-utils:** add deserializers/fetchers for mints and token accounts ([c58fbcf](https://github.com/saber-hq/solana-common/commit/c58fbcf1cc32510e48a2868646b3ad550905a279))
+
+
+
+
+
 ## 1.12.38 (2022-02-08)
 
 
