@@ -37,7 +37,7 @@ export class TokenAugmentedProvider
     mintKP?: Keypair;
     authority?: PublicKey;
     decimals?: number;
-  }): Promise<{ token: Token; tx: TransactionEnvelope }> {
+  } = {}): Promise<{ token: Token; tx: TransactionEnvelope }> {
     const instructions = await createMintInstructions(
       this.provider,
       authority,
@@ -122,7 +122,7 @@ export class TokenAugmentedProvider
     mintKP?: Keypair;
     authority?: PublicKey;
     decimals?: number;
-  }): Promise<Token> {
+  } = {}): Promise<Token> {
     const { token, tx } = await this.createTokenTX({
       mintKP,
       authority,
