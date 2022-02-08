@@ -326,13 +326,18 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
  */
 export interface AugmentedProvider extends Provider {
   /**
+   * Gets the {@link PublicKey} of the wallet.
+   */
+  get walletKey(): PublicKey;
+
+  /**
    * Creates a new transaction using this Provider.
    * @param instructions
    * @param signers
    * @returns
    */
   newTX: (
-    instructions: (TransactionInstruction | null | undefined | boolean)[],
+    instructions?: (TransactionInstruction | null | undefined | boolean)[],
     signers?: Signer[]
   ) => TransactionEnvelope;
 
@@ -356,6 +361,10 @@ export interface AugmentedProvider extends Provider {
  */
 export class SolanaAugmentedProvider implements AugmentedProvider {
   constructor(readonly provider: Provider) {}
+
+  get walletKey(): PublicKey {
+    return this.provider.wallet.publicKey;
+  }
 
   get connection(): Connection {
     return this.provider.connection;
@@ -411,7 +420,7 @@ export class SolanaAugmentedProvider implements AugmentedProvider {
    * @returns
    */
   newTX(
-    instructions: (TransactionInstruction | null | undefined | boolean)[],
+    instructions: (TransactionInstruction | null | undefined | boolean)[] = [],
     signers: Signer[] = []
   ): TransactionEnvelope {
     return TransactionEnvelope.create(this, instructions, signers);

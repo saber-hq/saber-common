@@ -18,6 +18,11 @@ import { deserializeAccount, deserializeMint, MintLayout, Token } from ".";
 
 export * as token from "./token";
 
+/**
+ * Default number of decimals of a token.
+ */
+export const DEFAULT_TOKEN_DECIMALS = 6;
+
 export const SPL_SHARED_MEMORY_ID = new PublicKey(
   "shmem4EWT2sPdVGvTZCzXXRAURL9G5vpPxNwSeKhHUL"
 );
@@ -214,7 +219,16 @@ export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/**
+ * A parsed program-owned account.
+ */
 export type ProgramAccount<T> = {
+  /**
+   * {@link PublicKey} of the account.
+   */
   publicKey: PublicKey;
+  /**
+   * The parsed account data.
+   */
   account: T;
 };

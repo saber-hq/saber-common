@@ -75,17 +75,43 @@ export class TransactionEnvelope {
   ) {}
 
   /**
-   * Adds the given {@link TransactionInstruction}s to the {@link TransactionEnvelope}.
-   * @param instructions The instructions to add.
+   * Prepends the given {@link TransactionInstruction}s to the {@link TransactionEnvelope}.
+   * @param instructions The instructions to prepend.
    * @returns
    */
-  addInstructions(
+  prepend(
+    ...instructions: (TransactionInstruction | null | undefined | boolean)[]
+  ): TransactionEnvelope {
+    this.instructions.unshift(
+      ...instructions.filter((ix): ix is TransactionInstruction => !!ix)
+    );
+    return this;
+  }
+
+  /**
+   * Appends the given {@link TransactionInstruction}s to the {@link TransactionEnvelope}.
+   * @param instructions The instructions to append.
+   * @returns
+   */
+  append(
     ...instructions: (TransactionInstruction | null | undefined | boolean)[]
   ): TransactionEnvelope {
     this.instructions.push(
       ...instructions.filter((ix): ix is TransactionInstruction => !!ix)
     );
     return this;
+  }
+
+  /**
+   * A the given {@link TransactionInstruction}s to the {@link TransactionEnvelope}.
+   * @param instructions The instructions to add.
+   * @deprecated Use {@link #append} instead.
+   * @returns
+   */
+  addInstructions(
+    ...instructions: (TransactionInstruction | null | undefined | boolean)[]
+  ): TransactionEnvelope {
+    return this.append(...instructions);
   }
 
   /**

@@ -7,6 +7,7 @@ export * from "./token";
 export * from "./tokenAmount";
 export * from "./tokenList";
 export * from "./tokenOwner";
+export * from "./tokenProvider";
 
 // re-export token-math types
 // so consumers don't need to use them
