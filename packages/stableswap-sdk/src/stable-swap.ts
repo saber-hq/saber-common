@@ -87,11 +87,10 @@ export class StableSwap {
     programID: PublicKey = SWAP_PROGRAM_ID
   ): StableSwap {
     try {
-      const stableSwapData = StableSwapLayout.decode(swapAccountData);
-      if (!stableSwapData.isInitialized) {
+      const state = decodeSwap(swapAccountData);
+      if (!state.isInitialized) {
         throw new Error(`Invalid token swap state`);
       }
-      const state = decodeSwap(swapAccountData);
       return new StableSwap(
         {
           swapAccount: swapAccount,
