@@ -39,6 +39,5 @@ export {
   NATIVE_MINT,
   Token as SPLToken,
   TOKEN_PROGRAM_ID,
-  AccountInfo as TokenAccountData,
   u64,
 } from "@solana/spl-token";
