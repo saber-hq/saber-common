@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.41 (2022-02-10)
+
+
+### Bug Fixes
+
+* **token-utils:** export correct TokenAccountData ([99af608](https://github.com/saber-hq/solana-common/commit/99af60817d1a4d7918d25452d19d5ea50509ab23))
+
+
+
+
+
 ## 1.12.40 (2022-02-08)
 
 
