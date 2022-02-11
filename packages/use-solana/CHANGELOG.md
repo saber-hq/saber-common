@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.42 (2022-02-11)
+
+
+### Features
+
+* **tsconfig:** add noErrorTruncation to flags ([92d9ffe](https://github.com/saber-hq/saber-common/commit/92d9ffe5e8db444f122ed7e254cb29d9a833abd6))
+
+
+
+
+
 ## 1.12.41 (2022-02-10)
 
 
