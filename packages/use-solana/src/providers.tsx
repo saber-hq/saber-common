@@ -5,7 +5,10 @@ import { MathWalletAdapter } from "@solana/wallet-adapter-mathwallet";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import { SlopeWalletAdapter } from "@solana/wallet-adapter-slope";
 import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
-import { SolletWalletAdapter } from "@solana/wallet-adapter-sollet";
+import {
+  SolletExtensionWalletAdapter,
+  SolletWalletAdapter,
+} from "@solana/wallet-adapter-sollet";
 import { SolongWalletAdapter } from "@solana/wallet-adapter-solong";
 import type React from "react";
 
@@ -71,7 +74,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     icon: SOLLET,
     makeAdapter: (_provider: string, network: string) =>
       new SolanaWalletAdapter(
-        new SolletWalletAdapter({
+        new SolletExtensionWalletAdapter({
           network: network as WalletAdapterNetwork,
         })
       ),
