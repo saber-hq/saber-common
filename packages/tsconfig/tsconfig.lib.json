@@ -24,6 +24,7 @@
     "noUncheckedIndexedAccess": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
+    "noErrorTruncation": true,
 
     // sources
     "sourceMap": true,
