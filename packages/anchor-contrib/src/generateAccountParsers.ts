@@ -1,5 +1,5 @@
-import type { Idl } from "@project-serum/anchor";
-import { AccountsCoder } from "@project-serum/anchor";
+import type { AccountsCoder, Idl } from "@project-serum/anchor";
+import { BorshAccountsCoder } from "@project-serum/anchor";
 import camelCase from "lodash.camelcase";
 
 /**
@@ -19,7 +19,7 @@ export type AccountParsers<M> = {
 export const generateAccountParsers = <M extends Record<string, object>>(
   idl: Idl
 ): AccountParsers<M> => {
-  const coder = new AccountsCoder(idl);
+  const coder = new BorshAccountsCoder(idl);
   return generateAccountParsersFromCoder(
     idl.accounts?.map((a) => a.name),
     coder
