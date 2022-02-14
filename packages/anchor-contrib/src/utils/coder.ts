@@ -1,11 +1,11 @@
 import type { Accounts, Idl } from "@project-serum/anchor";
 import {
-  AccountsCoder,
-  Coder,
+  BorshAccountsCoder,
+  BorshCoder,
   EventParser,
   utils,
 } from "@project-serum/anchor";
-import type { InstructionDisplay } from "@project-serum/anchor/dist/cjs/coder/instruction";
+import type { InstructionDisplay } from "@project-serum/anchor/dist/cjs/coder/borsh/instruction";
 import type { IdlAccountItem } from "@project-serum/anchor/dist/cjs/idl";
 import InstructionNamespaceFactory from "@project-serum/anchor/dist/cjs/program/namespace/instruction";
 import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
@@ -50,7 +50,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
   /**
    * Underlying Coder.
    */
-  readonly coder: Coder;
+  readonly coder: BorshCoder;
   /**
    * Parses events.
    */
@@ -91,7 +91,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
      */
     readonly idl: T["IDL"]
   ) {
-    this.coder = new Coder(idl);
+    this.coder = new BorshCoder(idl);
     this.eventParser = new EventParser(address, this.coder);
     this.accountParsers = generateAccountParsersFromCoder(
       idl.accounts?.map((acc) => acc.name),
@@ -102,7 +102,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
     const discriminatorList =
       idl.accounts?.map((account) => ({
         name: account.name,
-        discriminator: AccountsCoder.accountDiscriminator(account.name),
+        discriminator: BorshAccountsCoder.accountDiscriminator(account.name),
       })) ?? [];
     this.discriminators = discriminatorList.reduce(
       (acc, el) => ({ ...acc, [el.discriminator.toString("hex")]: el.name }),
