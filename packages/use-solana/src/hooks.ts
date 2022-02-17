@@ -23,8 +23,14 @@ export function useWallet<
  * Gets the current Solana wallet, returning null if it is not connected.
  */
 export const useConnectedWallet = (): ConnectedWallet | null => {
-  const { wallet, connected } = useWallet<UnknownWalletType>();
-  if (!wallet?.connected || !connected || !wallet.publicKey) {
+  const { wallet, connected, walletActivating } =
+    useWallet<UnknownWalletType>();
+  if (
+    !wallet?.connected ||
+    !connected ||
+    !wallet.publicKey ||
+    walletActivating
+  ) {
     return null;
   }
   return wallet as ConnectedWallet;
