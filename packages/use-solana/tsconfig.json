@@ -3,7 +3,7 @@
   "compilerOptions": {
     "lib": ["ES2015", "DOM"],
     "outDir": "dist/cjs/",
-    "types": []
+    "types": ["node"]
   },
   "include": ["src/"]
 }
