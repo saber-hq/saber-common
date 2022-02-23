@@ -126,9 +126,32 @@ export const useWalletInternal = <
 
     if (wallet && walletProviderInfo) {
       timeout = setTimeout(() => {
-        void wallet.connect(walletArgs).catch((e) => {
-          onError(new WalletAutomaticConnectionError(e, walletProviderInfo));
-        });
+        // Try connecting the wallet.
+        // If we get a WalletNotReadyError, the wallet isn't ready yet,
+        // so we should retry connecting, up to MAX_RETRIES times.
+        void (async () => {
+          let numRetries = 0;
+          const MAX_RETRIES = 10;
+          let shouldTryConnect = true;
+          while (shouldTryConnect) {
+            try {
+              await wallet.connect(walletArgs);
+            } catch (e) {
+              if ((e as Error)?.name === "WalletNotReadyError") {
+                console.warn("Got WalletNotReadyError, retrying...");
+                numRetries++;
+                if (numRetries <= MAX_RETRIES) {
+                  await new Promise((e) => setTimeout(e, 1_000));
+                  continue;
+                }
+              }
+              onError(
+                new WalletAutomaticConnectionError(e, walletProviderInfo)
+              );
+            }
+            shouldTryConnect = false;
+          }
+        })();
       }, 1_000);
       wallet.on("connect", () => {
         if (disabled) {
