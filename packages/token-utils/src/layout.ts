@@ -72,14 +72,17 @@ export const MintLayout = TokenMintLayout as Layout<{
 }>;
 
 /**
+ * Data in an SPL token account.
+ */
+export type TokenAccountData = Omit<AccountInfo, "address">;
+
+/**
  * Deserializes a token account.
  * @param address
  * @param data
  * @returns
  */
-export const deserializeAccount = (
-  data: Buffer
-): Omit<AccountInfo, "address"> => {
+export const deserializeAccount = (data: Buffer): TokenAccountData => {
   const accountInfo = TokenAccountLayout.decode(data);
 
   const mint = new PublicKey(accountInfo.mint);

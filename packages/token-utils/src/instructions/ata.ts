@@ -9,7 +9,7 @@ import { PublicKey } from "@solana/web3.js";
 
 import { getATAAddress } from "../ata";
 
-type Result = {
+type GetOrCreateATAResult = {
   /**
    * ATA key
    */
@@ -20,7 +20,7 @@ type Result = {
   instruction: TransactionInstruction | null;
 };
 
-type Results<K extends string> = {
+type GetOrCreateATAsResult<K extends string> = {
   /**
    * All accounts
    */
@@ -50,7 +50,7 @@ export const getOrCreateATA = async ({
   mint: PublicKey;
   owner?: PublicKey;
   payer?: PublicKey;
-}): Promise<Result> => {
+}): Promise<GetOrCreateATAResult> => {
   const address = await getATAAddress({ mint, owner });
   if (await provider.getAccountInfo(address)) {
     return { address, instruction: null };
@@ -82,7 +82,7 @@ export const getOrCreateATAs = async <K extends string>({
     [mint in K]: PublicKey;
   };
   owner?: PublicKey;
-}): Promise<Results<K>> => {
+}): Promise<GetOrCreateATAsResult<K>> => {
   const result = await Promise.all(
     Object.entries(mints).map(
       async ([name, mint]): Promise<{
@@ -137,7 +137,7 @@ export const getOrCreateATAs = async <K extends string>({
     accounts: deduped.accounts,
     createAccountInstructions: deduped.createAccountInstructions,
     instructions: Object.values(deduped.instructions),
-  } as Results<K>;
+  } as GetOrCreateATAsResult<K>;
 };
 
 /**

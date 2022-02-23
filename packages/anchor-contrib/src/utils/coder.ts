@@ -1,7 +1,6 @@
 import type {
   Accounts,
   BorshInstructionCoder,
-  Coder,
   Idl,
 } from "@project-serum/anchor";
 import {
@@ -55,7 +54,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
   /**
    * Underlying Coder.
    */
-  readonly coder: Coder;
+  readonly coder: BorshCoder;
   /**
    * Parses events.
    */
@@ -191,10 +190,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
    */
   parseInstruction(txInstruction: TransactionInstruction): InstructionParsed {
     // FIXME(michael): Some weird hack
-    if (
-      typeof (this.coder.instruction as BorshInstructionCoder).decode !==
-      "undefined"
-    ) {
+    if (typeof this.coder.instruction.decode !== "undefined") {
       return this.__parseInstruction(
         this.coder as unknown as BorshInstructionCoder,
         txInstruction

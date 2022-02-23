@@ -4,3 +4,4 @@ export * from "./printAccountOwners";
 export * from "./printTXTable";
 export * from "./publicKey";
 export * from "./simulateTransactionWithCommitment";
+export * from "./time";

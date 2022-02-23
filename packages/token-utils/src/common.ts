@@ -3,7 +3,7 @@
  */
 
 import type { Provider } from "@saberhq/solana-contrib";
-import type { AccountInfo, MintInfo } from "@solana/spl-token";
+import type { MintInfo } from "@solana/spl-token";
 import { Token as SPLToken, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import type { TransactionInstruction } from "@solana/web3.js";
 import {
@@ -15,8 +15,14 @@ import {
 import type BN from "bn.js";
 
 import { deserializeAccount, deserializeMint, MintLayout, Token } from ".";
+import type { TokenAccountData } from "./layout";
 
 export * as token from "./token";
+
+/**
+ * Default number of decimals of a token.
+ */
+export const DEFAULT_TOKEN_DECIMALS = 6;
 
 export const SPL_SHARED_MEMORY_ID = new PublicKey(
   "shmem4EWT2sPdVGvTZCzXXRAURL9G5vpPxNwSeKhHUL"
@@ -202,7 +208,7 @@ export async function getMintInfo(
 export async function getTokenAccount(
   provider: Provider,
   addr: PublicKey
-): Promise<Omit<AccountInfo, "address">> {
+): Promise<TokenAccountData> {
   const depositorAccInfo = await provider.getAccountInfo(addr);
   if (depositorAccInfo === null) {
     throw new Error("Failed to find token account");
@@ -214,7 +220,16 @@ export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/**
+ * A parsed program-owned account.
+ */
 export type ProgramAccount<T> = {
+  /**
+   * {@link PublicKey} of the account.
+   */
   publicKey: PublicKey;
+  /**
+   * The parsed account data.
+   */
   account: T;
 };
