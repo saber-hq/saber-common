@@ -1,11 +1,16 @@
-import type { Accounts, Idl } from "@project-serum/anchor";
-import {
-  AccountsCoder,
+import type {
+  Accounts,
+  BorshInstructionCoder,
   Coder,
+  Idl,
+} from "@project-serum/anchor";
+import {
+  BorshAccountsCoder,
+  BorshCoder,
   EventParser,
   utils,
 } from "@project-serum/anchor";
-import type { InstructionDisplay } from "@project-serum/anchor/dist/cjs/coder/instruction";
+import type { InstructionDisplay } from "@project-serum/anchor/dist/cjs/coder/borsh/instruction";
 import type { IdlAccountItem } from "@project-serum/anchor/dist/cjs/idl";
 import InstructionNamespaceFactory from "@project-serum/anchor/dist/cjs/program/namespace/instruction";
 import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
@@ -91,7 +96,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
      */
     readonly idl: T["IDL"]
   ) {
-    this.coder = new Coder(idl);
+    this.coder = new BorshCoder(idl);
     this.eventParser = new EventParser(address, this.coder);
     this.accountParsers = generateAccountParsersFromCoder(
       idl.accounts?.map((acc) => acc.name),
@@ -102,7 +107,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
     const discriminatorList =
       idl.accounts?.map((account) => ({
         name: account.name,
-        discriminator: AccountsCoder.accountDiscriminator(account.name),
+        discriminator: BorshAccountsCoder.accountDiscriminator(account.name),
       })) ?? [];
     this.discriminators = discriminatorList.reduce(
       (acc, el) => ({ ...acc, [el.discriminator.toString("hex")]: el.name }),
@@ -185,11 +190,29 @@ export class SuperCoder<T extends CoderAnchorTypes> {
    * @returns
    */
   parseInstruction(txInstruction: TransactionInstruction): InstructionParsed {
-    const decoded = this.coder.instruction.decode(txInstruction.data);
+    // FIXME(michael): Some weird hack
+    if (
+      typeof (this.coder.instruction as BorshInstructionCoder).decode !==
+      "undefined"
+    ) {
+      return this.__parseInstruction(
+        this.coder as unknown as BorshInstructionCoder,
+        txInstruction
+      );
+    }
+
+    throw new Error("Unsupported coder");
+  }
+
+  __parseInstruction(
+    borshIxCoder: BorshInstructionCoder,
+    txInstruction: TransactionInstruction
+  ): InstructionParsed {
+    const decoded = borshIxCoder.decode(txInstruction.data);
     if (!decoded) {
       throw new Error("could not decode ix data");
     }
-    const fmt = this.coder.instruction.format(decoded, txInstruction.keys);
+    const fmt = borshIxCoder.format(decoded, txInstruction.keys);
     if (!fmt) {
       throw new Error("invalid instruction");
     }
