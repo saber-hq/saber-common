@@ -4,9 +4,9 @@ Common libraries across Saber projects.
 
 ## Documentation
 
-The best way to learn is by example. Some examples:
+Documentation is a work in progress.
 
-- [dApp Scaffold](https://github.com/saber-hq/dapp-scaffold) -- official Solana scaffold for dApps.
+Automatically generated TypeScript documentation can be found [on GitHub pages](https://saber-hq.github.io/saber-common/).
 
 ## Packages
 
