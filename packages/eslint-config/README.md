@@ -1,4 +1,4 @@
-# `@saber-hq/eslint-config`
+# `@saberhq/eslint-config`
 
 Saber ESLint config.
 

@@ -4,7 +4,7 @@ Common libraries across Saber projects.
 
 ## Documentation
 
-Documentation is a work in progress.
+Detailed information on how to build on Saber can be found on the [Saber developer documentation website](https://docs.saber.so/docs/developing/overview).
 
 Automatically generated TypeScript documentation can be found [on GitHub pages](https://saber-hq.github.io/saber-common/).
 
@@ -34,4 +34,4 @@ We're looking for contributors! Reach out to team@saber.so or message **michaelh
 
 ## License
 
-Apache 2.0
+Saber Common is licensed under the Apache License, Version 2.0.

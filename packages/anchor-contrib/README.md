@@ -1,6 +1,6 @@
-# `@saberhq/token-utils`
+# `anchor-contrib`
 
-Math and utilities for SPL tokens.
+TypeScript client for Anchor programs.
 
 ## Documentation
 
@@ -8,12 +8,6 @@ Detailed information on how to build on Saber can be found on the [Saber develop
 
 Automatically generated TypeScript documentation can be found [on GitHub pages](https://saber-hq.github.io/saber-common/).
 
-## Installation
-
-```
-yarn add @saberhq/token-utils
-```
-
 ## License
 
-Apache 2.0
+Saber Common is licensed under the Apache License, Version 2.0.
