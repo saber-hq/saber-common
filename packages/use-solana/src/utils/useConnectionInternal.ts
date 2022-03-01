@@ -19,9 +19,11 @@ export interface ConnectionContext {
   connection: Connection;
   sendConnection: Connection;
   network: Network;
-  setNetwork: (val: Network) => void;
+  setNetwork: (val: Network) => void | Promise<void>;
   endpoint: string;
-  setEndpoints: (endpoints: Omit<NetworkConfig, "name">) => void;
+  setEndpoints: (
+    endpoints: Omit<NetworkConfig, "name">
+  ) => void | Promise<void>;
 }
 
 const makeNetworkConfigMap = (

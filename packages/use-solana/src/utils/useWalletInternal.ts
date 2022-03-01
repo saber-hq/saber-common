@@ -39,6 +39,10 @@ export interface UseWallet<
    */
   walletProviderInfo?: WalletProviderInfo;
   /**
+   * Whether the provider is switching to a new wallet.
+   */
+  walletActivating: boolean;
+  /**
    * Whether or not the wallet is connected.
    */
   connected: Connected;
@@ -107,6 +111,7 @@ export const useWalletInternal = <
   };
 
   const [connected, setConnected] = useState(false);
+  const [walletActivating, setWalletActivating] = useState(false);
 
   const [walletProviderInfo, wallet]:
     | readonly [WalletProviderInfo, WalletAdapter]
@@ -159,6 +164,7 @@ export const useWalletInternal = <
         }
         if (wallet.publicKey) {
           setConnected(true);
+          setWalletActivating(false);
           onConnect(wallet as ConnectedWallet, walletProviderInfo);
         }
       });
@@ -168,6 +174,7 @@ export const useWalletInternal = <
           return;
         }
         setConnected(false);
+        setWalletActivating(false);
         onDisconnect(wallet as WalletAdapter<false>, walletProviderInfo);
       });
     }
@@ -200,6 +207,7 @@ export const useWalletInternal = <
       nextWalletType: WalletType[keyof WalletType],
       nextWalletArgs?: Record<string, unknown>
     ): Promise<void> => {
+      setWalletActivating(true);
       const nextWalletConfigStr = stringify({
         walletType: nextWalletType,
         walletArgs: nextWalletArgs ?? null,
@@ -217,6 +225,7 @@ export const useWalletInternal = <
             )
           );
         }
+        setWalletActivating(false);
       }
       await setWalletConfigStr(nextWalletConfigStr);
     },
@@ -231,6 +240,7 @@ export const useWalletInternal = <
   return {
     wallet,
     walletProviderInfo,
+    walletActivating,
     connected,
     publicKey: wallet?.publicKey ?? undefined,
     activate,

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.47 (2022-02-26)
+
+**Note:** Version bump only for package @saberhq/token-utils
+
+
+
+
+
+## 1.12.46 (2022-02-24)
+
+**Note:** Version bump only for package @saberhq/token-utils
+
+
+
+
+
 ## 1.12.45 (2022-02-17)
 
 **Note:** Version bump only for package @saberhq/token-utils
