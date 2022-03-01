@@ -18,6 +18,13 @@ Automatically generated TypeScript documentation can be found [on GitHub pages](
 yarn add @saberhq/chai-solana
 ```
 
+## Examples
+
+The best way to learn how to use `chai-solana` is by example. View examples in the integration tests here:
+
+- [Saber Merkle Distributor](https://github.com/saber-hq/merkle-distributor)
+- [Saber Voter Snapshots](https://github.com/saber-hq/snapshots)
+
 ## Common Issues
 
 ### Invalid Chai property: eventually
