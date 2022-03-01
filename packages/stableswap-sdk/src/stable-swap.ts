@@ -39,9 +39,9 @@ export class StableSwap {
   /**
    * Load an onchain StableSwap program.
    *
-   * @param connection The connection to use
-   * @param swapAccount The public key of the account to load
-   * @param programID Address of the onchain StableSwap program
+   * @param connection A {@link Connection} to use.
+   * @param swapAccount The {@link PublicKey} of the swap account to load. You can obtain this pubkey by visiting [app.saber.so](https://app.saber.so/], navigating to the pool you want to load, and getting the "swap account" key.
+   * @param programID Address of the onchain StableSwap program.
    */
   static async load(
     connection: Connection,
@@ -54,7 +54,7 @@ export class StableSwap {
   }
 
   /**
-   * Loads an onchain StableSwap program from an exchange.
+   * Loads an onchain StableSwap program from an {@link IExchange}.
    *
    * @param connection
    * @param exchange
