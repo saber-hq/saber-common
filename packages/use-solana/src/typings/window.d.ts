@@ -41,6 +41,7 @@ declare global {
       isSolflare?: boolean;
     };
     sollet?: string;
+    glow?: any;
     solong?: {
       signAllTransactions?: (txs: Transaction[]) => Promise<Transaction[]>;
       signTransaction: (tx: Transaction) => Promise<Transaction>;
