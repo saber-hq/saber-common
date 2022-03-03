@@ -41,6 +41,8 @@ declare global {
       isSolflare?: boolean;
     };
     sollet?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    glow?: any;
     solong?: {
       signAllTransactions?: (txs: Transaction[]) => Promise<Transaction[]>;
       signTransaction: (tx: Transaction) => Promise<Transaction>;
