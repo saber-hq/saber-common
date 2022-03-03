@@ -1,11 +1,11 @@
 import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { CloverWalletAdapter } from "@solana/wallet-adapter-clover";
 import { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
+import { GlowWalletAdapter } from "@solana/wallet-adapter-glow";
 import { MathWalletAdapter } from "@solana/wallet-adapter-mathwallet";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import { SlopeWalletAdapter } from "@solana/wallet-adapter-slope";
 import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
-import { GlowWalletAdapter } from "@solana/wallet-adapter-glow";
 import {
   SolletExtensionWalletAdapter,
   SolletWalletAdapter,
@@ -22,6 +22,7 @@ import {
   CLOVER,
   COIN98,
   FILE,
+  GLOW,
   LEDGER,
   MAGNIFYING_GLASS,
   MATHWALLET,
@@ -100,7 +101,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
   [DefaultWalletType.Glow]: {
     name: "Glow",
     url: "https://www.glow.app",
-    icon: PHANTOM,
+    icon: GLOW,
     makeAdapter: () => new SolanaWalletAdapter(new GlowWalletAdapter()),
 
     isInstalled: () => Boolean(window.glow),
