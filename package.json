@@ -19,7 +19,7 @@
     "@saberhq/eslint-config-react": "*",
     "@size-limit/file": "^7.0.8",
     "@size-limit/webpack": "^7.0.8",
-    "@solana/web3.js": "^1.35.1",
+    "@solana/web3.js": "^1.36.0",
     "@types/babel__core": "^7.1.18",
     "@types/babel__preset-env": "^7.9.2",
     "@types/bn.js": "^5.1.0",
@@ -37,14 +37,14 @@
     "jest": "^27.5.1",
     "jsbi": "^4.1.0",
     "lerna": "^4.0.0",
-    "lint-staged": "^12.3.4",
+    "lint-staged": "^12.3.5",
     "prettier": "^2.5.1",
     "react": "^17.0.2",
     "size-limit": "^7.0.8",
     "source-map-support": "^0.5.21",
-    "ts-node": "^10.5.0",
+    "ts-node": "^10.6.0",
     "typedoc": "^0.22.12",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.2"
   },
   "scripts": {
     "build": "lerna run build",
@@ -60,5 +60,5 @@
     "doctor:packages": "yarn doctor packages/"
   },
   "version": "0.0.0",
-  "packageManager": "yarn@3.1.1"
+  "packageManager": "yarn@3.2.0"
 }
