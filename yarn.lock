@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 5
+  version: 6
   cacheKey: 8
 
 "101@npm:^1.0.0, 101@npm:^1.2.0":
@@ -3381,7 +3381,7 @@ __metadata:
   dependencies:
     "@project-serum/anchor": ^0.22.1
     "@saberhq/solana-contrib": ^1.12.48
-    "@solana/web3.js": ^1.35.1
+    "@solana/web3.js": ^1.36.0
     "@types/lodash.camelcase": ^4.3.6
     "@types/lodash.mapvalues": ^4.6.6
     bn.js: ^5.2.0
@@ -3404,7 +3404,7 @@ __metadata:
     "@saberhq/anchor-contrib": ^1.12.48
     "@saberhq/solana-contrib": ^1.12.48
     "@saberhq/token-utils": ^1.12.48
-    "@solana/web3.js": ^1.35.1
+    "@solana/web3.js": ^1.36.0
     "@types/chai": ^4.3.0
     "@types/chai-as-promised": ^7.1.5
     "@types/promise-retry": ^1.1.3
@@ -3429,7 +3429,7 @@ __metadata:
   dependencies:
     "@saberhq/eslint-config": ^1.12.48
     eslint-plugin-jsx-a11y: ^6.5.1
-    eslint-plugin-react: ^7.29.2
+    eslint-plugin-react: ^7.29.3
     eslint-plugin-react-hooks: ^4.3.0
   peerDependencies:
     eslint: ">=7"
@@ -3442,7 +3442,7 @@ __metadata:
   dependencies:
     "@typescript-eslint/eslint-plugin": ^5.13.0
     "@typescript-eslint/parser": ^5.13.0
-    eslint-config-prettier: ^8.4.0
+    eslint-config-prettier: ^8.5.0
     eslint-import-resolver-node: ^0.3.6
     eslint-plugin-import: ^2.25.4
     eslint-plugin-prettier: ^4.0.0
@@ -3467,7 +3467,7 @@ __metadata:
     "@saberhq/eslint-config-react": "*"
     "@size-limit/file": ^7.0.8
     "@size-limit/webpack": ^7.0.8
-    "@solana/web3.js": ^1.35.1
+    "@solana/web3.js": ^1.36.0
     "@types/babel__core": ^7.1.18
     "@types/babel__preset-env": ^7.9.2
     "@types/bn.js": ^5.1.0
@@ -3485,14 +3485,14 @@ __metadata:
     jest: ^27.5.1
     jsbi: ^4.1.0
     lerna: ^4.0.0
-    lint-staged: ^12.3.4
+    lint-staged: ^12.3.5
     prettier: ^2.5.1
     react: ^17.0.2
     size-limit: ^7.0.8
     source-map-support: ^0.5.21
-    ts-node: ^10.5.0
+    ts-node: ^10.6.0
     typedoc: ^0.22.12
-    typescript: ^4.5.5
+    typescript: ^4.6.2
   languageName: unknown
   linkType: soft
 
@@ -3500,7 +3500,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/solana-contrib@workspace:packages/solana-contrib"
   dependencies:
-    "@solana/web3.js": ^1.35.1
+    "@solana/web3.js": ^1.36.0
     "@types/bn.js": ^5.1.0
     "@types/jest": ^27.4.1
     "@types/node": ^17.0.21
@@ -3524,7 +3524,7 @@ __metadata:
     "@saberhq/solana-contrib": ^1.12.48
     "@saberhq/token-utils": ^1.12.48
     "@solana/buffer-layout": ^4.0.0
-    "@solana/web3.js": ^1.35.1
+    "@solana/web3.js": ^1.36.0
     "@types/bn.js": ^5.1.0
     "@types/lodash.mapvalues": ^4.6.6
     "@types/node": ^17.0.21
@@ -3547,7 +3547,7 @@ __metadata:
     "@saberhq/tsconfig": ^1.12.48
     "@solana/buffer-layout": ^4.0.0
     "@solana/spl-token": ^0.1.8
-    "@solana/web3.js": ^1.35.1
+    "@solana/web3.js": ^1.36.0
     "@types/bn.js": ^5.1.0
     "@ubeswap/token-math": ^4.4.4
     jsbi: ^4.1.0
@@ -3583,7 +3583,7 @@ __metadata:
     "@solana/wallet-adapter-solflare": ^0.6.6
     "@solana/wallet-adapter-sollet": ^0.11.1
     "@solana/wallet-adapter-solong": ^0.9.3
-    "@solana/web3.js": ^1.35.1
+    "@solana/web3.js": ^1.36.0
     "@types/bn.js": ^5.1.0
     "@types/node": ^17.0.21
     "@types/react": ^17.0.39
@@ -3840,9 +3840,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/web3.js@npm:^1.35.1":
-  version: 1.35.1
-  resolution: "@solana/web3.js@npm:1.35.1"
+"@solana/web3.js@npm:^1.36.0":
+  version: 1.36.0
+  resolution: "@solana/web3.js@npm:1.36.0"
   dependencies:
     "@babel/runtime": ^7.12.5
     "@ethersproject/sha2": ^5.5.0
@@ -3858,7 +3858,7 @@ __metadata:
     secp256k1: ^4.0.2
     superstruct: ^0.14.2
     tweetnacl: ^1.0.0
-  checksum: aefc755a8b3994f74d836348fe677d5268a679f3ec8eba3a5b99778ee2bb1fda2448ea38d17e9e2efd80284891bf8df72b4b05949784ea6149b1f66349422872
+  checksum: 316c5752ff884a0c86b9544d2b73528f8d6efd9c4096a1685631aea79aeeb7b049d4f316f25a3c74d11f3c059ba7fa3e2a6344dcb1ec231743460c6da27e4a88
   languageName: node
   linkType: hard
 
@@ -5237,7 +5237,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.7.0":
+"acorn@npm:^8.5.0, acorn@npm:^8.7.0":
   version: 8.7.0
   resolution: "acorn@npm:8.7.0"
   bin:
@@ -7526,14 +7526,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^8.4.0":
-  version: 8.4.0
-  resolution: "eslint-config-prettier@npm:8.4.0"
+"eslint-config-prettier@npm:^8.5.0":
+  version: 8.5.0
+  resolution: "eslint-config-prettier@npm:8.5.0"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: bin/cli.js
-  checksum: ee8dc343f1fed15dc0658e190a966cc23644477f2331a7f56ae2bb79dd74892e3cde8ea5c142e7a3329a8291a1de041e13ca96e54d0c85ff4a2aba13390c5f10
+  checksum: 0d0f5c32e7a0ad91249467ce71ca92394ccd343178277d318baf32063b79ea90216f4c81d1065d60f96366fdc60f151d4d68ae7811a58bd37228b84c2083f893
   languageName: node
   linkType: hard
 
@@ -7626,9 +7626,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.29.2":
-  version: 7.29.2
-  resolution: "eslint-plugin-react@npm:7.29.2"
+"eslint-plugin-react@npm:^7.29.3":
+  version: 7.29.3
+  resolution: "eslint-plugin-react@npm:7.29.3"
   dependencies:
     array-includes: ^3.1.4
     array.prototype.flatmap: ^1.2.5
@@ -7646,7 +7646,7 @@ __metadata:
     string.prototype.matchall: ^4.0.6
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
-  checksum: fcd793c0fd8e4570dcf8f70dd4afae9882303f4a4b650e09dac2f85fdc0b28747cb97b79832f4b8f4eabdbfb9edf69dc0ff04e8b7f33e0bb8e3f024185f4b037
+  checksum: 5a7b0b5700a3ed9bc52f5e7caab31a60bba586d356d07b49aa78c4b7b83fb54f2e4f6d59f61a9a315f1f89ea74f422a41846ff3432647dd1e8ae629a96dc2814
   languageName: node
   linkType: hard
 
@@ -10345,9 +10345,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^12.3.4":
-  version: 12.3.4
-  resolution: "lint-staged@npm:12.3.4"
+"lint-staged@npm:^12.3.5":
+  version: 12.3.5
+  resolution: "lint-staged@npm:12.3.5"
   dependencies:
     cli-truncate: ^3.1.0
     colorette: ^2.0.16
@@ -10364,7 +10364,7 @@ __metadata:
     yaml: ^1.10.2
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 4e0b4b9da4183a0daeab35d41e4d243fb1270a39db997efa0c3745fa148a7a4b8b723a51cb757595fc8bb118796ca1465e67aede72f25e9ea48165aec36cec3b
+  checksum: 6653c7078b36741e521e5f309b56bb75db198a05cbdd188124ff82a290e352ade3eb1e6080265729e19711ac08d190e300874af00e4e540b57b3c8f0690e2573
   languageName: node
   linkType: hard
 
@@ -13957,9 +13957,9 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.5.0":
-  version: 10.5.0
-  resolution: "ts-node@npm:10.5.0"
+"ts-node@npm:^10.6.0":
+  version: 10.6.0
+  resolution: "ts-node@npm:10.6.0"
   dependencies:
     "@cspotcode/source-map-support": 0.7.0
     "@tsconfig/node10": ^1.0.7
@@ -13990,7 +13990,7 @@ resolve@^2.0.0-next.3:
     ts-node-script: dist/bin-script.js
     ts-node-transpile-only: dist/bin-transpile.js
     ts-script: dist/bin-script-deprecated.js
-  checksum: d51ac8a9b3582ce3705cef8d35f3372e40caa277dbd7c7baeb651961538f13d2f11f22402614348f78d9b10501bd1cb5f05ec4f2ec9a74bd0e288de769c32335
+  checksum: bc7589d8c38dc75a2a6f832ac43faaac7edd3d0ef4643f46a9deeaabcdd35722e8c89e729fcd39a16069b30d09e297c2fb3eec917a82dd3f1e7da8b352bbd447
   languageName: node
   linkType: hard
 
@@ -14185,33 +14185,33 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.5.5":
-  version: 4.5.5
-  resolution: "typescript@npm:4.5.5"
+"typescript@npm:^4.6.2":
+  version: 4.6.2
+  resolution: "typescript@npm:4.6.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 506f4c919dc8aeaafa92068c997f1d213b9df4d9756d0fae1a1e7ab66b585ab3498050e236113a1c9e57ee08c21ec6814ca7a7f61378c058d79af50a4b1f5a5e
+  checksum: 8a44ed7e6f6c4cb1ebe8cf236ecda2fb119d84dcf0fbd77e707b2dfea1bbcfc4e366493a143513ce7f57203c75da9d4e20af6fe46de89749366351046be7577c
   languageName: node
   linkType: hard
 
 "typescript@patch:typescript@4.6.1-rc#~builtin<compat/typescript>":
   version: 4.6.1-rc
-  resolution: "typescript@patch:typescript@npm%3A4.6.1-rc#~builtin<compat/typescript>::version=4.6.1-rc&hash=493e53"
+  resolution: "typescript@patch:typescript@npm%3A4.6.1-rc#~builtin<compat/typescript>::version=4.6.1-rc&hash=bda367"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 27bc11254482fa74b50a2a9d4c8114ecbaf02b129ac523de49703dec4efe61831ab8235f5a412fbc8c14d51f2d1c4d7313216ab40e47bfb2524bad6e70bf2243
+  checksum: 1b6d012dec886813d2f8f49e6af9e0895b702aa532b91069d788e072e723850177ccb6194f32de36e41c5fc1fac0f110ce53a663553351e77f0d4ddd136a6816
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.5.5#~builtin<compat/typescript>":
-  version: 4.5.5
-  resolution: "typescript@patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=493e53"
+"typescript@patch:typescript@^4.6.2#~builtin<compat/typescript>":
+  version: 4.6.2
+  resolution: "typescript@patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=bda367"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: c05c318d79c690f101d7ffb34cd6c7d6bbd884d3af9cefe7749ad0cd6be43c7082f098280982ca945dcba23fde34a08fed9602bb26540936baf8c0520727d3ba
+  checksum: 40b493a71747fb89fa70df104e2c4a5e284b43750af5bea024090a5261cefa387f7a9372411b13030f7bf5555cee4275443d08805642ae5c74ef76740854a4c7
   languageName: node
   linkType: hard
 
