@@ -87,5 +87,8 @@ declare global {
         }>;
       };
     };
+    huobiWallet?: {
+      isHuobiWallet?: boolean;
+    }
   }
 }
