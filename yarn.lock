@@ -3577,6 +3577,7 @@ __metadata:
     "@solana/wallet-adapter-clover": ^0.4.4
     "@solana/wallet-adapter-coin98": ^0.5.3
     "@solana/wallet-adapter-glow": ^0.1.0
+    "@solana/wallet-adapter-huobi": ^0.1.0
     "@solana/wallet-adapter-mathwallet": ^0.9.3
     "@solana/wallet-adapter-phantom": ^0.9.3
     "@solana/wallet-adapter-slope": ^0.5.4
@@ -3730,6 +3731,16 @@ __metadata:
     "@solana/wallet-adapter-base": ^0.9.3
     "@solana/web3.js": ^1.20.0
   checksum: e2b01ce39750302f0d43cea9ec3b2f874ceb58878de0d9d487f92100ea9a1f99b7dfffa8e05675d1a402754fdd44bd21259f492cad2a67d0743721c851c773e5
+  languageName: node
+  linkType: hard
+
+"@solana/wallet-adapter-huobi@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@solana/wallet-adapter-huobi@npm:0.1.0"
+  dependencies:
+    "@solana/wallet-adapter-base": ^0.9.4
+    "@solana/web3.js": ^1.20.0
+  checksum: c7d68fe5d8bdbf4417b182405d94d683bf328f9fa811c8b8ac14bd3fde2625f9be22f115cc38a7b057480ab3c4d92946cb3a2de4d570bb5aa48ffb0eb328809a
   languageName: node
   linkType: hard
 
