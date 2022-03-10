@@ -81,10 +81,17 @@ export interface ReadonlyProvider extends AccountInfoFetcher {
  */
 export interface Broadcaster {
   /**
+   * @deprecated: Please use getLatestBlockhash instead.
    * Fetch a recent blockhash from the cluster
    * @param commitment
    */
   getRecentBlockhash(commitment?: Commitment): Promise<Blockhash>;
+
+  /*
+   * Fetch a recent blockhash from the cluster
+   * @param commitment
+   */
+  getLatestBlockhash(commitment?: Commitment): Promise<Blockhash>;
 
   /**
    * Broadcasts a signed transaction to the connected Solana cluster.

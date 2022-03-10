@@ -110,7 +110,7 @@ export class SolanaTransactionSigner implements TransactionSigner {
     }
   ): Promise<Transaction> {
     tx.feePayer = this.wallet.publicKey;
-    tx.recentBlockhash = await this.broadcaster.getRecentBlockhash(
+    tx.recentBlockhash = await this.broadcaster.getLatestBlockhash(
       opts.preflightCommitment
     );
 
@@ -133,7 +133,7 @@ export class SolanaTransactionSigner implements TransactionSigner {
       preflightCommitment: this.preflightCommitment,
     }
   ): Promise<Transaction[]> {
-    const blockhash = await this.broadcaster.getRecentBlockhash(
+    const blockhash = await this.broadcaster.getLatestBlockhash(
       opts.preflightCommitment
     );
 

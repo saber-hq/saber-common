@@ -33,10 +33,18 @@ export class SingleConnectionBroadcaster implements Broadcaster {
     readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {}
 
+  // @deprecated: Please use getLatestBlockhash instead.
   async getRecentBlockhash(
-    commitment: Commitment = "processed"
+    commitment: Commitment = "confirmed"
   ): Promise<Blockhash> {
     const result = await this.sendConnection.getRecentBlockhash(commitment);
+    return result.blockhash;
+  }
+
+  async getLatestBlockhash(
+    commitment: Commitment = "confirmed"
+  ): Promise<Blockhash> {
+    const result = await this.sendConnection.getLatestBlockhash(commitment);
     return result.blockhash;
   }
 
@@ -113,7 +121,7 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
   ) {}
 
   async getRecentBlockhash(
-    commitment: Commitment = this.opts.commitment ?? "processed"
+    commitment: Commitment = this.opts.commitment ?? "confirmed"
   ): Promise<Blockhash> {
     const result = await Promise.any(
       this.connections.map((conn) => conn.getRecentBlockhash(commitment))
@@ -127,10 +135,15 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
   ): Promise<PendingTransaction> {
     return await Promise.any(
       this.connections.map(async (connection) => {
-        return new PendingTransaction(
-          connection,
-          await connection.sendRawTransaction(encoded, options)
-        );
+        try {
+          const pendingTx = new PendingTransaction(
+            connection,
+            await connection.sendRawTransaction(encoded, options)
+          );
+          return pendingTx;
+        } catch (e) {
+          throw new Error("Failed to send transaction", e);
+        }
       })
     );
   }
