@@ -2,6 +2,7 @@ import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { CloverWalletAdapter } from "@solana/wallet-adapter-clover";
 import { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
 import { GlowWalletAdapter } from "@solana/wallet-adapter-glow";
+import { HuobiWalletAdapter } from "@solana/wallet-adapter-huobi";
 import { MathWalletAdapter } from "@solana/wallet-adapter-mathwallet";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import { SlopeWalletAdapter } from "@solana/wallet-adapter-slope";
@@ -23,6 +24,7 @@ import {
   COIN98,
   FILE,
   GLOW,
+  HUOBI,
   LEDGER,
   MAGNIFYING_GLASS,
   MATHWALLET,
@@ -47,6 +49,7 @@ export enum DefaultWalletType {
   SolflareExtension = "SolflareExtension",
   Solong = "Solong",
   SecretKey = "SecretKey",
+  Huobi = "Huobi",
 }
 export type WalletTypeEnum<T> = { [name: string]: T[keyof T] | string };
 export type UnknownWalletType = WalletTypeEnum<Record<string, unknown>>;
@@ -172,6 +175,14 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     icon: SLOPE,
     makeAdapter: () => new SolanaWalletAdapter(new SlopeWalletAdapter()),
     isInstalled: () => window.Slope !== undefined,
+    isMobile: true,
+  },
+  [DefaultWalletType.Huobi]: {
+    name: "HuobiWallet",
+    url: "https://www.huobiwallet.io",
+    icon: HUOBI,
+    makeAdapter: () => new SolanaWalletAdapter(new HuobiWalletAdapter()),
+    isInstalled: () => window.huobiWallet?.isHuobiWallet === true,
     isMobile: true,
   },
   [DefaultWalletType.ReadOnly]: {
