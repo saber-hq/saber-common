@@ -326,9 +326,9 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
  */
 export interface AugmentedProvider extends Provider {
   /**
-   * Gets the {@link PublicKey} of the wallet.
+   * The {@link PublicKey} of the wallet.
    */
-  get walletKey(): PublicKey;
+  readonly walletKey: PublicKey;
 
   /**
    * Creates a new transaction using this Provider.
