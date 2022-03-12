@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.51 (2022-03-12)
+
+
+### Features
+
+* **anchor-contrib:** adds method for fetching all accountTypeDefs of an IDL ([d79d2a4](https://github.com/saber-hq/saber-common/commit/d79d2a415d48cc4520438b176352d0b449497150))
+
+
+
+
+
 ## 1.12.50 (2022-03-11)
 
 **Note:** Version bump only for package @saberhq/use-solana
