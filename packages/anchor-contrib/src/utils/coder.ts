@@ -6,7 +6,10 @@ import {
   utils,
 } from "@project-serum/anchor";
 import type { InstructionDisplay } from "@project-serum/anchor/dist/cjs/coder/borsh/instruction";
-import type { IdlAccountItem } from "@project-serum/anchor/dist/cjs/idl";
+import type {
+  IdlAccountItem,
+  IdlTypeDef,
+} from "@project-serum/anchor/dist/cjs/idl";
 import InstructionNamespaceFactory from "@project-serum/anchor/dist/cjs/program/namespace/instruction";
 import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
 import type { GetProgramAccountsFilter, PublicKey } from "@solana/web3.js";
@@ -41,6 +44,14 @@ type CoderAnchorTypes = {
   Program: unknown;
 };
 
+type IDLAccountName<IDL extends Idl> = NonNullable<
+  IDL["accounts"]
+>[number]["name"];
+
+type AccountTypeDefMap<IDL extends Idl> = {
+  [K in IDLAccountName<IDL>]: IdlTypeDef;
+};
+
 /**
  * Coder wrapper.
  *
@@ -59,6 +70,12 @@ export class SuperCoder<T extends CoderAnchorTypes> {
    * Parses accounts.
    */
   readonly accountParsers: AccountParsers<T["AccountMap"]>;
+  /**
+   * All account {@link IdlTypeDef}s.
+   */
+  readonly accountTypeDefs: {
+    [K in IDLAccountName<T["IDL"]>]: IdlTypeDef;
+  };
   /**
    * Mapping of error name to error details.
    */
@@ -97,6 +114,14 @@ export class SuperCoder<T extends CoderAnchorTypes> {
       idl.accounts?.map((acc) => acc.name),
       this.coder.accounts
     );
+
+    // Load all account type defs.
+    const accountTypeDefs: Partial<AccountTypeDefMap<T["IDL"]>> = {};
+    idl.accounts?.forEach((account: IdlTypeDef) => {
+      accountTypeDefs[account.name as IDLAccountName<T["IDL"]>] = account;
+    });
+    this.accountTypeDefs = accountTypeDefs as AccountTypeDefMap<T["IDL"]>;
+
     this.errorMap = generateErrorMap<T["IDL"]>(idl);
 
     const discriminatorList =
