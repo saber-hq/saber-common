@@ -33,6 +33,25 @@ export const FeesLayout = BufferLayout.struct<RawFees>(
 );
 
 /**
+ * Raw representation of a fraction.
+ */
+ export interface RawFraction {
+  numerator: Uint8Array;
+  denominator: Uint8Array;
+}
+
+/**
+ * Layout for fraction.
+ */
+ export const FractionLayout = BufferLayout.struct<RawFraction>(
+  [
+    Uint64Layout("numerator"),
+    Uint64Layout("denominator"),
+  ],
+  "fraction"
+);
+
+/**
  * Layout for stable swap state
  */
 export const StableSwapLayout = BufferLayout.struct<{
@@ -54,6 +73,8 @@ export const StableSwapLayout = BufferLayout.struct<{
   adminFeeAccountA: Uint8Array;
   adminFeeAccountB: Uint8Array;
   fees: RawFees;
+  exchangeRateOverrideA: RawFraction;
+  exchangeRateOverrideB: RawFraction;
 }>([
   BufferLayout.u8("isInitialized"),
   BufferLayout.u8("isPaused"),
@@ -73,4 +94,6 @@ export const StableSwapLayout = BufferLayout.struct<{
   PublicKeyLayout("adminFeeAccountA"),
   PublicKeyLayout("adminFeeAccountB"),
   FeesLayout,
+  FractionLayout,
+  FractionLayout,
 ]);

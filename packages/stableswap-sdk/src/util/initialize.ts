@@ -23,6 +23,7 @@ import type {
 import { initializeSwapInstruction as createInitializeStableSwapInstruction } from "../instructions/swap";
 import { findSwapAuthorityKey, StableSwap } from "../stable-swap";
 import { ZERO_FEES } from "../state/fees";
+import { UNDEFINED_FRACTION } from "../state/fraction";
 import { StableSwapLayout } from "../state/layout";
 import type { TransactionInstructions } from "./instructions";
 import {
@@ -41,7 +42,7 @@ export type ISeedPoolAccountsFn = (args: {
 export interface InitializeNewStableSwapArgs
   extends Pick<
     InitializeSwapInstruction,
-    "adminAccount" | "ampFactor" | "fees"
+    "adminAccount" | "ampFactor" | "fees" | "exchangeRateOverrideA" | "exchangeRateOverrideB"
   > {
   provider: Provider;
   swapProgramID: PublicKey;
@@ -133,6 +134,8 @@ export const loadSwapFromInitializeArgs = (
     startRampTimestamp: ZERO_TS,
     stopRampTimestamp: ZERO_TS,
     fees: initializeArgs.fees ?? ZERO_FEES,
+    exchangeRateOverrideA: initializeArgs.exchangeRateOverrideA ?? UNDEFINED_FRACTION,
+    exchangeRateOverrideB: initializeArgs.exchangeRateOverrideB ?? UNDEFINED_FRACTION,
   });
 
 /**
@@ -151,6 +154,8 @@ export const createInitializeStableSwapInstructions = async ({
   tokenBMint,
   ampFactor,
   fees,
+  exchangeRateOverrideA,
+  exchangeRateOverrideB,
 
   initialLiquidityProvider = adminAccount,
   useAssociatedAccountForInitialLP,
@@ -303,6 +308,8 @@ export const createInitializeStableSwapInstructions = async ({
     nonce,
     ampFactor,
     fees,
+    exchangeRateOverrideA,
+    exchangeRateOverrideB,
   };
   const {
     balanceNeeded: swapBalanceNeeded,

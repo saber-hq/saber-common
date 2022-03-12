@@ -3,7 +3,9 @@ import { PublicKey } from "@solana/web3.js";
 
 import type { SwapTokenInfo } from "../instructions/swap";
 import type { Fees } from "./fees";
+import type { Fraction} from "./fraction";
 import { decodeFees } from "./fees";
+import { decodeFraction } from "./fraction";
 import { StableSwapLayout } from "./layout";
 
 export * from "./fees";
@@ -75,6 +77,18 @@ export interface StableSwapState {
    * Fee schedule
    */
   fees: Fees;
+
+  /**
+   * Exchange rate override for token A.
+   * 0/0 means no override is set.
+   */
+  exchangeRateOverrideA: Fraction;
+
+  /**
+   * Exchange rate override for token B.
+   * 0/0 means no override is set.
+   */
+   exchangeRateOverrideB: Fraction;
 }
 
 /**
@@ -104,6 +118,8 @@ export const decodeSwap = (data: Buffer): StableSwapState => {
   const startRampTimestamp = stableSwapData.startRampTs;
   const stopRampTimestamp = stableSwapData.stopRampTs;
   const fees = decodeFees(stableSwapData.fees);
+  const exchangeRateOverrideA = decodeFraction(stableSwapData.exchangeRateOverrideA);
+  const exchangeRateOverrideB = decodeFraction(stableSwapData.exchangeRateOverrideB);
   return {
     isInitialized: !!stableSwapData.isInitialized,
     isPaused: !!stableSwapData.isPaused,
@@ -127,5 +143,7 @@ export const decodeSwap = (data: Buffer): StableSwapState => {
     startRampTimestamp,
     stopRampTimestamp,
     fees,
+    exchangeRateOverrideA,
+    exchangeRateOverrideB,
   };
 };

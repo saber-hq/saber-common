@@ -1,8 +1,8 @@
 import { Uint64Layout } from "@saberhq/token-utils";
 import * as BufferLayout from "@solana/buffer-layout";
 
-import type { RawFees } from "../state/layout";
-import { FeesLayout } from "../state/layout";
+import type { RawFees, RawFraction } from "../state/layout";
+import { FeesLayout, FractionLayout } from "../state/layout";
 import type { AdminInstruction } from ".";
 import type { StableSwapInstruction } from "./swap";
 
@@ -11,11 +11,15 @@ export const InitializeSwapIXLayout = BufferLayout.struct<{
   nonce: number;
   ampFactor: Uint8Array;
   fees: RawFees;
+  exchangeRateOverrideA: RawFraction;
+  exchangeRateOverrideB: RawFraction;
 }>([
   BufferLayout.u8("instruction"),
   BufferLayout.u8("nonce"),
   Uint64Layout("ampFactor"),
   FeesLayout,
+  FractionLayout,
+  FractionLayout,
 ]);
 
 export const SwapIXLayout = BufferLayout.struct<{

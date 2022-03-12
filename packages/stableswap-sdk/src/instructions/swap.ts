@@ -1,8 +1,10 @@
 import type { u64 } from "@saberhq/token-utils";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
 
-import type { Fees, RawFees } from "../state";
+import type { Fees, RawFees, RawFraction } from "../state";
 import { encodeFees, ZERO_FEES } from "../state";
+import type { Fraction } from "../state/fraction";
+import { encodeFraction, UNDEFINED_FRACTION } from "../state/fraction";
 import type { StableSwapConfig } from "./common";
 import { buildInstruction } from "./common";
 import {
@@ -63,6 +65,8 @@ export interface InitializeSwapInstruction {
   nonce: number;
   ampFactor: u64;
   fees?: Fees;
+  exchangeRateOverrideA?: Fraction;
+  exchangeRateOverrideB?: Fraction;
   isPaused?: boolean;
 }
 
@@ -198,8 +202,13 @@ export const initializeSwapInstructionRaw = ({
   nonce,
   ampFactor,
   fees,
-}: Omit<InitializeSwapInstruction, "fees"> & {
+  exchangeRateOverrideA,
+  exchangeRateOverrideB,
+}: Omit<InitializeSwapInstruction, "fees" | "exchangeRateOverrideA" | "exchangeRateOverrideB"> & {
   fees: RawFees;
+  exchangeRateOverrideA: RawFraction;
+  exchangeRateOverrideB: RawFraction;
+
 }): TransactionInstruction => {
   const keys = [
     { pubkey: config.swapAccount, isSigner: false, isWritable: false },
@@ -222,6 +231,8 @@ export const initializeSwapInstructionRaw = ({
       nonce,
       ampFactor: ampFactor.toBuffer(),
       fees,
+      exchangeRateOverrideA,
+      exchangeRateOverrideB,
     },
     data
   );
@@ -234,9 +245,16 @@ export const initializeSwapInstructionRaw = ({
 
 export const initializeSwapInstruction = ({
   fees = ZERO_FEES,
+  exchangeRateOverrideA = UNDEFINED_FRACTION,
+  exchangeRateOverrideB = UNDEFINED_FRACTION,
   ...args
 }: InitializeSwapInstruction): TransactionInstruction => {
-  return initializeSwapInstructionRaw({ ...args, fees: encodeFees(fees) });
+  return initializeSwapInstructionRaw({
+    ...args,
+     fees: encodeFees(fees),
+     exchangeRateOverrideA: encodeFraction(exchangeRateOverrideA),
+     exchangeRateOverrideB: encodeFraction(exchangeRateOverrideB),
+  });
 };
 
 export const swapInstruction = ({
