@@ -1,4 +1,5 @@
 import type {
+  Cluster,
   TransactionResponse,
   TransactionSignature,
 } from "@solana/web3.js";
@@ -51,5 +52,14 @@ export class TransactionReceipt {
     const amtStr = consumeLog.split(" ")[3];
     invariant(amtStr, "no amount");
     return parseInt(amtStr);
+  }
+
+  /**
+   * Generates a link to view this {@link TransactionReceipt} on the official Solana explorer.
+   * @param network
+   * @returns
+   */
+  generateSolanaExplorerLink(cluster: Cluster = "mainnet-beta"): string {
+    return `https://explorer.solana.com/tx/${this.signature}?cluster=${cluster}`;
   }
 }

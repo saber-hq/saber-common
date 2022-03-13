@@ -1,4 +1,5 @@
 import type {
+  Cluster,
   Connection,
   Finality,
   TransactionSignature,
@@ -111,5 +112,14 @@ export class PendingTransaction {
       throw value.err;
     }
     return this.signature;
+  }
+
+  /**
+   * Generates a link to view this {@link PendingTransaction} on the official Solana explorer.
+   * @param network
+   * @returns
+   */
+  generateSolanaExplorerLink(cluster: Cluster = "mainnet-beta"): string {
+    return `https://explorer.solana.com/tx/${this.signature}?cluster=${cluster}`;
   }
 }
