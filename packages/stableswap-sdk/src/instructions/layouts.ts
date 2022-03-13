@@ -18,8 +18,8 @@ export const InitializeSwapIXLayout = BufferLayout.struct<{
   BufferLayout.u8("nonce"),
   Uint64Layout("ampFactor"),
   FeesLayout,
-  FractionLayout,
-  FractionLayout,
+  FractionLayout("exchangeRateOverrideA"),
+  FractionLayout("exchangeRateOverrideB"),
 ]);
 
 export const SwapIXLayout = BufferLayout.struct<{

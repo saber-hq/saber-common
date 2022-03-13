@@ -43,13 +43,15 @@ export const FeesLayout = BufferLayout.struct<RawFees>(
 /**
  * Layout for fraction.
  */
- export const FractionLayout = BufferLayout.struct<RawFraction>(
-  [
-    Uint64Layout("numerator"),
-    Uint64Layout("denominator"),
-  ],
-  "fraction"
-);
+ export const FractionLayout = (name: string) => {
+  return BufferLayout.struct<RawFraction>(
+    [
+      Uint64Layout("numerator"),
+      Uint64Layout("denominator"),
+    ],
+    name
+  );
+ };
 
 /**
  * Layout for stable swap state
@@ -94,6 +96,6 @@ export const StableSwapLayout = BufferLayout.struct<{
   PublicKeyLayout("adminFeeAccountA"),
   PublicKeyLayout("adminFeeAccountB"),
   FeesLayout,
-  FractionLayout,
-  FractionLayout,
+  FractionLayout("exchangeRateOverrideA"),
+  FractionLayout("exchangeRateOverrideB"),
 ]);
