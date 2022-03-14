@@ -2,9 +2,7 @@ import type { u64 } from "@saberhq/token-utils";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
 
 import type { Fees, RawFees, RawFraction } from "../state";
-import { encodeFees, ZERO_FEES } from "../state";
-import type { Fraction } from "../state/fraction";
-import { encodeFraction, UNDEFINED_FRACTION } from "../state/fraction";
+import { encodeFees, encodeFraction, Fraction, UNDEFINED_FRACTION, ZERO_FEES } from "../state";
 import type { StableSwapConfig } from "./common";
 import { buildInstruction } from "./common";
 import {

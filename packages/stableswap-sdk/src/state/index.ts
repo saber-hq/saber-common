@@ -9,6 +9,7 @@ import { decodeFraction } from "./fraction";
 import { StableSwapLayout } from "./layout";
 
 export * from "./fees";
+export * from "./fraction";
 export * from "./layout";
 
 /**
