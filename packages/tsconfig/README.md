@@ -23,7 +23,7 @@ In your `tsconfig.json`, use the following:
 
 Note that `noEmit` is enabled by default, for typechecking.
 
-We recommend creating both a CommonJS and ESM build. For this, add the following two files:
+We recommend creating both a CommonJS and ESM build. The CommonJS build is useful for web apps, and the ESM build is useful for server-side apps and some web apps. For this, add the following two files:
 
 #### `tsconfig.esm.json`
 
