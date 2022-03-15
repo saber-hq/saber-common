@@ -35,7 +35,7 @@ export const FeesLayout = BufferLayout.struct<RawFees>(
 /**
  * Raw representation of a fraction.
  */
- export interface RawFraction {
+export interface RawFraction {
   numerator: Uint8Array;
   denominator: Uint8Array;
 }
@@ -43,15 +43,12 @@ export const FeesLayout = BufferLayout.struct<RawFees>(
 /**
  * Layout for fraction.
  */
- export const FractionLayout = (name: string) => {
+export const FractionLayout = (name: string) => {
   return BufferLayout.struct<RawFraction>(
-    [
-      Uint64Layout("numerator"),
-      Uint64Layout("denominator"),
-    ],
+    [Uint64Layout("numerator"), Uint64Layout("denominator")],
     name
   );
- };
+};
 
 /**
  * Layout for stable swap state

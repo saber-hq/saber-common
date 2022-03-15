@@ -14,7 +14,6 @@ import { loadProgramAccount } from "./util/account";
 export class StableSwap {
   /**
    * Constructor for new StableSwap client object
-   * @param connection
    * @param config
    * @param state
    */

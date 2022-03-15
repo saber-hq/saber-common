@@ -1,8 +1,13 @@
 import type { u64 } from "@saberhq/token-utils";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
 
-import type { Fees, RawFees, RawFraction } from "../state";
-import { encodeFees, encodeFraction, Fraction, UNDEFINED_FRACTION, ZERO_FEES } from "../state";
+import type { Fees, Fraction, RawFees, RawFraction } from "../state";
+import {
+  encodeFees,
+  encodeFraction,
+  UNDEFINED_FRACTION,
+  ZERO_FEES,
+} from "../state";
 import type { StableSwapConfig } from "./common";
 import { buildInstruction } from "./common";
 import {
@@ -202,11 +207,13 @@ export const initializeSwapInstructionRaw = ({
   fees,
   exchangeRateOverrideA,
   exchangeRateOverrideB,
-}: Omit<InitializeSwapInstruction, "fees" | "exchangeRateOverrideA" | "exchangeRateOverrideB"> & {
+}: Omit<
+  InitializeSwapInstruction,
+  "fees" | "exchangeRateOverrideA" | "exchangeRateOverrideB"
+> & {
   fees: RawFees;
   exchangeRateOverrideA: RawFraction;
   exchangeRateOverrideB: RawFraction;
-
 }): TransactionInstruction => {
   const keys = [
     { pubkey: config.swapAccount, isSigner: false, isWritable: false },
@@ -249,9 +256,9 @@ export const initializeSwapInstruction = ({
 }: InitializeSwapInstruction): TransactionInstruction => {
   return initializeSwapInstructionRaw({
     ...args,
-     fees: encodeFees(fees),
-     exchangeRateOverrideA: encodeFraction(exchangeRateOverrideA),
-     exchangeRateOverrideB: encodeFraction(exchangeRateOverrideB),
+    fees: encodeFees(fees),
+    exchangeRateOverrideA: encodeFraction(exchangeRateOverrideA),
+    exchangeRateOverrideB: encodeFraction(exchangeRateOverrideB),
   });
 };
 

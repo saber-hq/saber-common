@@ -42,7 +42,11 @@ export type ISeedPoolAccountsFn = (args: {
 export interface InitializeNewStableSwapArgs
   extends Pick<
     InitializeSwapInstruction,
-    "adminAccount" | "ampFactor" | "fees" | "exchangeRateOverrideA" | "exchangeRateOverrideB"
+    | "adminAccount"
+    | "ampFactor"
+    | "fees"
+    | "exchangeRateOverrideA"
+    | "exchangeRateOverrideB"
   > {
   provider: Provider;
   swapProgramID: PublicKey;
@@ -110,7 +114,6 @@ export const initializeStableSwap = async (
 
 /**
  * Creates a new instance of StableSwap from create args.
- * @param connection
  * @param initializeArgs
  * @returns
  */
@@ -134,8 +137,10 @@ export const loadSwapFromInitializeArgs = (
     startRampTimestamp: ZERO_TS,
     stopRampTimestamp: ZERO_TS,
     fees: initializeArgs.fees ?? ZERO_FEES,
-    exchangeRateOverrideA: initializeArgs.exchangeRateOverrideA ?? UNDEFINED_FRACTION,
-    exchangeRateOverrideB: initializeArgs.exchangeRateOverrideB ?? UNDEFINED_FRACTION,
+    exchangeRateOverrideA:
+      initializeArgs.exchangeRateOverrideA ?? UNDEFINED_FRACTION,
+    exchangeRateOverrideB:
+      initializeArgs.exchangeRateOverrideB ?? UNDEFINED_FRACTION,
   });
 
 /**
