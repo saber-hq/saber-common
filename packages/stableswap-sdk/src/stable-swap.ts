@@ -8,7 +8,6 @@ import type { StableSwapConfig } from "./instructions";
 import * as instructions from "./instructions";
 import type { StableSwapState } from "./state";
 import { decodeSwap } from "./state";
-import { StableSwapLayout } from "./state/layout";
 import { loadProgramAccount } from "./util/account";
 
 export class StableSwap {
@@ -30,9 +29,7 @@ export class StableSwap {
   static async getMinBalanceRentForExemptStableSwap(
     connection: Connection
   ): Promise<number> {
-    return await connection.getMinimumBalanceForRentExemption(
-      StableSwapLayout.span
-    );
+    return await connection.getMinimumBalanceForRentExemption(427);
   }
 
   /**

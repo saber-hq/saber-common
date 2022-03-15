@@ -23,8 +23,6 @@ import type {
 import { initializeSwapInstruction as createInitializeStableSwapInstruction } from "../instructions/swap";
 import { findSwapAuthorityKey, StableSwap } from "../stable-swap";
 import { ZERO_FEES } from "../state/fees";
-import { UNDEFINED_FRACTION } from "../state/fraction";
-import { StableSwapLayout } from "../state/layout";
 import type { TransactionInstructions } from "./instructions";
 import {
   createMutableTransactionInstructions,
@@ -137,10 +135,6 @@ export const loadSwapFromInitializeArgs = (
     startRampTimestamp: ZERO_TS,
     stopRampTimestamp: ZERO_TS,
     fees: initializeArgs.fees ?? ZERO_FEES,
-    exchangeRateOverrideA:
-      initializeArgs.exchangeRateOverrideA ?? UNDEFINED_FRACTION,
-    exchangeRateOverrideB:
-      initializeArgs.exchangeRateOverrideB ?? UNDEFINED_FRACTION,
   });
 
 /**
@@ -407,7 +401,7 @@ export const createInitializeStableSwapInstructionsRaw = async ({
         fromPubkey: provider.wallet.publicKey,
         newAccountPubkey: initializeSwapInstruction.config.swapAccount,
         lamports: balanceNeeded,
-        space: StableSwapLayout.span,
+        space: 427,
         programId: initializeSwapInstruction.config.swapProgramID,
       }),
       createInitializeStableSwapInstruction(initializeSwapInstruction),
