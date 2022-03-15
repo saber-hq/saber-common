@@ -1,10 +1,5 @@
 import type { Accounts, Idl } from "@project-serum/anchor";
-import {
-  BorshAccountsCoder,
-  BorshCoder,
-  EventParser,
-  utils,
-} from "@project-serum/anchor";
+import { BorshCoder, EventParser, utils } from "@project-serum/anchor";
 import type { InstructionDisplay } from "@project-serum/anchor/dist/cjs/coder/borsh/instruction";
 import type {
   IdlAccountItem,
@@ -20,6 +15,8 @@ import type { ErrorMap } from "../errors";
 import { generateErrorMap } from "../errors";
 import type { AccountParsers } from "../generateAccountParsers";
 import { generateAccountParsersFromCoder } from "../generateAccountParsers";
+import type { AnchorAccount, AnchorAccountMap } from "./accounts";
+import { generateAnchorAccounts } from "./accounts";
 import { newProgram } from "./programs";
 
 /**
@@ -67,11 +64,17 @@ export class SuperCoder<T extends CoderAnchorTypes> {
    */
   readonly eventParser: EventParser;
   /**
+   * All accounts.
+   */
+  readonly accounts: AnchorAccountMap<T["AccountMap"]>;
+  /**
    * Parses accounts.
+   * @deprecated use {@link SuperCoder#accounts}
    */
   readonly accountParsers: AccountParsers<T["AccountMap"]>;
   /**
    * All account {@link IdlTypeDef}s.
+   * @deprecated use {@link SuperCoder#accounts}
    */
   readonly accountTypeDefs: {
     [K in IDLAccountName<T["IDL"]>]: IdlTypeDef;
@@ -88,6 +91,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
   };
   /**
    * Mapping of hex discriminator to the account name.
+   * @deprecated use {@link SuperCoder#accounts}
    */
   readonly discriminatorsByAccount: {
     [K in NonNullable<T["IDL"]["accounts"]>[number]["name"]]: Buffer;
@@ -108,32 +112,34 @@ export class SuperCoder<T extends CoderAnchorTypes> {
      */
     readonly idl: T["IDL"]
   ) {
-    this.coder = new BorshCoder(idl);
+    this.coder = new BorshCoder<IDLAccountName<T["IDL"]>>(idl);
     this.eventParser = new EventParser(address, this.coder);
+    this.accounts = generateAnchorAccounts(
+      address,
+      idl.accounts ?? [],
+      this.coder.accounts
+    );
+
+    this.errorMap = generateErrorMap<T["IDL"]>(idl);
+
+    const accountsList = Object.values(
+      this.accounts
+    ) as AnchorAccount<unknown>[];
+    const accountTypeDefs: Partial<AccountTypeDefMap<T["IDL"]>> = {};
+    accountsList.forEach((account) => {
+      accountTypeDefs[account.name as IDLAccountName<T["IDL"]>] = account.idl;
+    });
+
     this.accountParsers = generateAccountParsersFromCoder(
       idl.accounts?.map((acc) => acc.name),
       this.coder.accounts
     );
-
-    // Load all account type defs.
-    const accountTypeDefs: Partial<AccountTypeDefMap<T["IDL"]>> = {};
-    idl.accounts?.forEach((account: IdlTypeDef) => {
-      accountTypeDefs[account.name as IDLAccountName<T["IDL"]>] = account;
-    });
     this.accountTypeDefs = accountTypeDefs as AccountTypeDefMap<T["IDL"]>;
-
-    this.errorMap = generateErrorMap<T["IDL"]>(idl);
-
-    const discriminatorList =
-      idl.accounts?.map((account) => ({
-        name: account.name,
-        discriminator: BorshAccountsCoder.accountDiscriminator(account.name),
-      })) ?? [];
-    this.discriminators = discriminatorList.reduce(
+    this.discriminators = accountsList.reduce(
       (acc, el) => ({ ...acc, [el.discriminator.toString("hex")]: el.name }),
       {}
     );
-    this.discriminatorsByAccount = discriminatorList.reduce(
+    this.discriminatorsByAccount = accountsList.reduce(
       (acc, el) => ({ ...acc, [el.name]: el.discriminator }),
       {} as { [K in NonNullable<T["IDL"]["accounts"]>[number]["name"]]: Buffer }
     );

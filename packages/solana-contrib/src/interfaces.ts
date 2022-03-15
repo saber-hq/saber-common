@@ -222,3 +222,23 @@ export interface Event {
  * Parses the events from logs.
  */
 export type EventParser<E extends Event> = (logs: string[]) => E[];
+
+/**
+ * A parser for program-owned accounts.
+ *
+ * This is used downstream by Sail.
+ */
+export interface ProgramAccountParser<T> {
+  /**
+   * ID of the program.
+   */
+  programID: PublicKey;
+  /**
+   * Name of the account.
+   */
+  name: string;
+  /**
+   * Function which parses the account.
+   */
+  parse: (data: Buffer) => T;
+}
