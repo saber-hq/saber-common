@@ -11,6 +11,8 @@ import type JSBI from "jsbi";
 
 import { SWAP_PROGRAM_ID } from "../constants";
 import { StableSwap } from "../stable-swap";
+import type { Fraction } from "../state";
+import { isUndefined } from "../state";
 import type { Fees } from "../state/fees";
 import { loadProgramAccount } from "../util/account";
 
@@ -50,6 +52,8 @@ export interface IExchangeInfo {
   fees: Fees;
   lpTotalSupply: TokenAmount;
   reserves: readonly [IReserve, IReserve];
+  exchangeRateA?: Fraction;
+  exchangeRateB?: Fraction;
 }
 
 /**
@@ -93,6 +97,15 @@ export const makeExchangeInfo = ({
         amount: new TokenAmount(exchange.tokens[1], swapAmountB),
       },
     ],
+    // TODO: If exchange rate is ever calculated dynamically, we should
+    // retrieve this rate by calling the program instead of using the
+    // overrides.
+    ...(isUndefined(swap.state.exchangeRateOverrideA)
+      ? { exchangeRateA: swap.state.exchangeRateOverrideA }
+      : {}),
+    ...(isUndefined(swap.state.exchangeRateOverrideB)
+      ? { exchangeRateB: swap.state.exchangeRateOverrideB }
+      : {}),
   };
 };
 

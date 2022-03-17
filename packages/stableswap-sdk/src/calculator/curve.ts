@@ -1,5 +1,6 @@
 import { ONE, ZERO } from "@saberhq/token-utils";
 import JSBI from "jsbi";
+import { FRACTION_ONE } from "../state";
 
 const N_COINS = JSBI.BigInt(2); // n
 
@@ -23,7 +24,9 @@ const MAX_ITERS = 20;
 export const computeD = (
   ampFactor: JSBI,
   amountA: JSBI,
-  amountB: JSBI
+  amountB: JSBI,
+  exchangeRateA = FRACTION_ONE,
+  exchangeRateB = FRACTION_ONE
 ): JSBI => {
   const Ann = JSBI.multiply(ampFactor, N_COINS); // A*n^n
   const S = JSBI.add(amountA, amountB); // sum(x_i), a.k.a S

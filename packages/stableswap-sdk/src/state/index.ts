@@ -6,7 +6,8 @@ import type { Fees } from "./fees";
 import { decodeFees } from "./fees";
 import type { Fraction } from "./fraction";
 import { decodeFraction } from "./fraction";
-import { StableSwapLayout } from "./layout";
+import type { StableSwapLayoutStruct } from "./layout";
+import { LegacyStableSwapLayout, StableSwapLayout } from "./layout";
 
 export * from "./fees";
 export * from "./fraction";
@@ -98,7 +99,26 @@ export interface StableSwapState {
  * @returns
  */
 export const decodeSwap = (data: Buffer): StableSwapState => {
-  const stableSwapData = StableSwapLayout.decode(data);
+  if (
+    data.length !== StableSwapLayout.span &&
+    data.length !== LegacyStableSwapLayout.span
+  ) {
+    throw new Error(`Invalid token swap state`);
+  }
+  const stableSwapData: StableSwapLayoutStruct =
+    data.length !== StableSwapLayout.span
+      ? StableSwapLayout.decode(data)
+      : {
+          ...LegacyStableSwapLayout.decode(data),
+          exchangeRateOverrideA: {
+            numerator: new Uint8Array(8),
+            denominator: new Uint8Array(8),
+          },
+          exchangeRateOverrideB: {
+            numerator: new Uint8Array(8),
+            denominator: new Uint8Array(8),
+          },
+        };
   if (!stableSwapData.isInitialized) {
     throw new Error(`Invalid token swap state`);
   }

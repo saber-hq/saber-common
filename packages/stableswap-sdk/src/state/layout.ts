@@ -50,10 +50,7 @@ export const FractionLayout = (name: string) => {
   );
 };
 
-/**
- * Layout for stable swap state
- */
-export const StableSwapLayout = BufferLayout.struct<{
+export type LegacyStableSwapLayoutStruct = {
   isInitialized: 0 | 1;
   isPaused: 0 | 1;
   nonce: number;
@@ -72,9 +69,14 @@ export const StableSwapLayout = BufferLayout.struct<{
   adminFeeAccountA: Uint8Array;
   adminFeeAccountB: Uint8Array;
   fees: RawFees;
+};
+
+export type StableSwapLayoutStruct = LegacyStableSwapLayoutStruct & {
   exchangeRateOverrideA: RawFraction;
   exchangeRateOverrideB: RawFraction;
-}>([
+};
+
+const LegacyStableSwapLayoutFields = [
   BufferLayout.u8("isInitialized"),
   BufferLayout.u8("isPaused"),
   BufferLayout.u8("nonce"),
@@ -93,6 +95,28 @@ export const StableSwapLayout = BufferLayout.struct<{
   PublicKeyLayout("adminFeeAccountA"),
   PublicKeyLayout("adminFeeAccountB"),
   FeesLayout,
+];
+
+const NewStableSwapLayoutFields = [
   FractionLayout("exchangeRateOverrideA"),
   FractionLayout("exchangeRateOverrideB"),
-]);
+];
+
+const StableSwapLayoutFields = (<
+  (
+    | typeof LegacyStableSwapLayoutFields[number]
+    | typeof NewStableSwapLayoutFields[number]
+  )[]
+>LegacyStableSwapLayoutFields).concat(NewStableSwapLayoutFields);
+
+export const LegacyStableSwapLayout =
+  BufferLayout.struct<LegacyStableSwapLayoutStruct>(
+    LegacyStableSwapLayoutFields
+  );
+
+/**
+ * Layout for stable swap state
+ */
+export const StableSwapLayout = BufferLayout.struct<StableSwapLayoutStruct>(
+  StableSwapLayoutFields
+);

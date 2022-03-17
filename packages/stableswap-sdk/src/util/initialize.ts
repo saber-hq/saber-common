@@ -23,7 +23,7 @@ import type {
 import { initializeSwapInstruction as createInitializeStableSwapInstruction } from "../instructions/swap";
 import { findSwapAuthorityKey, StableSwap } from "../stable-swap";
 import { ZERO_FEES } from "../state/fees";
-import { UNDEFINED_FRACTION } from "../state/fraction";
+import { FRACTION_UNDEFINED } from "../state/fraction";
 import { StableSwapLayout } from "../state/layout";
 import type { TransactionInstructions } from "./instructions";
 import {
@@ -138,9 +138,9 @@ export const loadSwapFromInitializeArgs = (
     stopRampTimestamp: ZERO_TS,
     fees: initializeArgs.fees ?? ZERO_FEES,
     exchangeRateOverrideA:
-      initializeArgs.exchangeRateOverrideA ?? UNDEFINED_FRACTION,
+      initializeArgs.exchangeRateOverrideA ?? FRACTION_UNDEFINED,
     exchangeRateOverrideB:
-      initializeArgs.exchangeRateOverrideB ?? UNDEFINED_FRACTION,
+      initializeArgs.exchangeRateOverrideB ?? FRACTION_UNDEFINED,
   });
 
 /**

@@ -24,7 +24,9 @@ export const calculateVirtualPrice = (
     computeD(
       exchange.ampFactor,
       exchange.reserves[0].amount.raw,
-      exchange.reserves[1].amount.raw
+      exchange.reserves[1].amount.raw,
+      exchange.exchangeRateA,
+      exchange.exchangeRateB
     ),
     amount.raw
   );
@@ -72,7 +74,13 @@ export const calculateEstimatedSwapOutputAmount = (
     computeY(
       amp,
       JSBI.add(fromReserves.amount.raw, fromAmount.raw),
-      computeD(amp, fromReserves.amount.raw, toReserves.amount.raw)
+      computeD(
+        amp,
+        fromReserves.amount.raw,
+        toReserves.amount.raw,
+        exchange.exchangeRateA,
+        exchange.exchangeRateB
+      )
     )
   );
 
@@ -156,7 +164,13 @@ export const calculateEstimatedWithdrawOneAmount = ({
       .raw ?? ZERO,
   ];
 
-  const d_0 = computeD(ampFactor, baseReserves, quoteReserves);
+  const d_0 = computeD(
+    ampFactor,
+    baseReserves,
+    quoteReserves,
+    exchange.exchangeRateA,
+    exchange.exchangeRateB
+  );
   const d_1 = JSBI.subtract(
     d_0,
     JSBI.divide(
@@ -327,12 +341,20 @@ export const calculateEstimatedMintAmount = (
 
   const amp = exchange.ampFactor;
   const [reserveA, reserveB] = exchange.reserves;
-  const d0 = computeD(amp, reserveA.amount.raw, reserveB.amount.raw);
+  const d0 = computeD(
+    amp,
+    reserveA.amount.raw,
+    reserveB.amount.raw,
+    exchange.exchangeRateA,
+    exchange.exchangeRateB
+  );
 
   const d1 = computeD(
     amp,
     JSBI.add(reserveA.amount.raw, depositAmountA),
-    JSBI.add(reserveB.amount.raw, depositAmountB)
+    JSBI.add(reserveB.amount.raw, depositAmountB),
+    exchange.exchangeRateA,
+    exchange.exchangeRateB
   );
   if (JSBI.lessThan(d1, d0)) {
     throw new Error("New D cannot be less than previous D");
@@ -360,7 +382,13 @@ export const calculateEstimatedMintAmount = (
     );
     return JSBI.subtract(newBalance, JSBI.BigInt(fee.toFixed(0)));
   }) as [JSBI, JSBI];
-  const d2 = computeD(amp, adjustedBalances[0], adjustedBalances[1]);
+  const d2 = computeD(
+    amp,
+    adjustedBalances[0],
+    adjustedBalances[1],
+    exchange.exchangeRateA,
+    exchange.exchangeRateB
+  );
 
   const lpSupply = exchange.lpTotalSupply;
   const mintAmountRaw = JSBI.divide(

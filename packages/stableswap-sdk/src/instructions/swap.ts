@@ -5,7 +5,7 @@ import type { Fees, Fraction, RawFees, RawFraction } from "../state";
 import {
   encodeFees,
   encodeFraction,
-  UNDEFINED_FRACTION,
+  FRACTION_UNDEFINED,
   ZERO_FEES,
 } from "../state";
 import type { StableSwapConfig } from "./common";
@@ -250,8 +250,8 @@ export const initializeSwapInstructionRaw = ({
 
 export const initializeSwapInstruction = ({
   fees = ZERO_FEES,
-  exchangeRateOverrideA = UNDEFINED_FRACTION,
-  exchangeRateOverrideB = UNDEFINED_FRACTION,
+  exchangeRateOverrideA = FRACTION_UNDEFINED,
+  exchangeRateOverrideB = FRACTION_UNDEFINED,
   ...args
 }: InitializeSwapInstruction): TransactionInstruction => {
   return initializeSwapInstructionRaw({

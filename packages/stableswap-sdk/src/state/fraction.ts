@@ -7,9 +7,18 @@ export type Fraction = {
   denominator: u64;
 };
 
-export const UNDEFINED_FRACTION: Fraction = {
+export const FRACTION_UNDEFINED: Fraction = {
   numerator: new u64(0),
   denominator: new u64(0),
+};
+
+export const FRACTION_ONE: Fraction = {
+  numerator: new u64(0),
+  denominator: new u64(0),
+};
+
+export const isUndefined = (fraction: Fraction) => {
+  return fraction.numerator.isZero() && fraction.denominator.isZero();
 };
 
 export const encodeFraction = (fraction: Fraction): RawFraction => ({
