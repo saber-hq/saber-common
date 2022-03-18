@@ -9,12 +9,11 @@ import type {
   Transaction,
 } from "@solana/web3.js";
 
-import type { Broadcaster } from ".";
-import {
-  DEFAULT_PROVIDER_OPTIONS,
-  PendingTransaction,
-  suppressConsoleErrorAsync,
-} from ".";
+import { firstAggregateError } from "./error";
+import type { Broadcaster } from "./interfaces";
+import { DEFAULT_PROVIDER_OPTIONS } from "./provider";
+import { PendingTransaction } from "./transaction";
+import { suppressConsoleErrorAsync } from "./utils";
 import { simulateTransactionWithCommitment } from "./utils/simulateTransactionWithCommitment";
 
 export interface BroadcastOptions extends ConfirmOptions {
@@ -115,24 +114,40 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
   async getRecentBlockhash(
     commitment: Commitment = this.opts.commitment ?? "processed"
   ): Promise<Blockhash> {
-    const result = await Promise.any(
-      this.connections.map((conn) => conn.getRecentBlockhash(commitment))
-    );
-    return result.blockhash;
+    try {
+      const result = await Promise.any(
+        this.connections.map((conn) => conn.getRecentBlockhash(commitment))
+      );
+      return result.blockhash;
+    } catch (e) {
+      if (e instanceof AggregateError) {
+        throw firstAggregateError(e);
+      } else {
+        throw e;
+      }
+    }
   }
 
   private async _sendRawTransaction(
     encoded: Buffer,
     options?: SendOptions
   ): Promise<PendingTransaction> {
-    return await Promise.any(
-      this.connections.map(async (connection) => {
-        return new PendingTransaction(
-          connection,
-          await connection.sendRawTransaction(encoded, options)
-        );
-      })
-    );
+    try {
+      return await Promise.any(
+        this.connections.map(async (connection) => {
+          return new PendingTransaction(
+            connection,
+            await connection.sendRawTransaction(encoded, options)
+          );
+        })
+      );
+    } catch (e) {
+      if (e instanceof AggregateError) {
+        throw firstAggregateError(e);
+      } else {
+        throw e;
+      }
+    }
   }
 
   /**
@@ -184,14 +199,22 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
     if (verifySigners && tx.signatures.length === 0) {
       throw new Error("Transaction must be signed before simulating.");
     }
-    return await Promise.any(
-      this.connections.map(async (connection) => {
-        return await simulateTransactionWithCommitment(
-          connection,
-          tx,
-          commitment
-        );
-      })
-    );
+    try {
+      return await Promise.any(
+        this.connections.map(async (connection) => {
+          return await simulateTransactionWithCommitment(
+            connection,
+            tx,
+            commitment
+          );
+        })
+      );
+    } catch (e) {
+      if (e instanceof AggregateError) {
+        throw firstAggregateError(e);
+      } else {
+        throw e;
+      }
+    }
   }
 }
