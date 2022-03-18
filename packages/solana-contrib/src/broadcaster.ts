@@ -120,7 +120,11 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
       );
       return result.blockhash;
     } catch (e) {
-      throw firstAggregateError(e as AggregateError);
+      if (e instanceof AggregateError) {
+        throw firstAggregateError(e);
+      } else {
+        throw e;
+      }
     }
   }
 
@@ -138,7 +142,11 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
         })
       );
     } catch (e) {
-      throw firstAggregateError(e as AggregateError);
+      if (e instanceof AggregateError) {
+        throw firstAggregateError(e);
+      } else {
+        throw e;
+      }
     }
   }
 
@@ -202,7 +210,11 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
         })
       );
     } catch (e) {
-      throw firstAggregateError(e as AggregateError);
+      if (e instanceof AggregateError) {
+        throw firstAggregateError(e);
+      } else {
+        throw e;
+      }
     }
   }
 }
