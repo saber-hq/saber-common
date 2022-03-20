@@ -12,6 +12,7 @@ import invariant from "tiny-invariant";
 import type { BroadcastOptions } from "../broadcaster";
 import type { Provider } from "../interfaces";
 import {
+  createMemoInstruction,
   EstimatedTXTooBigError,
   printTXTable,
   suppressConsoleError,
@@ -446,6 +447,16 @@ export class TransactionEnvelope {
   }
 
   /**
+   * Add a memo to each transaction envelope specified.
+   */
+  static addMemos(
+    memo: string,
+    ...txs: TransactionEnvelope[]
+  ): TransactionEnvelope[] {
+    return txs.map((tx) => tx.addMemo(memo));
+  }
+
+  /**
    * Combines multiple TransactionEnvelopes into one.
    */
   static combineAll(...txs: TransactionEnvelope[]): TransactionEnvelope {
@@ -571,5 +582,13 @@ export class TransactionEnvelope {
       throw new Error(`No instruction found at index ${index}`);
     }
     return ix;
+  }
+
+  /**
+   * Attach a memo instruction to this transaction.
+   */
+  addMemo(memo: string): TransactionEnvelope {
+    this.instructions.push(createMemoInstruction(memo));
+    return this;
   }
 }
