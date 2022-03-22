@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/use-solana",
-  "version": "1.12.55",
+  "version": "1.12.56",
   "description": "Solana utilities for React applications.",
   "homepage": "https://saber.so",
   "repository": "git@github.com:saber-hq/saber-common.git",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@ledgerhq/hw-transport": "^6.24.1",
     "@ledgerhq/hw-transport-webusb": "^6.24.1",
-    "@saberhq/solana-contrib": "^1.12.55",
+    "@saberhq/solana-contrib": "^1.12.56",
     "@solana/wallet-adapter-base": "^0.9.4",
     "@solana/wallet-adapter-clover": "^0.4.4",
     "@solana/wallet-adapter-coin98": "^0.5.3",
