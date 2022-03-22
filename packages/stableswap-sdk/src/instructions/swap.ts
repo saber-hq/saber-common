@@ -1,7 +1,7 @@
-import type { u64 } from "@saberhq/token-utils";
+import type { Fraction, u64 } from "@saberhq/token-utils";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
 
-import type { Fees, Fraction, RawFees, RawFraction } from "../state";
+import type { Fees, RawFees, RawFraction } from "../state";
 import {
   encodeFees,
   encodeFraction,

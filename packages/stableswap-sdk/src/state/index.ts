@@ -1,10 +1,10 @@
+import type { Fraction } from "@saberhq/token-utils";
 import { u64 } from "@saberhq/token-utils";
 import { PublicKey } from "@solana/web3.js";
 
 import type { SwapTokenInfo } from "../instructions/swap";
 import type { Fees } from "./fees";
 import { decodeFees } from "./fees";
-import type { Fraction } from "./fraction";
 import { decodeFraction } from "./fraction";
 import type { StableSwapLayoutStruct } from "./layout";
 import { LegacyStableSwapLayout, StableSwapLayout } from "./layout";
@@ -106,7 +106,7 @@ export const decodeSwap = (data: Buffer): StableSwapState => {
     throw new Error(`Invalid token swap state`);
   }
   const stableSwapData: StableSwapLayoutStruct =
-    data.length !== StableSwapLayout.span
+    data.length === StableSwapLayout.span
       ? StableSwapLayout.decode(data)
       : {
           ...LegacyStableSwapLayout.decode(data),

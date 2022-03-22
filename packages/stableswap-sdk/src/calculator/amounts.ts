@@ -5,6 +5,7 @@ import mapValues from "lodash.mapvalues";
 
 import type { IExchangeInfo } from "../entities/exchange";
 import type { Fees } from "../state/fees";
+import { divFraction, mulFraction } from "../util";
 import { computeD, computeY } from "./curve";
 
 /**
@@ -69,48 +70,64 @@ export const calculateEstimatedSwapOutputAmount = (
 
   const amp = exchange.ampFactor;
 
+  const [fromExchangeRate, toExchangeRate] = fromAmount.token.equals(
+    exchange.reserves[0].amount.token
+  )
+    ? [exchange.exchangeRateA, exchange.exchangeRateB]
+    : [exchange.exchangeRateB, exchange.exchangeRateA];
+
   const amountBeforeFees = JSBI.subtract(
-    toReserves.amount.raw,
+    mulFraction(toReserves.amount.raw, toExchangeRate),
     computeY(
       amp,
-      JSBI.add(fromReserves.amount.raw, fromAmount.raw),
+      mulFraction(
+        JSBI.add(fromReserves.amount.raw, fromAmount.raw),
+        fromExchangeRate
+      ),
       computeD(
         amp,
         fromReserves.amount.raw,
         toReserves.amount.raw,
-        exchange.exchangeRateA,
-        exchange.exchangeRateB
+        fromExchangeRate,
+        toExchangeRate
       )
     )
   );
 
   const outputAmountBeforeFees = new TokenAmount(
     toReserves.amount.token,
-    amountBeforeFees
+    divFraction(amountBeforeFees, toExchangeRate)
   );
 
-  const fee = new TokenAmount(
-    toReserves.amount.token,
+  const fee = JSBI.BigInt(
     exchange.fees.trade.asFraction.multiply(amountBeforeFees).toFixed(0)
   );
-
-  const adminFee = new TokenAmount(
-    toReserves.amount.token,
-    exchange.fees.adminTrade.asFraction.multiply(fee.raw).toFixed(0)
+  const adminFee = JSBI.BigInt(
+    exchange.fees.adminTrade.asFraction.multiply(fee).toFixed(0)
   );
-  const lpFee = fee.subtract(adminFee);
+
+  const feeAmount = new TokenAmount(
+    toReserves.amount.token,
+    divFraction(fee, toExchangeRate)
+  );
+
+  const adminFeeAmount = new TokenAmount(
+    toReserves.amount.token,
+    divFraction(adminFee, toExchangeRate)
+  );
+  const lpFee = feeAmount.subtract(adminFeeAmount);
 
   const outputAmount = new TokenAmount(
     toReserves.amount.token,
-    JSBI.subtract(amountBeforeFees, fee.raw)
+    JSBI.subtract(amountBeforeFees, feeAmount.raw)
   );
 
   return {
     outputAmountBeforeFees,
     outputAmount,
-    fee: fee,
+    fee: feeAmount,
     lpFee,
-    adminFee,
+    adminFee: adminFeeAmount,
   };
 };
 
@@ -164,13 +181,27 @@ export const calculateEstimatedWithdrawOneAmount = ({
       .raw ?? ZERO,
   ];
 
+  const [baseExchangeRate, quoteExchangeRate] = withdrawToken.equals(
+    exchange.reserves[0].amount.token
+  )
+    ? [
+        exchange.exchangeRateA ?? new Fraction(1),
+        exchange.exchangeRateB ?? new Fraction(1),
+      ]
+    : [
+        exchange.exchangeRateB ?? new Fraction(1),
+        exchange.exchangeRateA ?? new Fraction(1),
+      ];
+
   const d_0 = computeD(
     ampFactor,
     baseReserves,
     quoteReserves,
-    exchange.exchangeRateA,
-    exchange.exchangeRateB
+    baseExchangeRate,
+    quoteExchangeRate
   );
+  const baseReservesXp = mulFraction(baseReserves, baseExchangeRate);
+  const quoteReservesXp = mulFraction(quoteReserves, quoteExchangeRate);
   const d_1 = JSBI.subtract(
     d_0,
     JSBI.divide(
@@ -179,24 +210,24 @@ export const calculateEstimatedWithdrawOneAmount = ({
     )
   );
 
-  const new_y = computeY(ampFactor, quoteReserves, d_1);
+  const new_y = computeY(ampFactor, quoteReservesXp, d_1);
 
-  // expected_base_amount = swap_base_amount * d_1 / d_0 - new_y;
+  // expected_base_amount = swap_base_amount_xp * d_1 / d_0 - new_y;
   const expected_base_amount = JSBI.subtract(
-    JSBI.divide(JSBI.multiply(baseReserves, d_1), d_0),
+    JSBI.divide(JSBI.multiply(baseReservesXp, d_1), d_0),
     new_y
   );
-  // expected_quote_amount = swap_quote_amount - swap_quote_amount * d_1 / d_0;
+  // expected_quote_amount = swap_quote_amount_xp - swap_quote_amount_xp * d_1 / d_0;
   const expected_quote_amount = JSBI.subtract(
-    quoteReserves,
-    JSBI.divide(JSBI.multiply(quoteReserves, d_1), d_0)
+    quoteReservesXp,
+    JSBI.divide(JSBI.multiply(quoteReservesXp, d_1), d_0)
   );
-  // new_base_amount = swap_base_amount - expected_base_amount * fee / fee_denominator;
-  const new_base_amount = new Fraction(baseReserves.toString(), 1).subtract(
+  // new_base_amount = swap_base_amount_xp - expected_base_amount * fee / fee_denominator;
+  const new_base_amount = new Fraction(baseReservesXp.toString(), 1).subtract(
     normalizedTradeFee(fees, N_COINS, expected_base_amount)
   );
-  // new_quote_amount = swap_quote_amount - expected_quote_amount * fee / fee_denominator;
-  const new_quote_amount = new Fraction(quoteReserves.toString(), 1).subtract(
+  // new_quote_amount = swap_quote_amount_xp - expected_quote_amount * fee / fee_denominator;
+  const new_quote_amount = new Fraction(quoteReservesXp.toString(), 1).subtract(
     normalizedTradeFee(fees, N_COINS, expected_quote_amount)
   );
   const dy = new_base_amount.subtract(
@@ -206,11 +237,15 @@ export const calculateEstimatedWithdrawOneAmount = ({
       d_1
     ).toString()
   );
-  const dy_0 = JSBI.subtract(baseReserves, new_y);
+  const dy_0 = JSBI.subtract(baseReservesXp, new_y);
 
   // lp fees
-  const swapFee = new Fraction(dy_0.toString(), 1).subtract(dy);
-  const withdrawFee = dy.multiply(fees.withdraw.asFraction);
+  const swapFee = new Fraction(dy_0.toString(), 1)
+    .subtract(dy)
+    .divide(baseExchangeRate);
+  const withdrawFee = dy
+    .divide(baseExchangeRate)
+    .multiply(fees.withdraw.asFraction);
 
   // admin fees
   const adminSwapFee = swapFee.multiply(fees.adminTrade.asFraction);
@@ -221,12 +256,15 @@ export const calculateEstimatedWithdrawOneAmount = ({
   const lpWithdrawFee = withdrawFee.subtract(adminWithdrawFee);
 
   // final withdraw amount
-  const withdrawAmount = dy.subtract(withdrawFee).subtract(swapFee);
+  const withdrawAmount = dy
+    .divide(baseExchangeRate)
+    .subtract(withdrawFee)
+    .subtract(swapFee);
 
   // final quantities
   const quantities = {
     withdrawAmount,
-    withdrawAmountBeforeFees: dy,
+    withdrawAmountBeforeFees: dy.divide(baseExchangeRate),
     swapFee,
     withdrawFee,
     lpSwapFee,

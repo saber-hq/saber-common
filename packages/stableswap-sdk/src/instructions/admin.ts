@@ -1,14 +1,16 @@
-import type { u64 } from "@saberhq/token-utils";
+import type { Fraction, u64 } from "@saberhq/token-utils";
 import * as BufferLayout from "@solana/buffer-layout";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
 
 import type { StableSwapState } from "../state";
+import { encodeFraction } from "../state";
 import type { Fees } from "../state/fees";
 import { encodeFees, ZERO_FEES } from "../state/fees";
 import {
   ApplyNewAdminIXLayout,
   PauseIXLayout,
   RampAIXLayout,
+  SetExchangeRateOverrideIXLayout,
   SetFeeAccountIXLayout,
   SetNewFeesIXLayout,
   StopRampAIXLayout,
@@ -29,6 +31,8 @@ export enum AdminInstruction {
   APPLY_NEW_ADMIN = 105,
   COMMIT_NEW_ADMIN = 106,
   SET_NEW_FEES = 107,
+  SET_TOKEN_A_EXCHANGE_RATE_OVERRIDE = 108,
+  SET_TOKEN_B_EXCHANGE_RATE_OVERRIDE = 109,
 }
 
 /**
@@ -271,5 +275,73 @@ export const createAdminSetNewFeesInstruction = ({
     config,
     keys,
     data,
+  });
+};
+
+// Helper function to create instructions for overriding the token A or token B
+// exchange rates.
+const createAdminSetExchangeRateOverrideInstruction = ({
+  config,
+  adminAccount,
+  exchangeRate,
+  adminInstruction,
+}: {
+  config: StableSwapConfig;
+  adminAccount: PublicKey;
+  exchangeRate: Fraction;
+  adminInstruction:
+    | AdminInstruction.SET_TOKEN_A_EXCHANGE_RATE_OVERRIDE
+    | AdminInstruction.SET_TOKEN_B_EXCHANGE_RATE_OVERRIDE;
+}): TransactionInstruction => {
+  const keys = [
+    { pubkey: config.swapAccount, isSigner: false, isWritable: true },
+    { pubkey: adminAccount, isSigner: true, isWritable: false },
+  ];
+  const data = Buffer.alloc(SetExchangeRateOverrideIXLayout.span);
+  SetExchangeRateOverrideIXLayout.encode(
+    {
+      instruction: adminInstruction,
+      exchangeRate: encodeFraction(exchangeRate),
+    },
+    data
+  );
+  return buildInstruction({
+    config,
+    keys,
+    data,
+  });
+};
+
+export const createAdminSetTokenAExchangeRateOverrideInstruction = ({
+  config,
+  state: { adminAccount },
+  exchangeRate,
+}: {
+  config: StableSwapConfig;
+  state: Pick<StableSwapState, "adminAccount">;
+  exchangeRate: Fraction;
+}): TransactionInstruction => {
+  return createAdminSetExchangeRateOverrideInstruction({
+    config,
+    adminAccount,
+    exchangeRate,
+    adminInstruction: AdminInstruction.SET_TOKEN_A_EXCHANGE_RATE_OVERRIDE,
+  });
+};
+
+export const createAdminSetTokenBExchangeRateOverrideInstruction = ({
+  config,
+  state: { adminAccount },
+  exchangeRate,
+}: {
+  config: StableSwapConfig;
+  state: Pick<StableSwapState, "adminAccount">;
+  exchangeRate: Fraction;
+}): TransactionInstruction => {
+  return createAdminSetExchangeRateOverrideInstruction({
+    config,
+    adminAccount,
+    exchangeRate,
+    adminInstruction: AdminInstruction.SET_TOKEN_B_EXCHANGE_RATE_OVERRIDE,
   });
 };

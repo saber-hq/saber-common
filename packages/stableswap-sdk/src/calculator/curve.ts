@@ -1,6 +1,7 @@
-import { ONE, ZERO } from "@saberhq/token-utils";
+import { Fraction, ONE, ZERO } from "@saberhq/token-utils";
 import JSBI from "jsbi";
-import { FRACTION_ONE } from "../state";
+
+import { mulFraction } from "../util";
 
 const N_COINS = JSBI.BigInt(2); // n
 
@@ -25,11 +26,13 @@ export const computeD = (
   ampFactor: JSBI,
   amountA: JSBI,
   amountB: JSBI,
-  exchangeRateA = FRACTION_ONE,
-  exchangeRateB = FRACTION_ONE
+  exchangeRateA = new Fraction(1),
+  exchangeRateB = new Fraction(1)
 ): JSBI => {
+  const adjustedAmountA = mulFraction(amountA, exchangeRateA);
+  const adjustedAmountB = mulFraction(amountB, exchangeRateB);
   const Ann = JSBI.multiply(ampFactor, N_COINS); // A*n^n
-  const S = JSBI.add(amountA, amountB); // sum(x_i), a.k.a S
+  const S = JSBI.add(adjustedAmountA, adjustedAmountB); // sum(x_i), a.k.a S
   if (JSBI.equal(S, ZERO)) {
     return ZERO;
   }
@@ -44,8 +47,14 @@ export const computeD = (
   ) {
     dPrev = d;
     let dP = d;
-    dP = JSBI.divide(JSBI.multiply(dP, d), JSBI.multiply(amountA, N_COINS));
-    dP = JSBI.divide(JSBI.multiply(dP, d), JSBI.multiply(amountB, N_COINS));
+    dP = JSBI.divide(
+      JSBI.multiply(dP, d),
+      JSBI.multiply(adjustedAmountA, N_COINS)
+    );
+    dP = JSBI.divide(
+      JSBI.multiply(dP, d),
+      JSBI.multiply(adjustedAmountB, N_COINS)
+    );
 
     const dNumerator = JSBI.multiply(
       d,

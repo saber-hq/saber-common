@@ -97,7 +97,7 @@ const LegacyStableSwapLayoutFields = [
   FeesLayout,
 ];
 
-const NewStableSwapLayoutFields = [
+const ExchangeRateOverrideLayoutFields = [
   FractionLayout("exchangeRateOverrideA"),
   FractionLayout("exchangeRateOverrideB"),
 ];
@@ -105,9 +105,9 @@ const NewStableSwapLayoutFields = [
 const StableSwapLayoutFields = (<
   (
     | typeof LegacyStableSwapLayoutFields[number]
-    | typeof NewStableSwapLayoutFields[number]
+    | typeof ExchangeRateOverrideLayoutFields[number]
   )[]
->LegacyStableSwapLayoutFields).concat(NewStableSwapLayoutFields);
+>LegacyStableSwapLayoutFields).concat(ExchangeRateOverrideLayoutFields);
 
 export const LegacyStableSwapLayout =
   BufferLayout.struct<LegacyStableSwapLayoutStruct>(

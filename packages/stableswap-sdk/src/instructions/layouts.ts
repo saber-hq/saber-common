@@ -104,3 +104,10 @@ export const SetNewFeesIXLayout = BufferLayout.struct<{
   instruction: AdminInstruction.SET_NEW_FEES;
   fees: RawFees;
 }>([BufferLayout.u8("instruction"), FeesLayout]);
+
+export const SetExchangeRateOverrideIXLayout = BufferLayout.struct<{
+  instruction:
+    | AdminInstruction.SET_TOKEN_A_EXCHANGE_RATE_OVERRIDE
+    | AdminInstruction.SET_TOKEN_B_EXCHANGE_RATE_OVERRIDE;
+  exchangeRate: RawFraction;
+}>([BufferLayout.u8("instruction"), FractionLayout("exchangeRate")]);

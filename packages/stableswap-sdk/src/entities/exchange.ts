@@ -2,6 +2,7 @@ import type { TokenInfo } from "@saberhq/token-utils";
 import {
   deserializeAccount,
   deserializeMint,
+  Fraction,
   parseBigintIsh,
   Token,
   TokenAmount,
@@ -11,7 +12,6 @@ import type JSBI from "jsbi";
 
 import { SWAP_PROGRAM_ID } from "../constants";
 import { StableSwap } from "../stable-swap";
-import type { Fraction } from "../state";
 import { isUndefined } from "../state";
 import type { Fees } from "../state/fees";
 import { loadProgramAccount } from "../util/account";
@@ -101,10 +101,20 @@ export const makeExchangeInfo = ({
     // retrieve this rate by calling the program instead of using the
     // overrides.
     ...(isUndefined(swap.state.exchangeRateOverrideA)
-      ? { exchangeRateA: swap.state.exchangeRateOverrideA }
+      ? {
+          exchangeRateA: new Fraction(
+            swap.state.exchangeRateOverrideA.numerator.toString(),
+            swap.state.exchangeRateOverrideA.denominator.toString()
+          ),
+        }
       : {}),
     ...(isUndefined(swap.state.exchangeRateOverrideB)
-      ? { exchangeRateB: swap.state.exchangeRateOverrideB }
+      ? {
+          exchangeRateB: new Fraction(
+            swap.state.exchangeRateOverrideB.numerator.toString(),
+            swap.state.exchangeRateOverrideB.denominator.toString()
+          ),
+        }
       : {}),
   };
 };
