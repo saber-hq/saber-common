@@ -7,6 +7,7 @@ import type {
   TransactionInstruction,
 } from "@solana/web3.js";
 import { PACKET_DATA_SIZE, PublicKey, Transaction } from "@solana/web3.js";
+import chunk from "lodash.chunk";
 import invariant from "tiny-invariant";
 
 import type { BroadcastOptions } from "../broadcaster";
@@ -575,6 +576,20 @@ export class TransactionEnvelope {
       })
       .filter((ix): ix is TransactionInstruction => !!ix);
     return new TransactionEnvelope(this.provider, instructions, this.signers);
+  }
+
+  /**
+   * Chunk instructions of transaction envelope by the specified chunkSize.
+   */
+  chunkBy(chunkSize: number): TransactionEnvelope[] {
+    if (this.instructions.length <= chunkSize) {
+      return [this];
+    }
+
+    const chunks = chunk(this.instructions, chunkSize);
+    return chunks.map(
+      (c) => new TransactionEnvelope(this.provider, c, this.signers)
+    );
   }
 
   /**
