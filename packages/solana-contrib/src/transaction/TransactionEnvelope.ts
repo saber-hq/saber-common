@@ -10,6 +10,10 @@ import { PACKET_DATA_SIZE, PublicKey, Transaction } from "@solana/web3.js";
 import invariant from "tiny-invariant";
 
 import type { BroadcastOptions } from "../broadcaster";
+import {
+  requestComputeUnitsInstruction,
+  requestHeapFrameInstruction,
+} from "../computeBudget";
 import type { Provider } from "../interfaces";
 import {
   createMemoInstruction,
@@ -589,6 +593,27 @@ export class TransactionEnvelope {
    */
   addMemo(memo: string): TransactionEnvelope {
     this.instructions.push(createMemoInstruction(memo));
+    return this;
+  }
+
+  /**
+   * Request for additional compute units before processing this transaction.
+   */
+  addAdditionalComputeBudget(
+    units: number,
+    additionalFee: number
+  ): TransactionEnvelope {
+    this.instructions.unshift(
+      requestComputeUnitsInstruction(units, additionalFee)
+    );
+    return this;
+  }
+
+  /**
+   * Request a specific transaction-wide program heap region size in bytes.
+   */
+  addAdditionalHeapFrame(bytes: number): TransactionEnvelope {
+    this.instructions.unshift(requestHeapFrameInstruction(bytes));
     return this;
   }
 }

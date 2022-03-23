@@ -7,7 +7,7 @@ import { RequestHeapFrameLayout, RequestUnitsLayout } from "./layouts";
  * Request a specific maximum number of compute units the transaction is
  * allowed to consume and an additional fee to pay.
  */
-export const requestUnitsInstruction = (
+export const requestComputeUnitsInstruction = (
   units: number,
   additionalFee: number
 ): TransactionInstruction => {
@@ -25,7 +25,7 @@ export const requestUnitsInstruction = (
  * The value requested must be a multiple of 1024. This new heap region
  * size applies to each program executed, including all calls to CPIs.
  */
-export const requestRequestHeapFrameInstruction = (
+export const requestHeapFrameInstruction = (
   bytes: number
 ): TransactionInstruction => {
   const data = Buffer.alloc(RequestHeapFrameLayout.span);
