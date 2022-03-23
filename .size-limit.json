@@ -11,7 +11,7 @@
   },
   {
     "path": "packages/solana-contrib/dist/esm/index.js",
-    "limit": "10 KB",
+    "limit": "12 KB",
     "ignore": ["@solana/web3.js", "bn.js"],
     "webpack": true
   },
