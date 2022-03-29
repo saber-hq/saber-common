@@ -578,6 +578,30 @@ export class TransactionEnvelope {
   }
 
   /**
+   * Split out ATA instructions to a separate transaction envelope.
+   */
+  splitATAIXs(): {
+    ataIXs: TransactionEnvelope;
+    tx: TransactionEnvelope;
+  } {
+    const ataIXs = new TransactionEnvelope(this.provider, [], this.signers);
+    const newTx = new TransactionEnvelope(this.provider, [], this.signers);
+
+    for (const ix of this.instructions) {
+      if (ix.programId.equals(ASSOCIATED_TOKEN_PROGRAM_ID)) {
+        ataIXs.instructions.push(ix);
+      } else {
+        newTx.instructions.push(ix);
+      }
+    }
+
+    return {
+      ataIXs: ataIXs.dedupeATAIXs(),
+      tx: newTx,
+    };
+  }
+
+  /**
    * Get an instruction from the transaction envelope by index.
    */
   getInstruction(index: number): TransactionInstruction {
