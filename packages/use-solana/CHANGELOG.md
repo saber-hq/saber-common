@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.57 (2022-03-29)
+
+**Note:** Version bump only for package @saberhq/use-solana
+
+
+
+
+
 ## 1.12.56 (2022-03-22)
 
 **Note:** Version bump only for package @saberhq/use-solana
