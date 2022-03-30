@@ -12,6 +12,7 @@ import {
   SolletWalletAdapter,
 } from "@solana/wallet-adapter-sollet";
 import { SolongWalletAdapter } from "@solana/wallet-adapter-solong";
+import { TorusWalletAdapter } from "@solana/wallet-adapter-torus";
 import type React from "react";
 
 import type { WalletAdapterBuilder } from "./adapters";
@@ -50,6 +51,7 @@ export enum DefaultWalletType {
   Solong = "Solong",
   SecretKey = "SecretKey",
   Huobi = "Huobi",
+  Torus = "Torus"
 }
 export type WalletTypeEnum<T> = { [name: string]: T[keyof T] | string };
 export type UnknownWalletType = WalletTypeEnum<Record<string, unknown>>;
@@ -92,6 +94,14 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     url: "https://www.ledger.com",
     icon: LEDGER,
     makeAdapter: () => new LedgerWalletAdapter(),
+  },
+  [DefaultWalletType.Torus]: {
+    name: "Torus",
+    url: "https://www.app.torus.com",
+    // TODO ADD CORRECT ICON HERE ONCE WEBPACK IS FINALISED
+    icon: LEDGER,
+    makeAdapter: () =>  {
+      return new SolanaWalletAdapter(new TorusWalletAdapter())}
   },
   [DefaultWalletType.Solong]: {
     name: "Solong",
