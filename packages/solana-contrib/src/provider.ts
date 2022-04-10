@@ -28,8 +28,8 @@ import type {
 import { TransactionEnvelope } from "./transaction/TransactionEnvelope";
 
 export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
-  preflightCommitment: "processed",
-  commitment: "processed",
+  preflightCommitment: "confirmed",
+  commitment: "confirmed",
 };
 
 export const DEFAULT_READONLY_PUBLIC_KEY: PublicKey = SystemProgram.programId;
@@ -87,7 +87,7 @@ export class SolanaTransactionSigner implements TransactionSigner {
   constructor(
     readonly wallet: Wallet,
     readonly broadcaster: Broadcaster,
-    readonly preflightCommitment: Commitment = "processed"
+    readonly preflightCommitment: Commitment = "confirmed"
   ) {}
 
   get publicKey(): PublicKey {

@@ -32,20 +32,18 @@ export class SingleConnectionBroadcaster implements Broadcaster {
     readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {}
 
+  /**
+   * @inheritdoc
+   */
   async getRecentBlockhash(
-    commitment: Commitment = "processed"
+    commitment: Commitment = this.opts.commitment ?? "confirmed"
   ): Promise<Blockhash> {
-    const result = await this.sendConnection.getRecentBlockhash(commitment);
+    const result = await this.sendConnection.getLatestBlockhash(commitment);
     return result.blockhash;
   }
 
   /**
-   * Broadcasts a signed transaction.
-   *
-   * @param tx
-   * @param confirm
-   * @param opts
-   * @returns
+   * @inheritdoc
    */
   async broadcast(
     tx: Transaction,
@@ -73,21 +71,18 @@ export class SingleConnectionBroadcaster implements Broadcaster {
   }
 
   /**
-   * Simulates a transaction with a commitment.
-   * @param tx
-   * @param commitment
-   * @returns
+   * @inheritdoc
    */
   async simulate(
     tx: Transaction,
     {
-      commitment = "processed",
+      commitment = this.opts.preflightCommitment ?? "confirmed",
       verifySigners = true,
     }: {
       commitment?: Commitment;
       verifySigners?: boolean;
     } = {
-      commitment: "processed",
+      commitment: this.opts.preflightCommitment ?? "confirmed",
       verifySigners: true,
     }
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
@@ -112,11 +107,11 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
   ) {}
 
   async getRecentBlockhash(
-    commitment: Commitment = this.opts.commitment ?? "processed"
+    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed"
   ): Promise<Blockhash> {
     try {
       const result = await Promise.any(
-        this.connections.map((conn) => conn.getRecentBlockhash(commitment))
+        this.connections.map((conn) => conn.getLatestBlockhash(commitment))
       );
       return result.blockhash;
     } catch (e) {
@@ -186,13 +181,13 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
   async simulate(
     tx: Transaction,
     {
-      commitment = "processed",
+      commitment = this.opts.preflightCommitment ?? "confirmed",
       verifySigners = true,
     }: {
       commitment?: Commitment;
       verifySigners?: boolean;
     } = {
-      commitment: "processed",
+      commitment: this.opts.preflightCommitment ?? "confirmed",
       verifySigners: true,
     }
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {

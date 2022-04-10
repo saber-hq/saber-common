@@ -55,7 +55,7 @@ export const useConnectionInternal = ({
   // default to mainnet-beta
   defaultNetwork = "mainnet-beta",
   networkConfigs = DEFAULT_NETWORK_CONFIG_MAP,
-  commitment = "processed",
+  commitment = "confirmed",
   storageAdapter,
 }: ConnectionArgs): ConnectionContext => {
   const [network, setNetwork] = usePersistedKVStore<Network>(
