@@ -54,7 +54,7 @@ export const useProviderInternal = ({
   connection,
   sendConnection = connection,
   wallet,
-  commitment = "processed",
+  commitment = "confirmed",
   confirmOptions = DEFAULT_PROVIDER_OPTIONS,
 }: UseProviderArgs): UseProvider => {
   const provider = useMemo(

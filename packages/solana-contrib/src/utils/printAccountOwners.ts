@@ -130,7 +130,7 @@ async function gracefulGetMultipleAccountsInfo(
 
     const unsafeRes = await rpcRequest("getMultipleAccounts", [
       publicKeys.map((key) => key.toBase58()),
-      { encoding: "base64", commitment: "processed" },
+      { encoding: "base64", commitment: "confirmed" },
     ]);
 
     const value = unsafeRes?.result?.value;
@@ -147,7 +147,7 @@ async function gracefulGetMultipleAccountsInfo(
 type PublicKeyBase58 = string;
 type GetMultipleAccountsArgs = [
   PublicKeyBase58[],
-  { encoding: "base64"; commitment: "processed" }
+  { encoding: "base64"; commitment: "confirmed" }
 ];
 
 interface ConnectionWithGetMultipleAccounts {

@@ -42,13 +42,13 @@
   },
   "peerDependencies": {
     "@project-serum/anchor": ">=0.17",
-    "@solana/web3.js": "^1.29.2",
+    "@solana/web3.js": "^1.35",
     "bn.js": "^5.2.0",
     "jsbi": "*"
   },
   "devDependencies": {
     "@project-serum/anchor": "^0.22.1",
-    "@solana/web3.js": "^1.36.0",
+    "@solana/web3.js": "^1.37.1",
     "bn.js": "^5.2.0",
     "jsbi": "^4.2.0"
   }
