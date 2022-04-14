@@ -3652,9 +3652,9 @@ __metadata:
     tslib: ^2.3.1
     unstated-next: ^1.1.0
   peerDependencies:
-    "@solana/web3.js": ^1.29.2
+    "@solana/web3.js": ^1.37
     bn.js: ^4 || ^5
-    react: ^17.0.2
+    react: ^17.0.2 || ^18
   languageName: unknown
   linkType: soft
 
