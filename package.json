@@ -19,6 +19,7 @@
     "@saberhq/eslint-config-react": "*",
     "@size-limit/file": "^7.0.8",
     "@size-limit/webpack": "^7.0.8",
+    "@size-limit/webpack-why": "^7.0.8",
     "@solana/web3.js": "^1.37.2",
     "@types/babel__core": "^7.1.19",
     "@types/babel__preset-env": "^7.9.2",
@@ -51,6 +52,7 @@
   },
   "scripts": {
     "build": "lerna run build",
+    "clean": "lerna run clean",
     "typecheck": "tsc",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",

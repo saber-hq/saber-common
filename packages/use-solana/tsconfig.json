@@ -3,7 +3,9 @@
   "compilerOptions": {
     "lib": ["ES2015", "DOM"],
     "outDir": "dist/cjs/",
-    "types": ["node"]
+    "types": ["node"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   },
   "include": ["src/"]
 }
