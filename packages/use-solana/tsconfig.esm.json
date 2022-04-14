@@ -3,9 +3,7 @@
   "compilerOptions": {
     "lib": ["ES2015", "DOM"],
     "outDir": "dist/esm/",
-    "types": ["node"],
-    "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "types": []
   },
   "include": ["src/"]
 }
