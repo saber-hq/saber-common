@@ -31,7 +31,7 @@
     "jsbi": "^4.2.1"
   },
   "peerDependencies": {
-    "@solana/web3.js": "^1.35",
+    "@solana/web3.js": "^1.37",
     "bn.js": ">=5",
     "jsbi": "^3 || ^4"
   },

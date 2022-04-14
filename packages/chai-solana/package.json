@@ -42,7 +42,7 @@
   },
   "peerDependencies": {
     "@project-serum/anchor": ">=0.17",
-    "@solana/web3.js": "^1.35",
+    "@solana/web3.js": "^1.37",
     "bn.js": "^5.2.0",
     "jsbi": "*"
   },
