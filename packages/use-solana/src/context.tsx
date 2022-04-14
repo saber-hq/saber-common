@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import React from "react";
 import type { Container } from "unstated-next";
 import { createContainer, useContainer } from "unstated-next";
 

@@ -19,13 +19,14 @@
     "@saberhq/eslint-config-react": "*",
     "@size-limit/file": "^7.0.8",
     "@size-limit/webpack": "^7.0.8",
-    "@solana/web3.js": "^1.37.1",
+    "@size-limit/webpack-why": "^7.0.8",
+    "@solana/web3.js": "^1.37.2",
     "@types/babel__core": "^7.1.19",
     "@types/babel__preset-env": "^7.9.2",
     "@types/bn.js": "^5.1.0",
     "@types/jest": "^27.4.1",
-    "@types/node": "^17.0.23",
-    "@types/react": "^17.0.43",
+    "@types/node": "^17.0.24",
+    "@types/react": "^17.0.44",
     "@types/source-map-support": "^0.5.4",
     "@yarnpkg/doctor": "^3.1.1",
     "bn.js": "^5.2.0",
@@ -35,7 +36,7 @@
     "eslint-plugin-import": "^2.26.0",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
-    "jsbi": "^4.2.0",
+    "jsbi": "^4.2.1",
     "lerna": "^4.0.0",
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.2",
@@ -47,10 +48,11 @@
     "typescript": "^4.6.3"
   },
   "resolutions": {
-    "@solana/web3.js": "^1.35"
+    "@solana/web3.js": "^1.37"
   },
   "scripts": {
     "build": "lerna run build",
+    "clean": "lerna run clean",
     "typecheck": "tsc",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",

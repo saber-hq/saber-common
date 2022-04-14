@@ -1,8 +1,7 @@
 {
   "extends": "./packages/tsconfig/tsconfig.react.json",
   "compilerOptions": {
-    "jsx": "react",
-    "jsxImportSource": "",
+    "jsxImportSource": "react",
     "types": ["jest"]
   }
 }

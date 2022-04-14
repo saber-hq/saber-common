@@ -23,15 +23,15 @@
     "node": ">=12.x"
   },
   "devDependencies": {
-    "@solana/web3.js": "^1.37.1",
+    "@solana/web3.js": "^1.37.2",
     "@types/bn.js": "^5.1.0",
     "@types/lodash.mapvalues": "^4.6.6",
-    "@types/node": "^17.0.23",
+    "@types/node": "^17.0.24",
     "bn.js": "^5.2.0",
-    "jsbi": "^4.2.0"
+    "jsbi": "^4.2.1"
   },
   "peerDependencies": {
-    "@solana/web3.js": "^1.35",
+    "@solana/web3.js": "^1.37",
     "bn.js": ">=5",
     "jsbi": "^3 || ^4"
   },
