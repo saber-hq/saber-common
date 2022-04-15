@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.61 (2022-04-15)
+
+
+### Features
+
+* support Anchor 0.24 ([002c1de](https://github.com/saber-hq/saber-common/commit/002c1de5f2e3f6846e1530b116963987c4143bf2))
+
+
+
+
+
 ## 1.12.60 (2022-04-14)
 
 **Note:** Version bump only for package @saberhq/chai-solana
