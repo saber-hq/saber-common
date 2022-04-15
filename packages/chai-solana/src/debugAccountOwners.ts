@@ -1,4 +1,4 @@
-import { Provider as AnchorProvider } from "@project-serum/anchor";
+import { AnchorProviderClass } from "@saberhq/anchor-contrib";
 import { printAccountOwners } from "@saberhq/solana-contrib";
 
 /**
@@ -39,5 +39,5 @@ import { printAccountOwners } from "@saberhq/solana-contrib";
  * intended for debugging purposes only.
  */
 export function debugAccountOwners(plainObj: object): Promise<void> {
-  return printAccountOwners(AnchorProvider.env().connection, plainObj);
+  return printAccountOwners(AnchorProviderClass.env().connection, plainObj);
 }
