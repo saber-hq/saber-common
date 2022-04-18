@@ -27,4 +27,12 @@ export const generateErrorMap = <T extends Idl>(idl: T): ErrorMap<T> => {
  * @returns
  */
 export const matchError = (err: IdlErrorCode): RegExp =>
-  new RegExp(`custom program error: 0x${err.code.toString(16)}`);
+  matchErrorCode(err.code);
+
+/**
+ * Returns a RegExp which matches the code of a custom program error.
+ * @param err
+ * @returns
+ */
+export const matchErrorCode = (code: number): RegExp =>
+  new RegExp(`custom program error: 0x${code.toString(16)}`);

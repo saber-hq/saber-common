@@ -1,5 +1,5 @@
 import type { IdlErrorCode } from "@project-serum/anchor/dist/cjs/idl";
-import { matchError } from "@saberhq/anchor-contrib";
+import { matchError, matchErrorCode } from "@saberhq/anchor-contrib";
 import type { TransactionEnvelope } from "@saberhq/solana-contrib";
 import { parseTransactionLogs, printTXTable } from "@saberhq/solana-contrib";
 
@@ -163,4 +163,18 @@ export const assertTXThrows = (
   msg?: string
 ): Chai.PromisedAssertion => {
   return expectTX(tx, msg).to.be.rejectedWith(matchError(err));
+};
+
+/**
+ * Assert that a transaction will throw the given error.
+ * @param tx
+ * @param msg
+ * @returns
+ */
+export const assertTXThrowsCode = (
+  tx: TransactionEnvelope,
+  code: number,
+  msg?: string
+): Chai.PromisedAssertion => {
+  return expectTX(tx, msg).to.be.rejectedWith(matchErrorCode(code));
 };
