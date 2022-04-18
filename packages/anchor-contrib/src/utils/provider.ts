@@ -16,15 +16,17 @@ export interface AnchorProvider extends IAnchorProvider {
   opts: ConfirmOptions;
 }
 
+const anchorModule = anchor;
+
 /**
  * Class used to create new {@link AnchorProvider}s.
  */
 export const AnchorProviderClass: AnchorProviderCtor &
   typeof anchor.AnchorProvider =
-  "AnchorProvider" in anchor
-    ? anchor.AnchorProvider
+  "AnchorProvider" in anchorModule
+    ? anchorModule.AnchorProvider
     : (
-        anchor as unknown as {
+        anchorModule as unknown as {
           Provider: AnchorProviderCtor & typeof anchor.AnchorProvider;
         }
       ).Provider;
