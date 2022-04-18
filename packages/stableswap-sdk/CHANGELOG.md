@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.62 (2022-04-18)
+
+
+### Bug Fixes
+
+* assign Anchor namespace to a variable to fix ESM import ([c732aa4](https://github.com/saber-hq/saber-common/commit/c732aa493bf67f139596ce0c246e38529f970a69))
+
+
+
+
+
 ## 1.12.61 (2022-04-15)
 
 
