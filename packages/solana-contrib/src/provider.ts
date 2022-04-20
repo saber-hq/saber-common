@@ -11,6 +11,7 @@ import type {
   TransactionInstruction,
 } from "@solana/web3.js";
 import { SystemProgram } from "@solana/web3.js";
+import invariant from "tiny-invariant";
 
 import type { Broadcaster, ReadonlyProvider } from ".";
 import {
@@ -252,9 +253,16 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
      */
     readonly opts?: ConfirmOptions;
   }): SolanaProvider {
+    const firstBroadcastConnection = broadcastConnections[0];
+    invariant(
+      firstBroadcastConnection,
+      "must have at least one broadcast connection"
+    );
     return new SolanaProvider(
       connection,
-      new MultipleConnectionBroadcaster(broadcastConnections, opts),
+      broadcastConnections.length > 1
+        ? new MultipleConnectionBroadcaster(broadcastConnections, opts)
+        : new SingleConnectionBroadcaster(firstBroadcastConnection, opts),
       wallet,
       opts
     );
