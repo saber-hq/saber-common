@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/eslint-config",
-  "version": "1.12.62",
+  "version": "1.12.63",
   "description": "Saber base ESLint config",
   "keywords": [
     "eslint",
