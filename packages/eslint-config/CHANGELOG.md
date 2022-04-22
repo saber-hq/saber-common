@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.65 (2022-04-22)
+
+**Note:** Version bump only for package @saberhq/eslint-config
+
+
+
+
+
 ## 1.12.64 (2022-04-20)
 
 **Note:** Version bump only for package @saberhq/eslint-config
