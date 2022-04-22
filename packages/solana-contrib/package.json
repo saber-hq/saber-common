@@ -30,7 +30,7 @@
     "promise-retry": "^2.0.1",
     "retry": "^0.13.1",
     "tiny-invariant": "^1.2.0",
-    "tslib": "^2.3.1"
+    "tslib": "^2.4.0"
   },
   "devDependencies": {
     "@solana/web3.js": "^1.39.1",

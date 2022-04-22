@@ -20,7 +20,7 @@
     "@solana/spl-token": "^0.1.8",
     "@ubeswap/token-math": "^4.4.6",
     "tiny-invariant": "^1.2.0",
-    "tslib": "^2.3.1"
+    "tslib": "^2.4.0"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

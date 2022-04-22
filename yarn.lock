@@ -3568,7 +3568,7 @@ __metadata:
     eventemitter3: ^4.0.7
     lodash.camelcase: ^4.3.0
     lodash.mapvalues: ^4.6.0
-    tslib: ^2.3.1
+    tslib: ^2.4.0
   peerDependencies:
     "@project-serum/anchor": ^0.22 || ^0.23 || ^0.24
     "@solana/web3.js": ^1.37
@@ -3594,7 +3594,7 @@ __metadata:
     chai-bn: ^0.3.1
     colors: ^1.4.0
     jsbi: ^4.3.0
-    tslib: ^2.3.1
+    tslib: ^2.4.0
   peerDependencies:
     "@project-serum/anchor": ">=0.17"
     "@solana/web3.js": ^1.37
@@ -3654,7 +3654,7 @@ __metadata:
     "@types/bn.js": ^5.1.0
     "@types/jest": ^27.4.1
     "@types/node": ^17.0.25
-    "@types/react": ^18.0.5
+    "@types/react": ^18.0.6
     "@types/source-map-support": ^0.5.4
     "@yarnpkg/doctor": ^4.0.0-rc.2
     bn.js: ^5.2.0
@@ -3692,7 +3692,7 @@ __metadata:
     promise-retry: ^2.0.1
     retry: ^0.13.1
     tiny-invariant: ^1.2.0
-    tslib: ^2.3.1
+    tslib: ^2.4.0
   peerDependencies:
     "@solana/web3.js": ^1.37
     bn.js: ^4 || ^5
@@ -3713,7 +3713,7 @@ __metadata:
     bn.js: ^5.2.0
     jsbi: ^4.3.0
     lodash.mapvalues: ^4.6.0
-    tslib: ^2.3.1
+    tslib: ^2.4.0
   peerDependencies:
     "@solana/web3.js": ^1.37
     bn.js: ">=5"
@@ -3734,7 +3734,7 @@ __metadata:
     "@ubeswap/token-math": ^4.4.6
     jsbi: ^4.3.0
     tiny-invariant: ^1.2.0
-    tslib: ^2.3.1
+    tslib: ^2.4.0
   peerDependencies:
     "@solana/web3.js": ^1.29.2
     bn.js: ^4 || ^5
@@ -3769,13 +3769,13 @@ __metadata:
     "@solana/web3.js": ^1.39.1
     "@types/bn.js": ^5.1.0
     "@types/node": ^17.0.25
-    "@types/react": ^18.0.5
+    "@types/react": ^18.0.6
     bn.js: ^5.2.0
     eventemitter3: ^4.0.7
     fast-json-stable-stringify: ^2.1.0
     react: ^18.0.0
     tiny-invariant: ^1.2.0
-    tslib: ^2.3.1
+    tslib: ^2.4.0
     unstated-next: ^1.1.0
   peerDependencies:
     "@solana/web3.js": ^1.37
@@ -4609,14 +4609,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.0.5":
-  version: 18.0.5
-  resolution: "@types/react@npm:18.0.5"
+"@types/react@npm:^18.0.6":
+  version: 18.0.6
+  resolution: "@types/react@npm:18.0.6"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 70d3336d43ef25509fa89ef3278f57fdf1945fc921e69b7890a78ab9a52a55ee38e2f13aa71eb4f6032b7311e7557860ce8836c1acf3028304989571c9736a96
+  checksum: 368b40176f0dab30a611c3263bf1d9878cebede9ce8015bc5661a396787dbe41f0b667b8d6d448dea7bc8c0557bf3cb329ab2b16ad2dacb18eaa764358bd16d4
   languageName: node
   linkType: hard
 
@@ -14661,6 +14661,13 @@ resolve@^2.0.0-next.3:
   version: 2.3.1
   resolution: "tslib@npm:2.3.1"
   checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "tslib@npm:2.4.0"
+  checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
   languageName: node
   linkType: hard
 
