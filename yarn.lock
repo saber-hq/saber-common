@@ -3713,6 +3713,7 @@ __metadata:
     bn.js: ^5.2.0
     jsbi: ^4.3.0
     lodash.mapvalues: ^4.6.0
+    tiny-invariant: ^1.2.0
     tslib: ^2.4.0
   peerDependencies:
     "@solana/web3.js": ^1.37

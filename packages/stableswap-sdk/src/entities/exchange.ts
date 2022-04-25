@@ -7,10 +7,13 @@ import {
   TokenAmount,
 } from "@saberhq/token-utils";
 import type { Connection, PublicKey } from "@solana/web3.js";
+import BN from "bn.js";
 import type JSBI from "jsbi";
+import invariant from "tiny-invariant";
 
 import { SWAP_PROGRAM_ID } from "../constants";
 import { StableSwap } from "../stable-swap";
+import type { StableSwapState } from "../state";
 import type { Fees } from "../state/fees";
 import { loadProgramAccount } from "../util/account";
 
@@ -53,6 +56,39 @@ export interface IExchangeInfo {
 }
 
 /**
+ * Calculates the amp factor of a swap.
+ * @param state
+ * @param now
+ * @returns
+ */
+export const calculateAmpFactor = (
+  state: StableSwapState,
+  now = Date.now() / 1_000
+): JSBI => {
+  const {
+    initialAmpFactor,
+    targetAmpFactor,
+    startRampTimestamp,
+    stopRampTimestamp,
+  } = state;
+  invariant(
+    stopRampTimestamp >= startRampTimestamp,
+    "stop must be after start"
+  );
+  // Calculate how far we are along the ramp curve.
+  const percent =
+    now >= stopRampTimestamp
+      ? 1
+      : now <= startRampTimestamp
+      ? 0
+      : (now - startRampTimestamp) / (stopRampTimestamp - startRampTimestamp);
+  const diff = Math.floor(
+    parseFloat(targetAmpFactor.sub(initialAmpFactor).toString()) * percent
+  );
+  return parseBigintIsh(initialAmpFactor.add(new BN(diff)));
+};
+
+/**
  * Creates an IExchangeInfo from parameters.
  * @returns
  */
@@ -76,9 +112,10 @@ export const makeExchangeInfo = ({
     ? deserializeMint(accounts.poolMint).supply
     : undefined;
 
+  const ampFactor = calculateAmpFactor(swap.state);
+
   return {
-    // TODO(igm): this should be calculated dynamically
-    ampFactor: parseBigintIsh(swap.state.targetAmpFactor.toString()),
+    ampFactor,
     fees: swap.state.fees,
     lpTotalSupply: new TokenAmount(exchange.lpToken, poolMintSupply ?? 0),
     reserves: [
