@@ -62,7 +62,13 @@ export interface IExchangeInfo {
  * @returns
  */
 export const calculateAmpFactor = (
-  state: StableSwapState,
+  state: Pick<
+    StableSwapState,
+    | "initialAmpFactor"
+    | "targetAmpFactor"
+    | "startRampTimestamp"
+    | "stopRampTimestamp"
+  >,
   now = Date.now() / 1_000
 ): JSBI => {
   const {
@@ -71,6 +77,17 @@ export const calculateAmpFactor = (
     startRampTimestamp,
     stopRampTimestamp,
   } = state;
+
+  // The most common case is that there is no ramp in progress.
+  if (now >= stopRampTimestamp) {
+    return parseBigintIsh(targetAmpFactor);
+  }
+
+  // If the ramp is about to start, use the initial amp.
+  if (now <= startRampTimestamp) {
+    return parseBigintIsh(initialAmpFactor);
+  }
+
   invariant(
     stopRampTimestamp >= startRampTimestamp,
     "stop must be after start"
