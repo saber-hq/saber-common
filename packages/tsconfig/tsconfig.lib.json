@@ -4,7 +4,7 @@
   "compilerOptions": {
     // target
     "target": "ES2019",
-    "module": "ESNext",
+    "module": "ES2020",
     "moduleResolution": "node",
     "lib": ["ES2019"],
 
