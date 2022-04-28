@@ -6,7 +6,7 @@ import type {
   SimulatedTransactionResponse,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { PACKET_DATA_SIZE, PublicKey, Transaction } from "@solana/web3.js";
+import { PublicKey, Transaction } from "@solana/web3.js";
 import invariant from "tiny-invariant";
 
 import type { BroadcastOptions } from "../broadcaster";
@@ -27,6 +27,8 @@ import type { TransactionReceipt } from "./TransactionReceipt";
 import { calculateTxSizeUnsafe } from "./txSizer";
 import type { SerializableInstruction } from "./utils";
 import { generateInspectLinkFromBase64, RECENT_BLOCKHASH_STUB } from "./utils";
+
+export const PACKET_DATA_SIZE = 1280 - 40 - 8;
 
 const ASSOCIATED_TOKEN_PROGRAM_ID = new PublicKey(
   "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"

@@ -5,14 +5,14 @@ import type {
   TransactionSignature,
 } from "@solana/web3.js";
 import promiseRetry from "promise-retry";
-import type { OperationOptions } from "retry";
+import type { WrapOptions } from "retry";
 
 import { TransactionReceipt } from "../transaction";
 
 /**
  * Options for awaiting a transaction confirmation.
  */
-export interface TransactionWaitOptions extends OperationOptions {
+export interface TransactionWaitOptions extends WrapOptions {
   /**
    * Commitment of the transaction. Defaults to `confirmed`.
    */

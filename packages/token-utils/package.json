@@ -30,7 +30,7 @@
   ],
   "devDependencies": {
     "@saberhq/tsconfig": "^1.12.67",
-    "@solana/web3.js": "^1.39.1",
+    "@solana/web3.js": "^1.41.1",
     "@types/bn.js": "^5.1.0",
     "jsbi": "^4.3.0"
   },
