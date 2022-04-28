@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.68 (2022-04-28)
+
+
+### Bug Fixes
+
+* add PACKET_DATA_SIZE since it was removed from @solana/web3.js ([b67425d](https://github.com/saber-hq/saber-common/commit/b67425d662e853e89867cfb9cbdaf6ae63f36eef))
+
+
+
+
+
 ## 1.12.67 (2022-04-25)
 
 **Note:** Version bump only for package @saberhq/saber-common
