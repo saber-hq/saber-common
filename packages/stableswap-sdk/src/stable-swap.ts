@@ -1,3 +1,4 @@
+import type { ProgramAccount } from "@saberhq/token-utils";
 import { TOKEN_PROGRAM_ID } from "@saberhq/token-utils";
 import type { Connection, TransactionInstruction } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
@@ -11,10 +12,127 @@ import { decodeSwap } from "./state";
 import { StableSwapLayout } from "./state/layout";
 import { loadProgramAccount } from "./util/account";
 
-export class StableSwap {
+export interface StableSwapInfo {
+  config: StableSwapConfig;
+  state: StableSwapState;
+}
+
+/**
+ * Swap token A for token B
+ * @param userSource
+ * @param poolSource
+ * @param poolDestination
+ * @param userDestination
+ * @param amountIn
+ * @param minimumAmountOut
+ */
+export function createSaberSwapInstruction(
+  { config, state }: StableSwapInfo,
+  args: Pick<
+    instructions.SwapInstruction,
+    | "userAuthority"
+    | "userSource"
+    | "userDestination"
+    | "poolSource"
+    | "poolDestination"
+    | "amountIn"
+    | "minimumAmountOut"
+  >
+): TransactionInstruction {
+  const adminDestination = args.poolDestination.equals(state.tokenA.reserve)
+    ? state.tokenA.adminFeeAccount
+    : state.tokenB.adminFeeAccount;
+  return instructions.swapInstruction({
+    config: config,
+    ...args,
+    adminDestination,
+  });
+}
+
+/**
+ * Deposit tokens into the pool.
+ */
+export function createSaberDepositInstruction(
+  { config, state }: StableSwapInfo,
+  args: Pick<
+    instructions.DepositInstruction,
+    | "userAuthority"
+    | "sourceA"
+    | "sourceB"
+    | "poolTokenAccount"
+    | "tokenAmountA"
+    | "tokenAmountB"
+    | "minimumPoolTokenAmount"
+  >
+): TransactionInstruction {
+  return instructions.depositInstruction({
+    config: config,
+    tokenAccountA: state.tokenA.reserve,
+    tokenAccountB: state.tokenB.reserve,
+    poolTokenMint: state.poolTokenMint,
+    ...args,
+  });
+}
+
+/**
+ * Withdraw tokens from the pool
+ */
+export function createSaberWithdrawInstruction(
+  { config, state }: StableSwapInfo,
+  args: Pick<
+    instructions.WithdrawInstruction,
+    | "userAuthority"
+    | "userAccountA"
+    | "userAccountB"
+    | "sourceAccount"
+    | "poolTokenAmount"
+    | "minimumTokenA"
+    | "minimumTokenB"
+  >
+): TransactionInstruction {
+  return instructions.withdrawInstruction({
+    config: config,
+    poolMint: state.poolTokenMint,
+    tokenAccountA: state.tokenA.reserve,
+    tokenAccountB: state.tokenB.reserve,
+    adminFeeAccountA: state.tokenA.adminFeeAccount,
+    adminFeeAccountB: state.tokenB.adminFeeAccount,
+    ...args,
+  });
+}
+
+/**
+ * Withdraw tokens from the pool
+ */
+export function createSaberWithdrawOneInstruction(
+  { config, state }: StableSwapInfo,
+  args: Pick<
+    instructions.WithdrawOneInstruction,
+    | "userAuthority"
+    | "baseTokenAccount"
+    | "destinationAccount"
+    | "sourceAccount"
+    | "poolTokenAmount"
+    | "minimumTokenAmount"
+  >
+): TransactionInstruction {
+  const [quoteTokenAccount, adminDestinationAccount] =
+    args.baseTokenAccount.equals(state.tokenA.reserve)
+      ? [state.tokenB.reserve, state.tokenA.adminFeeAccount]
+      : [state.tokenA.reserve, state.tokenB.adminFeeAccount];
+
+  return instructions.withdrawOneInstruction({
+    config: config,
+    poolMint: state.poolTokenMint,
+    quoteTokenAccount,
+    adminDestinationAccount,
+    ...args,
+  });
+}
+
+export class StableSwap implements StableSwapInfo {
   /**
-   * Constructor for new StableSwap client object
-   * @param connection
+   * Constructor for new StableSwap client object.
    * @param config
    * @param state
    */
@@ -68,6 +186,38 @@ export class StableSwap {
       connection,
       exchange.swapAccount,
       exchange.programID
+    );
+  }
+
+  /**
+   * Loads the swap object from a program account.
+   * @param data
+   * @returns
+   */
+  static async fromProgramAccount(
+    data: ProgramAccount<StableSwapState>
+  ): Promise<StableSwap> {
+    const [authority] = await findSwapAuthorityKey(data.publicKey);
+    return StableSwap.fromProgramAccountWithAuthority(data, authority);
+  }
+
+  /**
+   * Loads the swap object from a program account, with the swap authority loaded.
+   * @param data
+   * @returns
+   */
+  static fromProgramAccountWithAuthority(
+    data: ProgramAccount<StableSwapState>,
+    authority: PublicKey
+  ): StableSwap {
+    return new StableSwap(
+      {
+        swapAccount: data.publicKey,
+        swapProgramID: SWAP_PROGRAM_ID,
+        tokenProgramID: TOKEN_PROGRAM_ID,
+        authority,
+      },
+      data.account
     );
   }
 
@@ -126,16 +276,7 @@ export class StableSwap {
       | "minimumAmountOut"
     >
   ): TransactionInstruction {
-    const adminDestination = args.poolDestination.equals(
-      this.state.tokenA.reserve
-    )
-      ? this.state.tokenA.adminFeeAccount
-      : this.state.tokenB.adminFeeAccount;
-    return instructions.swapInstruction({
-      config: this.config,
-      ...args,
-      adminDestination,
-    });
+    return createSaberSwapInstruction(this, args);
   }
 
   /**
@@ -153,13 +294,7 @@ export class StableSwap {
       | "minimumPoolTokenAmount"
     >
   ): TransactionInstruction {
-    return instructions.depositInstruction({
-      config: this.config,
-      tokenAccountA: this.state.tokenA.reserve,
-      tokenAccountB: this.state.tokenB.reserve,
-      poolTokenMint: this.state.poolTokenMint,
-      ...args,
-    });
+    return createSaberDepositInstruction(this, args);
   }
 
   /**
@@ -177,15 +312,7 @@ export class StableSwap {
       | "minimumTokenB"
     >
   ): TransactionInstruction {
-    return instructions.withdrawInstruction({
-      config: this.config,
-      poolMint: this.state.poolTokenMint,
-      tokenAccountA: this.state.tokenA.reserve,
-      tokenAccountB: this.state.tokenB.reserve,
-      adminFeeAccountA: this.state.tokenA.adminFeeAccount,
-      adminFeeAccountB: this.state.tokenB.adminFeeAccount,
-      ...args,
-    });
+    return createSaberWithdrawInstruction(this, args);
   }
 
   /**
@@ -202,18 +329,7 @@ export class StableSwap {
       | "minimumTokenAmount"
     >
   ): TransactionInstruction {
-    const [quoteTokenAccount, adminDestinationAccount] =
-      args.baseTokenAccount.equals(this.state.tokenA.reserve)
-        ? [this.state.tokenB.reserve, this.state.tokenA.adminFeeAccount]
-        : [this.state.tokenA.reserve, this.state.tokenB.adminFeeAccount];
-
-    return instructions.withdrawOneInstruction({
-      config: this.config,
-      poolMint: this.state.poolTokenMint,
-      quoteTokenAccount,
-      adminDestinationAccount,
-      ...args,
-    });
+    return createSaberWithdrawOneInstruction(this, args);
   }
 }
 
