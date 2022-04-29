@@ -73,3 +73,40 @@ export const exists = <TValue>(
 ): value is TValue => {
   return value !== null && value !== undefined;
 };
+
+/**
+ * Applies a function to a null/undefined inner value if it is null or undefined,
+ * otherwise returns null/undefined.
+ *
+ * @param obj
+ * @param fn
+ * @returns
+ */
+export const mapSome = <T, U>(
+  obj: NonNullable<T> | null | undefined,
+  fn: (obj: NonNullable<T>) => U
+): U | null | undefined => (exists(obj) ? fn(obj) : obj);
+
+/**
+ * Applies a function to a list of null/undefined values, unwrapping the null/undefined value or passing it through.
+ */
+export const mapN = <T extends unknown[], U>(
+  fn: (
+    ...a: {
+      [K in keyof T]: NonNullable<T[K]>;
+    }
+  ) => U,
+  ...args: T
+): U | null | undefined => {
+  if (!args.every((arg) => arg !== undefined)) {
+    return undefined;
+  }
+  if (!args.every((arg) => arg !== null)) {
+    return null;
+  }
+  return fn(
+    ...(args as {
+      [K in keyof T]: NonNullable<T[K]>;
+    })
+  );
+};
