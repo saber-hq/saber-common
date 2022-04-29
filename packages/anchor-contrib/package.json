@@ -6,7 +6,7 @@
   },
   "homepage": "https://saber.so",
   "description": "TypeScript client for Anchor programs.",
-  "version": "1.12.70",
+  "version": "1.12.71",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "author": "Ian Macalinao <ian@saber.so>",
@@ -29,7 +29,7 @@
     "bn.js": "^5.2.0"
   },
   "dependencies": {
-    "@saberhq/solana-contrib": "^1.12.70",
+    "@saberhq/solana-contrib": "^1.12.71",
     "eventemitter3": "^4.0.7",
     "lodash.camelcase": "^4.3.0",
     "lodash.mapvalues": "^4.6.0",
