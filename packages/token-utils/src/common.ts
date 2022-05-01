@@ -18,6 +18,7 @@ import { deserializeAccount, deserializeMint, MintLayout, Token } from ".";
 import type { TokenAccountData } from "./layout";
 
 export * as token from "./token";
+export { ProgramAccount } from "@saberhq/solana-contrib";
 
 /**
  * Default number of decimals of a token.
@@ -219,17 +220,3 @@ export async function getTokenAccount(
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-
-/**
- * A parsed program-owned account.
- */
-export type ProgramAccount<T> = {
-  /**
-   * {@link PublicKey} of the account.
-   */
-  publicKey: PublicKey;
-  /**
-   * The parsed account data.
-   */
-  account: T;
-};

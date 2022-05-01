@@ -242,3 +242,17 @@ export interface ProgramAccountParser<T> {
    */
   parse: (data: Buffer) => T;
 }
+
+/**
+ * A parsed program-owned account.
+ */
+export type ProgramAccount<T> = {
+  /**
+   * {@link PublicKey} of the account.
+   */
+  publicKey: PublicKey;
+  /**
+   * The parsed account data.
+   */
+  account: T;
+};
