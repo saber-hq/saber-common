@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.72 (2022-05-01)
+
+
+### Features
+
+* add ProgramAccount type to solana-contrib ([1bd35ea](https://github.com/saber-hq/saber-common/commit/1bd35eaf6e3ca43f90ba4847bd96fe23b0fdb792))
+
+
+
+
+
 ## 1.12.71 (2022-04-29)
 
 **Note:** Version bump only for package @saberhq/tsconfig

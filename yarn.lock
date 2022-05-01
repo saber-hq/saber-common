@@ -3107,12 +3107,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@saberhq/anchor-contrib@^1.12.71, @saberhq/anchor-contrib@workspace:packages/anchor-contrib":
+"@saberhq/anchor-contrib@^1.12.72, @saberhq/anchor-contrib@workspace:packages/anchor-contrib":
   version: 0.0.0-use.local
   resolution: "@saberhq/anchor-contrib@workspace:packages/anchor-contrib"
   dependencies:
     "@project-serum/anchor": ^0.24.2
-    "@saberhq/solana-contrib": ^1.12.71
+    "@saberhq/solana-contrib": ^1.12.72
     "@solana/web3.js": ^1.41.3
     "@types/lodash.camelcase": ^4.3.7
     "@types/lodash.mapvalues": ^4.6.7
@@ -3133,9 +3133,9 @@ __metadata:
   resolution: "@saberhq/chai-solana@workspace:packages/chai-solana"
   dependencies:
     "@project-serum/anchor": ^0.24.2
-    "@saberhq/anchor-contrib": ^1.12.71
-    "@saberhq/solana-contrib": ^1.12.71
-    "@saberhq/token-utils": ^1.12.71
+    "@saberhq/anchor-contrib": ^1.12.72
+    "@saberhq/solana-contrib": ^1.12.72
+    "@saberhq/token-utils": ^1.12.72
     "@solana/web3.js": ^1.41.3
     "@types/chai": ^4.3.1
     "@types/chai-as-promised": ^7.1.5
@@ -3159,7 +3159,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/eslint-config-react@workspace:packages/eslint-config-react"
   dependencies:
-    "@saberhq/eslint-config": ^1.12.71
+    "@saberhq/eslint-config": ^1.12.72
     eslint-plugin-jsx-a11y: ^6.5.1
     eslint-plugin-react: ^7.29.4
     eslint-plugin-react-hooks: ^4.5.0
@@ -3168,7 +3168,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/eslint-config@*, @saberhq/eslint-config@^1.12.71, @saberhq/eslint-config@workspace:packages/eslint-config":
+"@saberhq/eslint-config@*, @saberhq/eslint-config@^1.12.72, @saberhq/eslint-config@workspace:packages/eslint-config":
   version: 0.0.0-use.local
   resolution: "@saberhq/eslint-config@workspace:packages/eslint-config"
   dependencies:
@@ -3229,7 +3229,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/solana-contrib@^1.12.71, @saberhq/solana-contrib@workspace:packages/solana-contrib":
+"@saberhq/solana-contrib@^1.12.72, @saberhq/solana-contrib@workspace:packages/solana-contrib":
   version: 0.0.0-use.local
   resolution: "@saberhq/solana-contrib@workspace:packages/solana-contrib"
   dependencies:
@@ -3255,8 +3255,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/stableswap-sdk@workspace:packages/stableswap-sdk"
   dependencies:
-    "@saberhq/solana-contrib": ^1.12.71
-    "@saberhq/token-utils": ^1.12.71
+    "@saberhq/solana-contrib": ^1.12.72
+    "@saberhq/token-utils": ^1.12.72
     "@solana/buffer-layout": ^4.0.0
     "@solana/web3.js": ^1.41.3
     "@types/bn.js": ^5.1.0
@@ -3274,12 +3274,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/token-utils@^1.12.71, @saberhq/token-utils@workspace:packages/token-utils":
+"@saberhq/token-utils@^1.12.72, @saberhq/token-utils@workspace:packages/token-utils":
   version: 0.0.0-use.local
   resolution: "@saberhq/token-utils@workspace:packages/token-utils"
   dependencies:
-    "@saberhq/solana-contrib": ^1.12.71
-    "@saberhq/tsconfig": ^1.12.71
+    "@saberhq/solana-contrib": ^1.12.72
+    "@saberhq/tsconfig": ^1.12.72
     "@solana/buffer-layout": ^4.0.0
     "@solana/spl-token": ^0.1.8
     "@solana/web3.js": ^1.41.3
@@ -3295,7 +3295,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/tsconfig@^1.12.71, @saberhq/tsconfig@workspace:packages/tsconfig":
+"@saberhq/tsconfig@^1.12.72, @saberhq/tsconfig@workspace:packages/tsconfig":
   version: 0.0.0-use.local
   resolution: "@saberhq/tsconfig@workspace:packages/tsconfig"
   languageName: unknown
@@ -3307,7 +3307,7 @@ __metadata:
   dependencies:
     "@ledgerhq/hw-transport": ^6.27.1
     "@ledgerhq/hw-transport-webusb": ^6.27.1
-    "@saberhq/solana-contrib": ^1.12.71
+    "@saberhq/solana-contrib": ^1.12.72
     "@solana/wallet-adapter-base": ^0.9.5
     "@solana/wallet-adapter-clover": ^0.4.4
     "@solana/wallet-adapter-coin98": ^0.5.4
