@@ -5,17 +5,17 @@ import BN from "bn.js";
 export { PublicKey } from "@solana/web3.js";
 
 /**
- * Returns true if the given value is a {@link PublicKey}.
+ * Returns a {@link PublicKey} if it can be parsed, otherwise returns null.
  * @param pk
  * @returns
  */
-export const isPublicKey = (pk: unknown): pk is PublicKey => {
+export const parsePublicKey = (pk: unknown): PublicKey | null => {
   if (!pk) {
-    return false;
+    return null;
   }
 
   if (pk instanceof PublicKey) {
-    return true;
+    return pk;
   }
 
   if (
@@ -23,13 +23,21 @@ export const isPublicKey = (pk: unknown): pk is PublicKey => {
     Array.isArray(pk) ||
     ("constructor" in pk && BN.isBN(pk))
   ) {
-    return false;
+    return null;
   }
 
   try {
-    new PublicKey(pk as PublicKeyData);
-    return true;
+    return new PublicKey(pk as PublicKeyData);
   } catch (e) {
-    return false;
+    return null;
   }
+};
+
+/**
+ * Returns true if the given value is a {@link PublicKey}.
+ * @param pk
+ * @returns
+ */
+export const isPublicKey = (pk: unknown): pk is PublicKey => {
+  return !!parsePublicKey(pk);
 };
