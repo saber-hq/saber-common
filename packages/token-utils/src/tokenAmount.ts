@@ -1,6 +1,7 @@
 import { u64 } from "@solana/spl-token";
-import type { BigintIsh, NumberFormat, Percent } from "@ubeswap/token-math";
+import type { BigintIsh, NumberFormat } from "@ubeswap/token-math";
 import {
+  parseAmountFromString,
   parseBigintIsh,
   TokenAmount as UTokenAmount,
   validateU64,
@@ -9,22 +10,17 @@ import BN from "bn.js";
 
 import type { Token } from "./token";
 
-export interface IFormatUint {
-  /**
-   * If specified, format this according to `toLocaleString`
-   */
-  numberFormatOptions?: Intl.NumberFormatOptions;
-  /**
-   * Locale of the number
-   */
-  locale?: string;
-}
+export { IFormatUint } from "@ubeswap/token-math";
 
 export class TokenAmount extends UTokenAmount<Token> {
   // amount _must_ be raw, i.e. in the native representation
   constructor(token: Token, amount: BigintIsh) {
-    super(token, amount);
-    validateU64(this.raw);
+    super(token, amount, validateU64);
+  }
+
+  new(token: Token, amount: BigintIsh): this {
+    // unsafe but nobody will be extending this anyway probably
+    return new TokenAmount(token, amount) as this;
   }
 
   /**
@@ -34,25 +30,8 @@ export class TokenAmount extends UTokenAmount<Token> {
    * @returns
    */
   static parse(token: Token, uiAmount: string): TokenAmount {
-    const prev = UTokenAmount.parseFromString(token, uiAmount);
-    return new TokenAmount(token, prev.raw);
-  }
-
-  override add(other: TokenAmount): TokenAmount {
-    const result = super.add(other);
-    return new TokenAmount(this.token, result.raw);
-  }
-  override subtract(other: TokenAmount): TokenAmount {
-    const result = super.subtract(other);
-    return new TokenAmount(this.token, result.raw);
-  }
-  override multiplyBy(percent: Percent): TokenAmount {
-    const result = super.multiplyBy(percent);
-    return new TokenAmount(this.token, result.raw);
-  }
-  override reduceBy(percent: Percent): TokenAmount {
-    const result = super.reduceBy(percent);
-    return new TokenAmount(this.token, result.raw);
+    const prev = parseAmountFromString(token, uiAmount);
+    return new TokenAmount(token, prev);
   }
 
   /**

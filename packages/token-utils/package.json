@@ -18,7 +18,7 @@
     "@saberhq/solana-contrib": "^1.12.72",
     "@solana/buffer-layout": "^4.0.0",
     "@solana/spl-token": "^0.1.8",
-    "@ubeswap/token-math": "^4.4.7",
+    "@ubeswap/token-math": "^4.4.8",
     "tiny-invariant": "^1.2.0",
     "tslib": "^2.4.0"
   },
