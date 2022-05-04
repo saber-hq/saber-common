@@ -49,6 +49,84 @@ export const LEDGER: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
+export const EXODUS: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg
+    width="80"
+    height="80"
+    viewBox="0 0 80 80"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <mask
+      id="mask0_1298_96"
+      style="mask-type:alpha"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="80"
+      height="80"
+    >
+      <path
+        d="M79.5209 22.3372L45.4532 0V12.4888L67.3079 26.6905L64.7368 34.826H45.4532V45.1739H64.7368L67.3079 53.3095L45.4532 67.5111V80L79.5209 57.7342L73.9501 40.0357L79.5209 22.3372Z"
+        fill="#1D1D1B"
+      />
+      <path
+        d="M15.8135 45.1739H35.0257V34.826H15.7421L13.2424 26.6905L35.0257 12.4888V0L0.958008 22.3372L6.52883 40.0357L0.958008 57.7342L35.0971 80V67.5111L13.2424 53.3095L15.8135 45.1739Z"
+        fill="#1D1D1B"
+      />
+    </mask>
+    <g mask="url(#mask0_1298_96)">
+      <path
+        d="M79.5209 22.3372L45.4532 0V12.4888L67.3079 26.6905L64.7368 34.826H45.4532V45.1739H64.7368L67.3079 53.3095L45.4532 67.5111V80L79.5209 57.7342L73.9501 40.0357L79.5209 22.3372Z"
+        fill="white"
+      />
+      <path
+        d="M15.8135 45.1739H35.0257V34.826H15.7421L13.2424 26.6905L35.0257 12.4888V0L0.958008 22.3372L6.52883 40.0357L0.958008 57.7342L35.0971 80V67.5111L13.2424 53.3095L15.8135 45.1739Z"
+        fill="white"
+      />
+      <rect
+        x="1.05957"
+        width="86.9547"
+        height="88.4768"
+        fill="url(#paint0_linear_1298_96)"
+      />
+      <ellipse
+        cx="5.82219"
+        cy="17.5436"
+        rx="76.4839"
+        ry="82.9242"
+        transform="rotate(-33.9303 5.82219 17.5436)"
+        fill="url(#paint1_radial_1298_96)"
+      />
+    </g>
+    <defs>
+      <linearGradient
+        id="paint0_linear_1298_96"
+        x1="68.6615"
+        y1="85.8973"
+        x2="45.7499"
+        y2="-8.29151"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stop-color="#0B46F9" />
+        <stop offset="1" stop-color="#BBFBE0" />
+      </linearGradient>
+      <radialGradient
+        id="paint1_radial_1298_96"
+        cx="0"
+        cy="0"
+        r="1"
+        gradientUnits="userSpaceOnUse"
+        gradientTransform="translate(5.82218 17.5436) rotate(72.2556) scale(62.739 58.8096)"
+      >
+        <stop offset="0.119792" stop-color="#8952FF" stop-opacity="0.87" />
+        <stop offset="1" stop-color="#DABDFF" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+  </svg>
+);
+
 export const GLOW: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     width="254"
