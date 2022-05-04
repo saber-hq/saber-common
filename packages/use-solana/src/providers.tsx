@@ -1,6 +1,7 @@
 import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { CloverWalletAdapter } from "@solana/wallet-adapter-clover";
 import { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
+import { ExodusWalletAdapter } from "@solana/wallet-adapter-exodus";
 import { GlowWalletAdapter } from "@solana/wallet-adapter-glow";
 import { HuobiWalletAdapter } from "@solana/wallet-adapter-huobi";
 import { MathWalletAdapter } from "@solana/wallet-adapter-mathwallet";
@@ -22,6 +23,7 @@ import { SolflareAdapter } from "./adapters/solflare";
 import {
   CLOVER,
   COIN98,
+  EXODUS,
   FILE,
   GLOW,
   HUOBI,
@@ -38,6 +40,7 @@ export enum DefaultWalletType {
   Clover = "Clover",
   Coin98 = "Coin98",
   Ledger = "Ledger",
+  Exodus = "Exodus",
   Glow = "Glow",
   MathWallet = "MathWallet",
   Phantom = "Phantom",
@@ -100,6 +103,14 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     makeAdapter: () => new SolanaWalletAdapter(new SolongWalletAdapter()),
 
     isInstalled: () => window.solong !== undefined,
+  },
+  [DefaultWalletType.Exodus]: {
+    name: "Exodus",
+    url: "https://www.exodus.com/browser-extension",
+    icon: EXODUS,
+    makeAdapter: () => new SolanaWalletAdapter(new ExodusWalletAdapter()),
+    isInstalled: () => window.exodus?.solana !== undefined,
+    isMobile: true,
   },
   [DefaultWalletType.Glow]: {
     name: "Glow",
