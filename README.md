@@ -8,6 +8,12 @@ Detailed information on how to build on Saber can be found on the [Saber develop
 
 Automatically generated TypeScript documentation can be found [on GitHub pages](https://saber-hq.github.io/saber-common/).
 
+### Common Errors
+
+#### Module parse failed: Unexpected token
+
+`saber-common` [targets ES2019](packages/tsconfig/tsconfig.lib.json), which is [widely supported by modern DApp browsers](https://caniuse.com/?search=es2019). Please ensure that your build pipeline supports this version of ECMAScript.
+
 ## Packages
 
 | Package                        | Description                                 | Version                                                                                                                             |
