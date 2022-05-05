@@ -57,7 +57,11 @@ export class WrappedWalletAdapter<Connected extends boolean = boolean>
   }
 
   get connected(): Connected {
-    return this.adapter.connected;
+    return (
+      this.adapter.connected &&
+      // need this branch b/c Solflare adapter does not respect the connected state properly
+      (!!this.adapter.publicKey as Connected)
+    );
   }
 
   signTransaction(transaction: Transaction): Promise<Transaction> {
