@@ -11,13 +11,15 @@
       "aarch64-darwin"
       "x86_64-linux"
       "x86_64-darwin"
-    ] (system:
-      let pkgs = import nixpkgs { inherit system; };
-      in rec {
-        packages.ci = pkgs.buildEnv {
-          name = "ci";
-          paths = with pkgs; [ nodejs yarn ];
-        };
-        devShell = pkgs.mkShell { buildInputs = [ packages.ci ]; };
-      });
+    ]
+      (system:
+        let pkgs = import nixpkgs { inherit system; };
+        in
+        rec {
+          packages.ci = pkgs.buildEnv {
+            name = "ci";
+            paths = with pkgs; [ nodejs yarn ];
+          };
+          devShell = pkgs.mkShell { buildInputs = [ packages.ci ]; };
+        });
 }
