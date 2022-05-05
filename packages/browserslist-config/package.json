@@ -1,0 +1,29 @@
+{
+  "name": "@saberhq/browserslist-config",
+  "version": "1.13.0",
+  "homepage": "https://saber.so",
+  "description": "Saber shareable config for Browserslist.",
+  "repository": "git@github.com:saber-hq/saber-common.git",
+  "author": "Ian Macalinao <ian@saber.so>",
+  "license": "Apache-2.0",
+  "keywords": [
+    "saber",
+    "browserslist",
+    "react",
+    "solana"
+  ],
+  "bugs": {
+    "url": "https://github.com/saber-hq/saber-common/issues"
+  },
+  "funding": {
+    "type": "coingecko",
+    "url": "https://www.coingecko.com/en/coins/saber"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

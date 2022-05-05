@@ -3128,6 +3128,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@saberhq/browserslist-config@workspace:packages/browserslist-config":
+  version: 0.0.0-use.local
+  resolution: "@saberhq/browserslist-config@workspace:packages/browserslist-config"
+  languageName: unknown
+  linkType: soft
+
 "@saberhq/chai-solana@workspace:packages/chai-solana":
   version: 0.0.0-use.local
   resolution: "@saberhq/chai-solana@workspace:packages/chai-solana"
