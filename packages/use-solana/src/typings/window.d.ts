@@ -1,5 +1,34 @@
 import type { PublicKey, Transaction } from "@solana/web3.js";
 
+type ConnectOptions = {
+  onlyIfTrusted?: boolean;
+};
+
+type ExodusEvent = "accountChanged" | "connect" | "disconnect";
+type ExodusRequestMethod =
+  | "connect"
+  | "disconnect"
+  | "signTransaction"
+  | "signAllTransactions"
+  | "signAndSendTransaction"
+  | "signMessage"
+  | "postMessage";
+
+export interface ExodusProvider {
+  publicKey: PublicKey | null;
+  isConnected: boolean;
+  signTransaction: (transaction: Transaction) => Promise<Transaction>;
+  signAllTransactions: (transactions: Transaction[]) => Promise<Transaction[]>;
+  connect: (options?: ConnectOptions) => Promise<{ publicKey: PublicKey }>;
+  disconnect: () => void;
+  on: (event: ExodusEvent, handler: (args: unknown) => void) => void;
+  request: (method: ExodusRequestMethod, params: unknown[]) => Promise<unknown>;
+
+  isExodus: true;
+  isMathWallet: undefined;
+  isPhantom: undefined;
+}
+
 type PhantomEvent = "disconnect" | "connect";
 type PhantomRequestMethod =
   | "connect"
@@ -19,8 +48,9 @@ export interface PhantomProvider {
   request: (method: PhantomRequestMethod, params: unknown) => Promise<unknown>;
   listeners: (event: PhantomEvent) => (() => void)[];
 
-  isPhantom: true;
+  isExodus: undefined;
   isMathWallet: undefined;
+  isPhantom: true;
 }
 
 export interface MathWalletProvider {
@@ -28,15 +58,20 @@ export interface MathWalletProvider {
   signAllTransactions: (transactions: Transaction[]) => Promise<Transaction[]>;
   getAccount: () => Promise<string>;
 
+  isExodus: undefined;
   isMathWallet: true;
   isPhantom: undefined;
 }
 declare global {
   interface Window {
     solana?:
+      | ExodusProvider
       | MathWalletProvider
       | PhantomProvider
-      | { isPhantom?: false; isMathWallet?: false };
+      | { isExodusWallet?: false; isMathWallet?: false; isPhantom?: false };
+    exodus?: {
+      solana: ExodusProvider;
+    };
     solflare?: PhantomProvider & {
       isSolflare?: boolean;
     };
