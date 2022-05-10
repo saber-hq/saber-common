@@ -60,7 +60,7 @@ export const EXODUS: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   >
     <mask
       id="mask0_1298_96"
-      style="mask-type:alpha"
+      style={{ maskType: "alpha" }}
       maskUnits="userSpaceOnUse"
       x="0"
       y="0"
@@ -109,8 +109,8 @@ export const EXODUS: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
         y2="-8.29151"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#0B46F9" />
-        <stop offset="1" stop-color="#BBFBE0" />
+        <stop stopColor="#0B46F9" />
+        <stop offset="1" stopColor="#BBFBE0" />
       </linearGradient>
       <radialGradient
         id="paint1_radial_1298_96"
@@ -120,8 +120,8 @@ export const EXODUS: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(5.82218 17.5436) rotate(72.2556) scale(62.739 58.8096)"
       >
-        <stop offset="0.119792" stop-color="#8952FF" stop-opacity="0.87" />
-        <stop offset="1" stop-color="#DABDFF" stop-opacity="0" />
+        <stop offset="0.119792" stopColor="#8952FF" stopOpacity="0.87" />
+        <stop offset="1" stopColor="#DABDFF" stopOpacity="0" />
       </radialGradient>
     </defs>
   </svg>
