@@ -68,7 +68,7 @@ declare global {
       | ExodusProvider
       | MathWalletProvider
       | PhantomProvider
-      | { isExodusWallet?: false; isMathWallet?: false; isPhantom?: false };
+      | { isExodus?: false; isMathWallet?: false; isPhantom?: false };
     exodus?: {
       solana: ExodusProvider;
     };
