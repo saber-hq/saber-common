@@ -33,6 +33,7 @@
       "@solana/wallet-adapter-base",
       "@solana/wallet-adapter-clover",
       "@solana/wallet-adapter-coin98",
+      "@solana/wallet-adapter-exodus",
       "@solana/wallet-adapter-glow",
       "@solana/wallet-adapter-huobi",
       "@solana/wallet-adapter-mathwallet",
