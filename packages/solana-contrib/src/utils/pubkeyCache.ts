@@ -79,7 +79,7 @@ export const getProgramAddress = (
   programId: PublicKey
 ) => {
   const normalizedSeeds = concatSeeds(seeds);
-  const cacheKey = normalizedSeeds.toString();
+  const cacheKey = `${normalizedSeeds.toString()}_${programId.toString()}`;
   const cached = gpaCache[cacheKey];
   if (cached) {
     return cached;
