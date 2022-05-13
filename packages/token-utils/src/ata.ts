@@ -1,4 +1,5 @@
-import { PublicKey } from "@saberhq/solana-contrib";
+import type { PublicKey } from "@saberhq/solana-contrib";
+import { getProgramAddress } from "@saberhq/solana-contrib";
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
@@ -6,6 +7,8 @@ import {
 
 /**
  * Gets an associated token account address.
+ *
+ * @deprecated use {@link getATAAddressSync}
  */
 export const getATAAddress = async ({
   mint,
@@ -14,11 +17,23 @@ export const getATAAddress = async ({
   mint: PublicKey;
   owner: PublicKey;
 }): Promise<PublicKey> => {
-  const [address] = await PublicKey.findProgramAddress(
+  return Promise.resolve(getATAAddressSync({ mint, owner }));
+};
+
+/**
+ * Gets an associated token account address synchronously.
+ */
+export const getATAAddressSync = ({
+  mint,
+  owner,
+}: {
+  mint: PublicKey;
+  owner: PublicKey;
+}): PublicKey => {
+  return getProgramAddress(
     [owner.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), mint.toBuffer()],
     ASSOCIATED_TOKEN_PROGRAM_ID
   );
-  return address;
 };
 
 export type ATAMap<K extends string> = {
@@ -30,8 +45,10 @@ export type ATAMap<K extends string> = {
 
 /**
  * Gets multiple associated token account addresses.
+ *
+ * @deprecated use {@link getATAAddressesSync}
  */
-export const getATAAddresses = async <K extends string>({
+export const getATAAddresses = <K extends string>({
   mints,
   owner,
 }: {
@@ -45,27 +62,45 @@ export const getATAAddresses = async <K extends string>({
    */
   accounts: ATAMap<K>;
 }> => {
-  const result = await Promise.all(
-    Object.entries(mints).map(
-      async (
-        args
-      ): Promise<{
-        address: PublicKey;
-        name: string;
-        mint: PublicKey;
-      }> => {
-        const [name, mint] = args as [K, PublicKey];
-        const result = await getATAAddress({
-          mint,
-          owner: owner,
-        });
-        return {
-          address: result,
-          name,
-          mint,
-        };
-      }
-    )
+  return Promise.resolve(getATAAddressesSync({ mints, owner }));
+};
+
+/**
+ * Gets multiple associated token account addresses.
+ */
+export const getATAAddressesSync = <K extends string>({
+  mints,
+  owner,
+}: {
+  mints: {
+    [mint in K]: PublicKey;
+  };
+  owner: PublicKey;
+}): {
+  /**
+   * All ATAs
+   */
+  accounts: ATAMap<K>;
+} => {
+  const result = Object.entries(mints).map(
+    (
+      args
+    ): {
+      address: PublicKey;
+      name: string;
+      mint: PublicKey;
+    } => {
+      const [name, mint] = args as [K, PublicKey];
+      const result = getATAAddressSync({
+        mint,
+        owner: owner,
+      });
+      return {
+        address: result,
+        name,
+        mint,
+      };
+    }
   );
   const deduped = result.reduce(
     (acc, { address, name, mint }) => {

@@ -1,3 +1,4 @@
+import { getProgramAddress } from "@saberhq/solana-contrib";
 import type { ProgramAccount } from "@saberhq/token-utils";
 import { TOKEN_PROGRAM_ID } from "@saberhq/token-utils";
 import type { Connection, TransactionInstruction } from "@solana/web3.js";
@@ -167,7 +168,7 @@ export class StableSwap implements StableSwapInfo {
     programID: PublicKey = SWAP_PROGRAM_ID
   ): Promise<StableSwap> {
     const data = await loadProgramAccount(connection, swapAccount, programID);
-    const [authority] = await findSwapAuthorityKey(swapAccount, programID);
+    const authority = getSwapAuthorityKey(swapAccount, programID);
     return StableSwap.loadWithData(swapAccount, data, authority, programID);
   }
 
@@ -198,6 +199,16 @@ export class StableSwap implements StableSwapInfo {
     data: ProgramAccount<StableSwapState>
   ): Promise<StableSwap> {
     const [authority] = await findSwapAuthorityKey(data.publicKey);
+    return StableSwap.fromProgramAccountWithAuthority(data, authority);
+  }
+
+  /**
+   * Loads the swap object from a program account.
+   * @param data
+   * @returns
+   */
+  static fromData(data: ProgramAccount<StableSwapState>): StableSwap {
+    const authority = getSwapAuthorityKey(data.publicKey);
     return StableSwap.fromProgramAccountWithAuthority(data, authority);
   }
 
@@ -345,3 +356,15 @@ export const findSwapAuthorityKey = (
   swapProgramID: PublicKey = SWAP_PROGRAM_ID
 ): Promise<[PublicKey, number]> =>
   PublicKey.findProgramAddress([swapAccount.toBuffer()], swapProgramID);
+
+/**
+ * Finds the swap authority address that is used to sign transactions on behalf of the swap.
+ *
+ * @param swapAccount
+ * @param swapProgramID
+ * @returns
+ */
+export const getSwapAuthorityKey = (
+  swapAccount: PublicKey,
+  swapProgramID: PublicKey = SWAP_PROGRAM_ID
+): PublicKey => getProgramAddress([swapAccount.toBuffer()], swapProgramID);
