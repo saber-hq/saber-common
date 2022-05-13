@@ -84,6 +84,6 @@ export const getProgramAddress = (
   if (cached) {
     return cached;
   }
-  const [key] = PublicKey.findProgramAddressSync([normalizedSeeds], programId);
+  const [key] = PublicKey.findProgramAddressSync(seeds, programId);
   return (gpaCache[cacheKey] = getPublicKey(key));
 };
