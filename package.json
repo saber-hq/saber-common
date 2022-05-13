@@ -65,5 +65,5 @@
     "doctor:packages": "yarn doctor packages/"
   },
   "version": "0.0.0",
-  "packageManager": "yarn@3.2.0"
+  "packageManager": "yarn@3.2.1"
 }
