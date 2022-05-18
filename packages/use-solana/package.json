@@ -42,7 +42,7 @@
     "unstated-next": "^1.1.0"
   },
   "peerDependencies": {
-    "@solana/web3.js": "^1.37",
+    "@solana/web3.js": "^1.42",
     "bn.js": "^4 || ^5",
     "react": "^17.0.2 || ^18"
   },

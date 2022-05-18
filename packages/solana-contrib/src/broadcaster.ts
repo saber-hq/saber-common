@@ -1,5 +1,6 @@
 import type {
   Blockhash,
+  BlockhashWithExpiryBlockHeight,
   Commitment,
   ConfirmOptions,
   Connection,
@@ -31,6 +32,15 @@ export class SingleConnectionBroadcaster implements Broadcaster {
     readonly sendConnection: Connection,
     readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {}
+
+  /**
+   * @inheritdoc
+   */
+  async getLatestBlockhash(
+    commitment: Commitment = this.opts.commitment ?? "confirmed"
+  ): Promise<BlockhashWithExpiryBlockHeight> {
+    return await this.sendConnection.getLatestBlockhash(commitment);
+  }
 
   /**
    * @inheritdoc
@@ -105,6 +115,23 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
     readonly connections: readonly Connection[],
     readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {}
+
+  async getLatestBlockhash(
+    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed"
+  ): Promise<BlockhashWithExpiryBlockHeight> {
+    try {
+      const result = await Promise.any(
+        this.connections.map((conn) => conn.getLatestBlockhash(commitment))
+      );
+      return result;
+    } catch (e) {
+      if (e instanceof AggregateError) {
+        throw firstAggregateError(e);
+      } else {
+        throw e;
+      }
+    }
+  }
 
   async getRecentBlockhash(
     commitment: Commitment = this.opts.preflightCommitment ?? "confirmed"

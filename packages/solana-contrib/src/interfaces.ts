@@ -1,5 +1,6 @@
 import type {
   Blockhash,
+  BlockhashWithExpiryBlockHeight,
   Commitment,
   ConfirmOptions,
   Connection,
@@ -80,6 +81,14 @@ export interface ReadonlyProvider extends AccountInfoFetcher {
  * returning the transaction signatures.
  */
 export interface Broadcaster {
+  /**
+   * Fetch a recent blockhash from the cluster
+   * @param commitment
+   */
+  getLatestBlockhash(
+    commitment?: Commitment
+  ): Promise<BlockhashWithExpiryBlockHeight>;
+
   /**
    * Fetch a recent blockhash from the cluster
    * @param commitment
