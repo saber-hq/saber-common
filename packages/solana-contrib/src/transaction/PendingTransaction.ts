@@ -48,12 +48,12 @@ export class PendingTransaction {
   }
 
   /**
-   * Waits for the confirmation of the transaction, via polling.
+   * Waits for the confirmation of the transaction.
    * @returns
    */
   async wait({
     commitment = "confirmed",
-    useWebsocket = false,
+    useWebsocket = true,
     ...retryOpts
   }: TransactionWaitOptions = {}): Promise<TransactionReceipt> {
     if (this._receipt) {
