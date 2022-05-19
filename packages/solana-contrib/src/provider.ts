@@ -110,10 +110,11 @@ export class SolanaTransactionSigner implements TransactionSigner {
       preflightCommitment: this.preflightCommitment,
     }
   ): Promise<Transaction> {
+    const { blockhash, lastValidBlockHeight } =
+      await this.broadcaster.getLatestBlockhash(opts.preflightCommitment);
     tx.feePayer = this.wallet.publicKey;
-    tx.recentBlockhash = await this.broadcaster.getRecentBlockhash(
-      opts.preflightCommitment
-    );
+    tx.lastValidBlockHeight = lastValidBlockHeight;
+    tx.recentBlockhash = blockhash;
 
     await this.wallet.signTransaction(tx);
     signers
@@ -134,19 +135,12 @@ export class SolanaTransactionSigner implements TransactionSigner {
       preflightCommitment: this.preflightCommitment,
     }
   ): Promise<Transaction[]> {
-    const blockhash = await this.broadcaster.getRecentBlockhash(
-      opts.preflightCommitment
-    );
+    const { blockhash, lastValidBlockHeight } =
+      await this.broadcaster.getLatestBlockhash(opts.preflightCommitment);
 
-    const txs = reqs.map((r) => {
-      const tx = r.tx;
-      let signers = r.signers;
-
-      if (signers === undefined) {
-        signers = [];
-      }
-
+    const txs = reqs.map(({ tx, signers = [] }) => {
       tx.feePayer = this.wallet.publicKey;
+      tx.lastValidBlockHeight = lastValidBlockHeight;
       tx.recentBlockhash = blockhash;
 
       signers
