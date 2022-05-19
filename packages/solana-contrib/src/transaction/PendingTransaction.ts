@@ -1,7 +1,9 @@
 import type {
+  BlockhashWithExpiryBlockHeight,
   Cluster,
   Connection,
   Finality,
+  SignatureResult,
   TransactionSignature,
 } from "@solana/web3.js";
 import promiseRetry from "promise-retry";
@@ -12,7 +14,9 @@ import { TransactionReceipt } from "../transaction";
 /**
  * Options for awaiting a transaction confirmation.
  */
-export interface TransactionWaitOptions extends WrapOptions {
+export interface TransactionWaitOptions
+  extends WrapOptions,
+    Partial<BlockhashWithExpiryBlockHeight> {
   /**
    * Commitment of the transaction. Defaults to `confirmed`.
    */
@@ -56,7 +60,7 @@ export class PendingTransaction {
       return this._receipt;
     }
     if (useWebsocket) {
-      await this.awaitSignatureConfirmation(commitment);
+      await this.confirm({ commitment, ...retryOpts });
       return await this.pollForReceipt({ commitment });
     }
     return await this.pollForReceipt({ commitment, ...retryOpts });
@@ -99,6 +103,8 @@ export class PendingTransaction {
 
   /**
    * Awaits the confirmation of the transaction, via onSignature subscription.
+   *
+   * @deprecated use {@link PendingTransaction#confirm}
    * @returns
    */
   async awaitSignatureConfirmation(
@@ -111,6 +117,45 @@ export class PendingTransaction {
     if (value.err) {
       throw value.err;
     }
+    return this.signature;
+  }
+
+  /**
+   * Awaits the confirmation of the transaction, via onSignature subscription.
+   * @returns
+   */
+  async confirm({
+    commitment = "confirmed",
+    blockhash,
+    lastValidBlockHeight,
+  }: Pick<
+    TransactionWaitOptions,
+    "commitment" | "blockhash" | "lastValidBlockHeight"
+  >): Promise<TransactionSignature> {
+    let value: SignatureResult;
+    if (blockhash && lastValidBlockHeight) {
+      value = (
+        await this.connection.confirmTransaction(
+          {
+            signature: this.signature,
+            blockhash,
+            lastValidBlockHeight,
+          },
+          commitment
+        )
+      ).value;
+    } else {
+      value = (
+        await this.connection.confirmTransaction(this.signature, commitment)
+      ).value;
+    }
+
+    if (value.err) {
+      throw new Error(
+        `Transaction ${this.signature} failed (${JSON.stringify(value)})`
+      );
+    }
+
     return this.signature;
   }
 
