@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.13.7 (2022-05-19)
+
+
+### Features
+
+* **solana-contrib:** default to websocket-based confirmation rather than polling ([04f0b59](https://github.com/saber-hq/saber-common/commit/04f0b59d0cc5174927037e377575c900deb5e36f))
+
+
+
+
+
 ## 1.13.6 (2022-05-13)
 
 **Note:** Version bump only for package @saberhq/stableswap-sdk
