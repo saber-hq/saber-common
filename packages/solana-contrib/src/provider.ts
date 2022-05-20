@@ -262,7 +262,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
    * Sends the given transaction, paid for and signed by the provider's wallet.
    *
    * @param tx      The transaction to send.
-   * @param signers The set of signers in addition to the provdier wallet that
+   * @param signers The set of signers in addition to the provider wallet that
    *                will sign the transaction.
    * @param opts    Transaction confirmation options.
    */
