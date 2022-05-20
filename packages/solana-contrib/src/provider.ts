@@ -14,11 +14,7 @@ import { SystemProgram } from "@solana/web3.js";
 import invariant from "tiny-invariant";
 
 import type { Broadcaster, ReadonlyProvider } from ".";
-import {
-  MultipleConnectionBroadcaster,
-  PendingTransaction,
-  SignerWallet,
-} from ".";
+import { PendingTransaction, SignerWallet, TieredBroadcaster } from ".";
 import { SingleConnectionBroadcaster } from "./broadcaster";
 import type {
   Provider,
@@ -255,7 +251,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     return new SolanaProvider(
       connection,
       broadcastConnections.length > 1
-        ? new MultipleConnectionBroadcaster(broadcastConnections, opts)
+        ? new TieredBroadcaster(connection, broadcastConnections, opts)
         : new SingleConnectionBroadcaster(firstBroadcastConnection, opts),
       wallet,
       opts

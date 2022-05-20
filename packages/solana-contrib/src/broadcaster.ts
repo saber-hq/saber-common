@@ -277,3 +277,106 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
     }
   }
 }
+
+/**
+ * Broadcasts transactions to multiple connections simultaneously.
+ */
+export class TieredBroadcaster implements Broadcaster {
+  readonly premiumBroadcaster: SingleConnectionBroadcaster;
+
+  constructor(
+    readonly premiumConnection: Connection,
+    readonly freeConnections: readonly Connection[],
+    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
+  ) {
+    this.premiumBroadcaster = new SingleConnectionBroadcaster(
+      premiumConnection,
+      opts
+    );
+  }
+
+  async getLatestBlockhash(
+    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed"
+  ): Promise<BlockhashWithExpiryBlockHeight> {
+    return await this.premiumBroadcaster.getLatestBlockhash(commitment);
+  }
+
+  async getRecentBlockhash(
+    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed"
+  ): Promise<Blockhash> {
+    return await this.premiumBroadcaster.getRecentBlockhash(commitment);
+  }
+
+  private async _sendRawTransaction(
+    encoded: Buffer,
+    options?: SendOptions & Pick<BroadcastOptions, "retryTimes">
+  ): Promise<PendingTransaction> {
+    const pending = new PendingTransaction(
+      this.premiumConnection,
+      await sendAndSpamRawTx(this.premiumConnection, encoded, options ?? {})
+    );
+    void (async () => {
+      await Promise.all(
+        this.freeConnections.map(async (fc) => {
+          await sendAndSpamRawTx(fc, encoded, options ?? {});
+        })
+      );
+    })();
+    return pending;
+  }
+
+  /**
+   * Broadcasts a signed transaction.
+   *
+   * @param tx
+   * @param confirm
+   * @param opts
+   * @returns
+   */
+  async broadcast(
+    tx: Transaction,
+    { printLogs = true, ...opts }: BroadcastOptions = this.opts
+  ): Promise<PendingTransaction> {
+    if (tx.signatures.length === 0) {
+      throw new Error("Transaction must be signed before broadcasting.");
+    }
+    const rawTx = tx.serialize();
+
+    if (printLogs) {
+      return await this._sendRawTransaction(rawTx, opts);
+    }
+
+    return await suppressConsoleErrorAsync(async () => {
+      // hide the logs of TX errors if printLogs = false
+      return await this._sendRawTransaction(rawTx, opts);
+    });
+  }
+
+  /**
+   * Simulates a transaction with a commitment.
+   * @param tx
+   * @param commitment
+   * @returns
+   */
+  async simulate(
+    tx: Transaction,
+    {
+      commitment = this.opts.preflightCommitment ?? "confirmed",
+      verifySigners = true,
+    }: {
+      commitment?: Commitment;
+      verifySigners?: boolean;
+    } = {
+      commitment: this.opts.preflightCommitment ?? "confirmed",
+      verifySigners: true,
+    }
+  ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
+    if (verifySigners && tx.signatures.length === 0) {
+      throw new Error("Transaction must be signed before simulating.");
+    }
+    return this.premiumBroadcaster.simulate(tx, {
+      commitment,
+      verifySigners,
+    });
+  }
+}
