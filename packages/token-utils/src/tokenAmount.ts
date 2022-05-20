@@ -30,7 +30,7 @@ export class TokenAmount extends UTokenAmount<Token> {
    * @returns
    */
   static parse(token: Token, uiAmount: string): TokenAmount {
-    const prev = parseAmountFromString(token, uiAmount);
+    const prev = parseAmountFromString(token, uiAmount, ".", ",");
     return new TokenAmount(token, prev);
   }
 
