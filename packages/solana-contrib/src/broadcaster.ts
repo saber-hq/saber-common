@@ -14,14 +14,51 @@ import { firstAggregateError } from "./error";
 import type { Broadcaster } from "./interfaces";
 import { DEFAULT_PROVIDER_OPTIONS } from "./provider";
 import { PendingTransaction } from "./transaction";
-import { suppressConsoleErrorAsync } from "./utils";
+import { sleep, suppressConsoleErrorAsync } from "./utils";
 import { simulateTransactionWithCommitment } from "./utils/simulateTransactionWithCommitment";
+
+/**
+ * Sends and spams a raw transaction multiple times.
+ * @param connection Connection to send the transaction to. We recommend using a public endpoint such as GenesysGo.
+ * @param rawTx
+ * @param opts
+ */
+const sendAndSpamRawTx = async (
+  connection: Connection,
+  rawTx: Buffer,
+  {
+    retryTimes = 10,
+    ...opts
+  }: SendOptions & Pick<BroadcastOptions, "retryTimes">
+) => {
+  const result = await connection.sendRawTransaction(rawTx);
+  // if we could send the TX with preflight, let's spam it.
+  void (async () => {
+    // technique stolen from Mango.
+    for (let i = 0; i < retryTimes; i++) {
+      try {
+        await connection.sendRawTransaction(rawTx, {
+          ...opts,
+          skipPreflight: true,
+        });
+        await sleep(300);
+      } catch (e) {
+        console.warn(`[Broadcaster] sendAndSpamRawTx error`, e);
+      }
+    }
+  })();
+  return result;
+};
 
 export interface BroadcastOptions extends ConfirmOptions {
   /**
    * Prints the transaction logs as emitted by @solana/web3.js. Defaults to true.
    */
   printLogs?: boolean;
+  /**
+   * Number of times to retry the transaction being sent.
+   */
+  retryTimes?: number;
 }
 
 /**
@@ -67,7 +104,7 @@ export class SingleConnectionBroadcaster implements Broadcaster {
     if (printLogs) {
       return new PendingTransaction(
         this.sendConnection,
-        await this.sendConnection.sendRawTransaction(rawTx, opts)
+        await sendAndSpamRawTx(this.sendConnection, rawTx, opts)
       );
     }
 
@@ -75,7 +112,7 @@ export class SingleConnectionBroadcaster implements Broadcaster {
       // hide the logs of TX errors if printLogs = false
       return new PendingTransaction(
         this.sendConnection,
-        await this.sendConnection.sendRawTransaction(rawTx, opts)
+        await sendAndSpamRawTx(this.sendConnection, rawTx, opts)
       );
     });
   }
@@ -152,14 +189,14 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
 
   private async _sendRawTransaction(
     encoded: Buffer,
-    options?: SendOptions
+    options?: SendOptions & Pick<BroadcastOptions, "retryTimes">
   ): Promise<PendingTransaction> {
     try {
       return await Promise.any(
         this.connections.map(async (connection) => {
           return new PendingTransaction(
             connection,
-            await connection.sendRawTransaction(encoded, options)
+            await sendAndSpamRawTx(connection, encoded, options ?? {})
           );
         })
       );
