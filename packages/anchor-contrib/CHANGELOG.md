@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.13.9 (2022-05-20)
+
+
+### Features
+
+* implement tx spammer ([d776427](https://github.com/saber-hq/saber-common/commit/d776427980403b851343bf5770e6d756352bc739))
+
+
+
+
+
 ## 1.13.8 (2022-05-20)
 
 **Note:** Version bump only for package @saberhq/anchor-contrib
