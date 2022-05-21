@@ -43,6 +43,9 @@ jobs:
           CI: ""
           YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
       - run: yarn docs:generate
+      - uses: mikepenz/release-changelog-builder-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Perform Git release
         run: |
           VERSION=$(node -e "console.log(require('./package.json').version);")
@@ -52,6 +55,10 @@ jobs:
           git commit -a -m "Release v$VERSION"
           git tag "v$VERSION"
           git push origin HEAD --tags
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
       - name: Publish
         run: |
           echo 'npmAuthToken: "${NODE_AUTH_TOKEN}"' >> .yarnrc.yml
@@ -64,10 +71,3 @@ jobs:
         with:
           branch: gh-pages
           folder: docs
-      - uses: mikepenz/release-changelog-builder-action@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          generate_release_notes: true
