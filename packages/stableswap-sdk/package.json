@@ -16,8 +16,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "tsc && tsc -P tsconfig.cjs.json",
-    "clean": "rm -rf dist",
-    "test": "jest"
+    "clean": "rm -rf dist"
   },
   "engines": {
     "node": ">=12.x"
