@@ -10,55 +10,58 @@ import type {
   Transaction,
 } from "@solana/web3.js";
 
-import { firstAggregateError } from "./error";
-import type { Broadcaster } from "./interfaces";
-import { DEFAULT_PROVIDER_OPTIONS } from "./provider";
-import { PendingTransaction } from "./transaction";
-import { sleep, suppressConsoleErrorAsync } from "./utils";
-import { simulateTransactionWithCommitment } from "./utils/simulateTransactionWithCommitment";
+import { firstAggregateError } from "../error";
+import type { Broadcaster } from "../interfaces";
+import { DEFAULT_PROVIDER_OPTIONS } from "../provider";
+import { PendingTransaction } from "../transaction";
+import { suppressConsoleErrorAsync } from "../utils";
+import { simulateTransactionWithCommitment } from "../utils/simulateTransactionWithCommitment";
+import { sendAndSpamRawTx } from "./sendAndSpamRawTx";
+
+export * from "./tiered";
 
 /**
- * Sends and spams a raw transaction multiple times.
- * @param connection Connection to send the transaction to. We recommend using a public endpoint such as GenesysGo.
- * @param rawTx
- * @param opts
+ * Options for retrying sending of transactions periodically.
  */
-const sendAndSpamRawTx = async (
-  connection: Connection,
-  rawTx: Buffer,
-  {
-    retryTimes = 10,
-    ...opts
-  }: SendOptions & Pick<BroadcastOptions, "retryTimes">
-) => {
-  const result = await connection.sendRawTransaction(rawTx);
-  // if we could send the TX with preflight, let's spam it.
-  void (async () => {
-    // technique stolen from Mango.
-    for (let i = 0; i < retryTimes; i++) {
-      try {
-        await connection.sendRawTransaction(rawTx, {
-          ...opts,
-          skipPreflight: true,
-        });
-        await sleep(300);
-      } catch (e) {
-        console.warn(`[Broadcaster] sendAndSpamRawTx error`, e);
-      }
-    }
-  })();
-  return result;
+export interface TransactionRetryOptions {
+  /**
+   * Number of times to retry the transaction being sent.
+   */
+  retryTimes?: number;
+  /**
+   * Milliseconds elapsed between transaction retries.
+   */
+  retryInterval?: number;
+}
+
+/**
+ * Default retry parameters.
+ */
+export const DEFAULT_RETRY_OPTIONS: Required<TransactionRetryOptions> = {
+  retryTimes: 3,
+  retryInterval: 1_000,
 };
 
-export interface BroadcastOptions extends ConfirmOptions {
+/**
+ * Default retry parameters for fallbacks.
+ */
+export const DEFAULT_FALLBACK_RETRY_OPTIONS: Required<TransactionRetryOptions> =
+  {
+    retryTimes: 10,
+    retryInterval: 300,
+  };
+
+export interface BroadcastOptions
+  extends ConfirmOptions,
+    TransactionRetryOptions {
   /**
    * Prints the transaction logs as emitted by @solana/web3.js. Defaults to true.
    */
   printLogs?: boolean;
   /**
-   * Number of times to retry the transaction being sent.
+   * Retry options to use for fallback send connections.
    */
-  retryTimes?: number;
+  fallbackRetryOptions?: TransactionRetryOptions;
 }
 
 /**
@@ -104,7 +107,7 @@ export class SingleConnectionBroadcaster implements Broadcaster {
     if (printLogs) {
       return new PendingTransaction(
         this.sendConnection,
-        await sendAndSpamRawTx(this.sendConnection, rawTx, opts)
+        await sendAndSpamRawTx(this.sendConnection, rawTx, opts, opts)
       );
     }
 
@@ -112,7 +115,7 @@ export class SingleConnectionBroadcaster implements Broadcaster {
       // hide the logs of TX errors if printLogs = false
       return new PendingTransaction(
         this.sendConnection,
-        await sendAndSpamRawTx(this.sendConnection, rawTx, opts)
+        await sendAndSpamRawTx(this.sendConnection, rawTx, opts, opts)
       );
     });
   }
@@ -196,7 +199,7 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
         this.connections.map(async (connection) => {
           return new PendingTransaction(
             connection,
-            await sendAndSpamRawTx(connection, encoded, options ?? {})
+            await sendAndSpamRawTx(connection, encoded, options ?? this.opts)
           );
         })
       );
@@ -245,13 +248,16 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
   async simulate(
     tx: Transaction,
     {
-      commitment = this.opts.preflightCommitment ?? "confirmed",
+      commitment = this.opts.preflightCommitment ??
+        this.opts.commitment ??
+        "confirmed",
       verifySigners = true,
     }: {
       commitment?: Commitment;
       verifySigners?: boolean;
     } = {
-      commitment: this.opts.preflightCommitment ?? "confirmed",
+      commitment:
+        this.opts.preflightCommitment ?? this.opts.commitment ?? "confirmed",
       verifySigners: true,
     }
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
@@ -275,108 +281,5 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
         throw e;
       }
     }
-  }
-}
-
-/**
- * Broadcasts transactions to multiple connections simultaneously.
- */
-export class TieredBroadcaster implements Broadcaster {
-  readonly premiumBroadcaster: SingleConnectionBroadcaster;
-
-  constructor(
-    readonly primaryConnection: Connection,
-    readonly secondaryConnections: readonly Connection[],
-    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
-  ) {
-    this.premiumBroadcaster = new SingleConnectionBroadcaster(
-      primaryConnection,
-      opts
-    );
-  }
-
-  async getLatestBlockhash(
-    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed"
-  ): Promise<BlockhashWithExpiryBlockHeight> {
-    return await this.premiumBroadcaster.getLatestBlockhash(commitment);
-  }
-
-  async getRecentBlockhash(
-    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed"
-  ): Promise<Blockhash> {
-    return await this.premiumBroadcaster.getRecentBlockhash(commitment);
-  }
-
-  private async _sendRawTransaction(
-    encoded: Buffer,
-    options?: SendOptions & Pick<BroadcastOptions, "retryTimes">
-  ): Promise<PendingTransaction> {
-    const pending = new PendingTransaction(
-      this.primaryConnection,
-      await sendAndSpamRawTx(this.primaryConnection, encoded, options ?? {})
-    );
-    void (async () => {
-      await Promise.all(
-        this.secondaryConnections.map(async (fc) => {
-          await sendAndSpamRawTx(fc, encoded, options ?? {});
-        })
-      );
-    })();
-    return pending;
-  }
-
-  /**
-   * Broadcasts a signed transaction.
-   *
-   * @param tx
-   * @param confirm
-   * @param opts
-   * @returns
-   */
-  async broadcast(
-    tx: Transaction,
-    { printLogs = true, ...opts }: BroadcastOptions = this.opts
-  ): Promise<PendingTransaction> {
-    if (tx.signatures.length === 0) {
-      throw new Error("Transaction must be signed before broadcasting.");
-    }
-    const rawTx = tx.serialize();
-
-    if (printLogs) {
-      return await this._sendRawTransaction(rawTx, opts);
-    }
-
-    return await suppressConsoleErrorAsync(async () => {
-      // hide the logs of TX errors if printLogs = false
-      return await this._sendRawTransaction(rawTx, opts);
-    });
-  }
-
-  /**
-   * Simulates a transaction with a commitment.
-   * @param tx
-   * @param commitment
-   * @returns
-   */
-  async simulate(
-    tx: Transaction,
-    {
-      commitment = this.opts.preflightCommitment ?? "confirmed",
-      verifySigners = true,
-    }: {
-      commitment?: Commitment;
-      verifySigners?: boolean;
-    } = {
-      commitment: this.opts.preflightCommitment ?? "confirmed",
-      verifySigners: true,
-    }
-  ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
-    if (verifySigners && tx.signatures.length === 0) {
-      throw new Error("Transaction must be signed before simulating.");
-    }
-    return this.premiumBroadcaster.simulate(tx, {
-      commitment,
-      verifySigners,
-    });
   }
 }
