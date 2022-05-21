@@ -35,7 +35,6 @@
     "husky": "^8.0.1",
     "jest": "^28.1.0",
     "jsbi": "^4.3.0",
-    "lerna": "^4.0.0",
     "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
     "react": "^18.1.0",
@@ -51,6 +50,7 @@
   "scripts": {
     "build": "yarn workspaces foreach --exclude @saberhq/saber-common -pt run build",
     "clean": "yarn workspaces foreach --exclude @saberhq/saber-common -pt run clean",
+    "publish:all": "yarn workspaces foreach --exclude @saberhq/saber-common -pt npm publish",
     "typecheck": "tsc",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",

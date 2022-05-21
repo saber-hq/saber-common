@@ -44,4 +44,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/yarn
-      - run: yarn doctor:packages
+      # workaround b/c it's broken
+      - run: yarn plugin remove @yarnpkg/plugin-version
+      - run: yarn doctor packages/

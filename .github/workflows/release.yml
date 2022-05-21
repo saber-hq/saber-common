@@ -36,7 +36,7 @@ jobs:
       - name: Install Yarn dependencies
         run: yarn install
       - run: yarn build
-      - run: yarn lerna version --no-git-tag-version --conventional-commits --yes ${{ github.event.inputs.version }}
+      - run: yarn workspaces foreach -t version ${{ github.event.inputs.version }}
       - name: Update Yarn deps for version bump
         run: yarn install
         env:
@@ -45,7 +45,7 @@ jobs:
       - run: yarn docs:generate
       - name: Perform Git release
         run: |
-          VERSION=$(node -e "console.log(require('./lerna.json').version);")
+          VERSION=$(node -e "console.log(require('./package.json').version);")
           git config user.name "GitHub Actions"
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add .
@@ -56,7 +56,7 @@ jobs:
         run: |
           echo 'npmAuthToken: "${NODE_AUTH_TOKEN}"' >> .yarnrc.yml
           git update-index --assume-unchanged .yarnrc.yml
-          yarn lerna publish --no-verify-access --yes from-package
+          yarn publish:all
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
       - name: Deploy docs
