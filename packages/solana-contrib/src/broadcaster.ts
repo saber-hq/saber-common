@@ -285,12 +285,12 @@ export class TieredBroadcaster implements Broadcaster {
   readonly premiumBroadcaster: SingleConnectionBroadcaster;
 
   constructor(
-    readonly premiumConnection: Connection,
-    readonly freeConnections: readonly Connection[],
+    readonly primaryConnection: Connection,
+    readonly secondaryConnections: readonly Connection[],
     readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
   ) {
     this.premiumBroadcaster = new SingleConnectionBroadcaster(
-      premiumConnection,
+      primaryConnection,
       opts
     );
   }
@@ -312,12 +312,12 @@ export class TieredBroadcaster implements Broadcaster {
     options?: SendOptions & Pick<BroadcastOptions, "retryTimes">
   ): Promise<PendingTransaction> {
     const pending = new PendingTransaction(
-      this.premiumConnection,
-      await sendAndSpamRawTx(this.premiumConnection, encoded, options ?? {})
+      this.primaryConnection,
+      await sendAndSpamRawTx(this.primaryConnection, encoded, options ?? {})
     );
     void (async () => {
       await Promise.all(
-        this.freeConnections.map(async (fc) => {
+        this.secondaryConnections.map(async (fc) => {
           await sendAndSpamRawTx(fc, encoded, options ?? {});
         })
       );
