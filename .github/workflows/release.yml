@@ -37,16 +37,12 @@ jobs:
         run: yarn install
       - run: yarn build
       - run: yarn workspaces foreach -t version ${{ github.event.inputs.version }}
-      - name: Update Yarn deps for version bump
-        run: yarn install
-        env:
-          CI: ""
-          YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
       - run: yarn docs:generate
       - uses: mikepenz/release-changelog-builder-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Perform Git release
+      - id: git-release
+        name: Perform Git release
         run: |
           VERSION=$(node -e "console.log(require('./package.json').version);")
           git config user.name "GitHub Actions"
@@ -55,9 +51,11 @@ jobs:
           git commit -a -m "Release v$VERSION"
           git tag "v$VERSION"
           git push origin HEAD --tags
+          echo "::set-output name=version::v$VERSION"
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
+          id: ${{ steps.git-release.outputs.version }}
           generate_release_notes: true
       - name: Publish
         run: |
