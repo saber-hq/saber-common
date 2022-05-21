@@ -31,7 +31,7 @@
     "@yarnpkg/doctor": "^4.0.0-rc.6",
     "bn.js": "^5.2.0",
     "buffer": "^6.0.3",
-    "eslint": "^8.15.0",
+    "eslint": "^8.16.0",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.1",
