@@ -55,7 +55,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          id: ${{ steps.git-release.outputs.version }}
+          tag_name: ${{ steps.git-release.outputs.version }}
           generate_release_notes: true
       - name: Publish
         run: |
