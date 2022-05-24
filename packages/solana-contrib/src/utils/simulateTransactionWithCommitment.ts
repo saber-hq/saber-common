@@ -1,4 +1,5 @@
 import type {
+  BlockhashWithExpiryBlockHeight,
   Commitment,
   Connection,
   RpcResponseAndContext,
@@ -17,7 +18,9 @@ export async function simulateTransactionWithCommitment(
 ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
   const connectionInner = connection as Connection & {
     _disableBlockhashCaching: boolean;
-    _recentBlockhash: (disableBlockhashCaching: boolean) => Promise<string>;
+    _blockhashWithExpiryBlockHeight: (
+      disableBlockhashCaching: boolean
+    ) => Promise<BlockhashWithExpiryBlockHeight>;
     _rpcRequest: (
       rpc: "simulateTransaction",
       args: [
@@ -36,9 +39,10 @@ export async function simulateTransactionWithCommitment(
     _serialize: (buffer: Buffer) => Buffer;
   };
 
-  transaction.recentBlockhash = await connectionInner._recentBlockhash(
+  const { blockhash } = await connectionInner._blockhashWithExpiryBlockHeight(
     connectionInner._disableBlockhashCaching
   );
+  transaction.recentBlockhash = blockhash;
 
   const signData = transaction.serializeMessage();
 
