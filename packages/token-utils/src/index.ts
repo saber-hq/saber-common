@@ -11,14 +11,13 @@ export * from "./tokenProvider";
 
 // re-export token-math types
 // so consumers don't need to use them
+
+export type { BigintIsh, IFormatUint, NumberFormat } from "@ubeswap/token-math";
 export {
-  BigintIsh,
   Fraction,
-  IFormatUint,
   makeDecimalMultiplier,
   MAX_U64,
   MAX_U256,
-  NumberFormat,
   ONE,
   parseBigintIsh,
   Percent,
@@ -31,11 +30,13 @@ export {
 
 // re-export SPL token types
 export * from "./common";
-export {
-  ASSOCIATED_TOKEN_PROGRAM_ID,
+export type {
   AuthorityType,
   MintInfo as MintData,
   MultisigInfo,
+} from "@solana/spl-token";
+export {
+  ASSOCIATED_TOKEN_PROGRAM_ID,
   NATIVE_MINT,
   Token as SPLToken,
   TOKEN_PROGRAM_ID,

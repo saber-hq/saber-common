@@ -10,7 +10,7 @@ import BN from "bn.js";
 
 import type { Token } from "./token";
 
-export { IFormatUint } from "@ubeswap/token-math";
+export type { IFormatUint } from "@ubeswap/token-math";
 
 export class TokenAmount extends UTokenAmount<Token> {
   // amount _must_ be raw, i.e. in the native representation
