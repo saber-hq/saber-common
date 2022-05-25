@@ -3,7 +3,7 @@ import type {
   BroadcastOptions,
   PendingTransaction,
 } from "@saberhq/solana-contrib";
-import type { Transaction } from "@solana/web3.js";
+import type { Connection, Transaction } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
 import { EventEmitter } from "eventemitter3";
 
@@ -59,8 +59,9 @@ export class ReadonlyAdapter extends EventEmitter implements WalletAdapter {
 
   signAndBroadcastTransaction(
     _transaction: Transaction,
+    _connection: Connection,
     _broadcaster: Broadcaster,
-    _opts?: BroadcastOptions | undefined
+    _opts?: BroadcastOptions
   ): Promise<PendingTransaction> {
     throw new Error("readonly adapter cannot sign transactions");
   }
