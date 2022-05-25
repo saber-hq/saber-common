@@ -6,6 +6,43 @@ import type {
 import invariant from "tiny-invariant";
 
 import type { Event, EventParser } from "../interfaces";
+import type { PromiseOrValue } from "../utils/misc";
+import { valueAsPromise } from "../utils/misc";
+import type { TransactionEnvelope } from ".";
+import { PendingTransaction } from ".";
+
+/**
+ * A value that can be processed into a {@link TransactionReceipt}.
+ */
+export type TransactionLike =
+  | TransactionEnvelope
+  | PendingTransaction
+  | TransactionReceipt;
+
+/**
+ * Confirms a transaction, returning its receipt.
+ *
+ * @param tx
+ * @returns
+ */
+export const confirmTransactionLike = async (
+  tx: PromiseOrValue<TransactionLike>
+): Promise<TransactionReceipt> => {
+  const ish = await valueAsPromise(tx);
+  if (ish instanceof TransactionReceipt) {
+    return ish;
+  }
+
+  let pending: PendingTransaction;
+  if (ish instanceof PendingTransaction) {
+    pending = ish;
+  } else {
+    pending = await ish.send({
+      printLogs: false,
+    });
+  }
+  return await pending.wait();
+};
 
 /**
  * A transaction that has been processed by the cluster.

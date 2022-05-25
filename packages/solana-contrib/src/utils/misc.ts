@@ -114,3 +114,20 @@ export const mapN = <T extends unknown[], U>(
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+/**
+ * Promise or its inner value.
+ */
+export type PromiseOrValue<T> = Promise<T> | T;
+
+/**
+ * Awaits for a promise or value.
+ */
+export const valueAsPromise = async <T>(
+  awaitable: PromiseOrValue<T>
+): Promise<T> => {
+  if ("then" in awaitable) {
+    return await awaitable;
+  }
+  return awaitable;
+};

@@ -2,42 +2,23 @@ import "chai-as-promised";
 
 import type { Idl } from "@project-serum/anchor";
 import type {
-  TransactionEnvelope,
+  PromiseOrValue,
+  TransactionLike,
   TransactionReceipt,
 } from "@saberhq/solana-contrib";
-import { PendingTransaction } from "@saberhq/solana-contrib";
-import type { SendTransactionError } from "@solana/web3.js";
+import { confirmTransactionLike } from "@saberhq/solana-contrib";
 import { assert, expect } from "chai";
 
-import { printSendTransactionError } from "./printInstructionLogs";
-
-const processTX = async (
-  tx: TransactionEnvelope | PendingTransaction | null
-): Promise<TransactionReceipt> => {
-  if (tx instanceof PendingTransaction) {
-    return await tx.wait();
-  } else if (tx) {
-    try {
-      const pending = await tx.send({ printLogs: false });
-      return await pending.wait();
-    } catch (err) {
-      if (err && err instanceof Error && "logs" in err) {
-        printSendTransactionError(err as SendTransactionError);
-      }
-      throw err;
-    }
-  } else {
-    throw new Error("tx is null");
-  }
-};
-
+/**
+ * Processes a transaction, expecting rejection or fulfillment.
+ *
+ * @param tx
+ * @param msg
+ * @param cb
+ * @returns
+ */
 export const expectTX = (
-  tx:
-    | TransactionEnvelope
-    | null
-    | Promise<TransactionEnvelope | null>
-    | PendingTransaction
-    | Promise<PendingTransaction>,
+  tx: PromiseOrValue<TransactionLike | null>,
   msg?: string,
   cb?: (receipt: TransactionReceipt) => Promise<void>
 ): Chai.PromisedAssertion => {
@@ -47,12 +28,23 @@ export const expectTX = (
   };
 
   if (tx && "then" in tx) {
-    return expect(tx.then(processTX).then(handleReceipt), msg).eventually;
-  }
-  if (tx instanceof PendingTransaction) {
-    return expect(tx.wait().then(handleReceipt), msg).eventually;
+    return expect(
+      tx
+        .then(async (v) => {
+          if (v === null) {
+            throw new Error("transaction is null");
+          }
+          return await confirmTransactionLike(v);
+        })
+        .then(handleReceipt),
+      msg
+    ).eventually;
+  } else if (tx) {
+    return expect(confirmTransactionLike(tx).then(handleReceipt), msg)
+      .eventually;
   } else {
-    return expect(processTX(tx).then(handleReceipt), msg).eventually;
+    return expect(Promise.reject(new Error("transaction is null")), msg)
+      .eventually;
   }
 };
 
