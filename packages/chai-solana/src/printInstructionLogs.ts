@@ -44,9 +44,12 @@ export const formatInstructionLogsForConsole = (
 export const printSendTransactionError = (err: SendTransactionError) => {
   try {
     const parsed = parseTransactionLogs(err.logs ?? null, err);
-    console.error(formatInstructionLogsForConsole(parsed));
+    console.log(formatInstructionLogsForConsole(parsed));
   } catch (e) {
-    console.error(`Could not parse transaction error`, e);
-    console.error("SendTransactionError", err);
+    console.warn(
+      colors.yellow("Could not print logs due to error. Printing raw logs"),
+      e
+    );
+    console.log(err.logs?.join("\n"));
   }
 };
