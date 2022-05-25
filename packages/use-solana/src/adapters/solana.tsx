@@ -1,4 +1,9 @@
 import type {
+  Broadcaster,
+  BroadcastOptions,
+  PendingTransaction,
+} from "@saberhq/solana-contrib";
+import type {
   EventEmitter,
   SignerWalletAdapter,
   WalletAdapterEvents,
@@ -15,6 +20,15 @@ export class SolanaWalletAdapter implements WalletAdapter {
     > &
       EventEmitter<WalletAdapterEvents>
   ) {}
+
+  async signAndBroadcastTransaction(
+    transaction: Transaction,
+    broadcaster: Broadcaster,
+    opts?: BroadcastOptions | undefined
+  ): Promise<PendingTransaction> {
+    const tx = await this.adapter.signTransaction(transaction);
+    return await broadcaster.broadcast(tx, opts);
+  }
 
   get connected(): boolean {
     return this.adapter.connected;

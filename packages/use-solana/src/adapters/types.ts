@@ -1,3 +1,8 @@
+import type {
+  Broadcaster,
+  BroadcastOptions,
+  PendingTransaction,
+} from "@saberhq/solana-contrib";
 import { PublicKey } from "@saberhq/solana-contrib";
 import type {
   PublicKey as SolanaPublicKey,
@@ -8,6 +13,20 @@ export interface WalletAdapter<Connected extends boolean = boolean> {
   publicKey: Connected extends true ? SolanaPublicKey : null;
   autoApprove: boolean;
   connected: Connected;
+
+  /**
+   * Signs and broadcasts a transaction.
+   *
+   * @param transaction
+   * @param broadcaster
+   * @param options
+   */
+  signAndBroadcastTransaction(
+    transaction: Transaction,
+    broadcaster: Broadcaster,
+    opts?: BroadcastOptions
+  ): Promise<PendingTransaction>;
+
   signTransaction: (transaction: Transaction) => Promise<Transaction>;
   signAllTransactions: (transaction: Transaction[]) => Promise<Transaction[]>;
   connect: (args?: unknown) => Promise<void>;
@@ -61,6 +80,18 @@ export class WrappedWalletAdapter<Connected extends boolean = boolean>
       this.adapter.connected &&
       // need this branch b/c Solflare adapter does not respect the connected state properly
       (!!this.adapter.publicKey as Connected)
+    );
+  }
+
+  signAndBroadcastTransaction(
+    transaction: Transaction,
+    broadcaster: Broadcaster,
+    opts?: BroadcastOptions | undefined
+  ): Promise<PendingTransaction> {
+    return this.adapter.signAndBroadcastTransaction(
+      transaction,
+      broadcaster,
+      opts
     );
   }
 

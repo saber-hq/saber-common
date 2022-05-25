@@ -1,3 +1,8 @@
+import type {
+  Broadcaster,
+  BroadcastOptions,
+  PendingTransaction,
+} from "@saberhq/solana-contrib";
 import { SignerWallet } from "@saberhq/solana-contrib";
 import type { PublicKey, Transaction } from "@solana/web3.js";
 import { Keypair } from "@solana/web3.js";
@@ -22,6 +27,15 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
 
   get autoApprove(): boolean {
     return false;
+  }
+
+  async signAndBroadcastTransaction(
+    transaction: Transaction,
+    broadcaster: Broadcaster,
+    opts?: BroadcastOptions | undefined
+  ): Promise<PendingTransaction> {
+    const tx = await this.signTransaction(transaction);
+    return await broadcaster.broadcast(tx, opts);
   }
 
   signAllTransactions(transactions: Transaction[]): Promise<Transaction[]> {
