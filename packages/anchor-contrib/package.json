@@ -26,8 +26,8 @@
     "@solana/web3.js": "^1.43.1",
     "@types/lodash.camelcase": "^4.3.7",
     "@types/lodash.mapvalues": "^4.6.7",
-    "bn.js": "^5.2.0",
-    "typescript": "^4.6.4"
+    "bn.js": "^5.2.1",
+    "typescript": "^4.7.2"
   },
   "dependencies": {
     "@saberhq/solana-contrib": "^1.13.16",
