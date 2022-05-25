@@ -83,11 +83,7 @@ export class SolanaWalletAdapter implements WalletAdapter {
 
         return new PendingTransaction(connection, result.signature);
       }
-    } else if (
-      this.adapter instanceof BaseSignerWalletAdapter &&
-      // glow wallet is broken because they try to serialize the transaction while verifying signers
-      this.adapter.name !== GlowWalletName
-    ) {
+    } else if (this.adapter instanceof BaseSignerWalletAdapter) {
       // attempt to use the wallet's native transaction sending feature
       const signature = await this.adapter.sendTransaction(
         transaction,
