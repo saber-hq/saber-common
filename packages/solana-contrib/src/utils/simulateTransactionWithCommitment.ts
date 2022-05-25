@@ -1,5 +1,4 @@
 import type {
-  BlockhashWithExpiryBlockHeight,
   Commitment,
   Connection,
   RpcResponseAndContext,
@@ -17,10 +16,6 @@ export async function simulateTransactionWithCommitment(
   commitment: Commitment = "confirmed"
 ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
   const connectionInner = connection as Connection & {
-    _disableBlockhashCaching: boolean;
-    _blockhashWithExpiryBlockHeight: (
-      disableBlockhashCaching: boolean
-    ) => Promise<BlockhashWithExpiryBlockHeight>;
     _rpcRequest: (
       rpc: "simulateTransaction",
       args: [
@@ -35,18 +30,16 @@ export async function simulateTransactionWithCommitment(
       result: RpcResponseAndContext<SimulatedTransactionResponse>;
     }>;
   };
-  const transactionTyped = transaction as Transaction & {
-    _serialize: (buffer: Buffer) => Buffer;
-  };
 
-  const { blockhash } = await connectionInner._blockhashWithExpiryBlockHeight(
-    connectionInner._disableBlockhashCaching
-  );
-  transaction.recentBlockhash = blockhash;
+  // only populate recent blockhash if it isn't on the tx
+  if (!transaction.recentBlockhash) {
+    const { blockhash } = await connection.getLatestBlockhash(commitment);
+    transaction.recentBlockhash = blockhash;
+  }
 
-  const signData = transaction.serializeMessage();
-
-  const wireTransaction = transactionTyped._serialize(signData);
+  const wireTransaction = transaction.serialize({
+    requireAllSignatures: false,
+  });
   const encodedTransaction = wireTransaction.toString("base64");
   const config = { encoding: "base64", commitment };
 
