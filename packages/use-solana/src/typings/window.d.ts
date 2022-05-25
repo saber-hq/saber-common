@@ -89,7 +89,16 @@ declare global {
     };
     sollet?: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    glow?: any;
+    glowSolana?: {
+      signAndSendTransaction(
+        transaction: {
+          serialize(): {
+            toString(encoding: "base64"): string;
+          };
+        },
+        network?: "devnet" | "mainnet"
+      ): Promise<{ signature: TransactionSignature }>;
+    };
     solong?: {
       signAllTransactions?: (txs: Transaction[]) => Promise<Transaction[]>;
       signTransaction: (tx: Transaction) => Promise<Transaction>;

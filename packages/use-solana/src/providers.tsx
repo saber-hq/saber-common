@@ -119,7 +119,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     icon: GLOW,
     makeAdapter: () => new SolanaWalletAdapter(new GlowWalletAdapter()),
 
-    isInstalled: () => Boolean(window.glow),
+    isInstalled: () => Boolean(window.glowSolana),
     isMobile: true,
   },
   [DefaultWalletType.Phantom]: {

@@ -33,6 +33,10 @@ export class SolanaWalletAdapter implements WalletAdapter {
     broadcaster: Broadcaster,
     opts?: SignAndBroadcastOptions
   ): Promise<PendingTransaction> {
+    if (!transaction.feePayer) {
+      transaction.feePayer = this.publicKey ?? undefined;
+    }
+
     if (this.adapter.name === PhantomWalletName) {
       if (
         window.solana?.isPhantom &&
@@ -42,9 +46,6 @@ export class SolanaWalletAdapter implements WalletAdapter {
         (!opts?.signers || opts.signers.length === 0)
       ) {
         // HACK: Phantom's `signAndSendTransaction` should always set these, but doesn't yet
-        if (!transaction.feePayer) {
-          transaction.feePayer = this.publicKey ?? undefined;
-        }
         if (!transaction.recentBlockhash) {
           const latestBlockhash = await broadcaster.getLatestBlockhash();
           transaction.recentBlockhash = latestBlockhash.blockhash;
@@ -56,6 +57,31 @@ export class SolanaWalletAdapter implements WalletAdapter {
           opts
         );
         return new PendingTransaction(connection, signature);
+      }
+    } else if (this.adapter.name === GlowWalletName) {
+      if (window.glowSolana && window.glowSolana.signAndSendTransaction) {
+        // HACK: Glow's `signAndSendTransaction` should always set these, but doesn't yet
+        if (!transaction.recentBlockhash) {
+          const latestBlockhash = await broadcaster.getLatestBlockhash();
+          transaction.recentBlockhash = latestBlockhash.blockhash;
+          transaction.lastValidBlockHeight =
+            latestBlockhash.lastValidBlockHeight;
+        }
+        const result = await window.glowSolana.signAndSendTransaction({
+          serialize() {
+            return {
+              toString(): string {
+                return transaction
+                  .serialize({
+                    verifySignatures: false,
+                  })
+                  .toString("base64");
+              },
+            };
+          },
+        });
+
+        return new PendingTransaction(connection, result.signature);
       }
     } else if (
       this.adapter instanceof BaseSignerWalletAdapter &&
