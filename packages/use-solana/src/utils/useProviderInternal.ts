@@ -5,13 +5,13 @@ import type {
 import {
   DEFAULT_PROVIDER_OPTIONS,
   SolanaAugmentedProvider,
-  SolanaProvider,
   SolanaReadonlyProvider,
 } from "@saberhq/solana-contrib";
 import type { Commitment, ConfirmOptions, Connection } from "@solana/web3.js";
 import { useMemo } from "react";
 
 import type { ConnectedWallet, WalletAdapter } from "../adapters/types";
+import { WalletAdapterProvider } from "./provider";
 
 /**
  * Wallet-related information.
@@ -37,6 +37,10 @@ export interface UseProviderArgs {
    */
   sendConnection?: Connection;
   /**
+   * Broadcast connections.
+   */
+  broadcastConnections?: Connection[];
+  /**
    * Wallet.
    */
   wallet?: WalletAdapter<boolean>;
@@ -53,6 +57,7 @@ export interface UseProviderArgs {
 export const useProviderInternal = ({
   connection,
   sendConnection = connection,
+  broadcastConnections = [sendConnection],
   wallet,
   commitment = "confirmed",
   confirmOptions = DEFAULT_PROVIDER_OPTIONS,
@@ -71,15 +76,22 @@ export const useProviderInternal = ({
     () =>
       wallet && connected && publicKey
         ? new SolanaAugmentedProvider(
-            SolanaProvider.load({
+            WalletAdapterProvider.init({
               connection,
-              sendConnection,
+              broadcastConnections,
               wallet: wallet as ConnectedWallet,
               opts: confirmOptions,
             })
           )
         : null,
-    [wallet, connected, publicKey, connection, sendConnection, confirmOptions]
+    [
+      wallet,
+      connected,
+      publicKey,
+      connection,
+      broadcastConnections,
+      confirmOptions,
+    ]
   );
 
   return {

@@ -39,21 +39,22 @@ import {
 export enum DefaultWalletType {
   Clover = "Clover",
   Coin98 = "Coin98",
-  Ledger = "Ledger",
   Exodus = "Exodus",
   Glow = "Glow",
+  Huobi = "Huobi",
+  Ledger = "Ledger",
   MathWallet = "MathWallet",
   Phantom = "Phantom",
   ReadOnly = "ReadOnly",
+  SecretKey = "SecretKey",
   Slope = "Slope",
-  Sollet = "Sollet",
-  SolletExtension = "SolletExtension",
   Solflare = "Solflare",
   SolflareExtension = "SolflareExtension",
+  Sollet = "Sollet",
+  SolletExtension = "SolletExtension",
   Solong = "Solong",
-  SecretKey = "SecretKey",
-  Huobi = "Huobi",
 }
+
 export type WalletTypeEnum<T> = { [name: string]: T[keyof T] | string };
 export type UnknownWalletType = WalletTypeEnum<Record<string, unknown>>;
 
@@ -118,7 +119,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     icon: GLOW,
     makeAdapter: () => new SolanaWalletAdapter(new GlowWalletAdapter()),
 
-    isInstalled: () => Boolean(window.glow),
+    isInstalled: () => Boolean(window.glowSolana),
     isMobile: true,
   },
   [DefaultWalletType.Phantom]: {

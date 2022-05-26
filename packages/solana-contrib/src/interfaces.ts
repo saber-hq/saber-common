@@ -12,7 +12,7 @@ import type {
   Transaction,
 } from "@solana/web3.js";
 
-import type { PendingTransaction } from ".";
+import type { BroadcastOptions, PendingTransaction } from ".";
 
 /**
  * Wallet interface for objects that can be used to sign provider transactions.
@@ -103,7 +103,7 @@ export interface Broadcaster {
    */
   broadcast: (
     tx: Transaction,
-    opts?: ConfirmOptions
+    opts?: BroadcastOptions
   ) => Promise<PendingTransaction>;
 
   /**
@@ -122,10 +122,32 @@ export interface Broadcaster {
 }
 
 /**
+ * Sign and broadcast options.
+ */
+export type SignAndBroadcastOptions = BroadcastOptions & {
+  /**
+   * Additional signers
+   */
+  signers?: Signer[];
+};
+
+/**
  * An interface that can sign transactions.
  */
 export interface TransactionSigner {
   publicKey: PublicKey;
+
+  /**
+   * Signs and broadcasts a transaction.
+   *
+   * @param transaction
+   * @param broadcaster
+   * @param options
+   */
+  signAndBroadcastTransaction(
+    transaction: Transaction,
+    opts?: SignAndBroadcastOptions
+  ): Promise<PendingTransaction>;
 
   /**
    * Signs the given transaction, paid for and signed by the provider's wallet.
@@ -203,6 +225,18 @@ export interface Provider extends ReadonlyProvider {
     reqs: readonly SendTxRequest[],
     opts?: ConfirmOptions
   ) => Promise<PendingTransaction[]>;
+
+  /**
+   * Signs and broadcasts a transaction.
+   *
+   * @param transaction
+   * @param broadcaster
+   * @param options
+   */
+  signAndBroadcastTransaction(
+    transaction: Transaction,
+    opts?: SignAndBroadcastOptions
+  ): Promise<PendingTransaction>;
 
   /**
    * Simulates the given transaction, returning emitted logs from execution.

@@ -1,4 +1,9 @@
-import type { PublicKey, Transaction } from "@solana/web3.js";
+import type {
+  PublicKey,
+  SendOptions,
+  Transaction,
+  TransactionSignature,
+} from "@solana/web3.js";
 
 type ConnectOptions = {
   onlyIfTrusted?: boolean;
@@ -42,6 +47,13 @@ export interface PhantomProvider {
   autoApprove?: boolean;
   signTransaction: (transaction: Transaction) => Promise<Transaction>;
   signAllTransactions: (transactions: Transaction[]) => Promise<Transaction[]>;
+
+  signAndSendTransaction(
+    transaction: Transaction,
+    options?: SendOptions
+  ): Promise<{ signature: TransactionSignature }>;
+  signMessage(message: Uint8Array): Promise<{ signature: Uint8Array }>;
+
   connect: (args?: { onlyIfTrusted: true }) => Promise<void>;
   disconnect: () => Promise<void>;
   on: (event: PhantomEvent, handler: (args: unknown) => void) => void;
@@ -77,7 +89,16 @@ declare global {
     };
     sollet?: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    glow?: any;
+    glowSolana?: {
+      signAndSendTransaction(
+        transaction: {
+          serialize(): {
+            toString(encoding: "base64"): string;
+          };
+        },
+        network?: "devnet" | "mainnet"
+      ): Promise<{ signature: TransactionSignature }>;
+    };
     solong?: {
       signAllTransactions?: (txs: Transaction[]) => Promise<Transaction[]>;
       signTransaction: (tx: Transaction) => Promise<Transaction>;

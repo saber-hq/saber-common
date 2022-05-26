@@ -1,4 +1,9 @@
-import type { Transaction } from "@solana/web3.js";
+import type {
+  Broadcaster,
+  BroadcastOptions,
+  PendingTransaction,
+} from "@saberhq/solana-contrib";
+import type { Connection, Transaction } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
 import { EventEmitter } from "eventemitter3";
 
@@ -21,6 +26,9 @@ export const setReadonlySolanaPubkey = (pubkey: PublicKey): void => {
   window.USE_SOLANA_PUBKEY_OVERRIDE = pubkey.toString();
 };
 
+/**
+ * Adapter that cannot sign transactions. Dummy for testing.
+ */
 export class ReadonlyAdapter extends EventEmitter implements WalletAdapter {
   private _publicKey: PublicKey | null = null;
 
@@ -47,6 +55,15 @@ export class ReadonlyAdapter extends EventEmitter implements WalletAdapter {
 
   get publicKey(): PublicKey | null {
     return this._publicKey;
+  }
+
+  signAndBroadcastTransaction(
+    _transaction: Transaction,
+    _connection: Connection,
+    _broadcaster: Broadcaster,
+    _opts?: BroadcastOptions
+  ): Promise<PendingTransaction> {
+    throw new Error("readonly adapter cannot sign transactions");
   }
 
   signAllTransactions(_transactions: Transaction[]): Promise<Transaction[]> {

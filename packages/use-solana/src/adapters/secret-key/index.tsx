@@ -1,10 +1,21 @@
-import { SignerWallet } from "@saberhq/solana-contrib";
-import type { PublicKey, Transaction } from "@solana/web3.js";
+import type {
+  Broadcaster,
+  PendingTransaction,
+  SignAndBroadcastOptions,
+} from "@saberhq/solana-contrib";
+import {
+  doSignAndBroadcastTransaction,
+  SignerWallet,
+} from "@saberhq/solana-contrib";
+import type { Connection, PublicKey, Transaction } from "@solana/web3.js";
 import { Keypair } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
-import type { WalletAdapter } from "../types";
+import type { ConnectedWallet, WalletAdapter } from "../types";
 
+/**
+ * Adapter backed by a secret key.
+ */
 export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
   _wallet?: SignerWallet;
   _publicKey?: PublicKey;
@@ -22,6 +33,20 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
 
   get autoApprove(): boolean {
     return false;
+  }
+
+  async signAndBroadcastTransaction(
+    transaction: Transaction,
+    _connection: Connection,
+    broadcaster: Broadcaster,
+    opts?: SignAndBroadcastOptions
+  ): Promise<PendingTransaction> {
+    return await doSignAndBroadcastTransaction(
+      this as ConnectedWallet,
+      transaction,
+      broadcaster,
+      opts
+    );
   }
 
   signAllTransactions(transactions: Transaction[]): Promise<Transaction[]> {

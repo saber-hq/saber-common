@@ -1,9 +1,15 @@
 import type Transport from "@ledgerhq/hw-transport";
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
-import type { PublicKey, Transaction } from "@solana/web3.js";
+import type {
+  Broadcaster,
+  PendingTransaction,
+  SignAndBroadcastOptions,
+} from "@saberhq/solana-contrib";
+import { doSignAndBroadcastTransaction } from "@saberhq/solana-contrib";
+import type { Connection, PublicKey, Transaction } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
-import type { WalletAdapter } from "../types";
+import type { ConnectedWallet, WalletAdapter } from "../types";
 import { getPublicKey, getSolanaDerivationPath, signTransaction } from "./core";
 
 const DEFAULT_DERIVATION_PATH = getSolanaDerivationPath();
@@ -40,6 +46,20 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
 
   get autoApprove(): boolean {
     return false;
+  }
+
+  async signAndBroadcastTransaction(
+    transaction: Transaction,
+    _connection: Connection,
+    broadcaster: Broadcaster,
+    opts?: SignAndBroadcastOptions
+  ): Promise<PendingTransaction> {
+    return await doSignAndBroadcastTransaction(
+      this as ConnectedWallet,
+      transaction,
+      broadcaster,
+      opts
+    );
   }
 
   async signAllTransactions(

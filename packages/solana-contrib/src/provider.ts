@@ -19,6 +19,7 @@ import { SingleConnectionBroadcaster } from "./broadcaster";
 import type {
   Provider,
   SendTxRequest,
+  SignAndBroadcastOptions,
   TransactionSigner,
   Wallet,
 } from "./interfaces";
@@ -77,6 +78,19 @@ export class SolanaReadonlyProvider implements ReadonlyProvider {
   }
 }
 
+export const doSignAndBroadcastTransaction = async (
+  wallet: Pick<Wallet, "signTransaction">,
+  transaction: Transaction,
+  broadcaster: Broadcaster,
+  opts?: SignAndBroadcastOptions
+): Promise<PendingTransaction> => {
+  const tx = await wallet.signTransaction(transaction);
+  if (opts?.signers && opts.signers.length > 0) {
+    tx.sign(...opts.signers);
+  }
+  return await broadcaster.broadcast(tx, opts);
+};
+
 /**
  * Signs Solana transactions.
  */
@@ -89,6 +103,18 @@ export class SolanaTransactionSigner implements TransactionSigner {
 
   get publicKey(): PublicKey {
     return this.wallet.publicKey;
+  }
+
+  async signAndBroadcastTransaction(
+    transaction: Transaction,
+    opts?: SignAndBroadcastOptions | undefined
+  ): Promise<PendingTransaction> {
+    return await doSignAndBroadcastTransaction(
+      this.wallet,
+      transaction,
+      this.broadcaster,
+      opts
+    );
   }
 
   /**
@@ -160,8 +186,6 @@ export class SolanaTransactionSigner implements TransactionSigner {
  * This implementation was taken from Anchor.
  */
 export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
-  readonly signer: TransactionSigner;
-
   /**
    * @param connection The cluster connection where the program is deployed.
    * @param sendConnection The connection where transactions are sent to.
@@ -172,14 +196,21 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     override readonly connection: Connection,
     readonly broadcaster: Broadcaster,
     override readonly wallet: Wallet,
-    override readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
-  ) {
-    super(connection, opts);
-    this.signer = new SolanaTransactionSigner(
+    override readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS,
+    readonly signer: TransactionSigner = new SolanaTransactionSigner(
       wallet,
       broadcaster,
       opts.preflightCommitment
-    );
+    )
+  ) {
+    super(connection, opts);
+  }
+
+  async signAndBroadcastTransaction(
+    transaction: Transaction,
+    opts?: SignAndBroadcastOptions
+  ): Promise<PendingTransaction> {
+    return await this.signer.signAndBroadcastTransaction(transaction, opts);
   }
 
   /**
@@ -382,6 +413,13 @@ export class SolanaAugmentedProvider implements AugmentedProvider {
 
   get wallet(): Wallet {
     return this.provider.wallet;
+  }
+
+  signAndBroadcastTransaction(
+    transaction: Transaction,
+    opts?: SignAndBroadcastOptions
+  ): Promise<PendingTransaction> {
+    return this.provider.signAndBroadcastTransaction(transaction, opts);
   }
 
   send(
