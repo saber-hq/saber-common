@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/anchor-contrib",
-  "version": "1.13.18",
+  "version": "1.13.19",
   "description": "TypeScript client for Anchor programs.",
   "homepage": "https://github.com/saber-hq/saber-common/packages/anchor-contrib#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
@@ -35,7 +35,7 @@
     "typescript": "^4.7.2"
   },
   "dependencies": {
-    "@saberhq/solana-contrib": "^1.13.18",
+    "@saberhq/solana-contrib": "^1.13.19",
     "eventemitter3": "^4.0.7",
     "lodash.camelcase": "^4.3.0",
     "lodash.mapvalues": "^4.6.0",

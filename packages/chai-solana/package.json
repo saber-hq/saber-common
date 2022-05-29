@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/chai-solana",
-  "version": "1.13.18",
+  "version": "1.13.19",
   "description": "Solana Chai helpers",
   "homepage": "https://github.com/saber-hq/saber-common/packages/chai-solana#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
@@ -25,9 +25,9 @@
     "src/"
   ],
   "dependencies": {
-    "@saberhq/anchor-contrib": "^1.13.18",
-    "@saberhq/solana-contrib": "^1.13.18",
-    "@saberhq/token-utils": "^1.13.18",
+    "@saberhq/anchor-contrib": "^1.13.19",
+    "@saberhq/solana-contrib": "^1.13.19",
+    "@saberhq/token-utils": "^1.13.19",
     "@types/chai": "^4.3.1",
     "@types/chai-as-promised": "^7.1.5",
     "@types/promise-retry": "^1.1.3",
