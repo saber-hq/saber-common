@@ -5,7 +5,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "type": "module",
   "lint-staged": {
     "*.{ts,tsx}": "eslint --cache --fix",
     "*.{md,js,json,yml,yaml,css,md}": "prettier --write"

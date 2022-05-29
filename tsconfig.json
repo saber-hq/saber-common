@@ -2,7 +2,6 @@
   "extends": "./packages/tsconfig/tsconfig.react.json",
   "compilerOptions": {
     "jsxImportSource": "react",
-    "moduleResolution": "nodenext",
     "types": ["jest"]
   }
 }
