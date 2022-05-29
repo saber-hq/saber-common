@@ -2324,6 +2324,7 @@ __metadata:
   dependencies:
     "@saberhq/solana-contrib": ^1.13.17
     "@saberhq/token-utils": ^1.13.17
+    "@saberhq/tsconfig": "workspace:*"
     "@solana/buffer-layout": ^4.0.0
     "@solana/web3.js": ^1.43.2
     "@types/bn.js": ^5.1.0
