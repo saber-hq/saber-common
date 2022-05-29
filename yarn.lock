@@ -2355,7 +2355,7 @@ __metadata:
     "@solana/spl-token": ^0.1.8
     "@solana/web3.js": ^1.43.2
     "@types/bn.js": ^5.1.0
-    "@ubeswap/token-math": ^5.0.2
+    "@ubeswap/token-math": ^5.1.0
     jsbi: ^4.3.0
     tiny-invariant: ^1.2.0
     tslib: ^2.4.0
@@ -3407,19 +3407,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ubeswap/token-math@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "@ubeswap/token-math@npm:5.0.2"
+"@ubeswap/token-math@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "@ubeswap/token-math@npm:5.1.0"
   dependencies:
     big.js: ^6.1.1
     decimal.js-light: ^2.5.1
     tiny-invariant: ^1.2.0
-    toformat: ^2.0.0
     tslib: ^2.4.0
   peerDependencies:
     bn.js: ^5.2.0
     jsbi: ^3 || ^4
-  checksum: 6964344a0294199b3b2e33ac8334c987ac07dfa77a34acd75d6c2a7d42e6cd21b9174fdf22dd1e918bafe4cf9d7ccca464ef300ebdb3009c044bb46848429c86
+  checksum: 702fd70a95bd104b56f59b236530da9e07319775f89e841d5c70bbcf9f4fba27b4346fc571a65fea12abceffb5bd5c9c81728c382346d02ccc3f7a6351f58559
   languageName: node
   linkType: hard
 
@@ -10099,13 +10098,6 @@ __metadata:
   dependencies:
     is-number: ^7.0.0
   checksum: f76fa01b3d5be85db6a2a143e24df9f60dd047d151062d0ba3df62953f2f697b16fe5dad9b0ac6191c7efc7b1d9dcaa4b768174b7b29da89d4428e64bc0a20ed
-  languageName: node
-  linkType: hard
-
-"toformat@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "toformat@npm:2.0.0"
-  checksum: c75341911a811a85c309e2c3eb8e9c7b60f26e2c629170179fc92ed339a2faf44433ebde75d4ac6dbe6f55a2aa044e1d4cd5242dbdd5e4c047babbe6defd8387
   languageName: node
   linkType: hard
 
