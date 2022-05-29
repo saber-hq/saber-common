@@ -1,7 +1,7 @@
 import { TransactionInstruction } from "@solana/web3.js";
 
-import { COMPUTE_BUDGET_PROGRAM } from "./index";
-import { RequestHeapFrameLayout, RequestUnitsLayout } from "./layouts";
+import { COMPUTE_BUDGET_PROGRAM } from "./index.js";
+import { RequestHeapFrameLayout, RequestUnitsLayout } from "./layouts.js";
 
 /**
  * Request a specific maximum number of compute units the transaction is

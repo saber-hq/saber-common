@@ -3,9 +3,9 @@
  */
 
 import type { TransactionError } from "@solana/web3.js";
-import invariant from "tiny-invariant";
+import { default as invariant } from "tiny-invariant";
 
-import { getTransactionInstructionError } from "./programErr";
+import { getTransactionInstructionError } from "./programErr.js";
 
 /**
  * A log entry.

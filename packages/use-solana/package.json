@@ -7,7 +7,6 @@
   "bugs": "https://github.com/saber-hq/saber-common/issues",
   "author": "Saber Team <team@saber.so>",
   "license": "Apache-2.0",
-  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/esm/index.js",

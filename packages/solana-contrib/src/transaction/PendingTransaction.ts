@@ -9,7 +9,7 @@ import type {
 import promiseRetry from "promise-retry";
 import type { WrapOptions } from "retry";
 
-import { TransactionReceipt } from "../transaction";
+import { TransactionReceipt } from "./TransactionReceipt.js";
 
 /**
  * Options for awaiting a transaction confirmation.

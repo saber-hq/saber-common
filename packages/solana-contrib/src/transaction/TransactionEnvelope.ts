@@ -7,26 +7,29 @@ import type {
   TransactionInstruction,
 } from "@solana/web3.js";
 import { PublicKey, Transaction } from "@solana/web3.js";
-import invariant from "tiny-invariant";
+import { default as invariant } from "tiny-invariant";
 
-import type { BroadcastOptions } from "../broadcaster";
+import type { BroadcastOptions } from "../broadcaster/index.js";
 import {
   requestComputeUnitsInstruction,
   requestHeapFrameInstruction,
-} from "../computeBudget";
-import type { Provider } from "../interfaces";
+} from "../computeBudget/index.js";
+import type { Provider } from "../interfaces.js";
 import {
   createMemoInstruction,
   EstimatedTXTooBigError,
   printTXTable,
   suppressConsoleError,
   TXSizeEstimationError,
-} from "../utils";
-import type { PendingTransaction } from "./PendingTransaction";
-import type { TransactionReceipt } from "./TransactionReceipt";
-import { calculateTxSizeUnsafe } from "./txSizer";
-import type { SerializableInstruction } from "./utils";
-import { generateInspectLinkFromBase64, RECENT_BLOCKHASH_STUB } from "./utils";
+} from "../utils/index.js";
+import type { PendingTransaction } from "./PendingTransaction.js";
+import type { TransactionReceipt } from "./TransactionReceipt.js";
+import { calculateTxSizeUnsafe } from "./txSizer.js";
+import type { SerializableInstruction } from "./utils.js";
+import {
+  generateInspectLinkFromBase64,
+  RECENT_BLOCKHASH_STUB,
+} from "./utils.js";
 
 export const PACKET_DATA_SIZE = 1280 - 40 - 8;
 

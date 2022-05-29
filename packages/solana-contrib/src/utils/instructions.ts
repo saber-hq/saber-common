@@ -1,6 +1,4 @@
-import { TransactionInstruction } from "@solana/web3.js";
-
-import { PublicKey } from "./publicKey";
+import { PublicKey, TransactionInstruction } from "@solana/web3.js";
 
 /**
  * ID of the memo program.

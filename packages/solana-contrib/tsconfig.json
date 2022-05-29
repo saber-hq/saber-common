@@ -1,9 +1,10 @@
 {
-  "extends": "../../tsconfig.cjs.json",
+  "extends": "@saberhq/tsconfig/tsconfig.lib.json",
   "compilerOptions": {
-    "outDir": "dist/cjs/",
-    "types": ["node"]
+    "outDir": "dist/esm/",
+    "moduleResolution": "nodenext",
+    "lib": ["ES2021.Promise", "ES2019"],
+    "noEmit": false
   },
-  "include": ["src/"],
-  "exclude": ["**/*.test.ts"]
+  "include": ["src/"]
 }

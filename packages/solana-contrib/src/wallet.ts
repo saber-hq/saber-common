@@ -6,8 +6,8 @@ import type {
   Transaction,
 } from "@solana/web3.js";
 
-import type { Provider, Wallet } from "./interfaces";
-import { SolanaProvider } from "./provider";
+import type { Provider, Wallet } from "./interfaces.js";
+import { SolanaProvider } from "./provider.js";
 
 /**
  * Wallet based on a Signer.

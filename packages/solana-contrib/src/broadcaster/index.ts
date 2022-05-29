@@ -10,15 +10,15 @@ import type {
   Transaction,
 } from "@solana/web3.js";
 
-import { firstAggregateError } from "../error";
-import type { Broadcaster } from "../interfaces";
-import { DEFAULT_PROVIDER_OPTIONS } from "../provider";
-import { PendingTransaction } from "../transaction";
-import { suppressConsoleErrorAsync } from "../utils";
-import { simulateTransactionWithCommitment } from "../utils/simulateTransactionWithCommitment";
-import { sendAndSpamRawTx } from "./sendAndSpamRawTx";
+import { firstAggregateError } from "../error.js";
+import type { Broadcaster } from "../interfaces.js";
+import { DEFAULT_PROVIDER_OPTIONS } from "../provider.js";
+import { PendingTransaction } from "../transaction/index.js";
+import { suppressConsoleErrorAsync } from "../utils/index.js";
+import { simulateTransactionWithCommitment } from "../utils/simulateTransactionWithCommitment.js";
+import { sendAndSpamRawTx } from "./sendAndSpamRawTx.js";
 
-export * from "./tiered";
+export * from "./tiered.js";
 
 /**
  * Options for retrying sending of transactions periodically.

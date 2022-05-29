@@ -1,6 +1,6 @@
 /// <reference types="jest" />
 
-import { parseTransactionLogs } from "./parseTransactionLogs";
+import { parseTransactionLogs } from "./parseTransactionLogs.js";
 
 describe("parseTransactionLogs", () => {
   it("should parse the logs", () => {

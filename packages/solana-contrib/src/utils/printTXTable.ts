@@ -5,8 +5,8 @@ import type {
 } from "@solana/web3.js";
 import { Keypair, SystemProgram } from "@solana/web3.js";
 
-import type { Provider } from "..";
-import { TransactionEnvelope } from "..";
+import type { Provider } from "../index.js";
+import { TransactionEnvelope } from "../index.js";
 
 /**
  * Takes in a simulation result of a transaction and prints it in a cool table.

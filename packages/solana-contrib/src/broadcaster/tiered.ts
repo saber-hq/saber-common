@@ -10,17 +10,17 @@ import type {
   Transaction,
 } from "@solana/web3.js";
 
-import type { Broadcaster } from "../interfaces";
-import { DEFAULT_PROVIDER_OPTIONS } from "../provider";
-import { PendingTransaction } from "../transaction";
-import { suppressConsoleErrorAsync } from "../utils";
-import type { BroadcastOptions } from ".";
+import type { Broadcaster } from "../interfaces.js";
+import { DEFAULT_PROVIDER_OPTIONS } from "../provider.js";
+import { PendingTransaction } from "../transaction/index.js";
+import { suppressConsoleErrorAsync } from "../utils/index.js";
+import type { BroadcastOptions } from "./index.js";
 import {
   DEFAULT_FALLBACK_RETRY_OPTIONS,
   DEFAULT_RETRY_OPTIONS,
   SingleConnectionBroadcaster,
-} from ".";
-import { sendAndSpamRawTx } from "./sendAndSpamRawTx";
+} from "./index.js";
+import { sendAndSpamRawTx } from "./sendAndSpamRawTx.js";
 
 /**
  * Broadcasts transactions to multiple connections simultaneously.

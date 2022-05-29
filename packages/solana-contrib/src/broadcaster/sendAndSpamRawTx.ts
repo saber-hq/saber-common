@@ -1,8 +1,8 @@
 import type { Connection, SendOptions } from "@solana/web3.js";
 
-import { sleep } from "../utils";
-import type { TransactionRetryOptions } from ".";
-import { DEFAULT_RETRY_OPTIONS } from ".";
+import { sleep } from "../utils/index.js";
+import type { TransactionRetryOptions } from "./index.js";
+import { DEFAULT_RETRY_OPTIONS } from "./index.js";
 
 /**
  * Sends and spams a raw transaction multiple times.

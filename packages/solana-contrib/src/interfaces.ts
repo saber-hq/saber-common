@@ -12,7 +12,7 @@ import type {
   Transaction,
 } from "@solana/web3.js";
 
-import type { BroadcastOptions, PendingTransaction } from ".";
+import type { BroadcastOptions, PendingTransaction } from "./index.js";
 
 /**
  * Wallet interface for objects that can be used to sign provider transactions.

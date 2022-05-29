@@ -8,4 +8,4 @@ export const COMPUTE_BUDGET_PROGRAM = new PublicKey(
   "ComputeBudget111111111111111111111111111111"
 );
 
-export * from "./instructions";
+export * from "./instructions.js";

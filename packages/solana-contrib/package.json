@@ -9,7 +9,7 @@
   "author": "Saber Team <team@saber.so>",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "tsc && tsc -P tsconfig.esm.json",
+    "build": "tsc && tsc -P tsconfig.cjs.json",
     "clean": "rm -fr dist/",
     "prepublishOnly": "npm run build"
   },
@@ -37,6 +37,7 @@
     "tslib": "^2.4.0"
   },
   "devDependencies": {
+    "@saberhq/tsconfig": "workspace:*",
     "@solana/web3.js": "^1.43.2",
     "@types/bn.js": "^5.1.0",
     "@types/jest": "^27.5.1",

@@ -11,19 +11,23 @@ import type {
   TransactionInstruction,
 } from "@solana/web3.js";
 import { SystemProgram } from "@solana/web3.js";
-import invariant from "tiny-invariant";
+import { default as invariant } from "tiny-invariant";
 
-import type { Broadcaster, ReadonlyProvider } from ".";
-import { PendingTransaction, SignerWallet, TieredBroadcaster } from ".";
-import { SingleConnectionBroadcaster } from "./broadcaster";
+import { SingleConnectionBroadcaster } from "./broadcaster/index.js";
+import type { Broadcaster, ReadonlyProvider } from "./index.js";
+import {
+  PendingTransaction,
+  SignerWallet,
+  TieredBroadcaster,
+} from "./index.js";
 import type {
   Provider,
   SendTxRequest,
   SignAndBroadcastOptions,
   TransactionSigner,
   Wallet,
-} from "./interfaces";
-import { TransactionEnvelope } from "./transaction/TransactionEnvelope";
+} from "./interfaces.js";
+import { TransactionEnvelope } from "./transaction/TransactionEnvelope.js";
 
 export const DEFAULT_PROVIDER_OPTIONS: ConfirmOptions = {
   preflightCommitment: "confirmed",

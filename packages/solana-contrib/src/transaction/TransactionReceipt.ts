@@ -3,13 +3,13 @@ import type {
   TransactionResponse,
   TransactionSignature,
 } from "@solana/web3.js";
-import invariant from "tiny-invariant";
+import { default as invariant } from "tiny-invariant";
 
-import type { Event, EventParser } from "../interfaces";
-import type { PromiseOrValue } from "../utils/misc";
-import { valueAsPromise } from "../utils/misc";
-import type { TransactionEnvelope } from ".";
-import { PendingTransaction } from ".";
+import type { Event, EventParser } from "../interfaces.js";
+import type { PromiseOrValue } from "../utils/misc.js";
+import { valueAsPromise } from "../utils/misc.js";
+import { PendingTransaction } from "./PendingTransaction.js";
+import type { TransactionEnvelope } from "./TransactionEnvelope.js";
 
 /**
  * A value that can be processed into a {@link TransactionReceipt}.
