@@ -2,26 +2,21 @@
   "name": "@saberhq/eslint-config",
   "version": "1.13.17",
   "description": "Saber base ESLint config",
+  "homepage": "https://github.com/saber-hq/saber-common/packages/eslint-config#readme",
+  "repository": "git+https://github.com/saber-hq/saber-common.git",
+  "bugs": "https://github.com/saber-hq/saber-common/issues",
+  "author": "Saber Team <team@saber.so>",
+  "license": "Apache-2.0",
   "keywords": [
     "eslint",
     "saber"
   ],
-  "author": "Ian Macalinao <ian@saber.so>",
-  "homepage": "https://saber.so",
-  "license": "Apache-2.0",
   "main": "lib/eslint-config.js",
   "files": [
     "lib"
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/saber-hq/saber-common.git"
-  },
-  "bugs": {
-    "url": "https://github.com/saber-hq/saber-common/issues"
   },
   "peerDependencies": {
     "eslint": ">=7"

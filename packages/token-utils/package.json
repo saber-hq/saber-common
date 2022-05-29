@@ -2,8 +2,11 @@
   "name": "@saberhq/token-utils",
   "description": "Token-related math and transaction utilities for Solana.",
   "version": "1.13.17",
-  "repository": "git@github.com:saber-hq/solana-common.git",
-  "author": "Ian Macalinao <ian@saber.so>",
+  "homepage": "https://github.com/saber-hq/saber-common/packages/token-utils#readme",
+  "repository": "git+https://github.com/saber-hq/saber-common.git",
+  "bugs": "https://github.com/saber-hq/saber-common/issues",
+  "funding": "https://www.coingecko.com/en/coins/saber",
+  "author": "Saber Team <team@saber.so>",
   "license": "Apache-2.0",
   "type": "module",
   "exports": {

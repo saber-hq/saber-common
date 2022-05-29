@@ -2,8 +2,10 @@
   "name": "@saberhq/tsconfig",
   "description": "Saber TypeScript configurations.",
   "version": "1.13.17",
-  "repository": "git@github.com:saber-hq/saber-common.git",
-  "author": "Ian Macalinao <ian@saber.so>",
+  "homepage": "https://github.com/saber-hq/saber-common/packages/tsconfig#readme",
+  "repository": "git+https://github.com/saber-hq/saber-common.git",
+  "bugs": "https://github.com/saber-hq/saber-common/issues",
+  "author": "Saber Team <team@saber.so>",
   "license": "Apache-2.0",
   "keywords": [
     "solana",

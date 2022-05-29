@@ -1,12 +1,13 @@
 {
   "name": "@saberhq/anchor-contrib",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/saber-hq/saber-common.git"
-  },
-  "homepage": "https://saber.so",
-  "description": "TypeScript client for Anchor programs.",
   "version": "1.13.17",
+  "description": "TypeScript client for Anchor programs.",
+  "homepage": "https://github.com/saber-hq/saber-common/packages/anchor-contrib#readme",
+  "repository": "git+https://github.com/saber-hq/saber-common.git",
+  "bugs": "https://github.com/saber-hq/saber-common/issues",
+  "funding": "https://www.coingecko.com/en/coins/saber",
+  "author": "Saber Team <team@saber.so>",
+  "license": "Apache-2.0",
   "type": "module",
   "exports": {
     ".": {
@@ -16,8 +17,6 @@
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "author": "Ian Macalinao <ian@saber.so>",
-  "license": "Apache-2.0",
   "scripts": {
     "build": "tsc && tsc -P tsconfig.esm.json",
     "clean": "rm -fr dist/",
