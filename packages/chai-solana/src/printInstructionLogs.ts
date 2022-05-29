@@ -1,7 +1,7 @@
 import type { InstructionLogs } from "@saberhq/solana-contrib";
 import { formatLogEntry, parseTransactionLogs } from "@saberhq/solana-contrib";
 import type { SendTransactionError } from "@solana/web3.js";
-import colors from "colors/safe";
+import { default as colors } from "colors/safe.js";
 
 /**
  * Formats instruction logs to be printed to the console.

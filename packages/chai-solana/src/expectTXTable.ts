@@ -1,10 +1,10 @@
-import type { IdlErrorCode } from "@project-serum/anchor/dist/cjs/idl";
+import type { IdlErrorCode } from "@project-serum/anchor/dist/esm/idl.js";
 import { matchError, matchErrorCode } from "@saberhq/anchor-contrib";
 import type { TransactionEnvelope } from "@saberhq/solana-contrib";
 import { parseTransactionLogs, printTXTable } from "@saberhq/solana-contrib";
 
-import { formatInstructionLogsForConsole } from "./printInstructionLogs";
-import { expectTX } from "./utils";
+import { formatInstructionLogsForConsole } from "./printInstructionLogs.js";
+import { expectTX } from "./utils.js";
 
 /**
  * expectTXTable is a drop in replacement for expectTX with a cool table output like:

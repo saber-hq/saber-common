@@ -1,16 +1,16 @@
-import "./types";
+import "./types.js";
 
 import type { Address } from "@project-serum/anchor";
 import { BN } from "@project-serum/anchor";
 import { TokenAmount } from "@saberhq/token-utils";
 import { PublicKey } from "@solana/web3.js";
 import chaiAsPromised from "chai-as-promised";
-import chaiBN from "chai-bn";
+import { default as chaiBN } from "chai-bn";
 
-export * from "./debugAccountOwners";
-export * from "./expectTXTable";
-export * from "./printInstructionLogs";
-export * from "./utils";
+export * from "./debugAccountOwners.js";
+export * from "./expectTXTable.js";
+export * from "./printInstructionLogs.js";
+export * from "./utils.js";
 
 export const chaiSolana: Chai.ChaiPlugin = (chai) => {
   chai.use(chaiBN(BN) as Chai.ChaiPlugin);
