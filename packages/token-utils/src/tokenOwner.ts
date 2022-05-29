@@ -4,6 +4,7 @@ import type { TransactionInstruction } from "@solana/web3.js";
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   getATAAddress,
+  getATAAddressSync,
   SPLToken,
   TOKEN_PROGRAM_ID,
 } from ".";
@@ -22,6 +23,15 @@ export class TokenOwner {
    */
   async getATA(mint: PublicKey): Promise<PublicKey> {
     return await getATAAddress({ mint, owner: this.owner });
+  }
+
+  /**
+   * Gets the user's ATA.
+   * @param mint
+   * @returns
+   */
+  getATASync(mint: PublicKey): PublicKey {
+    return getATAAddressSync({ mint, owner: this.owner });
   }
 
   /**
