@@ -96,7 +96,6 @@ export class WalletAdapterProvider extends SolanaProvider {
      */
     readonly opts?: ConfirmOptions;
   }): WalletAdapterProvider {
-    console.log("initialize wallet adapter provider");
     const firstBroadcastConnection = broadcastConnections[0];
     invariant(
       firstBroadcastConnection,
