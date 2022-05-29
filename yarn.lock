@@ -2242,6 +2242,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@saberhq/option-utils@workspace:*, @saberhq/option-utils@workspace:packages/option-utils":
+  version: 0.0.0-use.local
+  resolution: "@saberhq/option-utils@workspace:packages/option-utils"
+  dependencies:
+    "@saberhq/tsconfig": "workspace:*"
+    tslib: ^2.4.0
+    typescript: ^4.7.2
+  languageName: unknown
+  linkType: soft
+
 "@saberhq/saber-common@workspace:.":
   version: 0.0.0-use.local
   resolution: "@saberhq/saber-common@workspace:."
@@ -2286,6 +2296,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/solana-contrib@workspace:packages/solana-contrib"
   dependencies:
+    "@saberhq/option-utils": "workspace:*"
     "@solana/buffer-layout": ^4.0.0
     "@solana/web3.js": ^1.43.1
     "@types/bn.js": ^5.1.0
@@ -2351,7 +2362,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/tsconfig@^1.13.17, @saberhq/tsconfig@workspace:packages/tsconfig":
+"@saberhq/tsconfig@^1.13.17, @saberhq/tsconfig@workspace:*, @saberhq/tsconfig@workspace:packages/tsconfig":
   version: 0.0.0-use.local
   resolution: "@saberhq/tsconfig@workspace:packages/tsconfig"
   languageName: unknown

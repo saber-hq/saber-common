@@ -1,0 +1,32 @@
+{
+  "name": "@saberhq/option-utils",
+  "version": "0.1.14",
+  "description": "Utilities for handling optional values in TypeScript.",
+  "homepage": "https://github.com/saber-hq/saber-common/packages/option-utils#readme",
+  "repository": "git@github.com:saber-hq/saber-common.git",
+  "author": "Ian Macalinao <ian@saber.so>",
+  "license": "Apache-2.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "src/",
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc && tsc --project tsconfig.cjs.json",
+    "clean": "rm -fr dist/"
+  },
+  "bugs": {
+    "url": "https://github.com/saber-hq/saber-common/issues"
+  },
+  "dependencies": {
+    "tslib": "^2.4.0"
+  },
+  "devDependencies": {
+    "@saberhq/tsconfig": "workspace:*",
+    "typescript": "^4.7.2"
+  }
+}
