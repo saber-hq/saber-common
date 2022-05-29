@@ -64,6 +64,6 @@
     "test": "jest **/*.test.ts",
     "doctor:packages": "yarn doctor packages/"
   },
-  "version": "1.13.19",
+  "version": "1.13.20",
   "packageManager": "yarn@3.2.1"
 }

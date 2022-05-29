@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/eslint-config-react",
-  "version": "1.13.19",
+  "version": "1.13.20",
   "description": "Saber base React ESLint config",
   "homepage": "https://github.com/saber-hq/saber-common/packages/eslint-config-react#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
@@ -23,7 +23,7 @@
     "eslint": ">=7"
   },
   "dependencies": {
-    "@saberhq/eslint-config": "^1.13.19",
+    "@saberhq/eslint-config": "^1.13.20",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.5.0"
