@@ -5,6 +5,13 @@
   "repository": "git@github.com:saber-hq/solana-common.git",
   "author": "Ian Macalinao <ian@saber.so>",
   "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
   "keywords": [
     "solana",
     "saber"

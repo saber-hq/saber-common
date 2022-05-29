@@ -7,6 +7,13 @@
   "homepage": "https://saber.so",
   "description": "TypeScript client for Anchor programs.",
   "version": "1.13.17",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "author": "Ian Macalinao <ian@saber.so>",

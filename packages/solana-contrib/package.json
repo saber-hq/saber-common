@@ -3,19 +3,21 @@
   "version": "1.13.17",
   "description": "Common types and libraries for Solana",
   "author": "Ian Macalinao <ian@saber.so>",
-  "homepage": "https://github.com/saber-hq/saber-common#readme",
+  "homepage": "https://github.com/saber-hq/saber-common/packages/solana-contrib#readme",
+  "repository": "git+https://github.com/saber-hq/saber-common.git",
+  "bugs": "https://github.com/saber-hq/saber-common/issues",
   "license": "Apache-2.0",
   "scripts": {
     "build": "tsc && tsc -P tsconfig.esm.json",
     "clean": "rm -fr dist/",
     "prepublishOnly": "npm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/saber-hq/saber-common.git"
-  },
-  "bugs": {
-    "url": "https://github.com/saber-hq/saber-common/issues"
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
