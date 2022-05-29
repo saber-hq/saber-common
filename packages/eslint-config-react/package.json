@@ -12,7 +12,7 @@
     "saber",
     "react"
   ],
-  "main": "lib/eslint-config-react.js",
+  "main": "lib/eslint-config-react.cjs",
   "files": [
     "lib"
   ],

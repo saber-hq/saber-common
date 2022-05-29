@@ -1,6 +1,6 @@
 import { SolletWalletAdapter } from "@solana/wallet-adapter-sollet";
 import type { Transaction } from "@solana/web3.js";
-import invariant from "tiny-invariant";
+import { default as invariant } from "tiny-invariant";
 
 export class SolflareAdapter extends SolletWalletAdapter {
   override signAllTransactions = async (

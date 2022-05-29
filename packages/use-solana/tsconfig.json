@@ -2,6 +2,7 @@
   "extends": "@saberhq/tsconfig/tsconfig.react.json",
   "compilerOptions": {
     "jsxImportSource": "react",
+    "moduleResolution": "nodenext",
     "lib": ["ES2015", "DOM"],
     "outDir": "dist/esm/",
     "types": [],

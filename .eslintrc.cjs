@@ -8,7 +8,6 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ["*.js"],
   extends: ["@saberhq/eslint-config-react"],
   parserOptions: {
     project: "tsconfig.json",

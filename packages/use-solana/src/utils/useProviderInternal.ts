@@ -10,8 +10,8 @@ import {
 import type { Commitment, ConfirmOptions, Connection } from "@solana/web3.js";
 import { useMemo } from "react";
 
-import type { ConnectedWallet, WalletAdapter } from "../adapters/types";
-import { WalletAdapterProvider } from "./provider";
+import type { ConnectedWallet, WalletAdapter } from "../adapters/types.js";
+import { WalletAdapterProvider } from "./provider.js";
 
 /**
  * Wallet-related information.

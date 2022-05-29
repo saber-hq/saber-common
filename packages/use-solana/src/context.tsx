@@ -2,26 +2,26 @@ import type { ReactNode } from "react";
 import type { Container } from "unstated-next";
 import { createContainer, useContainer } from "unstated-next";
 
+import type { UseSolanaError } from "./error.js";
+import { ErrorLevel } from "./error.js";
 import type {
   DefaultWalletType,
   WalletAdapter,
   WalletProviderInfo,
   WalletTypeEnum,
-} from ".";
-import type { UseSolanaError } from "./error";
-import { ErrorLevel } from "./error";
-import type { UnknownWalletType, WalletProviderMap } from "./providers";
-import { DEFAULT_WALLET_PROVIDERS } from "./providers";
-import { LOCAL_STORAGE_ADAPTER } from "./storage";
+} from "./index.js";
+import type { UnknownWalletType, WalletProviderMap } from "./providers.js";
+import { DEFAULT_WALLET_PROVIDERS } from "./providers.js";
+import { LOCAL_STORAGE_ADAPTER } from "./storage.js";
 import type {
   ConnectionArgs,
   ConnectionContext,
-} from "./utils/useConnectionInternal";
-import { useConnectionInternal } from "./utils/useConnectionInternal";
-import type { UseProvider } from "./utils/useProviderInternal";
-import { useProviderInternal } from "./utils/useProviderInternal";
-import type { UseWallet, UseWalletArgs } from "./utils/useWalletInternal";
-import { useWalletInternal } from "./utils/useWalletInternal";
+} from "./utils/useConnectionInternal.js";
+import { useConnectionInternal } from "./utils/useConnectionInternal.js";
+import type { UseProvider } from "./utils/useProviderInternal.js";
+import { useProviderInternal } from "./utils/useProviderInternal.js";
+import type { UseWallet, UseWalletArgs } from "./utils/useWalletInternal.js";
+import { useWalletInternal } from "./utils/useWalletInternal.js";
 
 export interface UseSolana<
   WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType,

@@ -11,7 +11,7 @@
     "eslint",
     "saber"
   ],
-  "main": "lib/eslint-config.js",
+  "main": "lib/eslint-config.cjs",
   "files": [
     "lib"
   ],
