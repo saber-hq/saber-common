@@ -1,23 +1,23 @@
 import type { Accounts, Idl } from "@project-serum/anchor";
 import { BorshCoder, EventParser, utils } from "@project-serum/anchor";
-import type { InstructionDisplay } from "@project-serum/anchor/dist/cjs/coder/borsh/instruction";
+import type { InstructionDisplay } from "@project-serum/anchor/dist/esm/coder/borsh/instruction.js";
 import type {
   IdlAccountItem,
   IdlTypeDef,
-} from "@project-serum/anchor/dist/cjs/idl";
-import InstructionNamespaceFactory from "@project-serum/anchor/dist/cjs/program/namespace/instruction";
+} from "@project-serum/anchor/dist/esm/idl.js";
+import { default as InstructionNamespaceFactory } from "@project-serum/anchor/dist/esm/program/namespace/instruction.js";
 import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
 import type { GetProgramAccountsFilter, PublicKey } from "@solana/web3.js";
 import { TransactionInstruction } from "@solana/web3.js";
 import mapValues from "lodash.mapvalues";
 
-import type { ErrorMap } from "../errors";
-import { generateErrorMap } from "../errors";
-import type { AccountParsers } from "../generateAccountParsers";
-import { generateAccountParsersFromCoder } from "../generateAccountParsers";
-import type { AnchorAccount, AnchorAccountMap } from "./accounts";
-import { generateAnchorAccounts } from "./accounts";
-import { newProgram } from "./programs";
+import type { ErrorMap } from "../errors.js";
+import { generateErrorMap } from "../errors.js";
+import type { AccountParsers } from "../generateAccountParsers.js";
+import { generateAccountParsersFromCoder } from "../generateAccountParsers.js";
+import type { AnchorAccount, AnchorAccountMap } from "./accounts.js";
+import { generateAnchorAccounts } from "./accounts.js";
+import { newProgram } from "./programs.js";
 
 /**
  * Formatted instruction with its name.

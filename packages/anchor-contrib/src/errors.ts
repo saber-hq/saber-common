@@ -1,7 +1,7 @@
 import type { Idl } from "@project-serum/anchor";
-import type { IdlErrorCode } from "@project-serum/anchor/dist/esm/idl";
+import type { IdlErrorCode } from "@project-serum/anchor/dist/esm/idl.js";
 
-import type { AnchorError } from ".";
+import type { AnchorError } from "./index.js";
 
 export type ErrorMap<T extends Idl> = {
   [K in AnchorError<T>["name"]]: AnchorError<T> & { name: K };

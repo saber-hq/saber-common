@@ -2160,7 +2160,8 @@ __metadata:
   resolution: "@saberhq/anchor-contrib@workspace:packages/anchor-contrib"
   dependencies:
     "@project-serum/anchor": ^0.24.2
-    "@saberhq/solana-contrib": ^1.13.19
+    "@saberhq/solana-contrib": "workspace:^"
+    "@saberhq/tsconfig": "workspace:^"
     "@solana/web3.js": ^1.43.2
     "@types/lodash.camelcase": ^4.3.7
     "@types/lodash.mapvalues": ^4.6.7
@@ -2295,7 +2296,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/solana-contrib@^1.13.19, @saberhq/solana-contrib@workspace:packages/solana-contrib":
+"@saberhq/solana-contrib@^1.13.19, @saberhq/solana-contrib@workspace:^, @saberhq/solana-contrib@workspace:packages/solana-contrib":
   version: 0.0.0-use.local
   resolution: "@saberhq/solana-contrib@workspace:packages/solana-contrib"
   dependencies:
@@ -2367,7 +2368,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/tsconfig@^1.13.19, @saberhq/tsconfig@workspace:*, @saberhq/tsconfig@workspace:packages/tsconfig":
+"@saberhq/tsconfig@^1.13.19, @saberhq/tsconfig@workspace:*, @saberhq/tsconfig@workspace:^, @saberhq/tsconfig@workspace:packages/tsconfig":
   version: 0.0.0-use.local
   resolution: "@saberhq/tsconfig@workspace:packages/tsconfig"
   languageName: unknown

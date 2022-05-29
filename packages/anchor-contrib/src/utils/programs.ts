@@ -7,7 +7,7 @@ import type {
 import type { PublicKey } from "@solana/web3.js";
 import mapValues from "lodash.mapvalues";
 
-import { makeAnchorProvider } from "./provider";
+import { makeAnchorProvider } from "./provider.js";
 
 /**
  * Builds a program from its IDL.

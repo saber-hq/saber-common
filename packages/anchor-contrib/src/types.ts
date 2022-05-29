@@ -18,7 +18,7 @@ import type {
   IdlType,
   IdlTypeDef,
   IdlTypeDefTyStruct,
-} from "@project-serum/anchor/dist/esm/idl";
+} from "@project-serum/anchor/dist/esm/idl.js";
 import type {
   AccountMeta,
   PublicKey,
