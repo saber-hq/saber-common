@@ -2191,6 +2191,7 @@ __metadata:
     "@saberhq/anchor-contrib": ^1.13.17
     "@saberhq/solana-contrib": ^1.13.17
     "@saberhq/token-utils": ^1.13.17
+    "@saberhq/tsconfig": "workspace:*"
     "@solana/web3.js": ^1.43.2
     "@types/chai": ^4.3.1
     "@types/chai-as-promised": ^7.1.5
