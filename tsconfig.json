@@ -3,5 +3,6 @@
   "compilerOptions": {
     "jsxImportSource": "react",
     "types": ["jest"]
-  }
+  },
+  "exclude": ["packages/solana-wallet-adapters"]
 }

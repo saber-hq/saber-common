@@ -14,7 +14,6 @@
     "preserveConstEnums": true,
     "skipLibCheck": true,
     "importHelpers": true,
-    "noEmit": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
 

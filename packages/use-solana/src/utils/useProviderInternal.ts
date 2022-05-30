@@ -7,11 +7,14 @@ import {
   SolanaAugmentedProvider,
   SolanaReadonlyProvider,
 } from "@saberhq/solana-contrib";
+import type {
+  ConnectedWallet,
+  WalletAdapter,
+} from "@saberhq/use-solana-adapters";
 import type { Commitment, ConfirmOptions, Connection } from "@solana/web3.js";
 import { useMemo } from "react";
 
-import type { ConnectedWallet, WalletAdapter } from "../adapters/types";
-import { WalletAdapterProvider } from "./provider";
+import { WalletAdapterProvider } from "./provider.js";
 
 /**
  * Wallet-related information.

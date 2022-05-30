@@ -1,4 +1,4 @@
-import type { WalletProviderInfo, WalletTypeEnum } from ".";
+import type { WalletProviderInfo, WalletTypeEnum } from "./index.js";
 
 export enum ErrorLevel {
   WARN = "warn",

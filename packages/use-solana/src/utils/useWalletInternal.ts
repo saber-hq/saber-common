@@ -1,23 +1,24 @@
 import type { Network } from "@saberhq/solana-contrib";
+import type {
+  ConnectedWallet,
+  WalletAdapter,
+  WalletProviderInfo,
+  WalletProviderMap,
+  WalletTypeEnum,
+} from "@saberhq/use-solana-adapters";
+import { WrappedWalletAdapter } from "@saberhq/use-solana-adapters";
 import type { PublicKey } from "@solana/web3.js";
 import stringify from "fast-json-stable-stringify";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import type { ConnectedWallet, WalletAdapter } from "../adapters/types";
-import { WrappedWalletAdapter } from "../adapters/types";
-import type { UseSolanaError } from "../error";
+import type { UseSolanaError } from "../error.js";
 import {
   WalletActivateError,
   WalletAutomaticConnectionError,
   WalletDisconnectError,
-} from "../error";
-import type {
-  WalletProviderInfo,
-  WalletProviderMap,
-  WalletTypeEnum,
-} from "../providers";
-import type { StorageAdapter } from "../storage";
-import { usePersistedKVStore } from "./usePersistedKVStore";
+} from "../error.js";
+import type { StorageAdapter } from "../storage.js";
+import { usePersistedKVStore } from "./usePersistedKVStore.js";
 
 /**
  * Wallet-related information.
