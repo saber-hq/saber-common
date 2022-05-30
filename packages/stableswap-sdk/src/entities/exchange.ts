@@ -8,14 +8,14 @@ import {
 } from "@saberhq/token-utils";
 import type { Connection, PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
-import type JSBI from "jsbi";
-import invariant from "tiny-invariant";
+import type { default as JSBI } from "jsbi";
+import { default as invariant } from "tiny-invariant";
 
-import { SWAP_PROGRAM_ID } from "../constants";
-import { StableSwap } from "../stable-swap";
-import type { StableSwapState } from "../state";
-import type { Fees } from "../state/fees";
-import { loadProgramAccount } from "../util/account";
+import { SWAP_PROGRAM_ID } from "../constants.js";
+import { StableSwap } from "../stable-swap.js";
+import type { Fees } from "../state/fees.js";
+import type { StableSwapState } from "../state/index.js";
+import { loadProgramAccount } from "../util/account.js";
 
 /**
  * Reserve information.

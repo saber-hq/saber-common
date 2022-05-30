@@ -1,8 +1,7 @@
 {
-  "extends": "./tsconfig.esm.json",
+  "extends": "@saberhq/tsconfig/tsconfig.module.build.json",
   "compilerOptions": {
-    "outDir": "dist/cjs/",
-    "module": "CommonJS"
+    "outDir": "dist/esm/"
   },
   "include": ["src/"]
 }

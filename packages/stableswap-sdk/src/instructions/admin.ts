@@ -2,9 +2,11 @@ import type { u64 } from "@saberhq/token-utils";
 import * as BufferLayout from "@solana/buffer-layout";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
 
-import type { StableSwapState } from "../state";
-import type { Fees } from "../state/fees";
-import { encodeFees, ZERO_FEES } from "../state/fees";
+import type { Fees } from "../state/fees.js";
+import { encodeFees, ZERO_FEES } from "../state/fees.js";
+import type { StableSwapState } from "../state/index.js";
+import type { StableSwapConfig } from "./common.js";
+import { buildInstruction } from "./common.js";
 import {
   ApplyNewAdminIXLayout,
   PauseIXLayout,
@@ -13,9 +15,7 @@ import {
   SetNewFeesIXLayout,
   StopRampAIXLayout,
   UnpauseIXLayout,
-} from ".";
-import type { StableSwapConfig } from "./common";
-import { buildInstruction } from "./common";
+} from "./layouts.js";
 
 /**
  * Admin instruction.

@@ -1,5 +1,5 @@
 {
-  "extends": "@saberhq/tsconfig/tsconfig.next.build.json",
+  "extends": "@saberhq/tsconfig/tsconfig.module.build.json",
   "compilerOptions": {
     "outDir": "dist/esm/",
     "lib": ["ES2021.Promise", "ES2019"]

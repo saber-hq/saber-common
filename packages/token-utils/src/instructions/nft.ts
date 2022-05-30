@@ -2,7 +2,8 @@ import type { Provider, TransactionEnvelope } from "@saberhq/solana-contrib";
 import { Token as SPLToken, TOKEN_PROGRAM_ID, u64 } from "@solana/spl-token";
 import type { PublicKey, Signer } from "@solana/web3.js";
 
-import { createInitMintInstructions, getOrCreateATA } from ".";
+import { getOrCreateATA } from "./ata.js";
+import { createInitMintInstructions } from "./mint.js";
 
 export const mintNFT = async (
   provider: Provider,

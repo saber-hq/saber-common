@@ -2325,8 +2325,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/stableswap-sdk@workspace:packages/stableswap-sdk"
   dependencies:
-    "@saberhq/solana-contrib": ^1.13.20
-    "@saberhq/token-utils": ^1.13.20
+    "@saberhq/solana-contrib": "workspace:^"
+    "@saberhq/token-utils": "workspace:^"
     "@saberhq/tsconfig": "workspace:*"
     "@solana/buffer-layout": ^4.0.0
     "@solana/web3.js": ^1.43.2
@@ -2346,12 +2346,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/token-utils@^1.13.20, @saberhq/token-utils@workspace:packages/token-utils":
+"@saberhq/token-utils@^1.13.20, @saberhq/token-utils@workspace:^, @saberhq/token-utils@workspace:packages/token-utils":
   version: 0.0.0-use.local
   resolution: "@saberhq/token-utils@workspace:packages/token-utils"
   dependencies:
-    "@saberhq/solana-contrib": ^1.13.20
-    "@saberhq/tsconfig": ^1.13.20
+    "@saberhq/solana-contrib": "workspace:^"
+    "@saberhq/tsconfig": "workspace:^"
     "@solana/buffer-layout": ^4.0.0
     "@solana/spl-token": ^0.1.8
     "@solana/web3.js": ^1.43.2
@@ -2368,7 +2368,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/tsconfig@^1.13.20, @saberhq/tsconfig@workspace:*, @saberhq/tsconfig@workspace:^, @saberhq/tsconfig@workspace:packages/tsconfig":
+"@saberhq/tsconfig@workspace:*, @saberhq/tsconfig@workspace:^, @saberhq/tsconfig@workspace:packages/tsconfig":
   version: 0.0.0-use.local
   resolution: "@saberhq/tsconfig@workspace:packages/tsconfig"
   languageName: unknown
@@ -2380,7 +2380,7 @@ __metadata:
   dependencies:
     "@ledgerhq/hw-transport": ^6.27.1
     "@ledgerhq/hw-transport-webusb": ^6.27.1
-    "@saberhq/solana-contrib": ^1.13.20
+    "@saberhq/solana-contrib": "workspace:^"
     "@saberhq/tsconfig": "workspace:*"
     "@solana/wallet-adapter-base": ^0.9.5
     "@solana/wallet-adapter-clover": ^0.4.4

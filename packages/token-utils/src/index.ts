@@ -1,13 +1,13 @@
-export * from "./ata";
-export * from "./instructions";
-export * from "./layout";
-export * from "./price";
-export * from "./splTokenRegistry";
-export * from "./token";
-export * from "./tokenAmount";
-export * from "./tokenList";
-export * from "./tokenOwner";
-export * from "./tokenProvider";
+export * from "./ata.js";
+export * from "./instructions/index.js";
+export * from "./layout.js";
+export * from "./price.js";
+export * from "./splTokenRegistry.js";
+export * from "./token.js";
+export * from "./tokenAmount.js";
+export * from "./tokenList.js";
+export * from "./tokenOwner.js";
+export * from "./tokenProvider.js";
 
 // re-export token-math types
 // so consumers don't need to use them
@@ -28,8 +28,10 @@ export {
   ZERO,
 } from "@ubeswap/token-math";
 
+// serum common
+export * from "./common.js";
+
 // re-export SPL token types
-export * from "./common";
 export type {
   AuthorityType,
   MintInfo as MintData,

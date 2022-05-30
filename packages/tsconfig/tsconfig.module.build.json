@@ -1,5 +1,5 @@
 {
-  "extends": "./tsconfig.next.json",
+  "extends": "./tsconfig.module.json",
   "display": "Saber NodeNext Build TSConfig (recommended)",
   "compilerOptions": {
     "noEmit": false

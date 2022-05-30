@@ -14,10 +14,15 @@ import {
 } from "@solana/web3.js";
 import type BN from "bn.js";
 
-import { deserializeAccount, deserializeMint, MintLayout, Token } from ".";
-import type { TokenAccountData } from "./layout";
+import {
+  deserializeAccount,
+  deserializeMint,
+  MintLayout,
+  Token,
+} from "./index.js";
+import type { TokenAccountData } from "./layout.js";
 
-export * as token from "./token";
+export * as token from "./token.js";
 export type { ProgramAccount } from "@saberhq/solana-contrib";
 
 /**

@@ -4,7 +4,7 @@ import { Token as SPLToken, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import type { PublicKey, Signer } from "@solana/web3.js";
 import { Keypair, SystemProgram } from "@solana/web3.js";
 
-import { TokenAccountLayout } from "../layout";
+import { TokenAccountLayout } from "../layout.js";
 
 export const createTokenAccount = async ({
   provider,

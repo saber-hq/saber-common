@@ -2,19 +2,19 @@ import type { BigintIsh } from "@saberhq/token-utils";
 import { Percent, Token as SToken, TokenAmount } from "@saberhq/token-utils";
 import { PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
-import JSBI from "jsbi";
+import { default as JSBI } from "jsbi";
 import mapValues from "lodash.mapvalues";
 
-import { SWAP_PROGRAM_ID } from "../constants";
-import type { IExchangeInfo } from "../entities/exchange";
-import { RECOMMENDED_FEES, ZERO_FEES } from "../state/fees";
+import { SWAP_PROGRAM_ID } from "../constants.js";
+import type { IExchangeInfo } from "../entities/exchange.js";
+import { RECOMMENDED_FEES, ZERO_FEES } from "../state/fees.js";
 import {
   calculateEstimatedMintAmount,
   calculateEstimatedSwapOutputAmount,
   calculateEstimatedWithdrawAmount,
   calculateEstimatedWithdrawOneAmount,
   calculateVirtualPrice,
-} from "./amounts";
+} from "./amounts.js";
 
 const exchange = {
   swapAccount: new PublicKey("YAkoNb6HKmSxQN9L8hiBE5tPJRsniSSMzND1boHmZxe"),
