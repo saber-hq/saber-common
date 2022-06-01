@@ -23,20 +23,31 @@ jobs:
 
   typecheck:
     runs-on: ubuntu-latest
-    needs: build
     steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/yarn
+        with:
+          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: yarn build
       - run: yarn typecheck
 
   test:
     runs-on: ubuntu-latest
-    needs: build
     steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/yarn
+        with:
+          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: yarn build
       - run: yarn test
 
   lint:
     runs-on: ubuntu-latest
-    needs: build
     steps:
+      - uses: ./.github/actions/yarn
+        with:
+          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: yarn build
       - run: yarn lint:ci
 
   doctor:

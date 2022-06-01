@@ -8,8 +8,8 @@
   ],
   "lint-staged": {
     "*.nix": "nixpkgs-fmt",
-    "*.{ts,tsx}": "eslint --cache --fix",
-    "*.{md,js,json,yml,yaml,css,md}": "prettier --write"
+    "*.{ts,tsx,mts,cts}": "eslint --cache --fix",
+    "*.{md,js,jsx,json,yml,yaml,css,md}": "prettier --write"
   },
   "devDependencies": {
     "@babel/core": "^7.18.2",
