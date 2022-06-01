@@ -12,6 +12,7 @@ module.exports = {
     jest: true,
   },
   ignorePatterns: ["*.js", "*.cjs"],
+  settings: { react: { version: "18" } },
   extends: ["@saberhq/eslint-config-react"],
   parserOptions: {
     project: "tsconfig.json",
