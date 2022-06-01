@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/eslint-config-react",
-  "version": "1.13.22",
+  "version": "1.13.23",
   "description": "Saber base React ESLint config",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/eslint-config-react#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
