@@ -13,7 +13,6 @@
     "clean": "rm -fr dist/",
     "prepublishOnly": "npm run build"
   },
-  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/esm/index.js",
