@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/stableswap-sdk",
-  "version": "1.13.21",
+  "version": "1.13.22",
   "description": "Solana SDK for Saber's StableSwap program.",
   "homepage": "https://github.com/saber-hq/saber-common/packages/stableswap-sdk#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",

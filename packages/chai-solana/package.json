@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/chai-solana",
-  "version": "1.13.21",
+  "version": "1.13.22",
   "description": "Solana Chai helpers",
   "homepage": "https://github.com/saber-hq/saber-common/packages/chai-solana#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
