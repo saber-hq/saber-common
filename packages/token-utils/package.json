@@ -14,31 +14,31 @@
       "require": "./dist/cjs/index.js"
     }
   },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "keywords": [
     "solana",
     "saber"
   ],
   "scripts": {
-    "build": "tsc && tsc -P tsconfig.esm.json",
+    "build": "tsc && tsc -P tsconfig.cjs.json",
     "clean": "rm -fr dist/",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@saberhq/solana-contrib": "^1.13.21",
+    "@saberhq/solana-contrib": "workspace:^",
     "@solana/buffer-layout": "^4.0.0",
     "@solana/spl-token": "^0.1.8",
     "@ubeswap/token-math": "^5.1.0",
     "tiny-invariant": "^1.2.0",
     "tslib": "^2.4.0"
   },
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
   "files": [
     "dist/",
     "src/"
   ],
   "devDependencies": {
-    "@saberhq/tsconfig": "^1.13.21",
+    "@saberhq/tsconfig": "workspace:^",
     "@solana/web3.js": "^1.43.2",
     "@types/bn.js": "^5.1.0",
     "jsbi": "^4.3.0",

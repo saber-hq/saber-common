@@ -4,8 +4,8 @@ import { NATIVE_MINT } from "@solana/spl-token";
 import type { Connection } from "@solana/web3.js";
 import type { Token as UToken } from "@ubeswap/token-math";
 
-import { deserializeMint } from "./layout";
-import type { TokenInfo } from "./tokenList";
+import { deserializeMint } from "./layout.js";
+import type { TokenInfo } from "./tokenList.js";
 
 /**
  * Magic value representing the raw, underlying Solana native asset.

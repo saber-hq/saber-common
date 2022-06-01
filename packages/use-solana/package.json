@@ -19,7 +19,7 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "workspace:*",
+    "@saberhq/tsconfig": "workspace:^",
     "@solana/web3.js": "^1.43.2",
     "@types/bn.js": "^5.1.0",
     "@types/node": "^17.0.36",
@@ -31,7 +31,7 @@
   "dependencies": {
     "@ledgerhq/hw-transport": "^6.27.1",
     "@ledgerhq/hw-transport-webusb": "^6.27.1",
-    "@saberhq/solana-contrib": "^1.13.21",
+    "@saberhq/solana-contrib": "workspace:^",
     "@solana/wallet-adapter-base": "^0.9.5",
     "@solana/wallet-adapter-clover": "^0.4.4",
     "@solana/wallet-adapter-coin98": "^0.5.4",

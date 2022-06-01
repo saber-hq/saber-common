@@ -7,7 +7,7 @@ import {
 import type { TransactionInstruction } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
 
-import { getATAAddress } from "../ata";
+import { getATAAddress } from "../ata.js";
 
 type GetOrCreateATAResult = {
   /**

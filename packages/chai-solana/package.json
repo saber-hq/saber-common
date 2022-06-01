@@ -25,9 +25,9 @@
     "src/"
   ],
   "dependencies": {
-    "@saberhq/anchor-contrib": "^1.13.21",
-    "@saberhq/solana-contrib": "^1.13.21",
-    "@saberhq/token-utils": "^1.13.21",
+    "@saberhq/anchor-contrib": "workspace:^",
+    "@saberhq/solana-contrib": "workspace:^",
+    "@saberhq/token-utils": "workspace:^",
     "@types/chai": "^4.3.1",
     "@types/chai-as-promised": "^7.1.5",
     "@types/promise-retry": "^1.1.3",
