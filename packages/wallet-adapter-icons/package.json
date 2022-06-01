@@ -2,7 +2,7 @@
   "name": "@saberhq/wallet-adapter-icons",
   "version": "1.13.20",
   "description": "Solana wallet adapter icons.",
-  "homepage": "https://github.com/saber-hq/saber-common/packages/solana-wallet-adapters#readme",
+  "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/solana-wallet-adapters#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
   "bugs": "https://github.com/saber-hq/saber-common/issues",
   "funding": "https://www.coingecko.com/en/coins/saber",

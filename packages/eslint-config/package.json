@@ -2,7 +2,7 @@
   "name": "@saberhq/eslint-config",
   "version": "1.13.22",
   "description": "Saber base ESLint config",
-  "homepage": "https://github.com/saber-hq/saber-common/packages/eslint-config#readme",
+  "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/eslint-config#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
   "bugs": "https://github.com/saber-hq/saber-common/issues",
   "author": "Saber Team <team@saber.so>",
