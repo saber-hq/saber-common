@@ -2430,7 +2430,7 @@ __metadata:
   resolution: "@saberhq/wallet-adapter-icons@workspace:packages/wallet-adapter-icons"
   dependencies:
     "@saberhq/tsconfig": "workspace:^"
-    "@types/react": ^18.0.9
+    "@types/react": ^18.0.10
     react: ^18.1.0
     tslib: ^2.4.0
     typescript: ^4.7.2
@@ -3238,7 +3238,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.0.10, @types/react@npm:^18.0.9":
+"@types/react@npm:^18.0.10":
   version: 18.0.10
   resolution: "@types/react@npm:18.0.10"
   dependencies:
