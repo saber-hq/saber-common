@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/anchor-contrib",
-  "version": "1.13.20",
+  "version": "1.13.21",
   "description": "TypeScript client for Anchor programs.",
   "homepage": "https://github.com/saber-hq/saber-common/packages/anchor-contrib#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
