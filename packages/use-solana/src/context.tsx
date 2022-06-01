@@ -18,7 +18,7 @@ import type {
   ConnectionContext,
 } from "./utils/useConnectionInternal";
 import { useConnectionInternal } from "./utils/useConnectionInternal";
-import type { UseProvider } from "./utils/useProviderInternal";
+import type { UseProvider, UseProviderArgs } from "./utils/useProviderInternal";
 import { useProviderInternal } from "./utils/useProviderInternal";
 import type { UseWallet, UseWalletArgs } from "./utils/useWalletInternal";
 import { useWalletInternal } from "./utils/useWalletInternal";
@@ -38,7 +38,8 @@ export interface UseSolanaArgs<
         UseWalletArgs<WalletType>,
         "onConnect" | "onDisconnect" | "storageAdapter" | "walletProviders"
       >
-    > {
+    >,
+    Pick<UseProviderArgs, "broadcastConnections" | "confirmOptions"> {
   /**
    * Called when an error is thrown.
    */
@@ -79,6 +80,11 @@ const useSolanaInternal = <WalletType extends WalletTypeEnum<WalletType>>({
   onError = defaultOnError,
   storageAdapter = LOCAL_STORAGE_ADAPTER,
   walletProviders = DEFAULT_WALLET_PROVIDERS as unknown as WalletProviderMap<WalletType>,
+
+  // useProvider args
+  broadcastConnections,
+  confirmOptions,
+
   ...connectionArgs
 }: UseSolanaArgs<WalletType> = {}): UseSolana<WalletType> => {
   const connectionCtx = useConnectionInternal({
@@ -98,6 +104,11 @@ const useSolanaInternal = <WalletType extends WalletTypeEnum<WalletType>>({
   const providerCtx = useProviderInternal({
     connection: connectionCtx.connection,
     wallet: walletCtx.wallet,
+    sendConnection: connectionCtx.sendConnection,
+    commitment: connectionArgs.commitment,
+
+    broadcastConnections,
+    confirmOptions,
   });
 
   return {
