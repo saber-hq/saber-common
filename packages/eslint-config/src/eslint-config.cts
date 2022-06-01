@@ -1,6 +1,6 @@
-"use strict";
+import type { Linter } from "eslint";
 
-module.exports = {
+const config: Linter.Config = {
   root: true,
   ignorePatterns: ["dist/", "*.js"],
   parser: "@typescript-eslint/parser",
@@ -49,3 +49,5 @@ module.exports = {
     ],
   },
 };
+
+module.exports = config;

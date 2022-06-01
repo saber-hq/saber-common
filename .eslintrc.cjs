@@ -1,14 +1,17 @@
+// @ts-check
+
 "use strict";
 
 require("@rushstack/eslint-patch/modern-module-resolution");
 
+/** @type import('eslint').Linter.Config */
 module.exports = {
   env: {
     browser: true,
     node: true,
     jest: true,
   },
-  ignorePatterns: ["*.js"],
+  ignorePatterns: ["*.js", "*.cjs"],
   extends: ["@saberhq/eslint-config-react"],
   parserOptions: {
     project: "tsconfig.json",
