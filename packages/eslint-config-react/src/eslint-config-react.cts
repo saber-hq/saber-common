@@ -1,6 +1,6 @@
-"use strict";
+import type { Linter } from "eslint";
 
-module.exports = {
+const config: Linter.Config = {
   env: {
     browser: true,
   },
@@ -16,3 +16,5 @@ module.exports = {
     "react/no-unescaped-entities": "off",
   },
 };
+
+module.exports = config;
