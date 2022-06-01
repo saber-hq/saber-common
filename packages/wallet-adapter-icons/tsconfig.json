@@ -1,0 +1,10 @@
+{
+  "extends": "@saberhq/tsconfig/tsconfig.module.react.json",
+  "compilerOptions": {
+    "jsxImportSource": "react",
+    "outDir": "dist/esm/",
+    "skipLibCheck": false,
+    "types": []
+  },
+  "include": ["src/"]
+}

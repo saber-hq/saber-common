@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.lib.json",
-  "display": "Saber NodeNext TSConfig (recommended)",
+  "display": "Saber Node16 TSConfig (recommended)",
   "compilerOptions": {
     "moduleResolution": "node16"
   }

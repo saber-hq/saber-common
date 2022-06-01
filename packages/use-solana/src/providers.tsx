@@ -1,3 +1,18 @@
+import {
+  CLOVER,
+  COIN98,
+  EXODUS,
+  FILE,
+  GLOW,
+  HUOBI,
+  LEDGER,
+  MAGNIFYING_GLASS,
+  MATHWALLET,
+  PHANTOM,
+  SLOPE,
+  SOLFLARE,
+  SOLLET,
+} from "@saberhq/wallet-adapter-icons";
 import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { CloverWalletAdapter } from "@solana/wallet-adapter-clover";
 import { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
@@ -20,21 +35,6 @@ import { LedgerWalletAdapter, SolanaWalletAdapter } from "./adapters";
 import { ReadonlyAdapter } from "./adapters/readonly";
 import { SecretKeyAdapter } from "./adapters/secret-key";
 import { SolflareAdapter } from "./adapters/solflare";
-import {
-  CLOVER,
-  COIN98,
-  EXODUS,
-  FILE,
-  GLOW,
-  HUOBI,
-  LEDGER,
-  MAGNIFYING_GLASS,
-  MATHWALLET,
-  PHANTOM,
-  SLOPE,
-  SOLFLARE,
-  SOLLET,
-} from "./icons";
 
 export enum DefaultWalletType {
   Clover = "Clover",

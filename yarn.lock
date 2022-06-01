@@ -2393,6 +2393,7 @@ __metadata:
     "@ledgerhq/hw-transport-webusb": ^6.27.1
     "@saberhq/solana-contrib": "workspace:^"
     "@saberhq/tsconfig": "workspace:^"
+    "@saberhq/wallet-adapter-icons": "workspace:^"
     "@solana/wallet-adapter-base": ^0.9.5
     "@solana/wallet-adapter-clover": ^0.4.4
     "@solana/wallet-adapter-coin98": ^0.5.4
@@ -2420,6 +2421,20 @@ __metadata:
   peerDependencies:
     "@solana/web3.js": ^1.42
     bn.js: ^4 || ^5
+    react: ^17.0.2 || ^18
+  languageName: unknown
+  linkType: soft
+
+"@saberhq/wallet-adapter-icons@workspace:^, @saberhq/wallet-adapter-icons@workspace:packages/wallet-adapter-icons":
+  version: 0.0.0-use.local
+  resolution: "@saberhq/wallet-adapter-icons@workspace:packages/wallet-adapter-icons"
+  dependencies:
+    "@saberhq/tsconfig": "workspace:^"
+    "@types/react": ^18.0.9
+    react: ^18.1.0
+    tslib: ^2.4.0
+    typescript: ^4.7.2
+  peerDependencies:
     react: ^17.0.2 || ^18
   languageName: unknown
   linkType: soft

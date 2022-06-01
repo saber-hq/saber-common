@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.react.json",
+  "display": "Saber Node16 React TSConfig (recommended)",
+  "compilerOptions": {
+    "moduleResolution": "node16"
+  }
+}
