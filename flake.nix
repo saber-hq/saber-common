@@ -14,7 +14,7 @@
         rec {
           packages.ci = pkgs.buildEnv {
             name = "ci";
-            paths = with pkgs; [ nodejs yarn nixpkgs-fmt ];
+            paths = with pkgs; [ nodejs yarn nixpkgs-fmt bash ];
           };
           devShell = pkgs.mkShell { buildInputs = [ packages.ci ]; };
         });
