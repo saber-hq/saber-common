@@ -8,7 +8,7 @@ on:
 
 defaults:
   run:
-    shell: nix shell .#env-anchor-idls --command bash {0}
+    shell: nix shell .#ci --command bash {0}
 
 jobs:
   build:
