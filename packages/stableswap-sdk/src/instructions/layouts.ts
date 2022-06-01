@@ -1,10 +1,10 @@
 import { Uint64Layout } from "@saberhq/token-utils";
 import * as BufferLayout from "@solana/buffer-layout";
 
-import type { RawFees } from "../state/layout";
-import { FeesLayout } from "../state/layout";
-import type { AdminInstruction } from ".";
-import type { StableSwapInstruction } from "./swap";
+import type { RawFees } from "../state/layout.js";
+import { FeesLayout } from "../state/layout.js";
+import type { AdminInstruction } from "./admin.js";
+import type { StableSwapInstruction } from "./swap.js";
 
 export const InitializeSwapIXLayout = BufferLayout.struct<{
   instruction: StableSwapInstruction.INITIALIZE;

@@ -1,7 +1,7 @@
 import type { BigintIsh } from "@saberhq/token-utils";
-import JSBI from "jsbi";
+import { default as JSBI } from "jsbi";
 
-import { computeD, computeY } from "./curve";
+import { computeD, computeY } from "./curve.js";
 
 const assertBN = (actual: BigintIsh, expected: BigintIsh) => {
   expect(actual.toString()).toEqual(expected.toString());

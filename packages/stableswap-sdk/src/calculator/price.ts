@@ -1,8 +1,8 @@
 import { Price, TokenAmount } from "@saberhq/token-utils";
 import BN from "bn.js";
 
-import type { IExchangeInfo } from "..";
-import { calculateEstimatedSwapOutputAmount } from "..";
+import type { IExchangeInfo } from "../index.js";
+import { calculateEstimatedSwapOutputAmount } from "../index.js";
 
 /**
  * Gets the price of the second token in the swap, i.e. "Token 1", with respect to "Token 0".
