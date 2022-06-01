@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [master]
 
+defaults:
+  run:
+    shell: nix shell .#env-anchor-idls --command bash {0}
+
 jobs:
   build:
     runs-on: ubuntu-latest
