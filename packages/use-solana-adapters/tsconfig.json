@@ -3,5 +3,5 @@
   "compilerOptions": {
     "outDir": "dist/esm/"
   },
-  "include": ["src/", "../solana-wallet-adapters/src/adapters/solflare.ts"]
+  "include": ["src/"]
 }
