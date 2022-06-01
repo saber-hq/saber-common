@@ -1,13 +1,13 @@
 import { u64 } from "@saberhq/token-utils";
 import { PublicKey } from "@solana/web3.js";
 
-import type { SwapTokenInfo } from "../instructions/swap";
-import type { Fees } from "./fees";
-import { decodeFees } from "./fees";
-import { StableSwapLayout } from "./layout";
+import type { SwapTokenInfo } from "../instructions/swap.js";
+import type { Fees } from "./fees.js";
+import { decodeFees } from "./fees.js";
+import { StableSwapLayout } from "./layout.js";
 
-export * from "./fees";
-export * from "./layout";
+export * from "./fees.js";
+export * from "./layout.js";
 
 /**
  * State of a StableSwap, read from the swap account.

@@ -1,3 +1,3 @@
-export * from "./amounts";
-export * from "./curve";
-export * from "./price";
+export * from "./amounts.js";
+export * from "./curve.js";
+export * from "./price.js";

@@ -4,14 +4,14 @@ import { TOKEN_PROGRAM_ID } from "@saberhq/token-utils";
 import type { Connection, TransactionInstruction } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
 
-import { SWAP_PROGRAM_ID } from "./constants";
-import type { IExchange } from "./entities/exchange";
-import type { StableSwapConfig } from "./instructions";
-import * as instructions from "./instructions";
-import type { StableSwapState } from "./state";
-import { decodeSwap } from "./state";
-import { StableSwapLayout } from "./state/layout";
-import { loadProgramAccount } from "./util/account";
+import { SWAP_PROGRAM_ID } from "./constants.js";
+import type { IExchange } from "./entities/exchange.js";
+import type { StableSwapConfig } from "./instructions/index.js";
+import * as instructions from "./instructions/index.js";
+import type { StableSwapState } from "./state/index.js";
+import { decodeSwap } from "./state/index.js";
+import { StableSwapLayout } from "./state/layout.js";
+import { loadProgramAccount } from "./util/account.js";
 
 export interface StableSwapInfo {
   config: StableSwapConfig;

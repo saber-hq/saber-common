@@ -4,5 +4,6 @@
     "noEmit": true,
     "jsxImportSource": "react",
     "types": ["jest"]
-  }
+  },
+  "include": ["packages/"]
 }

@@ -1,11 +1,11 @@
 import type { Token } from "@saberhq/token-utils";
 import { Fraction, ONE, TokenAmount, ZERO } from "@saberhq/token-utils";
-import JSBI from "jsbi";
+import { default as JSBI } from "jsbi";
 import mapValues from "lodash.mapvalues";
 
-import type { IExchangeInfo } from "../entities/exchange";
-import type { Fees } from "../state/fees";
-import { computeD, computeY } from "./curve";
+import type { IExchangeInfo } from "../entities/exchange.js";
+import type { Fees } from "../state/fees.js";
+import { computeD, computeY } from "./curve.js";
 
 /**
  * Calculates the current virtual price of the exchange.
