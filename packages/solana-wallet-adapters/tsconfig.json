@@ -1,0 +1,7 @@
+{
+  "extends": "@saberhq/tsconfig/tsconfig.lib.json",
+  "compilerOptions": {
+    "outDir": "dist/esm/"
+  },
+  "include": ["src/"]
+}

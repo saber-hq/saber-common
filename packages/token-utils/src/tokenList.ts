@@ -2,8 +2,8 @@ import type {
   SPLTokenExtensions,
   SPLTokenInfo,
   SPLTokenList,
-} from "./splTokenRegistry";
-import { Token } from "./token";
+} from "./splTokenRegistry.js";
+import { Token } from "./token.js";
 
 /**
  * Known origin chains.

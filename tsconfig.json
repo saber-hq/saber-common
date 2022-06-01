@@ -1,7 +1,8 @@
 {
-  "extends": "./packages/tsconfig/tsconfig.react.json",
+  "extends": "./packages/tsconfig/tsconfig.module.react.json",
   "compilerOptions": {
     "jsxImportSource": "react",
     "types": ["jest"]
-  }
+  },
+  "exclude": ["packages/solana-wallet-adapters"]
 }

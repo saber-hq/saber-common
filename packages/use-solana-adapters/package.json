@@ -1,0 +1,60 @@
+{
+  "name": "@saberhq/use-solana-adapters",
+  "version": "1.13.20",
+  "description": "use-solana wallet adapters.",
+  "homepage": "https://github.com/saber-hq/saber-common/packages/solana-wallet-adapters#readme",
+  "repository": "git+https://github.com/saber-hq/saber-common.git",
+  "bugs": "https://github.com/saber-hq/saber-common/issues",
+  "funding": "https://www.coingecko.com/en/coins/saber",
+  "author": "Saber Team <team@saber.so>",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "src/",
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "typescript",
+    "saber",
+    "solana",
+    "wallet"
+  ],
+  "scripts": {
+    "build": "tsc && tsc -P tsconfig.cjs.json",
+    "clean": "rm -fr dist/"
+  },
+  "dependencies": {
+    "@ledgerhq/hw-transport": "^6.27.1",
+    "@ledgerhq/hw-transport-webusb": "^6.27.1",
+    "@saberhq/solana-contrib": "workspace:^",
+    "@saberhq/solana-wallet-adapters": "workspace:^",
+    "@saberhq/wallet-adapter-icons": "workspace:^",
+    "eventemitter3": "^4.0.7",
+    "tiny-invariant": "^1.2.0",
+    "tslib": "^2.4.0"
+  },
+  "peerDependencies": {
+    "@solana/web3.js": "^1.43.2",
+    "bn.js": "^5.2.0",
+    "react": "^17 || ^18"
+  },
+  "devDependencies": {
+    "@saberhq/tsconfig": "workspace:^",
+    "@solana/web3.js": "^1.43.2",
+    "@types/react": "^18.0.9",
+    "bn.js": "^5.2.1",
+    "react": "^18.1.0",
+    "typescript": "^4.7.2"
+  }
+}

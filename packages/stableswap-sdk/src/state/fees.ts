@@ -1,6 +1,6 @@
 import { Percent, u64 } from "@saberhq/token-utils";
 
-import type { RawFees } from "./layout";
+import type { RawFees } from "./layout.js";
 
 export type Fees = {
   trade: Percent;

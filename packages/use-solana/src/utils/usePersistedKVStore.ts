@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import type { StorageAdapter } from "../storage";
+import type { StorageAdapter } from "../storage.js";
 
 export function usePersistedKVStore<T>(
   key: string,

@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "display": "Saber NodeNext TSConfig (recommended)",
+  "compilerOptions": {
+    "moduleResolution": "node16"
+  }
+}

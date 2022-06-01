@@ -1,4 +1,4 @@
-export * from "./admin";
-export type { StableSwapConfig } from "./common";
-export * from "./layouts";
-export * from "./swap";
+export * from "./admin.js";
+export type { StableSwapConfig } from "./common.js";
+export * from "./layouts.js";
+export * from "./swap.js";

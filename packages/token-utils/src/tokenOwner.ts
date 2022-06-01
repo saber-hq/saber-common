@@ -7,8 +7,8 @@ import {
   getATAAddressSync,
   SPLToken,
   TOKEN_PROGRAM_ID,
-} from ".";
-import type { TokenAmount } from "./tokenAmount";
+} from "./index.js";
+import type { TokenAmount } from "./tokenAmount.js";
 
 /**
  * Wrapper around a token account owner to create token instructions.

@@ -1,7 +1,7 @@
 import React from "react";
 
-export * from "./coin98";
-export * from "./mathwallet";
+export * from "./coin98.js";
+export * from "./mathwallet.js";
 
 export const LEDGER: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg

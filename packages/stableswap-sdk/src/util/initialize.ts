@@ -15,20 +15,20 @@ import type {
 } from "@solana/web3.js";
 import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 
-import { SWAP_PROGRAM_ID, ZERO_TS } from "../constants";
+import { SWAP_PROGRAM_ID, ZERO_TS } from "../constants.js";
 import type {
   InitializeSwapInstruction,
   SwapTokenInfo,
-} from "../instructions/swap";
-import { initializeSwapInstruction as createInitializeStableSwapInstruction } from "../instructions/swap";
-import { findSwapAuthorityKey, StableSwap } from "../stable-swap";
-import { ZERO_FEES } from "../state/fees";
-import { StableSwapLayout } from "../state/layout";
-import type { TransactionInstructions } from "./instructions";
+} from "../instructions/swap.js";
+import { initializeSwapInstruction as createInitializeStableSwapInstruction } from "../instructions/swap.js";
+import { findSwapAuthorityKey, StableSwap } from "../stable-swap.js";
+import { ZERO_FEES } from "../state/fees.js";
+import { StableSwapLayout } from "../state/layout.js";
+import type { TransactionInstructions } from "./instructions.js";
 import {
   createMutableTransactionInstructions,
   mergeInstructions,
-} from "./instructions";
+} from "./instructions.js";
 
 export type ISeedPoolAccountsFn = (args: {
   tokenAAccount: PublicKey;

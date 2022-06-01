@@ -8,7 +8,7 @@ import {
 } from "@ubeswap/token-math";
 import BN from "bn.js";
 
-import type { Token } from "./token";
+import type { Token } from "./token.js";
 
 export type { IFormatUint } from "@ubeswap/token-math";
 

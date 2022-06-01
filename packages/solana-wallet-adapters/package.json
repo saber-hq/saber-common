@@ -1,0 +1,61 @@
+{
+  "name": "@saberhq/solana-wallet-adapters",
+  "version": "1.13.20",
+  "description": "Wrapper package for Solana wallet adapters.",
+  "homepage": "https://github.com/saber-hq/saber-common/packages/solana-wallet-adapters#readme",
+  "repository": "git+https://github.com/saber-hq/saber-common.git",
+  "bugs": "https://github.com/saber-hq/saber-common/issues",
+  "funding": "https://www.coingecko.com/en/coins/saber",
+  "author": "Saber Team <team@saber.so>",
+  "license": "Apache-2.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "src/",
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "typescript",
+    "saber",
+    "solana",
+    "wallet"
+  ],
+  "scripts": {
+    "build": "tsc && tsc -P tsconfig.cjs.json",
+    "clean": "rm -fr dist/"
+  },
+  "dependencies": {
+    "@saberhq/solana-contrib": "workspace:^",
+    "@solana/wallet-adapter-base": "^0.9.5",
+    "@solana/wallet-adapter-clover": "^0.4.4",
+    "@solana/wallet-adapter-coin98": "^0.5.4",
+    "@solana/wallet-adapter-exodus": "^0.1.0",
+    "@solana/wallet-adapter-glow": "^0.1.1",
+    "@solana/wallet-adapter-huobi": "^0.1.0",
+    "@solana/wallet-adapter-mathwallet": "^0.9.3",
+    "@solana/wallet-adapter-phantom": "^0.9.3",
+    "@solana/wallet-adapter-slope": "^0.5.4",
+    "@solana/wallet-adapter-solflare": "^0.6.6",
+    "@solana/wallet-adapter-sollet": "^0.11.1",
+    "@solana/wallet-adapter-solong": "^0.9.3",
+    "eventemitter3": "^4.0.7",
+    "tiny-invariant": "^1.2.0",
+    "tslib": "^2.4.0"
+  },
+  "peerDependencies": {
+    "@solana/web3.js": "^1.43.2",
+    "bn.js": "^5.2.0"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.1.3",
+    "@saberhq/eslint-config": "workspace:^",
+    "@saberhq/tsconfig": "workspace:*",
+    "@solana/web3.js": "^1.43.2",
+    "bn.js": "^5.2.1",
+    "eslint": "7",
+    "typescript": "^4.7.2"
+  }
+}

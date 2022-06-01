@@ -11,7 +11,7 @@ import type { Connection, PublicKey, Transaction } from "@solana/web3.js";
 import { Keypair } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
-import type { ConnectedWallet, WalletAdapter } from "../types";
+import type { ConnectedWallet, WalletAdapter } from "../types.js";
 
 /**
  * Adapter backed by a secret key.

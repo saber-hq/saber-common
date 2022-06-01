@@ -1,17 +1,17 @@
 import type { u64 } from "@saberhq/token-utils";
 import type { PublicKey, TransactionInstruction } from "@solana/web3.js";
 
-import type { Fees, RawFees } from "../state";
-import { encodeFees, ZERO_FEES } from "../state";
-import type { StableSwapConfig } from "./common";
-import { buildInstruction } from "./common";
+import type { Fees, RawFees } from "../state/index.js";
+import { encodeFees, ZERO_FEES } from "../state/index.js";
+import type { StableSwapConfig } from "./common.js";
+import { buildInstruction } from "./common.js";
 import {
   DepositIXLayout,
   InitializeSwapIXLayout,
   SwapIXLayout,
   WithdrawIXLayout,
   WithdrawOneIXLayout,
-} from "./layouts";
+} from "./layouts.js";
 
 /**
  * Instruction enum.

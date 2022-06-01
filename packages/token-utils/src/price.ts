@@ -1,7 +1,7 @@
 import type { BigintIsh } from "@ubeswap/token-math";
 import { Price as UPrice } from "@ubeswap/token-math";
 
-import type { Token } from "./token";
+import type { Token } from "./token.js";
 
 /**
  * A price of one token relative to another.

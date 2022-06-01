@@ -5,7 +5,7 @@ import { Token as SPLToken, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import type { PublicKey, Signer } from "@solana/web3.js";
 import { SystemProgram } from "@solana/web3.js";
 
-import { MintLayout } from "../layout";
+import { MintLayout } from "../layout.js";
 
 /**
  * Creates instructions for initializing a mint.

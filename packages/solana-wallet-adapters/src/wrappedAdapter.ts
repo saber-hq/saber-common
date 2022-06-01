@@ -1,24 +1,34 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import type {
   Broadcaster,
   SignAndBroadcastOptions,
 } from "@saberhq/solana-contrib";
-import {
-  doSignAndBroadcastTransaction,
-  PendingTransaction,
-} from "@saberhq/solana-contrib";
 import type {
-  EventEmitter,
   SignerWalletAdapter,
   WalletAdapterEvents,
 } from "@solana/wallet-adapter-base";
 import { BaseSignerWalletAdapter } from "@solana/wallet-adapter-base";
 import { GlowWalletName } from "@solana/wallet-adapter-glow";
 import { PhantomWalletName } from "@solana/wallet-adapter-phantom";
-import type { Connection, PublicKey, Transaction } from "@solana/web3.js";
+import type {
+  Connection,
+  PublicKey,
+  Transaction,
+  TransactionSignature,
+} from "@solana/web3.js";
+import type EventEmitter from "eventemitter3";
 
-import type { ConnectedWallet, WalletAdapter } from "./types";
+export type WrappedAdapterInput = Omit<
+  SignerWalletAdapter,
+  "sendTransaction" | keyof EventEmitter
+> &
+  EventEmitter<WalletAdapterEvents>;
 
-export class SolanaWalletAdapter implements WalletAdapter {
+/**
+ * Wrapper for Solana adapters.
+ */
+export class WrappedAdapter {
   constructor(
     readonly adapter: Omit<
       SignerWalletAdapter,
@@ -30,9 +40,9 @@ export class SolanaWalletAdapter implements WalletAdapter {
   async signAndBroadcastTransaction(
     transaction: Transaction,
     connection: Connection,
-    broadcaster: Broadcaster,
+    getLatestBlockhash: Broadcaster["getLatestBlockhash"],
     opts?: SignAndBroadcastOptions
-  ): Promise<PendingTransaction> {
+  ): Promise<TransactionSignature | null> {
     if (!transaction.feePayer) {
       transaction.feePayer = this.publicKey ?? undefined;
     }
@@ -47,7 +57,7 @@ export class SolanaWalletAdapter implements WalletAdapter {
       ) {
         // HACK: Phantom's `signAndSendTransaction` should always set these, but doesn't yet
         if (!transaction.recentBlockhash) {
-          const latestBlockhash = await broadcaster.getLatestBlockhash();
+          const latestBlockhash = await getLatestBlockhash();
           transaction.recentBlockhash = latestBlockhash.blockhash;
           transaction.lastValidBlockHeight =
             latestBlockhash.lastValidBlockHeight;
@@ -56,13 +66,13 @@ export class SolanaWalletAdapter implements WalletAdapter {
           transaction,
           opts
         );
-        return new PendingTransaction(connection, signature);
+        return signature;
       }
     } else if (this.adapter.name === GlowWalletName) {
       if (window.glowSolana && window.glowSolana.signAndSendTransaction) {
         // HACK: Glow's `signAndSendTransaction` should always set these, but doesn't yet
         if (!transaction.recentBlockhash) {
-          const latestBlockhash = await broadcaster.getLatestBlockhash();
+          const latestBlockhash = await getLatestBlockhash();
           transaction.recentBlockhash = latestBlockhash.blockhash;
           transaction.lastValidBlockHeight =
             latestBlockhash.lastValidBlockHeight;
@@ -80,27 +90,24 @@ export class SolanaWalletAdapter implements WalletAdapter {
             };
           },
         });
-
-        return new PendingTransaction(connection, result.signature);
+        return result.signature;
       }
     } else if (this.adapter instanceof BaseSignerWalletAdapter) {
       // attempt to use the wallet's native transaction sending feature
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
       const signature = await this.adapter.sendTransaction(
         transaction,
         connection,
         opts
       );
-      return new PendingTransaction(connection, signature);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return signature;
     }
-    return await doSignAndBroadcastTransaction(
-      this as ConnectedWallet,
-      transaction,
-      broadcaster,
-      opts
-    );
+    return null;
   }
 
   get connected(): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.adapter.connected;
   }
 
@@ -108,9 +115,7 @@ export class SolanaWalletAdapter implements WalletAdapter {
     return false;
   }
 
-  async signAllTransactions(
-    transactions: Transaction[]
-  ): Promise<Transaction[]> {
+  signAllTransactions(transactions: Transaction[]): Promise<Transaction[]> {
     return this.adapter.signAllTransactions(transactions);
   }
 
@@ -118,11 +123,10 @@ export class SolanaWalletAdapter implements WalletAdapter {
     return this.adapter.publicKey;
   }
 
-  async signTransaction(transaction: Transaction): Promise<Transaction> {
+  signTransaction(transaction: Transaction): Promise<Transaction> {
     if (!this.adapter) {
-      return transaction;
+      return Promise.resolve(transaction);
     }
-
     return this.adapter.signTransaction(transaction);
   }
 

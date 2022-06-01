@@ -10,15 +10,14 @@ import {
   SolanaTransactionSigner,
   TieredBroadcaster,
 } from "@saberhq/solana-contrib";
+import type { ConnectedWallet } from "@saberhq/use-solana-adapters";
 import type {
   Commitment,
   ConfirmOptions,
   Connection,
   Transaction,
 } from "@solana/web3.js";
-import invariant from "tiny-invariant";
-
-import type { ConnectedWallet } from "../adapters";
+import { default as invariant } from "tiny-invariant";
 
 export class WalletAdapterTransactionSigner extends SolanaTransactionSigner {
   constructor(

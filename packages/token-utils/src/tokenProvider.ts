@@ -10,14 +10,14 @@ import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import type { Signer } from "@solana/web3.js";
 import { Keypair } from "@solana/web3.js";
 
-import type { TokenAmount, TokenInfo } from ".";
-import { getATAAddresses, SPLToken } from ".";
-import { getATAAddress } from "./ata";
-import { createMintInstructions, DEFAULT_TOKEN_DECIMALS } from "./common";
-import { getOrCreateATA, getOrCreateATAs } from "./instructions/ata";
-import type { TokenAccountData } from "./layout";
-import { deserializeAccount, deserializeMint } from "./layout";
-import { Token } from "./token";
+import { getATAAddress, getATAAddresses } from "./ata.js";
+import { createMintInstructions, DEFAULT_TOKEN_DECIMALS } from "./common.js";
+import type { TokenAmount, TokenInfo } from "./index.js";
+import { SPLToken } from "./index.js";
+import { getOrCreateATA, getOrCreateATAs } from "./instructions/ata.js";
+import type { TokenAccountData } from "./layout.js";
+import { deserializeAccount, deserializeMint } from "./layout.js";
+import { Token } from "./token.js";
 
 /**
  * Augmented provider with token utilities.
