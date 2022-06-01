@@ -2244,7 +2244,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/option-utils@workspace:*, @saberhq/option-utils@workspace:packages/option-utils":
+"@saberhq/option-utils@workspace:^, @saberhq/option-utils@workspace:packages/option-utils":
   version: 0.0.0-use.local
   resolution: "@saberhq/option-utils@workspace:packages/option-utils"
   dependencies:
@@ -2300,8 +2300,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/solana-contrib@workspace:packages/solana-contrib"
   dependencies:
-    "@saberhq/option-utils": "workspace:*"
-    "@saberhq/tsconfig": "workspace:*"
+    "@saberhq/option-utils": "workspace:^"
+    "@saberhq/tsconfig": "workspace:^"
     "@solana/buffer-layout": ^4.0.0
     "@solana/web3.js": ^1.43.2
     "@types/bn.js": ^5.1.0
