@@ -2,7 +2,7 @@
   "name": "@saberhq/solana-contrib",
   "version": "1.13.22",
   "description": "Common types and libraries for Solana",
-  "homepage": "https://github.com/saber-hq/saber-common/packages/solana-contrib#readme",
+  "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/solana-contrib#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
   "bugs": "https://github.com/saber-hq/saber-common/issues",
   "funding": "https://www.coingecko.com/en/coins/saber",

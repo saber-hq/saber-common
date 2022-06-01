@@ -2,7 +2,7 @@
   "name": "@saberhq/browserslist-config",
   "version": "1.13.22",
   "description": "Saber shareable config for Browserslist.",
-  "homepage": "https://github.com/saber-hq/saber-common/packages/browserslist-config#readme",
+  "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/browserslist-config#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
   "bugs": "https://github.com/saber-hq/saber-common/issues",
   "funding": "https://www.coingecko.com/en/coins/saber",

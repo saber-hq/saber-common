@@ -2,7 +2,7 @@
   "name": "@saberhq/anchor-contrib",
   "version": "1.13.22",
   "description": "TypeScript client for Anchor programs.",
-  "homepage": "https://github.com/saber-hq/saber-common/packages/anchor-contrib#readme",
+  "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/anchor-contrib#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
   "bugs": "https://github.com/saber-hq/saber-common/issues",
   "funding": "https://www.coingecko.com/en/coins/saber",
