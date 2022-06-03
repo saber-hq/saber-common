@@ -364,6 +364,19 @@ export const findSwapAuthorityKey = (
  * @param swapProgramID
  * @returns
  */
+export const findSwapAuthorityKeySync = (
+  swapAccount: PublicKey,
+  swapProgramID: PublicKey = SWAP_PROGRAM_ID
+): [PublicKey, number] =>
+  PublicKey.findProgramAddressSync([swapAccount.toBuffer()], swapProgramID);
+
+/**
+ * Finds the swap authority address that is used to sign transactions on behalf of the swap.
+ *
+ * @param swapAccount
+ * @param swapProgramID
+ * @returns
+ */
 export const getSwapAuthorityKey = (
   swapAccount: PublicKey,
   swapProgramID: PublicKey = SWAP_PROGRAM_ID

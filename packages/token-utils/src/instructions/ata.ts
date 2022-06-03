@@ -7,7 +7,7 @@ import {
 import type { TransactionInstruction } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
 
-import { getATAAddress } from "../ata.js";
+import { getATAAddressSync } from "../ata.js";
 
 type GetOrCreateATAResult = {
   /**
@@ -51,7 +51,7 @@ export const getOrCreateATA = async ({
   owner?: PublicKey;
   payer?: PublicKey;
 }): Promise<GetOrCreateATAResult> => {
-  const address = await getATAAddress({ mint, owner });
+  const address = getATAAddressSync({ mint, owner });
   if (await provider.getAccountInfo(address)) {
     return { address, instruction: null };
   } else {

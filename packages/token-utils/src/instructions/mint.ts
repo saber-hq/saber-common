@@ -25,6 +25,38 @@ export const createInitMintInstructions = async ({
   mintAuthority?: PublicKey;
   freezeAuthority?: PublicKey | null;
 }): Promise<TransactionEnvelope> => {
+  return createInitMintTX({
+    provider,
+    mintKP,
+    decimals,
+    rentExemptMintBalance: await SPLToken.getMinBalanceRentForExemptMint(
+      provider.connection
+    ),
+    mintAuthority,
+    freezeAuthority,
+  });
+};
+
+/**
+ * Creates instructions for initializing a mint.
+ * @param param0
+ * @returns
+ */
+export const createInitMintTX = ({
+  provider,
+  mintKP,
+  decimals,
+  rentExemptMintBalance,
+  mintAuthority = provider.wallet.publicKey,
+  freezeAuthority = null,
+}: {
+  provider: Provider;
+  mintKP: Signer;
+  decimals: number;
+  rentExemptMintBalance: number;
+  mintAuthority?: PublicKey;
+  freezeAuthority?: PublicKey | null;
+}): TransactionEnvelope => {
   const from = provider.wallet.publicKey;
   return new TransactionEnvelope(
     provider,
@@ -33,9 +65,7 @@ export const createInitMintInstructions = async ({
         fromPubkey: from,
         newAccountPubkey: mintKP.publicKey,
         space: MintLayout.span,
-        lamports: await SPLToken.getMinBalanceRentForExemptMint(
-          provider.connection
-        ),
+        lamports: rentExemptMintBalance,
         programId: TOKEN_PROGRAM_ID,
       }),
       SPLToken.createInitMintInstruction(

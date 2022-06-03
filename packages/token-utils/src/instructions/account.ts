@@ -26,10 +26,42 @@ export const createTokenAccount = async ({
   tx: TransactionEnvelope;
 }> => {
   // Allocate memory for the account
-  const balanceNeeded = await SPLToken.getMinBalanceRentForExemptAccount(
-    provider.connection
-  );
+  const rentExemptAccountBalance =
+    await SPLToken.getMinBalanceRentForExemptAccount(provider.connection);
+  return buildCreateTokenAccountTX({
+    provider,
+    mint,
+    rentExemptAccountBalance,
+    owner,
+    payer,
+    accountSigner,
+  });
+};
 
+export const buildCreateTokenAccountTX = ({
+  provider,
+  mint,
+  rentExemptAccountBalance,
+  owner = provider.wallet.publicKey,
+  payer = provider.wallet.publicKey,
+  accountSigner = Keypair.generate(),
+}: {
+  provider: Provider;
+  mint: PublicKey;
+  /**
+   * SOL needed for a rent exempt token account.
+   */
+  rentExemptAccountBalance: number;
+  owner?: PublicKey;
+  payer?: PublicKey;
+  /**
+   * The keypair of the account to be created.
+   */
+  accountSigner?: Signer;
+}): {
+  key: PublicKey;
+  tx: TransactionEnvelope;
+} => {
   const tokenAccount = accountSigner.publicKey;
   return {
     key: tokenAccount,
@@ -39,7 +71,7 @@ export const createTokenAccount = async ({
         SystemProgram.createAccount({
           fromPubkey: payer,
           newAccountPubkey: accountSigner.publicKey,
-          lamports: balanceNeeded,
+          lamports: rentExemptAccountBalance,
           space: TokenAccountLayout.span,
           programId: TOKEN_PROGRAM_ID,
         }),
