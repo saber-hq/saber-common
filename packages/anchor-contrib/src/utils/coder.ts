@@ -1,11 +1,11 @@
 import type { Accounts, Idl } from "@project-serum/anchor";
 import { BorshCoder, EventParser, utils } from "@project-serum/anchor";
+import { default as InstructionNamespaceFactory } from "@project-serum/anchor/dist/cjs/program/namespace/instruction.js";
 import type { InstructionDisplay } from "@project-serum/anchor/dist/esm/coder/borsh/instruction.js";
 import type {
   IdlAccountItem,
   IdlTypeDef,
 } from "@project-serum/anchor/dist/esm/idl.js";
-import { default as InstructionNamespaceFactory } from "@project-serum/anchor/dist/esm/program/namespace/instruction.js";
 import type { Provider as SaberProvider } from "@saberhq/solana-contrib";
 import type { GetProgramAccountsFilter, PublicKey } from "@solana/web3.js";
 import { TransactionInstruction } from "@solana/web3.js";
