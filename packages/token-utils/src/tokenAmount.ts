@@ -1,5 +1,5 @@
 import { u64 } from "@solana/spl-token";
-import type { BigintIsh } from "@ubeswap/token-math";
+import type { BigintIsh, FractionObject } from "@ubeswap/token-math";
 import {
   parseAmountFromString,
   parseBigintIsh,
@@ -11,6 +11,21 @@ import BN from "bn.js";
 import type { Token } from "./token.js";
 
 export type { IFormatUint } from "@ubeswap/token-math";
+
+export interface TokenAmountObject extends FractionObject {
+  /**
+   * Discriminator to show this is a token amount.
+   */
+  _isTA: true;
+  /**
+   * Mint of the token.
+   */
+  mint: string;
+  /**
+   * Amount of tokens in string representation.
+   */
+  uiAmount: string;
+}
 
 export class TokenAmount extends UTokenAmount<Token> {
   // amount _must_ be raw, i.e. in the native representation
@@ -56,21 +71,9 @@ export class TokenAmount extends UTokenAmount<Token> {
   /**
    * JSON representation of the token amount.
    */
-  toJSON(): {
-    /**
-     * Discriminator to show this is a token amount.
-     */
-    _isTA: true;
-    /**
-     * Mint of the token.
-     */
-    mint: string;
-    /**
-     * Amount of tokens in string representation.
-     */
-    uiAmount: string;
-  } {
+  override toJSON(): TokenAmountObject {
     return {
+      ...super.toJSON(),
       _isTA: true,
       mint: this.token.address,
       uiAmount: this.toExact(),
