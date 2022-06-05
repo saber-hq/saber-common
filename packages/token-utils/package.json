@@ -29,7 +29,7 @@
     "@saberhq/solana-contrib": "workspace:^",
     "@solana/buffer-layout": "^4.0.0",
     "@solana/spl-token": "^0.1.8",
-    "@ubeswap/token-math": "^5.1.5",
+    "@ubeswap/token-math": "^5.1.6",
     "tiny-invariant": "^1.2.0",
     "tslib": "^2.4.0"
   },

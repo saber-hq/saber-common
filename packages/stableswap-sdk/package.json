@@ -30,7 +30,7 @@
     "@saberhq/tsconfig": "workspace:^",
     "@solana/web3.js": "^1.43.5",
     "@types/bn.js": "^5.1.0",
-    "@types/lodash": "^4",
+    "@types/lodash": "^4.14.182",
     "@types/node": "^17.0.40",
     "bn.js": "^5.2.1",
     "jsbi": "^4.3.0",
