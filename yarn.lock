@@ -2370,7 +2370,7 @@ __metadata:
     "@solana/spl-token": ^0.1.8
     "@solana/web3.js": ^1.43.5
     "@types/bn.js": ^5.1.0
-    "@ubeswap/token-math": ^5.1.3
+    "@ubeswap/token-math": ^5.1.4
     jsbi: ^4.3.0
     tiny-invariant: ^1.2.0
     tslib: ^2.4.0
@@ -3461,9 +3461,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ubeswap/token-math@npm:^5.1.3":
-  version: 5.1.3
-  resolution: "@ubeswap/token-math@npm:5.1.3"
+"@ubeswap/token-math@npm:^5.1.4":
+  version: 5.1.4
+  resolution: "@ubeswap/token-math@npm:5.1.4"
   dependencies:
     "@types/big.js": ^6.1.3
     big.js: ^6.2.0
@@ -3473,7 +3473,7 @@ __metadata:
   peerDependencies:
     bn.js: ^5.2.0
     jsbi: ^3 || ^4
-  checksum: 097921d82e0123dc55c2107aef9eec2df490fcb165fdcd3fb7e8655b0f870be46b3ede68b5f24ef734ec1adb52ec60d2380cb0414e1438296956b9cb52c5bb3a
+  checksum: 455ddddae6b39cfb6f56d418de9885359d17a70c5d0cc45dbe05a3214c381f13ea9c65ee97b148828765dca9f03e3b3844adfed06d725e9bdaaa103cd3991a5a
   languageName: node
   linkType: hard
 
