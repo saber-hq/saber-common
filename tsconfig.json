@@ -5,5 +5,5 @@
     "jsxImportSource": "react",
     "types": ["jest"]
   },
-  "include": ["packages/"]
+  "include": ["packages/", "jest.config.mjs"]
 }
