@@ -4,8 +4,7 @@
     "jsxImportSource": "react",
     "lib": ["ES2015", "DOM"],
     "outDir": "dist/esm/",
-    "types": [],
-    "noEmit": false
+    "types": []
   },
   "include": ["src/"]
 }
