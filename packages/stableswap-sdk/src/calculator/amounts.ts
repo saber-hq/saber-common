@@ -1,7 +1,6 @@
 import type { Token } from "@saberhq/token-utils";
 import { Fraction, ONE, TokenAmount, ZERO } from "@saberhq/token-utils";
 import { default as JSBI } from "jsbi";
-import mapValues from "lodash.mapvalues";
 
 import type { IExchangeInfo } from "../entities/exchange.js";
 import type { Fees } from "../state/fees.js";
@@ -134,17 +133,17 @@ export const calculateEstimatedWithdrawOneAmount = ({
 }): IWithdrawOneResult => {
   if (poolTokenAmount.equalTo(0)) {
     // final quantities
-    const quantities = {
-      withdrawAmount: ZERO,
-      withdrawAmountBeforeFees: ZERO,
-      swapFee: ZERO,
-      withdrawFee: ZERO,
-      lpSwapFee: ZERO,
-      lpWithdrawFee: ZERO,
-      adminSwapFee: ZERO,
-      adminWithdrawFee: ZERO,
+    const zeroQuantity = new TokenAmount(withdrawToken, ZERO);
+    return {
+      withdrawAmount: zeroQuantity,
+      withdrawAmountBeforeFees: zeroQuantity,
+      swapFee: zeroQuantity,
+      withdrawFee: zeroQuantity,
+      lpSwapFee: zeroQuantity,
+      lpWithdrawFee: zeroQuantity,
+      adminSwapFee: zeroQuantity,
+      adminWithdrawFee: zeroQuantity,
     };
-    return mapValues(quantities, (q) => new TokenAmount(withdrawToken, q));
   }
 
   const { ampFactor, fees } = exchange;
@@ -210,21 +209,19 @@ export const calculateEstimatedWithdrawOneAmount = ({
   const withdrawAmount = dy.subtract(withdrawFee).subtract(swapFee);
 
   // final quantities
-  const quantities = {
-    withdrawAmount,
-    withdrawAmountBeforeFees: dy,
-    swapFee,
-    withdrawFee,
-    lpSwapFee,
-    lpWithdrawFee,
-    adminSwapFee,
-    adminWithdrawFee,
+  return {
+    withdrawAmount: new TokenAmount(withdrawToken, withdrawAmount.toFixed(0)),
+    withdrawAmountBeforeFees: new TokenAmount(withdrawToken, dy.toFixed(0)),
+    swapFee: new TokenAmount(withdrawToken, swapFee.toFixed(0)),
+    withdrawFee: new TokenAmount(withdrawToken, withdrawFee.toFixed(0)),
+    lpSwapFee: new TokenAmount(withdrawToken, lpSwapFee.toFixed(0)),
+    lpWithdrawFee: new TokenAmount(withdrawToken, lpWithdrawFee.toFixed(0)),
+    adminSwapFee: new TokenAmount(withdrawToken, adminSwapFee.toFixed(0)),
+    adminWithdrawFee: new TokenAmount(
+      withdrawToken,
+      adminWithdrawFee.toFixed(0)
+    ),
   };
-
-  return mapValues(
-    quantities,
-    (q) => new TokenAmount(withdrawToken, q.toFixed(0))
-  );
 };
 
 /**

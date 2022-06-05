@@ -1,9 +1,9 @@
 import type { BigintIsh } from "@saberhq/token-utils";
 import { Percent, Token as SToken, TokenAmount } from "@saberhq/token-utils";
 import { PublicKey } from "@solana/web3.js";
-import BN from "bn.js";
+import { BN } from "bn.js";
 import { default as JSBI } from "jsbi";
-import mapValues from "lodash.mapvalues";
+import { mapValues } from "lodash";
 
 import { SWAP_PROGRAM_ID } from "../constants.js";
 import type { IExchangeInfo } from "../entities/exchange.js";
