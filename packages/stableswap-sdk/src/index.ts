@@ -1,3 +1,8 @@
+/**
+ * [[include:stableswap-sdk/README.md]]
+ * @module
+ */
+
 export * from "./calculator/index.js";
 export * from "./constants.js";
 export * from "./entities/index.js";

@@ -1,4 +1,9 @@
 /**
+ * [[include:option-utils/README.md]]
+ * @module
+ */
+
+/**
  * Optional type.
  */
 export type Maybe<T> = T | null | undefined;

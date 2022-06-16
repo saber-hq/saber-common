@@ -1,4 +1,4 @@
-# `@saberhq/wallet-adapter-icons`
+# @saberhq/wallet-adapter-icons
 
 Icons of wallet adapters.
 

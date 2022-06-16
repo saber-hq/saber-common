@@ -1,4 +1,4 @@
-# `chai-solana`
+# @saberhq/chai-solana
 
 Chai helpers for Solana tests.
 

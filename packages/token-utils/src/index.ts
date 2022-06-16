@@ -1,3 +1,8 @@
+/**
+ * [[include:token-utils/README.md]]
+ * @module
+ */
+
 export * from "./ata.js";
 export * from "./instructions/index.js";
 export * from "./layout.js";

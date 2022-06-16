@@ -1,4 +1,4 @@
-# `@saberhq/option-utils`
+# @saberhq/option-utils
 
 Utilities related to optional types.
 

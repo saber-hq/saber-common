@@ -1,4 +1,4 @@
-# `anchor-contrib`
+# @saberhq/anchor-contrib
 
 TypeScript client for Anchor programs.
 

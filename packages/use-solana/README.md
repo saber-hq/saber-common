@@ -1,4 +1,4 @@
-# use-solana
+# @saberhq/use-solana
 
 Solana frontend library and TypeScript SDK. This SDK features:
 

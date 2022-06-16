@@ -1,4 +1,4 @@
-# `@saberhq/tuple-utils`
+# @saberhq/tuple-utils
 
 Miscellaneous utilities for dealing with tuples.
 

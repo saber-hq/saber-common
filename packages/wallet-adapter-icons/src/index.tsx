@@ -1,3 +1,8 @@
+/**
+ * [[include:wallet-adapter-icons/README.md]]
+ * @module
+ */
+
 import React from "react";
 
 export * from "./coin98.js";

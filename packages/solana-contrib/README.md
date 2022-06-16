@@ -1,4 +1,4 @@
-# @saberhq/solana
+# @saberhq/solana-contrib
 
 Common types and libraries for Solana development.
 

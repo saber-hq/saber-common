@@ -1,3 +1,8 @@
+/**
+ * [[include:chai-solana/README.md]]
+ * @module
+ */
+
 import "./types.js";
 
 import type { Address } from "@project-serum/anchor";

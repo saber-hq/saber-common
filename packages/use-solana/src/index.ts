@@ -1,3 +1,8 @@
+/**
+ * [[include:use-solana/README.md]]
+ * @module
+ */
+
 export * from "./adapters/index.js";
 export * from "./context.js";
 export * from "./error.js";
