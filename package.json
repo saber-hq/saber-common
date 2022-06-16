@@ -68,7 +68,7 @@
     "prepare": "husky install",
     "size": "size-limit",
     "analyze": "size-limit --why",
-    "docs:generate": "typedoc --excludePrivate --includeVersion --out docs/ packages/**/src/index.{ts,tsx}",
+    "docs:generate": "typedoc --excludePrivate --includeVersion --out docs/ --entryPointStrategy packages $(find ./packages -mindepth 1 -maxdepth 1 | grep -v browserslist)",
     "test": "jest **/*.test.ts",
     "doctor:packages": "yarn doctor packages/"
   },
