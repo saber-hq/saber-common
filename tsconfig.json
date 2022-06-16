@@ -7,6 +7,7 @@
     "types": ["jest"]
   },
   "files": ["jest.config.mjs", ".eslintrc.cjs"],
+  "include": ["./**/*.test.ts"],
   "references": [
     { "path": "packages/anchor-contrib/" },
     { "path": "packages/chai-solana/" },
