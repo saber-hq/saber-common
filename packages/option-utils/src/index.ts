@@ -1,4 +1,9 @@
 /**
+ * Optional type.
+ */
+export type Maybe<T> = T | null | undefined;
+
+/**
  * Applies a function to a list of null/undefined values, unwrapping the null/undefined value or passing it through.
  */
 export const mapN = <T extends unknown[], U>(
