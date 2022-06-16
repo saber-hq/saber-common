@@ -1,6 +1,8 @@
 {
   "extends": "@saberhq/tsconfig/tsconfig.react.json",
   "compilerOptions": {
+    "rootDir": "src/",
+    "composite": true,
     "jsxImportSource": "react",
     "lib": ["ES2015", "DOM"],
     "outDir": "dist/esm/",
