@@ -1,6 +1,8 @@
 {
   "extends": "@saberhq/tsconfig/tsconfig.module.react.json",
   "compilerOptions": {
+    "rootDir": "src/",
+    "composite": true,
     "jsxImportSource": "react",
     "outDir": "dist/esm/",
     "skipLibCheck": false,

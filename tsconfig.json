@@ -1,9 +1,24 @@
 {
-  "extends": "./packages/tsconfig/tsconfig.react.json",
+  "extends": "@saberhq/tsconfig/tsconfig.react.json",
   "compilerOptions": {
+    "allowJs": true,
     "noEmit": true,
     "jsxImportSource": "react",
     "types": ["jest"]
   },
-  "include": ["packages/", "jest.config.mjs"]
+  "files": ["jest.config.mjs", ".eslintrc.cjs"],
+  "include": ["./**/*.test.ts"],
+  "references": [
+    { "path": "packages/anchor-contrib/" },
+    { "path": "packages/chai-solana/" },
+    { "path": "packages/eslint-config/" },
+    { "path": "packages/eslint-config-react/" },
+    { "path": "packages/option-utils/" },
+    { "path": "packages/solana-contrib/" },
+    { "path": "packages/stableswap-sdk/" },
+    { "path": "packages/token-utils/" },
+    { "path": "packages/tuple-utils/" },
+    { "path": "packages/use-solana/" },
+    { "path": "packages/wallet-adapter-icons/" }
+  ]
 }
