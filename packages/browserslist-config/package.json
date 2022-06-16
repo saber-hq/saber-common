@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/browserslist-config",
-  "version": "1.13.28",
+  "version": "1.13.29",
   "description": "Saber shareable config for Browserslist.",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/browserslist-config#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
