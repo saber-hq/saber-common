@@ -2441,6 +2441,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@saberhq/tuple-utils@workspace:packages/tuple-utils":
+  version: 0.0.0-use.local
+  resolution: "@saberhq/tuple-utils@workspace:packages/tuple-utils"
+  dependencies:
+    "@saberhq/option-utils": "workspace:^"
+    "@saberhq/tsconfig": "workspace:^"
+    tslib: ^2.4.0
+    typescript: ^4.7.3
+  languageName: unknown
+  linkType: soft
+
 "@saberhq/use-solana@workspace:*, @saberhq/use-solana@workspace:packages/use-solana":
   version: 0.0.0-use.local
   resolution: "@saberhq/use-solana@workspace:packages/use-solana"

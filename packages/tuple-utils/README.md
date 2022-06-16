@@ -1,6 +1,6 @@
-# `@saberhq/option-utils`
+# `@saberhq/tuple-utils`
 
-Utilities related to optional types.
+Miscellaneous utilities for dealing with tuples.
 
 ## License
 
