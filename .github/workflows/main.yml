@@ -51,6 +51,16 @@ jobs:
       - run: yarn build
       - run: yarn lint:ci
 
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/yarn
+        with:
+          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: yarn build
+      - run: yarn docs:generate
+
   doctor:
     runs-on: ubuntu-latest
     steps:
