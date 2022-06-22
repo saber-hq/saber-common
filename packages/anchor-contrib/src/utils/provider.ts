@@ -11,6 +11,9 @@ import {
 } from "@saberhq/solana-contrib";
 import type { ConfirmOptions, Connection } from "@solana/web3.js";
 
+/**
+ * Interface of an AnchorProvider.
+ */
 export interface AnchorProvider extends IAnchorProvider {
   wallet: Wallet;
   opts: ConfirmOptions;
@@ -73,7 +76,7 @@ export const makeReadonlySaberProvider = (
  * @returns
  */
 export const makeSaberProvider = (
-  anchorProvider: anchor.AnchorProvider
+  anchorProvider: AnchorProvider
 ): SaberProvider => {
   return SolanaProvider.init({
     connection: anchorProvider.connection,
