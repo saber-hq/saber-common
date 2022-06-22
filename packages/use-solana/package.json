@@ -20,13 +20,13 @@
   },
   "devDependencies": {
     "@saberhq/tsconfig": "workspace:^",
-    "@solana/web3.js": "^1.44.0",
+    "@solana/web3.js": "^1.44.2",
     "@types/bn.js": "^5.1.0",
     "@types/node": "^18.0.0",
-    "@types/react": "^18.0.13",
+    "@types/react": "^18.0.14",
     "bn.js": "^5.2.1",
     "react": "^18.2.0",
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.4"
   },
   "dependencies": {
     "@ledgerhq/hw-transport": "^6.27.1",
