@@ -2095,6 +2095,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nightlylabs/wallet-solana-adapter@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "@nightlylabs/wallet-solana-adapter@npm:0.0.2"
+  dependencies:
+    "@solana/wallet-adapter-base": ^0.9.4
+    "@solana/web3.js": ^1.41.1
+  checksum: efd9a35e67637cb60dafc9a974b9ce28bde6233a53ac743ecc8936c2417b76d2f5bf35164268a2a3161200e3f5db3e777129d335ea58dd099e4a947bea6e18b4
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -2460,6 +2470,7 @@ __metadata:
   dependencies:
     "@ledgerhq/hw-transport": ^6.27.1
     "@ledgerhq/hw-transport-webusb": ^6.27.1
+    "@nightlylabs/wallet-solana-adapter": ^0.0.2
     "@saberhq/solana-contrib": "workspace:^"
     "@saberhq/tsconfig": "workspace:^"
     "@saberhq/wallet-adapter-icons": "workspace:^"
