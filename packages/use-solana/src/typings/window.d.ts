@@ -74,6 +74,15 @@ export interface MathWalletProvider {
   isMathWallet: true;
   isPhantom: undefined;
 }
+
+export interface NightlyProvider {
+  publicKey: PublicKey;
+  connect(onDisconnect?: () => void): Promise<PublicKey>;
+  disconnect(): Promise<void>;
+  signTransaction(tx: Transaction): Promise<Transaction>;
+  signAllTransactions(txs: Transaction[]): Promise<Transaction[]>;
+}
+
 declare global {
   interface Window {
     solana?:
@@ -146,5 +155,8 @@ declare global {
     huobiWallet?: {
       isHuobiWallet?: boolean;
     };
+    nightly?: {
+      solana?: NightlyProvider
+    }
   }
 }
