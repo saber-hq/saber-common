@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/solana-contrib",
-  "version": "1.13.29",
+  "version": "1.13.30",
   "description": "Common types and libraries for Solana",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/solana-contrib#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
@@ -37,12 +37,12 @@
   },
   "devDependencies": {
     "@saberhq/tsconfig": "workspace:^",
-    "@solana/web3.js": "^1.44.0",
+    "@solana/web3.js": "^1.44.2",
     "@types/bn.js": "^5.1.0",
-    "@types/jest": "^28.1.1",
+    "@types/jest": "^28.1.3",
     "@types/node": "^18.0.0",
     "bn.js": "^5.2.1",
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.4"
   },
   "peerDependencies": {
     "@solana/web3.js": "^1.42",

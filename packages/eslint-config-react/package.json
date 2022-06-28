@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/eslint-config-react",
-  "version": "1.13.29",
+  "version": "1.13.30",
   "description": "Saber base React ESLint config",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/eslint-config-react#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
@@ -37,7 +37,7 @@
     "@saberhq/tsconfig": "workspace:^",
     "@types/eslint": "^8.4.3",
     "@types/node": "^18.0.0",
-    "eslint": "^8.17.0",
-    "typescript": "^4.7.3"
+    "eslint": "^8.18.0",
+    "typescript": "^4.7.4"
   }
 }
