@@ -2095,9 +2095,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nightlylabs/connect@npm:^0.0.19":
-  version: 0.0.19
-  resolution: "@nightlylabs/connect@npm:0.0.19"
+"@nightlylabs/connect@npm:^0.0.20":
+  version: 0.0.20
+  resolution: "@nightlylabs/connect@npm:0.0.20"
   dependencies:
     "@nightlylabs/qr-code": 1.0.20
     "@solana/wallet-adapter-base": ^0.9.5
@@ -2106,7 +2106,7 @@ __metadata:
     near-api-js: ^0.45.1
     uuid: ^8.3.2
     ws: ^8.8.0
-  checksum: a9b2c8f05aa6341f931c939e41742dc14110d0fbfc528bb8ca97806ac5cca6228cb418382cabb9244427a035cc28380bf117bebaa0b7061b9156bc7ead4eef33
+  checksum: 1486587fe324b2453560bfac037b11d28056fef98261f307129af9a985821274db6ba30b2e10c9131102c57b25b92b13f0aad3a467004e82124e2dcf46364713
   languageName: node
   linkType: hard
 
@@ -2494,7 +2494,7 @@ __metadata:
   dependencies:
     "@ledgerhq/hw-transport": ^6.27.1
     "@ledgerhq/hw-transport-webusb": ^6.27.1
-    "@nightlylabs/connect": ^0.0.19
+    "@nightlylabs/connect": ^0.0.20
     "@nightlylabs/wallet-solana-adapter": ^0.0.4
     "@saberhq/solana-contrib": "workspace:^"
     "@saberhq/tsconfig": "workspace:^"

@@ -423,12 +423,9 @@ export const NIGHTLY_CONNECT: React.FC<React.SVGProps<SVGSVGElement>> = (
   <svg
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
     x="0px"
     y="0px"
     viewBox="0 0 1080 1080"
-    style="enable-background:new 0 0 1080 1080;"
-    xml:space="preserve"
     {...props}
   >
     <style type="text/css">
@@ -437,36 +434,36 @@ export const NIGHTLY_CONNECT: React.FC<React.SVGProps<SVGSVGElement>> = (
     </style>
     <g id="Warstwa_2">
       <g>
-        <circle class="st0" cx="540" cy="540" r="540" />
+        <circle className="st0" cx="540" cy="540" r="540" />
         <g>
           <g>
             <path
-              class="st0"
+              className="st0"
               d="M477.9,734.6c-2.1-68.4-69.5-90.4-115.5-61.6c0,0,7.2,29.4,40.8,44.2C430.6,729.3,442.4,713.1,477.9,734.6z
 					"
             />
             <path
-              class="st0"
+              className="st0"
               d="M253.1,259.8c-27.1,95.1-15.4,215.4,27.4,303c43.8-31,89.8-78.9,114.3-129.6
 					C337.1,390.5,288.7,349.9,253.1,259.8z"
             />
             <path
-              class="st0"
+              className="st0"
               d="M602.1,734.6c2.1-68.4,69.5-90.4,115.5-61.6c0,0-7.2,29.4-40.8,44.2C649.4,729.3,637.6,713.1,602.1,734.6z"
             />
             <path
-              class="st0"
+              className="st0"
               d="M826.9,259.8c27.1,95.1,15.4,215.4-27.4,303c-43.8-31-89.8-78.9-114.3-129.6
 					C742.9,390.5,791.3,349.9,826.9,259.8z"
             />
-            <ellipse class="st0" cx="540" cy="921.3" rx="43.6" ry="38.4" />
+            <ellipse className="st0" cx="540" cy="921.3" rx="43.6" ry="38.4" />
           </g>
         </g>
       </g>
     </g>
     <g id="Warstwa_3">
       <path
-        class="st1"
+        className="st1"
         d="M540.3,959.8c-0.4,0-0.8,0-1,0c-0.2,0-0.5,0-1,0c-5.7,0-26-0.8-48.8-10.8c-24.4-10.7-56.6-34.5-71.2-87
 		c-13.1-46.8-43.3-67.5-66.3-76.6c-14.1-5.6-29.8-8.5-45.6-8.5c-17.5,0-34.2,3.7-44.5,10l-5.2,3.1l-2.6-5.4
 		c-23.7-49-36.4-102.1-21.6-202c-1.3-5.1-3.5-11.7-6.2-20c-9.9-30.2-26.4-80.8-30.8-145.6c-5.3-78.3,8.6-156.7,41.4-233l4-9.3

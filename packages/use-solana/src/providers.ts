@@ -216,7 +216,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     url: "https://nightly.app",
     icon: NIGHTLY,
     makeAdapter: () => new SolanaWalletAdapter(new NightlyWalletAdapter()),
-    isInstalled: () => typeof window?.nightly?.solana !== 'undefined',
+    isInstalled: () => typeof window?.nightly?.solana !== "undefined",
   },
   [DefaultWalletType.NightlyConnect]: {
     name: "Nightly Connect",
