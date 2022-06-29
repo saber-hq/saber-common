@@ -1,4 +1,3 @@
-import { NCSolanaWalletAdapter } from "@nightlylabs/connect";
 import { NightlyWalletAdapter } from "@nightlylabs/wallet-solana-adapter";
 import {
   CLOVER,
@@ -11,7 +10,6 @@ import {
   MAGNIFYING_GLASS,
   MATHWALLET,
   NIGHTLY,
-  NIGHTLY_CONNECT,
   PHANTOM,
   SLOPE,
   SOLFLARE,
@@ -49,7 +47,6 @@ export enum DefaultWalletType {
   Ledger = "Ledger",
   MathWallet = "MathWallet",
   Nightly = "Nightly",
-  NightlyConnect = "NightlyConnect",
   Phantom = "Phantom",
   ReadOnly = "ReadOnly",
   SecretKey = "SecretKey",
@@ -217,12 +214,6 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     icon: NIGHTLY,
     makeAdapter: () => new SolanaWalletAdapter(new NightlyWalletAdapter()),
     isInstalled: () => typeof window?.nightly?.solana !== "undefined",
-  },
-  [DefaultWalletType.NightlyConnect]: {
-    name: "Nightly Connect",
-    url: "https://nightly.app",
-    icon: NIGHTLY_CONNECT,
-    makeAdapter: () => new SolanaWalletAdapter(new NCSolanaWalletAdapter()),
   },
 };
 
