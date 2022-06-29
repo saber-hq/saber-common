@@ -61,7 +61,7 @@
     "build": "yarn workspaces foreach --exclude @saberhq/saber-common -ptv run build",
     "clean": "yarn workspaces foreach --exclude @saberhq/saber-common -ptv run clean",
     "publish:all": "yarn workspaces foreach --exclude @saberhq/saber-common -ptv npm publish",
-    "typecheck": "tsc",
+    "typecheck": "tsc --build",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",
     "lint:ci": "eslint . --max-warnings=0",
