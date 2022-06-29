@@ -1,3 +1,5 @@
+import { NCSolanaWalletAdapter } from "@nightlylabs/connect";
+import { NightlyWalletAdapter } from "@nightlylabs/wallet-solana-adapter";
 import {
   CLOVER,
   COIN98,
@@ -37,8 +39,6 @@ import { LedgerWalletAdapter, SolanaWalletAdapter } from "./adapters";
 import { ReadonlyAdapter } from "./adapters/readonly";
 import { SecretKeyAdapter } from "./adapters/secret-key";
 import { SolflareAdapter } from "./adapters/solflare";
-import { NightlyWalletAdapter } from "@nightlylabs/wallet-solana-adapter";
-import { NCSolanaWalletAdapter } from "@nightlylabs/connect";
 
 export enum DefaultWalletType {
   Clover = "Clover",
