@@ -37,7 +37,7 @@
     "tslib": "^2.4.0"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "workspace:^",
+    "@saberhq/tsconfig": "^1.13.30",
     "typescript": "^4.7.4"
   }
 }

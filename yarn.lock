@@ -2240,7 +2240,7 @@ __metadata:
   dependencies:
     "@project-serum/anchor": ^0.25.0-beta.1
     "@saberhq/solana-contrib": "workspace:^"
-    "@saberhq/tsconfig": "workspace:^"
+    "@saberhq/tsconfig": ^1.13.30
     "@solana/web3.js": ^1.46.0
     "@types/lodash.camelcase": ^4.3.7
     "@types/lodash.mapvalues": ^4.6.7
@@ -2257,12 +2257,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/browserslist-config@workspace:packages/browserslist-config":
-  version: 0.0.0-use.local
-  resolution: "@saberhq/browserslist-config@workspace:packages/browserslist-config"
-  languageName: unknown
-  linkType: soft
-
 "@saberhq/chai-solana@workspace:packages/chai-solana":
   version: 0.0.0-use.local
   resolution: "@saberhq/chai-solana@workspace:packages/chai-solana"
@@ -2271,7 +2265,7 @@ __metadata:
     "@saberhq/anchor-contrib": "workspace:^"
     "@saberhq/solana-contrib": "workspace:^"
     "@saberhq/token-utils": "workspace:^"
-    "@saberhq/tsconfig": "workspace:^"
+    "@saberhq/tsconfig": ^1.13.30
     "@solana/web3.js": ^1.46.0
     "@types/chai": ^4.3.1
     "@types/chai-as-promised": ^7.1.5
@@ -2292,52 +2286,44 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/eslint-config-react@workspace:*, @saberhq/eslint-config-react@workspace:packages/eslint-config-react":
-  version: 0.0.0-use.local
-  resolution: "@saberhq/eslint-config-react@workspace:packages/eslint-config-react"
+"@saberhq/eslint-config-react@npm:^1.13.30":
+  version: 1.13.30
+  resolution: "@saberhq/eslint-config-react@npm:1.13.30"
   dependencies:
-    "@saberhq/eslint-config": "workspace:^"
-    "@saberhq/tsconfig": "workspace:^"
-    "@types/eslint": ^8.4.3
-    "@types/node": ^18.0.0
-    eslint: ^8.18.0
-    eslint-plugin-jsx-a11y: ^6.6.0
-    eslint-plugin-react: ^7.30.1
+    "@saberhq/eslint-config": ^1.13.30
+    eslint-plugin-jsx-a11y: ^6.5.1
+    eslint-plugin-react: ^7.30.0
     eslint-plugin-react-hooks: ^4.6.0
-    typescript: ^4.7.4
   peerDependencies:
     eslint: ">=7"
-  languageName: unknown
-  linkType: soft
+  checksum: 270ea487fc00db48db47a99ab8d4a606c540963db1c2f922e4f6bcb5bfb958762383db7a869ce10a49b582038356a6fec9c66ed7a62189f9a9713c2b96ccf762
+  languageName: node
+  linkType: hard
 
-"@saberhq/eslint-config@workspace:*, @saberhq/eslint-config@workspace:^, @saberhq/eslint-config@workspace:packages/eslint-config":
-  version: 0.0.0-use.local
-  resolution: "@saberhq/eslint-config@workspace:packages/eslint-config"
+"@saberhq/eslint-config@npm:^1.13.30":
+  version: 1.13.30
+  resolution: "@saberhq/eslint-config@npm:1.13.30"
   dependencies:
-    "@saberhq/tsconfig": "workspace:^"
-    "@types/eslint": ^8.4.3
-    "@types/node": ^18.0.0
-    "@typescript-eslint/eslint-plugin": ^5.30.0
-    "@typescript-eslint/parser": ^5.30.0
-    eslint: ^8.18.0
+    "@typescript-eslint/eslint-plugin": ^5.29.0
+    "@typescript-eslint/parser": ^5.29.0
     eslint-config-prettier: ^8.5.0
     eslint-import-resolver-node: ^0.3.6
     eslint-plugin-import: ^2.26.0
-    eslint-plugin-prettier: ^4.1.0
+    eslint-plugin-prettier: ^4.0.0
     eslint-plugin-simple-import-sort: ^7.0.0
     eslint-plugin-unused-imports: ^2.0.0
     prettier: ^2.7.1
-    typescript: ^4.7.4
   peerDependencies:
     eslint: ">=7"
-  languageName: unknown
-  linkType: soft
+  checksum: f66a72d79f6b73f844169ad0f2b59e431e400620c332d9ab9e2def71dde4bddcae6bd39f04bf4f9fd608e3d648c2b2c8238d7b37a6af0c9f85395cb0a9690ec8
+  languageName: node
+  linkType: hard
 
 "@saberhq/option-utils@workspace:^, @saberhq/option-utils@workspace:packages/option-utils":
   version: 0.0.0-use.local
   resolution: "@saberhq/option-utils@workspace:packages/option-utils"
   dependencies:
-    "@saberhq/tsconfig": "workspace:^"
+    "@saberhq/tsconfig": ^1.13.30
     tslib: ^2.4.0
     typescript: ^4.7.4
   languageName: unknown
@@ -2353,9 +2339,9 @@ __metadata:
     "@jest/types": ^28.1.1
     "@project-serum/anchor": ^0.25.0-beta.1
     "@rushstack/eslint-patch": ^1.1.4
-    "@saberhq/eslint-config": "workspace:*"
-    "@saberhq/eslint-config-react": "workspace:*"
-    "@saberhq/tsconfig": "workspace:*"
+    "@saberhq/eslint-config": ^1.13.30
+    "@saberhq/eslint-config-react": ^1.13.30
+    "@saberhq/tsconfig": ^1.13.30
     "@saberhq/use-solana": "workspace:*"
     "@size-limit/file": ^7.0.8
     "@size-limit/webpack": ^7.0.8
@@ -2396,7 +2382,7 @@ __metadata:
   resolution: "@saberhq/solana-contrib@workspace:packages/solana-contrib"
   dependencies:
     "@saberhq/option-utils": "workspace:^"
-    "@saberhq/tsconfig": "workspace:^"
+    "@saberhq/tsconfig": ^1.13.30
     "@solana/buffer-layout": ^4.0.0
     "@solana/web3.js": ^1.46.0
     "@types/bn.js": ^5.1.0
@@ -2422,7 +2408,7 @@ __metadata:
   dependencies:
     "@saberhq/solana-contrib": "workspace:^"
     "@saberhq/token-utils": "workspace:^"
-    "@saberhq/tsconfig": "workspace:^"
+    "@saberhq/tsconfig": ^1.13.30
     "@solana/buffer-layout": ^4.0.0
     "@solana/web3.js": ^1.46.0
     "@types/bn.js": ^5.1.0
@@ -2446,7 +2432,7 @@ __metadata:
   resolution: "@saberhq/token-utils@workspace:packages/token-utils"
   dependencies:
     "@saberhq/solana-contrib": "workspace:^"
-    "@saberhq/tsconfig": "workspace:^"
+    "@saberhq/tsconfig": ^1.13.30
     "@solana/buffer-layout": ^4.0.0
     "@solana/spl-token": ^0.1.8
     "@solana/web3.js": ^1.46.0
@@ -2463,18 +2449,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@saberhq/tsconfig@workspace:*, @saberhq/tsconfig@workspace:^, @saberhq/tsconfig@workspace:packages/tsconfig":
-  version: 0.0.0-use.local
-  resolution: "@saberhq/tsconfig@workspace:packages/tsconfig"
-  languageName: unknown
-  linkType: soft
+"@saberhq/tsconfig@npm:^1.13.30":
+  version: 1.13.30
+  resolution: "@saberhq/tsconfig@npm:1.13.30"
+  checksum: ed4582e26d36c76676235c5fda8f7c4c555fd75f8d959d30927e6ba9ac3596e9d3731d2626900899079ac07461dfcca4cf5a7cab5a69501a275ca4a239aed217
+  languageName: node
+  linkType: hard
 
 "@saberhq/tuple-utils@workspace:packages/tuple-utils":
   version: 0.0.0-use.local
   resolution: "@saberhq/tuple-utils@workspace:packages/tuple-utils"
   dependencies:
     "@saberhq/option-utils": "workspace:^"
-    "@saberhq/tsconfig": "workspace:^"
+    "@saberhq/tsconfig": ^1.13.30
     tslib: ^2.4.0
     typescript: ^4.7.4
   languageName: unknown
@@ -2487,7 +2474,7 @@ __metadata:
     "@ledgerhq/hw-transport": ^6.27.1
     "@ledgerhq/hw-transport-webusb": ^6.27.1
     "@saberhq/solana-contrib": "workspace:^"
-    "@saberhq/tsconfig": "workspace:^"
+    "@saberhq/tsconfig": ^1.13.30
     "@saberhq/wallet-adapter-icons": "workspace:^"
     "@solana/wallet-adapter-base": ^0.9.6
     "@solana/wallet-adapter-clover": ^0.4.5
@@ -2524,7 +2511,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/wallet-adapter-icons@workspace:packages/wallet-adapter-icons"
   dependencies:
-    "@saberhq/tsconfig": "workspace:^"
+    "@saberhq/tsconfig": ^1.13.30
     "@types/react": ^18.0.14
     react: ^18.2.0
     tslib: ^2.4.0
@@ -3447,7 +3434,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.30.0":
+"@typescript-eslint/eslint-plugin@npm:^5.29.0":
   version: 5.30.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.30.0"
   dependencies:
@@ -3470,7 +3457,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.30.0":
+"@typescript-eslint/parser@npm:^5.29.0":
   version: 5.30.0
   resolution: "@typescript-eslint/parser@npm:5.30.0"
   dependencies:
@@ -5933,7 +5920,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsx-a11y@npm:^6.6.0":
+"eslint-plugin-jsx-a11y@npm:^6.5.1":
   version: 6.6.0
   resolution: "eslint-plugin-jsx-a11y@npm:6.6.0"
   dependencies:
@@ -5956,7 +5943,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^4.1.0":
+"eslint-plugin-prettier@npm:^4.0.0":
   version: 4.1.0
   resolution: "eslint-plugin-prettier@npm:4.1.0"
   dependencies:
@@ -5980,7 +5967,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.30.1":
+"eslint-plugin-react@npm:^7.30.0":
   version: 7.30.1
   resolution: "eslint-plugin-react@npm:7.30.1"
   dependencies:
