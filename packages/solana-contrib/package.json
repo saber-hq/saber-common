@@ -36,7 +36,7 @@
     "tslib": "^2.4.0"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "workspace:^",
+    "@saberhq/tsconfig": "^1.13.32",
     "@solana/web3.js": "^1.46.0",
     "@types/bn.js": "^5.1.0",
     "@types/jest": "^28.1.3",

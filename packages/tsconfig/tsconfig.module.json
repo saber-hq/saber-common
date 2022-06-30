@@ -1,8 +1,0 @@
-{
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "./tsconfig.lib.json",
-  "display": "Saber Node16 TSConfig (recommended)",
-  "compilerOptions": {
-    "moduleResolution": "Node16"
-  }
-}

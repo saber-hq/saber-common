@@ -11,8 +11,6 @@
   "references": [
     { "path": "packages/anchor-contrib/" },
     { "path": "packages/chai-solana/" },
-    { "path": "packages/eslint-config/" },
-    { "path": "packages/eslint-config-react/" },
     { "path": "packages/option-utils/" },
     { "path": "packages/solana-contrib/" },
     { "path": "packages/stableswap-sdk/" },

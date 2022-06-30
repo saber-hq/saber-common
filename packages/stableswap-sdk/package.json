@@ -27,7 +27,7 @@
     "node": ">=12.x"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "workspace:^",
+    "@saberhq/tsconfig": "^1.13.32",
     "@solana/web3.js": "^1.46.0",
     "@types/bn.js": "^5.1.0",
     "@types/lodash": "^4.14.182",
