@@ -70,12 +70,16 @@ export class TieredBroadcaster implements Broadcaster {
     void (async () => {
       await Promise.all(
         this.fallbackConnections.map(async (fc) => {
-          await sendAndSpamRawTx(
-            fc,
-            encoded,
-            options ?? this.opts,
-            options?.fallbackRetryOptions ?? DEFAULT_FALLBACK_RETRY_OPTIONS
-          );
+          try {
+            await sendAndSpamRawTx(
+              fc,
+              encoded,
+              options ?? this.opts,
+              options?.fallbackRetryOptions ?? DEFAULT_FALLBACK_RETRY_OPTIONS
+            );
+          } catch (e) {
+            console.warn(`[Broadcaster] _sendRawTransaction error`, e);
+          }
         })
       );
     })();
