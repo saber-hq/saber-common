@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/wallet-adapter-icons",
-  "version": "1.13.28",
+  "version": "1.13.30",
   "description": "Solana wallet adapter icons.",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/solana-wallet-adapters#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
@@ -40,7 +40,7 @@
     "react": "^17.0.2 || ^18"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "workspace:^",
+    "@saberhq/tsconfig": "^1.13.32",
     "@types/react": "^18.0.14",
     "react": "^18.2.0",
     "typescript": "^4.7.4"

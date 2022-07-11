@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/stableswap-sdk",
-  "version": "1.13.30",
+  "version": "1.13.32",
   "description": "Solana SDK for Saber's StableSwap program.",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/stableswap-sdk#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
@@ -27,8 +27,8 @@
     "node": ">=12.x"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "workspace:^",
-    "@solana/web3.js": "^1.44.2",
+    "@saberhq/tsconfig": "^1.13.32",
+    "@solana/web3.js": "^1.46.0",
     "@types/bn.js": "^5.1.0",
     "@types/lodash": "^4.14.182",
     "@types/node": "^18.0.0",

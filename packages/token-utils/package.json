@@ -1,7 +1,7 @@
 {
   "name": "@saberhq/token-utils",
   "description": "Token-related math and transaction utilities for Solana.",
-  "version": "1.13.30",
+  "version": "1.13.32",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/token-utils#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
   "bugs": "https://github.com/saber-hq/saber-common/issues",
@@ -38,8 +38,8 @@
     "src/"
   ],
   "devDependencies": {
-    "@saberhq/tsconfig": "workspace:^",
-    "@solana/web3.js": "^1.44.2",
+    "@saberhq/tsconfig": "^1.13.32",
+    "@solana/web3.js": "^1.46.0",
     "@types/bn.js": "^5.1.0",
     "jsbi": "^4.3.0",
     "typescript": "^4.7.4"

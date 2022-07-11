@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/option-utils",
-  "version": "1.13.30",
+  "version": "1.13.32",
   "description": "Utilities for handling optional values in TypeScript.",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/option-utils#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
@@ -36,7 +36,7 @@
     "tslib": "^2.4.0"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "workspace:^",
+    "@saberhq/tsconfig": "^1.13.32",
     "typescript": "^4.7.4"
   }
 }
