@@ -5,6 +5,7 @@
 
 import React from "react";
 
+export * from "./bravewallet.js";
 export * from "./coin98.js";
 export * from "./mathwallet.js";
 

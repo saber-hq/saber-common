@@ -146,5 +146,8 @@ declare global {
     huobiWallet?: {
       isHuobiWallet?: boolean;
     };
+    braveSolana?: {
+      isBraveWallet?: boolean;
+    };
   }
 }

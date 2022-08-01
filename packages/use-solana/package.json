@@ -34,6 +34,7 @@
     "@saberhq/solana-contrib": "workspace:^",
     "@saberhq/wallet-adapter-icons": "workspace:^",
     "@solana/wallet-adapter-base": "^0.9.6",
+    "@solana/wallet-adapter-brave": "0.1.4",
     "@solana/wallet-adapter-clover": "^0.4.5",
     "@solana/wallet-adapter-coin98": "^0.5.5",
     "@solana/wallet-adapter-exodus": "^0.1.1",
