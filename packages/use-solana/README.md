@@ -3,12 +3,12 @@
 Solana frontend library and TypeScript SDK. This SDK features:
 
 - React hooks and providers for adding a Solana connection to your app
-- Integrations with several popular wallets (full list [here](https://github.com/saber-hq/use-solana/blob/master/packages/use-solana/src/providers.tsx))
+- Integrations with several popular wallets (full list [here](https://github.com/saber-hq/use-solana/blob/master/packages/use-solana/src/providers.ts))
 - Helpers for fetching token account balances and performing mathematical operations on tokens
 
 ## Documentation
 
-Detailed information on how to build on Saber can be found on the [Saber developer documentation website](https://docs.saber.so/docs/developing/overview).
+Detailed information on how to build on Saber can be found on the [Saber developer documentation website](https://docs.saber.so/developing/overview).
 
 Automatically generated TypeScript documentation can be found [on GitHub pages](https://saber-hq.github.io/saber-common/).
 
