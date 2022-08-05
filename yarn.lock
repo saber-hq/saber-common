@@ -2479,6 +2479,7 @@ __metadata:
     "@solana/wallet-adapter-base": ^0.9.6
     "@solana/wallet-adapter-clover": ^0.4.5
     "@solana/wallet-adapter-coin98": ^0.5.5
+    "@solana/wallet-adapter-coinbase": ^0.1.5
     "@solana/wallet-adapter-exodus": ^0.1.1
     "@solana/wallet-adapter-glow": ^0.1.2
     "@solana/wallet-adapter-huobi": ^0.1.1
@@ -2634,6 +2635,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@solana/wallet-adapter-base@npm:^0.9.9":
+  version: 0.9.9
+  resolution: "@solana/wallet-adapter-base@npm:0.9.9"
+  dependencies:
+    eventemitter3: ^4.0.0
+  peerDependencies:
+    "@solana/web3.js": ^1.44.3
+  checksum: 3e69b0bf7e5dbc2447db65096904e1d5f7f8ba2ef3eca1b5018f6c7b48c744229870f0bb2096249078ee33a3de63c575e665502bb09e532221dbd732fa095654
+  languageName: node
+  linkType: hard
+
 "@solana/wallet-adapter-clover@npm:^0.4.5":
   version: 0.4.5
   resolution: "@solana/wallet-adapter-clover@npm:0.4.5"
@@ -2654,6 +2666,17 @@ __metadata:
   peerDependencies:
     "@solana/web3.js": ^1.44.3
   checksum: a563d37d812d5935be41e4b1ffc323195883becf0a7768f537eb357529741eced9ce3014fb156a4a40adc8362480b6fa80cd01a32d9c29eec7c781f6799b3e6e
+  languageName: node
+  linkType: hard
+
+"@solana/wallet-adapter-coinbase@npm:^0.1.5":
+  version: 0.1.5
+  resolution: "@solana/wallet-adapter-coinbase@npm:0.1.5"
+  dependencies:
+    "@solana/wallet-adapter-base": ^0.9.9
+  peerDependencies:
+    "@solana/web3.js": ^1.36.0
+  checksum: 35a3d9ef74d1b422c4e538fdceb2c41caed9f43a669685a94a7d7b746821ffad7a06f5c2caf2808c5a5f71589e8388c00172a8ba8d33808d443bbe05abc328b0
   languageName: node
   linkType: hard
 
