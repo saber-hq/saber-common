@@ -2477,6 +2477,7 @@ __metadata:
     "@saberhq/tsconfig": ^1.13.32
     "@saberhq/wallet-adapter-icons": "workspace:^"
     "@solana/wallet-adapter-base": ^0.9.6
+    "@solana/wallet-adapter-brave": 0.1.4
     "@solana/wallet-adapter-clover": ^0.4.5
     "@solana/wallet-adapter-coin98": ^0.5.5
     "@solana/wallet-adapter-exodus": ^0.1.1
@@ -2631,6 +2632,28 @@ __metadata:
   peerDependencies:
     "@solana/web3.js": ^1.44.3
   checksum: b1cbefaf6001009a692d5aeecd51696f943e14757945addff5f5288753329a461e84f41097f7ccf53b03c53e986d5d16ec049f8c3840c96f10fa15d1f7d3b25f
+  languageName: node
+  linkType: hard
+
+"@solana/wallet-adapter-base@npm:^0.9.9":
+  version: 0.9.9
+  resolution: "@solana/wallet-adapter-base@npm:0.9.9"
+  dependencies:
+    eventemitter3: ^4.0.0
+  peerDependencies:
+    "@solana/web3.js": ^1.44.3
+  checksum: 3e69b0bf7e5dbc2447db65096904e1d5f7f8ba2ef3eca1b5018f6c7b48c744229870f0bb2096249078ee33a3de63c575e665502bb09e532221dbd732fa095654
+  languageName: node
+  linkType: hard
+
+"@solana/wallet-adapter-brave@npm:0.1.4":
+  version: 0.1.4
+  resolution: "@solana/wallet-adapter-brave@npm:0.1.4"
+  dependencies:
+    "@solana/wallet-adapter-base": ^0.9.9
+  peerDependencies:
+    "@solana/web3.js": ^1.36.0
+  checksum: d8b8fcf8b8ecbb4e100c8f7af97392bdb9e0fbcf4a720fb7f1743e5b89c5088b99af6db8a59dfdcda0024f6791509361e0e3259aecfc6d8dbf13a6d0dd32c845
   languageName: node
   linkType: hard
 
