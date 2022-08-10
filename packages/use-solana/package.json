@@ -31,6 +31,7 @@
   "dependencies": {
     "@ledgerhq/hw-transport": "^6.27.2",
     "@ledgerhq/hw-transport-webusb": "^6.27.2",
+    "@nightlylabs/wallet-solana-adapter": "^0.0.4",
     "@saberhq/solana-contrib": "workspace:^",
     "@saberhq/wallet-adapter-icons": "workspace:^",
     "@solana/wallet-adapter-base": "^0.9.6",

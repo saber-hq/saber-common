@@ -1,3 +1,4 @@
+import { NightlyWalletAdapter } from "@nightlylabs/wallet-solana-adapter";
 import {
   BRAVEWALLET,
   CLOVER,
@@ -9,6 +10,7 @@ import {
   LEDGER,
   MAGNIFYING_GLASS,
   MATHWALLET,
+  NIGHTLY,
   PHANTOM,
   SLOPE,
   SOLFLARE,
@@ -47,6 +49,7 @@ export enum DefaultWalletType {
   Huobi = "Huobi",
   Ledger = "Ledger",
   MathWallet = "MathWallet",
+  Nightly = "Nightly",
   Phantom = "Phantom",
   ReadOnly = "ReadOnly",
   SecretKey = "SecretKey",
@@ -215,6 +218,13 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     makeAdapter: () => new ReadonlyAdapter(),
     isInstalled: () =>
       !!process.env.LOCAL_PUBKEY || !!process.env.REACT_APP_LOCAL_PUBKEY,
+  },
+  [DefaultWalletType.Nightly]: {
+    name: "Nightly",
+    url: "https://nightly.app",
+    icon: NIGHTLY,
+    makeAdapter: () => new SolanaWalletAdapter(new NightlyWalletAdapter()),
+    isInstalled: () => typeof window?.nightly?.solana !== "undefined",
   },
 };
 
