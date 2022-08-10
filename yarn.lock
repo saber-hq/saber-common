@@ -40,7 +40,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.18.6":
+"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.18.10":
   version: 7.18.10
   resolution: "@babel/core@npm:7.18.10"
   dependencies:
@@ -1159,7 +1159,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.18.6":
+"@babel/preset-env@npm:^7.18.10":
   version: 7.18.10
   resolution: "@babel/preset-env@npm:7.18.10"
   dependencies:
@@ -1688,7 +1688,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/types@npm:^28.1.1, @jest/types@npm:^28.1.3":
+"@jest/types@npm:^28.1.3":
   version: 28.1.3
   resolution: "@jest/types@npm:28.1.3"
   dependencies:
@@ -1793,7 +1793,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport-webusb@npm:^6.27.1":
+"@ledgerhq/hw-transport-webusb@npm:^6.27.2":
   version: 6.27.2
   resolution: "@ledgerhq/hw-transport-webusb@npm:6.27.2"
   dependencies:
@@ -1805,7 +1805,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport@npm:^6.27.1, @ledgerhq/hw-transport@npm:^6.27.2":
+"@ledgerhq/hw-transport@npm:^6.27.2":
   version: 6.27.2
   resolution: "@ledgerhq/hw-transport@npm:6.27.2"
   dependencies:
@@ -1880,7 +1880,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@project-serum/anchor@npm:^0.25.0-beta.1":
+"@project-serum/anchor@npm:^0.25.0":
   version: 0.25.0
   resolution: "@project-serum/anchor@npm:0.25.0"
   dependencies:
@@ -1950,10 +1950,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/anchor-contrib@workspace:packages/anchor-contrib"
   dependencies:
-    "@project-serum/anchor": ^0.25.0-beta.1
+    "@project-serum/anchor": ^0.25.0
     "@saberhq/solana-contrib": "workspace:^"
     "@saberhq/tsconfig": ^1.13.32
-    "@solana/web3.js": ^1.46.0
+    "@solana/web3.js": ^1.50.1
     "@types/lodash.camelcase": ^4.3.7
     "@types/lodash.mapvalues": ^4.6.7
     bn.js: ^5.2.1
@@ -1973,13 +1973,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/chai-solana@workspace:packages/chai-solana"
   dependencies:
-    "@project-serum/anchor": ^0.25.0-beta.1
+    "@project-serum/anchor": ^0.25.0
     "@saberhq/anchor-contrib": "workspace:^"
     "@saberhq/solana-contrib": "workspace:^"
     "@saberhq/token-utils": "workspace:^"
     "@saberhq/tsconfig": ^1.13.32
-    "@solana/web3.js": ^1.46.0
-    "@types/chai": ^4.3.1
+    "@solana/web3.js": ^1.50.1
+    "@types/chai": ^4.3.3
     "@types/chai-as-promised": ^7.1.5
     "@types/promise-retry": ^1.1.3
     bn.js: ^5.2.1
@@ -2045,11 +2045,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/saber-common@workspace:."
   dependencies:
-    "@babel/core": ^7.18.6
-    "@babel/preset-env": ^7.18.6
+    "@babel/core": ^7.18.10
+    "@babel/preset-env": ^7.18.10
     "@babel/preset-typescript": ^7.18.6
-    "@jest/types": ^28.1.1
-    "@project-serum/anchor": ^0.25.0-beta.1
+    "@jest/types": ^28.1.3
+    "@project-serum/anchor": ^0.25.0
     "@rushstack/eslint-patch": ^1.1.4
     "@saberhq/eslint-config": ^1.13.32
     "@saberhq/eslint-config-react": ^1.13.32
@@ -2058,31 +2058,31 @@ __metadata:
     "@size-limit/file": ^7.0.8
     "@size-limit/webpack": ^7.0.8
     "@size-limit/webpack-why": ^7.0.8
-    "@solana/web3.js": ^1.46.0
+    "@solana/web3.js": ^1.50.1
     "@types/babel__core": ^7.1.19
     "@types/babel__preset-env": ^7.9.2
     "@types/bn.js": ^5.1.0
-    "@types/eslint": ^8.4.3
-    "@types/jest": ^28.1.3
-    "@types/node": ^18.0.0
-    "@types/react": ^18.0.14
+    "@types/eslint": ^8.4.5
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.6.5
+    "@types/react": ^18.0.17
     "@types/source-map-support": ^0.5.4
     "@types/w3c-web-usb": ^1.0.6
-    "@typescript-eslint/utils": ^5.30.0
+    "@typescript-eslint/utils": ^5.33.0
     "@yarnpkg/doctor": ^3.1.3
     bn.js: ^5.2.1
     buffer: ^6.0.3
     eslint: ^8.18.0
     husky: ^8.0.1
-    jest: ^28.1.2
-    jest-runtime: ^28.1.2
+    jest: ^28.1.3
+    jest-runtime: ^28.1.3
     jsbi: ^4.3.0
     lint-staged: ^13.0.3
     prettier: ^2.7.1
     react: ^18.2.0
     size-limit: ^7.0.8
     source-map-support: ^0.5.21
-    ts-jest: ^28.0.5
+    ts-jest: ^28.0.7
     ts-node: ^10.8.1
     typedoc: ^0.22.18
     typescript: ^4.7.4
@@ -2096,10 +2096,10 @@ __metadata:
     "@saberhq/option-utils": "workspace:^"
     "@saberhq/tsconfig": ^1.13.32
     "@solana/buffer-layout": ^4.0.0
-    "@solana/web3.js": ^1.46.0
+    "@solana/web3.js": ^1.50.1
     "@types/bn.js": ^5.1.0
-    "@types/jest": ^28.1.3
-    "@types/node": ^18.0.0
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.6.5
     "@types/promise-retry": ^1.1.3
     "@types/retry": ^0.12.2
     bn.js: ^5.2.1
@@ -2122,10 +2122,10 @@ __metadata:
     "@saberhq/token-utils": "workspace:^"
     "@saberhq/tsconfig": ^1.13.32
     "@solana/buffer-layout": ^4.0.0
-    "@solana/web3.js": ^1.46.0
+    "@solana/web3.js": ^1.50.1
     "@types/bn.js": ^5.1.0
     "@types/lodash": ^4.14.182
-    "@types/node": ^18.0.0
+    "@types/node": ^18.6.5
     bn.js: ^5.2.1
     jsbi: ^4.3.0
     lodash: ^4.17.21
@@ -2147,9 +2147,9 @@ __metadata:
     "@saberhq/tsconfig": ^1.13.32
     "@solana/buffer-layout": ^4.0.0
     "@solana/spl-token": ^0.1.8
-    "@solana/web3.js": ^1.46.0
+    "@solana/web3.js": ^1.50.1
     "@types/bn.js": ^5.1.0
-    "@ubeswap/token-math": ^5.1.6
+    "@ubeswap/token-math": ^5.2.0
     jsbi: ^4.3.0
     tiny-invariant: ^1.2.0
     tslib: ^2.4.0
@@ -2183,8 +2183,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/use-solana@workspace:packages/use-solana"
   dependencies:
-    "@ledgerhq/hw-transport": ^6.27.1
-    "@ledgerhq/hw-transport-webusb": ^6.27.1
+    "@ledgerhq/hw-transport": ^6.27.2
+    "@ledgerhq/hw-transport-webusb": ^6.27.2
     "@nightlylabs/wallet-solana-adapter": ^0.0.4
     "@saberhq/solana-contrib": "workspace:^"
     "@saberhq/tsconfig": ^1.13.32
@@ -2202,10 +2202,10 @@ __metadata:
     "@solana/wallet-adapter-solflare": ^0.6.7
     "@solana/wallet-adapter-sollet": ^0.11.2
     "@solana/wallet-adapter-solong": ^0.9.4
-    "@solana/web3.js": ^1.46.0
+    "@solana/web3.js": ^1.50.1
     "@types/bn.js": ^5.1.0
-    "@types/node": ^18.0.0
-    "@types/react": ^18.0.14
+    "@types/node": ^18.6.5
+    "@types/react": ^18.0.17
     bn.js: ^5.2.1
     eventemitter3: ^4.0.7
     fast-json-stable-stringify: ^2.1.0
@@ -2226,7 +2226,7 @@ __metadata:
   resolution: "@saberhq/wallet-adapter-icons@workspace:packages/wallet-adapter-icons"
   dependencies:
     "@saberhq/tsconfig": ^1.13.32
-    "@types/react": ^18.0.14
+    "@types/react": ^18.0.17
     react: ^18.2.0
     tslib: ^2.4.0
     typescript: ^4.7.4
@@ -2325,7 +2325,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/wallet-adapter-base@npm:^0.9.10, @solana/wallet-adapter-base@npm:^0.9.4, @solana/wallet-adapter-base@npm:^0.9.6":
+"@solana/wallet-adapter-base@npm:^0.9.10, @solana/wallet-adapter-base@npm:^0.9.4, @solana/wallet-adapter-base@npm:^0.9.6, @solana/wallet-adapter-base@npm:^0.9.9":
   version: 0.9.10
   resolution: "@solana/wallet-adapter-base@npm:0.9.10"
   dependencies:
@@ -2333,17 +2333,6 @@ __metadata:
   peerDependencies:
     "@solana/web3.js": ^1.50.1
   checksum: bafe964a98bb1f44bcea78983bfbe0ca64ad7f2da5d77da7907a382e436f6d0ff2420ccb1fbeacd9c21c901afe5b2316ecc0c4c349cb4c950702ba5453ab327e
-  languageName: node
-  linkType: hard
-
-"@solana/wallet-adapter-base@npm:^0.9.9":
-  version: 0.9.9
-  resolution: "@solana/wallet-adapter-base@npm:0.9.9"
-  dependencies:
-    eventemitter3: ^4.0.0
-  peerDependencies:
-    "@solana/web3.js": ^1.44.3
-  checksum: 3e69b0bf7e5dbc2447db65096904e1d5f7f8ba2ef3eca1b5018f6c7b48c744229870f0bb2096249078ee33a3de63c575e665502bb09e532221dbd732fa095654
   languageName: node
   linkType: hard
 
@@ -2819,7 +2808,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chai@npm:*, @types/chai@npm:^4.3.1":
+"@types/chai@npm:*, @types/chai@npm:^4.3.3":
   version: 4.3.3
   resolution: "@types/chai@npm:4.3.3"
   checksum: 20cd094753e137cfc35939cae7f0ed78ecda7861e5c94704efab6979b9121a63807e9b631bdcf3a2792d6c6dba44050b13387262f9e63ebb040741c01c345f0a
@@ -2852,7 +2841,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:*, @types/eslint@npm:^8.4.3":
+"@types/eslint@npm:*, @types/eslint@npm:^8.4.5":
   version: 8.4.5
   resolution: "@types/eslint@npm:8.4.5"
   dependencies:
@@ -2928,7 +2917,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^28.1.3":
+"@types/jest@npm:^28.1.6":
   version: 28.1.6
   resolution: "@types/jest@npm:28.1.6"
   dependencies:
@@ -2993,7 +2982,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^18.0.0":
+"@types/node@npm:*, @types/node@npm:^18.6.5":
   version: 18.6.5
   resolution: "@types/node@npm:18.6.5"
   checksum: e3e66c9a84b94010a57c1b9dac882c08484278d74f9d120dbe6a3e45d00740d178bd1d34a5deee28197c94b9f4359153b637bab9b305328e865027e9987a0f3d
@@ -3051,7 +3040,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.0.14":
+"@types/react@npm:^18.0.17":
   version: 18.0.17
   resolution: "@types/react@npm:18.0.17"
   dependencies:
@@ -3238,7 +3227,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:5.33.0, @typescript-eslint/utils@npm:^5.30.0":
+"@typescript-eslint/utils@npm:5.33.0, @typescript-eslint/utils@npm:^5.33.0":
   version: 5.33.0
   resolution: "@typescript-eslint/utils@npm:5.33.0"
   dependencies:
@@ -3264,7 +3253,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ubeswap/token-math@npm:^5.1.6":
+"@ubeswap/token-math@npm:^5.2.0":
   version: 5.2.0
   resolution: "@ubeswap/token-math@npm:5.2.0"
   dependencies:
@@ -5298,9 +5287,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.202":
-  version: 1.4.212
-  resolution: "electron-to-chromium@npm:1.4.212"
-  checksum: 972eb1b46bce2fa7fa19eb70779d27b84b7113daad01718a67cfbd92e2972c09eaf15bbe5e901467399e5e66c74a17a74891c7aeda8118b1ef655d8c1913ee2a
+  version: 1.4.213
+  resolution: "electron-to-chromium@npm:1.4.213"
+  checksum: 63953b2db5f87ef11caad8c57bba69300cc5ab1bf363d5758c48187fe9e414e971e470bfc961540c954a2f966fadccce29bdbfa60f5bd6c4b5499f16404d0846
   languageName: node
   linkType: hard
 
@@ -7239,7 +7228,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-runtime@npm:^28.1.2, jest-runtime@npm:^28.1.3":
+"jest-runtime@npm:^28.1.3":
   version: 28.1.3
   resolution: "jest-runtime@npm:28.1.3"
   dependencies:
@@ -7366,7 +7355,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^28.1.2":
+"jest@npm:^28.1.3":
   version: 28.1.3
   resolution: "jest@npm:28.1.3"
   dependencies:
@@ -9927,7 +9916,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:^28.0.5":
+"ts-jest@npm:^28.0.7":
   version: 28.0.7
   resolution: "ts-jest@npm:28.0.7"
   dependencies:

@@ -20,17 +20,17 @@
   },
   "devDependencies": {
     "@saberhq/tsconfig": "^1.13.32",
-    "@solana/web3.js": "^1.46.0",
+    "@solana/web3.js": "^1.50.1",
     "@types/bn.js": "^5.1.0",
-    "@types/node": "^18.0.0",
-    "@types/react": "^18.0.14",
+    "@types/node": "^18.6.5",
+    "@types/react": "^18.0.17",
     "bn.js": "^5.2.1",
     "react": "^18.2.0",
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@ledgerhq/hw-transport": "^6.27.1",
-    "@ledgerhq/hw-transport-webusb": "^6.27.1",
+    "@ledgerhq/hw-transport": "^6.27.2",
+    "@ledgerhq/hw-transport-webusb": "^6.27.2",
     "@nightlylabs/wallet-solana-adapter": "^0.0.4",
     "@saberhq/solana-contrib": "workspace:^",
     "@saberhq/wallet-adapter-icons": "workspace:^",
