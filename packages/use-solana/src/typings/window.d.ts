@@ -156,7 +156,7 @@ declare global {
       isHuobiWallet?: boolean;
     };
     nightly?: {
-      solana?: NightlyProvider
+      solana?: NightlyProvider;
     };
     braveSolana?: {
       isBraveWallet?: boolean;
