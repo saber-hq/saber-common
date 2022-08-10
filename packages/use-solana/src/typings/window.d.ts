@@ -157,6 +157,9 @@ declare global {
     };
     nightly?: {
       solana?: NightlyProvider
-    }
+    };
+    braveSolana?: {
+      isBraveWallet?: boolean;
+    };
   }
 }

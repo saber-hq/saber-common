@@ -1,5 +1,6 @@
 import { NightlyWalletAdapter } from "@nightlylabs/wallet-solana-adapter";
 import {
+  BRAVEWALLET,
   CLOVER,
   COIN98,
   EXODUS,
@@ -16,6 +17,7 @@ import {
   SOLLET,
 } from "@saberhq/wallet-adapter-icons";
 import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { BraveWalletAdapter } from "@solana/wallet-adapter-brave";
 import { CloverWalletAdapter } from "@solana/wallet-adapter-clover";
 import { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
 import { ExodusWalletAdapter } from "@solana/wallet-adapter-exodus";
@@ -30,7 +32,7 @@ import {
   SolletWalletAdapter,
 } from "@solana/wallet-adapter-sollet";
 import { SolongWalletAdapter } from "@solana/wallet-adapter-solong";
-import type React from "react";
+import type * as React from "react";
 
 import type { WalletAdapterBuilder } from "./adapters";
 import { LedgerWalletAdapter, SolanaWalletAdapter } from "./adapters";
@@ -39,6 +41,7 @@ import { SecretKeyAdapter } from "./adapters/secret-key";
 import { SolflareAdapter } from "./adapters/solflare";
 
 export enum DefaultWalletType {
+  BraveWallet = "BraveWallet",
   Clover = "Clover",
   Coin98 = "Coin98",
   Exodus = "Exodus",
@@ -93,6 +96,14 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
       ),
 
     isInstalled: () => window.sollet !== undefined,
+  },
+  [DefaultWalletType.BraveWallet]: {
+    name: "Brave Wallet",
+    url: "https://www.brave.com/wallet",
+    icon: BRAVEWALLET,
+    makeAdapter: () => new SolanaWalletAdapter(new BraveWalletAdapter()),
+    isInstalled: () => window.braveSolana?.isBraveWallet === true,
+    isMobile: true,
   },
   [DefaultWalletType.Ledger]: {
     name: "Ledger",
