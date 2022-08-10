@@ -175,9 +175,12 @@ export class SuperCoder<T extends CoderAnchorTypes> {
       return [];
     }
     const events: E[] = [];
-    this.eventParser.parseLogs(logs ?? [], (event) =>
-      events.push(event as unknown as E)
-    );
+    const parsedLogsIter = this.eventParser.parseLogs(logs ?? []);
+    let parsedEvent = parsedLogsIter.next();
+    while (!parsedEvent.done) {
+      events.push(parsedEvent.value as unknown as E);
+      parsedEvent = parsedLogsIter.next();
+    }
     return events;
   }
 
