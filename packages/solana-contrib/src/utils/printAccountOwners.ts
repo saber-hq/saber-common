@@ -63,7 +63,8 @@ export async function printAccountOwners(
         if (
           expectIndex > 0 &&
           typeof process !== "undefined" &&
-          typeof window === "undefined"
+          process.versions !== undefined &&
+          process.versions.node !== undefined
         ) {
           const maybeProcess: MaybeProcess = process;
           const targetLine = callStack[expectIndex + 1];
