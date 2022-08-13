@@ -112,7 +112,7 @@ export class TransactionReceipt {
       case ExplorerType.SOLSCAN:
         return `https://solscan.io/tx/${this.signature}?cluster=${cluster}`;
       default:
-        return "";
+        throw new Error(`Explorer type is not passed.`);
     }
   }
 }
