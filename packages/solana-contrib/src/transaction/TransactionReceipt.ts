@@ -102,6 +102,10 @@ export class TransactionReceipt {
    * @returns
    */
 
+  generateSolanaExplorerLink(cluster: Cluster = "mainnet-beta"): string {
+    return this.generateTXLink(cluster);
+  }
+
   generateTXLink(
     cluster: Cluster = "mainnet-beta",
     explorerType: string = ExplorerType.SOLANA_EXPLORER
