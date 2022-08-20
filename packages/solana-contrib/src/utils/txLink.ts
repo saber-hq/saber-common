@@ -9,22 +9,22 @@ export enum ExplorerType {
 }
 
 export function generateSolanaExplorerLink(
-  tx: PendingTransaction | TransactionReceipt,
+  signature: string,
   cluster: Cluster = "mainnet-beta"
 ): string {
-  return generateTXLink(tx, cluster);
+  return generateTXLink(signature, cluster);
 }
 
 export function generateTXLink(
-  tx: PendingTransaction | TransactionReceipt,
+  signature: string,
   cluster: Cluster = "mainnet-beta",
   explorerType: string = ExplorerType.SOLANA_EXPLORER
 ): string {
   switch (explorerType) {
     case ExplorerType.SOLANA_EXPLORER:
-      return `https://explorer.solana.com/tx/${tx.signature}?cluster=${cluster}`;
+      return `https://explorer.solana.com/tx/${signature}?cluster=${cluster}`;
     case ExplorerType.SOLSCAN:
-      return `https://solscan.io/tx/${tx.signature}?cluster=${cluster}`;
+      return `https://solscan.io/tx/${signature}?cluster=${cluster}`;
     default:
       throw new Error(`Explorer type ${explorerType} is not supported.`);
   }
