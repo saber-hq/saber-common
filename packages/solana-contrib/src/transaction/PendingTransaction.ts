@@ -1,5 +1,6 @@
 import type {
   BlockhashWithExpiryBlockHeight,
+  Cluster,
   Connection,
   Finality,
   SignatureResult,
@@ -8,6 +9,7 @@ import type {
 import promiseRetry from "promise-retry";
 import type { WrapOptions } from "retry";
 
+import { generateTXLink } from "../utils/txLink.js";
 import { TransactionReceipt } from "./TransactionReceipt.js";
 
 /**
@@ -156,5 +158,14 @@ export class PendingTransaction {
     }
 
     return this.signature;
+  }
+
+  /**
+   * Generates a link to view this {@link PendingTransaction} on the official Solana explorer.
+   * @param network
+   * @returns
+   */
+  generateSolanaExplorerLink(cluster: Cluster = "mainnet-beta"): string {
+    return generateTXLink(this.signature, cluster);
   }
 }

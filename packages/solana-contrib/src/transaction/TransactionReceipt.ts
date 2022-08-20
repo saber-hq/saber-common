@@ -1,4 +1,5 @@
 import type {
+  Cluster,
   TransactionResponse,
   TransactionSignature,
 } from "@solana/web3.js";
@@ -7,6 +8,7 @@ import { default as invariant } from "tiny-invariant";
 import type { Event, EventParser } from "../interfaces.js";
 import type { PromiseOrValue } from "../utils/misc.js";
 import { valueAsPromise } from "../utils/misc.js";
+import { generateTXLink } from "../utils/txLink.js";
 import { PendingTransaction } from "./PendingTransaction.js";
 import type { TransactionEnvelope } from "./TransactionEnvelope.js";
 
@@ -88,5 +90,14 @@ export class TransactionReceipt {
     const amtStr = consumeLog.split(" ")[3];
     invariant(amtStr, "no amount");
     return parseInt(amtStr);
+  }
+
+  /**
+   * Generates a link to view this {@link TransactionReceipt} on the official Solana explorer.
+   * @param network
+   * @returns
+   */
+  generateSolanaExplorerLink(cluster: Cluster = "mainnet-beta"): string {
+    return generateTXLink(this.signature, cluster);
   }
 }
