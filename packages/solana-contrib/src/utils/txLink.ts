@@ -12,7 +12,7 @@ export function generateSolanaExplorerLink(
   tx: PendingTransaction | TransactionReceipt,
   cluster: Cluster = "mainnet-beta"
 ): string {
-  return generateTXLink(tx.signature, cluster);
+  return generateTXLink(tx, cluster);
 }
 
 export function generateTXLink(

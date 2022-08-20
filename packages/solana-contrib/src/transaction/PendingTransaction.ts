@@ -1,6 +1,5 @@
 import type {
   BlockhashWithExpiryBlockHeight,
-  Cluster,
   Connection,
   Finality,
   SignatureResult,
@@ -9,7 +8,7 @@ import type {
 import promiseRetry from "promise-retry";
 import type { WrapOptions } from "retry";
 
-import { ExplorerType, TransactionReceipt } from "./TransactionReceipt.js";
+import { TransactionReceipt } from "./TransactionReceipt.js";
 
 /**
  * Options for awaiting a transaction confirmation.

@@ -1,5 +1,4 @@
 import type {
-  Cluster,
   TransactionResponse,
   TransactionSignature,
 } from "@solana/web3.js";
