@@ -1,18 +1,8 @@
 import { Cluster } from "@solana/web3.js";
 
-import { PendingTransaction } from "../transaction/PendingTransaction";
-import { TransactionReceipt } from "../transaction/TransactionReceipt";
-
 export enum ExplorerType {
   SOLANA_EXPLORER = "solana-explorer",
   SOLSCAN = "solscan",
-}
-
-export function generateSolanaExplorerLink(
-  signature: string,
-  cluster: Cluster = "mainnet-beta"
-): string {
-  return generateTXLink(signature, cluster);
 }
 
 export function generateTXLink(
