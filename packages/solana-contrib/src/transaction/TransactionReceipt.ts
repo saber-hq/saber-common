@@ -19,11 +19,6 @@ export type TransactionLike =
   | PendingTransaction
   | TransactionReceipt;
 
-export enum ExplorerType {
-  SOLANA_EXPLORER = "solana-explorer",
-  SOLSCAN = "solscan",
-}
-
 /**
  * Confirms a transaction, returning its receipt.
  *
@@ -94,28 +89,5 @@ export class TransactionReceipt {
     const amtStr = consumeLog.split(" ")[3];
     invariant(amtStr, "no amount");
     return parseInt(amtStr);
-  }
-
-  /**
-   * Generates a link to view this {@link TransactionReceipt} on the official Solana explorer.
-   * @param network
-   * @returns
-   */
-  generateSolanaExplorerLink(cluster: Cluster = "mainnet-beta"): string {
-    return this.generateTXLink(cluster);
-  }
-
-  generateTXLink(
-    cluster: Cluster = "mainnet-beta",
-    explorerType: string = ExplorerType.SOLANA_EXPLORER
-  ): string {
-    switch (explorerType) {
-      case ExplorerType.SOLANA_EXPLORER:
-        return `https://explorer.solana.com/tx/${this.signature}?cluster=${cluster}`;
-      case ExplorerType.SOLSCAN:
-        return `https://solscan.io/tx/${this.signature}?cluster=${cluster}`;
-      default:
-        throw new Error(`Explorer type ${explorerType} is not supported.`);
-    }
   }
 }

@@ -158,27 +158,4 @@ export class PendingTransaction {
 
     return this.signature;
   }
-
-  /**
-   * Generates a link to view this {@link PendingTransaction} on the official Solana explorer.
-   * @param network
-   * @returns
-   */
-  generateSolanaExplorerLink(cluster: Cluster = "mainnet-beta"): string {
-    return `https://explorer.solana.com/tx/${this.signature}?cluster=${cluster}`;
-  }
-
-  generateTXLink(
-    cluster: Cluster = "mainnet-beta",
-    explorerType: string = ExplorerType.SOLANA_EXPLORER
-  ): string {
-    switch (explorerType) {
-      case ExplorerType.SOLANA_EXPLORER:
-        return `https://explorer.solana.com/tx/${this.signature}?cluster=${cluster}`;
-      case ExplorerType.SOLSCAN:
-        return `https://solscan.io/tx/${this.signature}?cluster=${cluster}`;
-      default:
-        throw new Error(`Explorer type ${explorerType} is not supported.`);
-    }
-  }
 }
