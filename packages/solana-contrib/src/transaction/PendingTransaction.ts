@@ -9,7 +9,7 @@ import type {
 import promiseRetry from "promise-retry";
 import type { WrapOptions } from "retry";
 
-import { TransactionReceipt } from "./TransactionReceipt.js";
+import { ExplorerType, TransactionReceipt } from "./TransactionReceipt.js";
 
 /**
  * Options for awaiting a transaction confirmation.
@@ -166,5 +166,19 @@ export class PendingTransaction {
    */
   generateSolanaExplorerLink(cluster: Cluster = "mainnet-beta"): string {
     return `https://explorer.solana.com/tx/${this.signature}?cluster=${cluster}`;
+  }
+
+  generateTXLink(
+    cluster: Cluster = "mainnet-beta",
+    explorerType: string = ExplorerType.SOLANA_EXPLORER
+  ): string {
+    switch (explorerType) {
+      case ExplorerType.SOLANA_EXPLORER:
+        return `https://explorer.solana.com/tx/${this.signature}?cluster=${cluster}`;
+      case ExplorerType.SOLSCAN:
+        return `https://solscan.io/tx/${this.signature}?cluster=${cluster}`;
+      default:
+        throw new Error(`Explorer type ${explorerType} is not supported.`);
+    }
   }
 }
