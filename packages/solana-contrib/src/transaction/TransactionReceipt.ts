@@ -8,6 +8,7 @@ import { default as invariant } from "tiny-invariant";
 import type { Event, EventParser } from "../interfaces.js";
 import type { PromiseOrValue } from "../utils/misc.js";
 import { valueAsPromise } from "../utils/misc.js";
+import { generateTXLink } from "../utils/txLink.js";
 import { PendingTransaction } from "./PendingTransaction.js";
 import type { TransactionEnvelope } from "./TransactionEnvelope.js";
 
@@ -18,11 +19,6 @@ export type TransactionLike =
   | TransactionEnvelope
   | PendingTransaction
   | TransactionReceipt;
-
-export enum ExplorerType {
-  SOLANA_EXPLORER = "solana-explorer",
-  SOLSCAN = "solscan",
-}
 
 /**
  * Confirms a transaction, returning its receipt.
@@ -102,20 +98,6 @@ export class TransactionReceipt {
    * @returns
    */
   generateSolanaExplorerLink(cluster: Cluster = "mainnet-beta"): string {
-    return this.generateTXLink(cluster);
-  }
-
-  generateTXLink(
-    cluster: Cluster = "mainnet-beta",
-    explorerType: string = ExplorerType.SOLANA_EXPLORER
-  ): string {
-    switch (explorerType) {
-      case ExplorerType.SOLANA_EXPLORER:
-        return `https://explorer.solana.com/tx/${this.signature}?cluster=${cluster}`;
-      case ExplorerType.SOLSCAN:
-        return `https://solscan.io/tx/${this.signature}?cluster=${cluster}`;
-      default:
-        throw new Error(`Explorer type ${explorerType} is not supported.`);
-    }
+    return generateTXLink(this.signature, cluster);
   }
 }

@@ -9,6 +9,7 @@ import type {
 import promiseRetry from "promise-retry";
 import type { WrapOptions } from "retry";
 
+import { generateTXLink } from "../utils/txLink.js";
 import { TransactionReceipt } from "./TransactionReceipt.js";
 
 /**
@@ -165,6 +166,6 @@ export class PendingTransaction {
    * @returns
    */
   generateSolanaExplorerLink(cluster: Cluster = "mainnet-beta"): string {
-    return `https://explorer.solana.com/tx/${this.signature}?cluster=${cluster}`;
+    return generateTXLink(this.signature, cluster);
   }
 }
