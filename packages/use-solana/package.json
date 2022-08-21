@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/use-solana",
-  "version": "1.14.1",
+  "version": "1.14.2",
   "description": "Solana utilities for React applications.",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/use-solana#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
@@ -42,7 +42,7 @@
     "@solana/wallet-adapter-glow": "^0.1.2",
     "@solana/wallet-adapter-huobi": "^0.1.1",
     "@solana/wallet-adapter-mathwallet": "^0.9.4",
-    "@solana/wallet-adapter-phantom": "^0.9.4",
+    "@solana/wallet-adapter-phantom": "^0.9.13",
     "@solana/wallet-adapter-slope": "^0.5.5",
     "@solana/wallet-adapter-solflare": "^0.6.7",
     "@solana/wallet-adapter-sollet": "^0.11.2",
