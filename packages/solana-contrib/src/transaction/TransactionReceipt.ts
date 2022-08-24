@@ -8,6 +8,7 @@ import { default as invariant } from "tiny-invariant";
 import type { Event, EventParser } from "../interfaces.js";
 import type { PromiseOrValue } from "../utils/misc.js";
 import { valueAsPromise } from "../utils/misc.js";
+import { generateTXLink } from "../utils/txLink.js";
 import { PendingTransaction } from "./PendingTransaction.js";
 import type { TransactionEnvelope } from "./TransactionEnvelope.js";
 
@@ -97,6 +98,6 @@ export class TransactionReceipt {
    * @returns
    */
   generateSolanaExplorerLink(cluster: Cluster = "mainnet-beta"): string {
-    return `https://explorer.solana.com/tx/${this.signature}?cluster=${cluster}`;
+    return generateTXLink(this.signature, cluster);
   }
 }

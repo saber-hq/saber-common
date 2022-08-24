@@ -30,6 +30,7 @@
       "bn.js",
       "@ledgerhq/hw-transport",
       "@ledgerhq/hw-transport-webusb",
+      "@nightlylabs/wallet-solana-adapter",
       "@solana/wallet-adapter-base",
       "@solana/wallet-adapter-clover",
       "@solana/wallet-adapter-coin98",
