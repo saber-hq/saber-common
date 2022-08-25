@@ -14,8 +14,8 @@ export interface CoinbaseWalletProvider {
   signTransaction(transaction: Transaction): Promise<Transaction>;
   signAllTransactions(transactions: Transaction[]): Promise<Transaction[]>;
   signAndSendTransaction(
-      transaction: Transaction,
-      options?: SendOptions
+    transaction: Transaction,
+    options?: SendOptions
   ): Promise<{ signature: TransactionSignature }>;
   signMessage(message: Uint8Array): Promise<{ signature: Uint8Array }>;
   connect(): Promise<void>;
