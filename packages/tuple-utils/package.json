@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/tuple-utils",
-  "version": "1.14.2",
+  "version": "1.14.4",
   "description": "Utilities for handling tuples in TypeScript.",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/tuple-utils#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
@@ -37,7 +37,7 @@
     "tslib": "^2.4.0"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "^1.13.32",
+    "@saberhq/tsconfig": "^2.0.4",
     "typescript": "^4.7.4"
   }
 }
