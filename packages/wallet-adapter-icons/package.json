@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/wallet-adapter-icons",
-  "version": "1.14.3",
+  "version": "1.14.4",
   "description": "Solana wallet adapter icons.",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/solana-wallet-adapters#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
