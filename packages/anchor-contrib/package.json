@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@project-serum/anchor": "^0.25.0",
-    "@saberhq/tsconfig": "^1.13.32",
+    "@saberhq/tsconfig": "^2.0.4",
     "@solana/web3.js": "^1.50.1",
     "@types/lodash.camelcase": "^4.3.7",
     "@types/lodash.mapvalues": "^4.6.7",

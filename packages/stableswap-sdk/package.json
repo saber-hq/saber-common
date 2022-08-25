@@ -27,11 +27,11 @@
     "node": ">=12.x"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "^1.13.32",
+    "@saberhq/tsconfig": "^2.0.4",
     "@solana/web3.js": "^1.50.1",
     "@types/bn.js": "^5.1.0",
-    "@types/lodash": "^4.14.182",
-    "@types/node": "^18.6.5",
+    "@types/lodash": "^4.14.184",
+    "@types/node": "^18.7.13",
     "bn.js": "^5.2.1",
     "jsbi": "^4.3.0",
     "lodash": "^4.17.21",
