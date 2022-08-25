@@ -28,7 +28,7 @@
   "dependencies": {
     "@saberhq/solana-contrib": "workspace:^",
     "@solana/buffer-layout": "^4.0.0",
-    "@solana/spl-token": "^0.1.8",
+    "@solana/spl-token": "^0.3.4",
     "@ubeswap/token-math": "^5.2.0",
     "tiny-invariant": "^1.2.0",
     "tslib": "^2.4.0"
