@@ -9,6 +9,19 @@ type ConnectOptions = {
   onlyIfTrusted?: boolean;
 };
 
+export interface CoinbaseWalletProvider {
+  publicKey?: PublicKey;
+  signTransaction(transaction: Transaction): Promise<Transaction>;
+  signAllTransactions(transactions: Transaction[]): Promise<Transaction[]>;
+  signAndSendTransaction(
+    transaction: Transaction,
+    options?: SendOptions
+  ): Promise<{ signature: TransactionSignature }>;
+  signMessage(message: Uint8Array): Promise<{ signature: Uint8Array }>;
+  connect(): Promise<void>;
+  disconnect(): Promise<void>;
+}
+
 type ExodusEvent = "accountChanged" | "connect" | "disconnect";
 type ExodusRequestMethod =
   | "connect"
@@ -122,6 +135,7 @@ declare global {
         disconnect: () => void;
       };
     };
+    coinbaseSolana?: CoinbaseWalletProvider;
     clover_solana?: {
       signAllTransactions?: (txs: Transaction[]) => Promise<Transaction[]>;
       signTransaction: (tx: Transaction) => Promise<Transaction>;

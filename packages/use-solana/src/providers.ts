@@ -3,6 +3,7 @@ import {
   BRAVEWALLET,
   CLOVER,
   COIN98,
+  COINBASEWALLET,
   EXODUS,
   FILE,
   GLOW,
@@ -20,6 +21,7 @@ import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { BraveWalletAdapter } from "@solana/wallet-adapter-brave";
 import { CloverWalletAdapter } from "@solana/wallet-adapter-clover";
 import { Coin98WalletAdapter } from "@solana/wallet-adapter-coin98";
+import { CoinbaseWalletAdapter } from "@solana/wallet-adapter-coinbase";
 import { ExodusWalletAdapter } from "@solana/wallet-adapter-exodus";
 import { GlowWalletAdapter } from "@solana/wallet-adapter-glow";
 import { HuobiWalletAdapter } from "@solana/wallet-adapter-huobi";
@@ -44,6 +46,7 @@ export enum DefaultWalletType {
   BraveWallet = "BraveWallet",
   Clover = "Clover",
   Coin98 = "Coin98",
+  CoinbaseWallet = "CoinbaseWallet",
   Exodus = "Exodus",
   Glow = "Glow",
   Huobi = "Huobi",
@@ -159,6 +162,14 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     icon: COIN98,
     makeAdapter: () => new SolanaWalletAdapter(new Coin98WalletAdapter()),
     isInstalled: () => window.coin98 !== undefined,
+    isMobile: true,
+  },
+  [DefaultWalletType.CoinbaseWallet]: {
+    name: "Coinbase Wallet",
+    url: "https://www.coinbase.com/wallet",
+    icon: COINBASEWALLET,
+    makeAdapter: () => new SolanaWalletAdapter(new CoinbaseWalletAdapter()),
+    isInstalled: () => window.coinbaseSolana !== undefined,
     isMobile: true,
   },
   [DefaultWalletType.Clover]: {
