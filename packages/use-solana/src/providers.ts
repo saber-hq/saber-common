@@ -40,7 +40,6 @@ import type { WalletAdapterBuilder } from "./adapters";
 import { LedgerWalletAdapter, SolanaWalletAdapter } from "./adapters";
 import { ReadonlyAdapter } from "./adapters/readonly";
 import { SecretKeyAdapter } from "./adapters/secret-key";
-import { SolflareAdapter } from "./adapters/solflare";
 
 export enum DefaultWalletType {
   BraveWallet = "BraveWallet",
@@ -58,7 +57,6 @@ export enum DefaultWalletType {
   SecretKey = "SecretKey",
   Slope = "Slope",
   Solflare = "Solflare",
-  SolflareExtension = "SolflareExtension",
   Sollet = "Sollet",
   SolletExtension = "SolletExtension",
   Solong = "Solong",
@@ -186,24 +184,10 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     makeAdapter: () => new SecretKeyAdapter(),
   },
   [DefaultWalletType.Solflare]: {
-    name: "Solflare (Web)",
-    url: "https://solflare.com/provider",
-    icon: SOLFLARE,
-    makeAdapter: (provider, network) =>
-      new SolanaWalletAdapter(
-        new SolflareAdapter({
-          provider,
-          network: network as WalletAdapterNetwork,
-        })
-      ),
-  },
-  [DefaultWalletType.SolflareExtension]: {
-    name: "Solflare (Extension)",
+    name: "Solflare",
     url: "https://solflare.com/",
     icon: SOLFLARE,
     makeAdapter: () => new SolanaWalletAdapter(new SolflareWalletAdapter()),
-
-    isInstalled: () => window.solflare?.isSolflare === true,
     isMobile: true,
   },
   [DefaultWalletType.Slope]: {
