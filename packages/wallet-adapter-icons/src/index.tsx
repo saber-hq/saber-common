@@ -201,7 +201,7 @@ export const PHANTOM: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-export const COINBASEWALLET: React.FC<React.SVGProps<SVGSVGElement>> = (
+export const COINBASE_WALLET: React.FC<React.SVGProps<SVGSVGElement>> = (
   props
 ) => (
   <svg

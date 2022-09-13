@@ -115,7 +115,9 @@ export function getTransactionInstructionError(
   }
 
   if (typeof error === "object" && "InstructionError" in error) {
-    const innerError = error["InstructionError"];
+    const innerError = (error as { InstructionError: number[] })[
+      "InstructionError"
+    ];
     const index = innerError[0] as number;
     const instructionError = innerError[1];
 
