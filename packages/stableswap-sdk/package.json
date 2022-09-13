@@ -27,15 +27,15 @@
     "node": ">=12.x"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "^2.0.4",
+    "@saberhq/tsconfig": "^2.0.5",
     "@solana/web3.js": "^1.54.0",
-    "@types/bn.js": "^5.1.0",
-    "@types/lodash": "^4.14.184",
-    "@types/node": "^18.7.13",
+    "@types/bn.js": "^5.1.1",
+    "@types/lodash": "^4.14.185",
+    "@types/node": "^18.7.17",
     "bn.js": "^5.2.1",
     "jsbi": "^4.3.0",
     "lodash": "^4.17.21",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.3"
   },
   "peerDependencies": {
     "@solana/web3.js": "^1.42",

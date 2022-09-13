@@ -3,7 +3,7 @@ import {
   BRAVEWALLET,
   CLOVER,
   COIN98,
-  COINBASEWALLET,
+  COINBASE_WALLET,
   EXODUS,
   FILE,
   GLOW,
@@ -165,7 +165,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
   [DefaultWalletType.CoinbaseWallet]: {
     name: "Coinbase Wallet",
     url: "https://www.coinbase.com/wallet",
-    icon: COINBASEWALLET,
+    icon: COINBASE_WALLET,
     makeAdapter: () => new SolanaWalletAdapter(new CoinbaseWalletAdapter()),
     isInstalled: () => window.coinbaseSolana !== undefined,
     isMobile: true,
