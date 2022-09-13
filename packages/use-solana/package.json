@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/use-solana",
-  "version": "1.14.5",
+  "version": "1.14.6",
   "description": "Solana utilities for React applications.",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/use-solana#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
