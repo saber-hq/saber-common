@@ -16,6 +16,7 @@ import {
   SLOPE,
   SOLFLARE,
   SOLLET,
+  WALLETCONNECT,
 } from "@saberhq/wallet-adapter-icons";
 import type { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { BraveWalletAdapter } from "@solana/wallet-adapter-brave";
@@ -34,9 +35,10 @@ import {
   SolletWalletAdapter,
 } from "@solana/wallet-adapter-sollet";
 import { SolongWalletAdapter } from "@solana/wallet-adapter-solong";
+import { WalletConnectWalletAdapter } from "@solana/wallet-adapter-walletconnect";
 import type * as React from "react";
 
-import type { WalletAdapterBuilder } from "./adapters";
+import type { WalletAdapterBuilder, WalletOptions } from "./adapters";
 import { LedgerWalletAdapter, SolanaWalletAdapter } from "./adapters";
 import { ReadonlyAdapter } from "./adapters/readonly";
 import { SecretKeyAdapter } from "./adapters/secret-key";
@@ -60,6 +62,7 @@ export enum DefaultWalletType {
   Sollet = "Sollet",
   SolletExtension = "SolletExtension",
   Solong = "Solong",
+  WalletConnect = "WalletConnect",
 }
 
 export type WalletTypeEnum<T> = { [name: string]: T[keyof T] | string };
@@ -97,6 +100,28 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
       ),
 
     isInstalled: () => window.sollet !== undefined,
+  },
+  [DefaultWalletType.WalletConnect]: {
+    name: "WalletConnect",
+    url: "https://walletconnect.com/",
+    icon: WALLETCONNECT,
+    makeAdapter: (
+      _provider: string,
+      network: string,
+      options?: WalletOptions
+    ) => {
+      if (!options) {
+        throw new Error("WalletConnect options not provided");
+      }
+      return new SolanaWalletAdapter(
+        new WalletConnectWalletAdapter({
+          network: network as
+            | WalletAdapterNetwork.Mainnet
+            | WalletAdapterNetwork.Devnet,
+          options: options["options"] as unknown,
+        })
+      );
+    },
   },
   [DefaultWalletType.BraveWallet]: {
     name: "Brave Wallet",
