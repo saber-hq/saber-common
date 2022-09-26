@@ -42,7 +42,8 @@
       "@solana/wallet-adapter-slope",
       "@solana/wallet-adapter-solflare",
       "@solana/wallet-adapter-sollet",
-      "@solana/wallet-adapter-solong"
+      "@solana/wallet-adapter-solong",
+      "@solana/wallet-adapter-walletconnect"
     ],
     "webpack": true
   }

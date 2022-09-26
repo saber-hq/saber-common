@@ -5,6 +5,7 @@ import type {
   Wallet,
 } from "@saberhq/solana-contrib";
 import { PublicKey } from "@saberhq/solana-contrib";
+import type { WalletConnectWalletAdapterConfig } from "@solana/wallet-adapter-walletconnect";
 import type {
   Connection,
   PublicKey as SolanaPublicKey,
@@ -38,9 +39,12 @@ export interface WalletAdapter<Connected extends boolean = boolean>
 
 export type ConnectedWallet = WalletAdapter<true> & Wallet;
 
+export type WalletOptions = WalletConnectWalletAdapterConfig;
+
 export type WalletAdapterBuilder = (
   providerUrl: string,
-  endpoint: string
+  endpoint: string,
+  options?: WalletOptions
 ) => WalletAdapter;
 
 /**

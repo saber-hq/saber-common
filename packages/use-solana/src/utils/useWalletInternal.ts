@@ -3,7 +3,11 @@ import type { PublicKey } from "@solana/web3.js";
 import stringify from "fast-json-stable-stringify";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import type { ConnectedWallet, WalletAdapter } from "../adapters/types";
+import type {
+  ConnectedWallet,
+  WalletAdapter,
+  WalletOptions,
+} from "../adapters/types";
 import { WrappedWalletAdapter } from "../adapters/types";
 import type { UseSolanaError } from "../error";
 import {
@@ -73,6 +77,7 @@ export interface UseWalletArgs<WalletType extends WalletTypeEnum<WalletType>> {
   endpoint: string;
   storageAdapter: StorageAdapter;
   walletProviders: WalletProviderMap<WalletType>;
+  walletOptions?: WalletOptions;
 }
 
 interface WalletConfig<WalletType extends WalletTypeEnum<WalletType>> {
@@ -90,6 +95,7 @@ export const useWalletInternal = <
   onError,
   storageAdapter,
   walletProviders,
+  walletOptions,
 }: UseWalletArgs<WalletType>): UseWallet<WalletType, boolean> => {
   const [walletConfigStr, setWalletConfigStr] = usePersistedKVStore<
     string | null
@@ -119,11 +125,15 @@ export const useWalletInternal = <
     if (walletType) {
       const provider = walletProviders[walletType];
       console.debug("New wallet", provider.url, network);
-      const adapter = provider.makeAdapter(provider.url, endpoint);
+      const adapter = provider.makeAdapter(
+        provider.url,
+        endpoint,
+        walletOptions
+      );
       return [provider, new WrappedWalletAdapter(adapter)];
     }
     return [undefined, undefined];
-  }, [walletProviders, walletType, network, endpoint]);
+  }, [walletProviders, walletType, network, endpoint, walletOptions]);
 
   useEffect(() => {
     let disabled = false;

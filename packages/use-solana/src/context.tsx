@@ -36,7 +36,11 @@ export interface UseSolanaArgs<
     Partial<
       Pick<
         UseWalletArgs<WalletType>,
-        "onConnect" | "onDisconnect" | "storageAdapter" | "walletProviders"
+        | "onConnect"
+        | "onDisconnect"
+        | "storageAdapter"
+        | "walletProviders"
+        | "walletOptions"
       >
     >,
     Pick<UseProviderArgs, "broadcastConnections" | "confirmOptions"> {
@@ -80,6 +84,7 @@ const useSolanaInternal = <WalletType extends WalletTypeEnum<WalletType>>({
   onError = defaultOnError,
   storageAdapter = LOCAL_STORAGE_ADAPTER,
   walletProviders = DEFAULT_WALLET_PROVIDERS as unknown as WalletProviderMap<WalletType>,
+  walletOptions,
 
   // useProvider args
   broadcastConnections,
@@ -100,6 +105,7 @@ const useSolanaInternal = <WalletType extends WalletTypeEnum<WalletType>>({
     onError,
     storageAdapter,
     walletProviders,
+    walletOptions,
   });
   const providerCtx = useProviderInternal({
     connection: connectionCtx.connection,
