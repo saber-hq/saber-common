@@ -47,7 +47,7 @@
     "@solana/wallet-adapter-slope": "^0.5.14",
     "@solana/wallet-adapter-solflare": "^0.6.15",
     "@solana/wallet-adapter-sollet": "^0.11.10",
-    "@solana/wallet-adapter-solong": "^0.9.11",
+    "@solana/wallet-adapter-solong": "^0.9.12",
     "@solana/wallet-adapter-walletconnect": "^0.1.5",
     "eventemitter3": "^4.0.7",
     "fast-json-stable-stringify": "^2.1.0",
