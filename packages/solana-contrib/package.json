@@ -1,6 +1,6 @@
 {
   "name": "@saberhq/solana-contrib",
-  "version": "1.14.6",
+  "version": "1.14.7",
   "description": "Common types and libraries for Solana",
   "homepage": "https://github.com/saber-hq/saber-common/tree/master/packages/solana-contrib#readme",
   "repository": "git+https://github.com/saber-hq/saber-common.git",
