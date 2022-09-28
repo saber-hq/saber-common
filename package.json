@@ -70,5 +70,8 @@
     "doctor:packages": "yarn doctor packages/"
   },
   "version": "1.14.7",
-  "packageManager": "yarn@4.0.0-rc.22"
+  "packageManager": "yarn@4.0.0-rc.22",
+  "resolutions": {
+    "@walletconnect/sign-client": "2.0.0-rc.3"
+  }
 }

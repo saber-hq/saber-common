@@ -69,8 +69,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f9fd3fbd36a7a6dd6f5e9597af5309affe50ac0e",
-  "resolutions": {
-    "@walletconnect/sign-client": "2.0.0-rc.3"
-  }
+  "gitHead": "f9fd3fbd36a7a6dd6f5e9597af5309affe50ac0e"
 }

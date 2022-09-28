@@ -4109,7 +4109,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/sign-client@npm:2.0.0-rc.2":
+"@walletconnect/sign-client@npm:2.0.0-rc.3":
   version: 2.0.0-rc.3
   resolution: "@walletconnect/sign-client@npm:2.0.0-rc.3"
   dependencies:
