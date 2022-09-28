@@ -9,13 +9,15 @@
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem
       (system:
-        let pkgs = import nixpkgs { inherit system; };
+        let
+          pkgs = import nixpkgs { inherit system; };
         in
+        with pkgs;
         rec {
-          packages.ci = pkgs.buildEnv {
+          packages.ci = buildEnv {
             name = "ci";
-            paths = with pkgs; [ nodejs yarn nixpkgs-fmt bash ];
+            paths = [ nodejs yarn nixpkgs-fmt bash ];
           };
-          devShell = pkgs.mkShell { buildInputs = [ packages.ci ]; };
+          devShell = mkShell { buildInputs = [ packages.ci ]; };
         });
 }

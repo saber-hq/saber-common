@@ -22,9 +22,17 @@ export class SolanaWalletAdapter implements WalletAdapter {
   constructor(
     readonly adapter: Omit<
       SignerWalletAdapter,
-      "sendTransaction" | keyof EventEmitter
+      | "sendTransaction"
+      | keyof EventEmitter
+      | "signTransaction"
+      | "signAllTransactions"
     > &
-      EventEmitter<WalletAdapterEvents>
+      EventEmitter<WalletAdapterEvents> & {
+        signTransaction: (transaction: Transaction) => Promise<Transaction>;
+        signAllTransactions: (
+          transactions: Transaction[]
+        ) => Promise<Transaction[]>;
+      }
   ) {}
 
   async signAndBroadcastTransaction(

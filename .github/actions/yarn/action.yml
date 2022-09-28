@@ -18,7 +18,6 @@ runs:
         authToken: ${{ inputs.cachix-auth-token }}
 
     # Install Node
-    - uses: actions/setup-node@v3
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
       run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
@@ -27,8 +26,8 @@ runs:
       uses: actions/cache@v3
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-mod-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}-modules-
+          ${{ runner.os }}-mod-
     - run: yarn install
       shell: nix shell .#ci --command bash {0}
