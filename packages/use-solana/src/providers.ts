@@ -1,4 +1,3 @@
-import { NightlyWalletAdapter } from "@nightlylabs/wallet-solana-adapter";
 import {
   BRAVEWALLET,
   CLOVER,
@@ -27,6 +26,7 @@ import { ExodusWalletAdapter } from "@solana/wallet-adapter-exodus";
 import { GlowWalletAdapter } from "@solana/wallet-adapter-glow";
 import { HuobiWalletAdapter } from "@solana/wallet-adapter-huobi";
 import { MathWalletAdapter } from "@solana/wallet-adapter-mathwallet";
+import { NightlyWalletAdapter } from "@solana/wallet-adapter-nightly";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import { SlopeWalletAdapter } from "@solana/wallet-adapter-slope";
 import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
