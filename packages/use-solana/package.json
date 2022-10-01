@@ -29,9 +29,9 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@ledgerhq/hw-transport": "^6.27.5",
-    "@ledgerhq/hw-transport-webusb": "^6.27.5",
-    "@nightlylabs/wallet-solana-adapter": "^0.0.6",
+    "@ledgerhq/devices": "6.27.1",
+    "@ledgerhq/hw-transport": "6.27.1",
+    "@ledgerhq/hw-transport-webusb": "6.27.1",
     "@saberhq/solana-contrib": "workspace:^",
     "@saberhq/wallet-adapter-icons": "workspace:^",
     "@solana/wallet-adapter-base": "^0.9.17",
@@ -43,6 +43,7 @@
     "@solana/wallet-adapter-glow": "^0.1.12",
     "@solana/wallet-adapter-huobi": "^0.1.9",
     "@solana/wallet-adapter-mathwallet": "^0.9.12",
+    "@solana/wallet-adapter-nightly": "^0.1.9",
     "@solana/wallet-adapter-phantom": "^0.9.16",
     "@solana/wallet-adapter-slope": "^0.5.15",
     "@solana/wallet-adapter-solflare": "^0.6.16",
@@ -69,5 +70,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "f9fd3fbd36a7a6dd6f5e9597af5309affe50ac0e"
+  "gitHead": "f9fd3fbd36a7a6dd6f5e9597af5309affe50ac0e",
+  "resolutions": {
+    "@ledgerhq/devices": "6.27.1",
+    "@ledgerhq/hw-transport": "6.27.1",
+    "@ledgerhq/hw-transport-webusb": "6.27.1"
+  }
 }
