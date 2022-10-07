@@ -1,3 +1,5 @@
+import type { PublicKey } from "./publicKey";
+
 export * from "@saberhq/option-utils";
 
 const noop = () => {
@@ -59,4 +61,16 @@ export const valueAsPromise = async <T>(
     return await awaitable;
   }
   return awaitable;
+};
+
+/**
+ * Shortens a pubkey.
+ * @param pubkey
+ * @returns
+ */
+export const shortenPubkey = (pubkey: PublicKey): string => {
+  const str = pubkey.toString();
+  return str.length > 20
+    ? `${str.substring(0, 7)}.....${str.substring(str.length - 7, str.length)}`
+    : str;
 };
