@@ -68,9 +68,16 @@ export const valueAsPromise = async <T>(
  * @param pubkey
  * @returns
  */
-export const shortenPubkey = (pubkey: PublicKey): string => {
+export const formatPubkeyShort = (
+  pubkey: PublicKey,
+  leading = 7,
+  trailing = 7
+): string => {
   const str = pubkey.toString();
   return str.length > 20
-    ? `${str.substring(0, 7)}.....${str.substring(str.length - 7, str.length)}`
+    ? `${str.substring(0, leading)}.....${str.substring(
+        str.length - trailing,
+        str.length
+      )}`
     : str;
 };
