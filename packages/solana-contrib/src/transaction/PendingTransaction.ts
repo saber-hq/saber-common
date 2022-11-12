@@ -26,6 +26,10 @@ export interface TransactionWaitOptions
    * Whether or not to use websockets for awaiting confirmation. Defaults to `false`.
    */
   readonly useWebsocket?: boolean;
+  /**
+   * Max supported transaction version. Pass `undefined` to only support `legacy` transactions.
+   */
+  readonly maxSupportedTransactionVersion?: number;
 }
 
 /**
@@ -54,6 +58,7 @@ export class PendingTransaction {
    */
   async wait({
     commitment = "confirmed",
+    maxSupportedTransactionVersion = 0,
     useWebsocket = true,
     ...retryOpts
   }: TransactionWaitOptions = {}): Promise<TransactionReceipt> {
@@ -62,9 +67,16 @@ export class PendingTransaction {
     }
     if (useWebsocket) {
       await this.confirm({ commitment, ...retryOpts });
-      return await this.pollForReceipt({ commitment });
+      return await this.pollForReceipt({
+        commitment,
+        maxSupportedTransactionVersion,
+      });
     }
-    return await this.pollForReceipt({ commitment, ...retryOpts });
+    return await this.pollForReceipt({
+      commitment,
+      maxSupportedTransactionVersion,
+      ...retryOpts,
+    });
   }
 
   /**
@@ -73,6 +85,7 @@ export class PendingTransaction {
    */
   async pollForReceipt({
     commitment = "confirmed",
+    maxSupportedTransactionVersion = 0,
     ...retryOpts
   }: Omit<
     TransactionWaitOptions,
@@ -82,6 +95,7 @@ export class PendingTransaction {
       async (retry) => {
         const result = await this.connection.getTransaction(this.signature, {
           commitment,
+          maxSupportedTransactionVersion,
         });
         if (!result) {
           retry(new Error("Error fetching transaction"));
