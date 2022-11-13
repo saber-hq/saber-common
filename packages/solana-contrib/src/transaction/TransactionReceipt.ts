@@ -2,6 +2,7 @@ import type {
   Cluster,
   TransactionResponse,
   TransactionSignature,
+  VersionedTransactionResponse,
 } from "@solana/web3.js";
 import { default as invariant } from "tiny-invariant";
 
@@ -57,7 +58,7 @@ export class TransactionReceipt {
     /**
      * Raw response from web3.js
      */
-    readonly response: TransactionResponse
+    readonly response: TransactionResponse | VersionedTransactionResponse
   ) {}
 
   /**

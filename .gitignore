@@ -119,6 +119,9 @@ dist/
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+# Idea editors
+.idea
+
 # Temporary folders
 tmp/
 temp/
