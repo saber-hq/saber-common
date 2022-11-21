@@ -37,7 +37,7 @@ export type NetworkConfig = Readonly<
 export const DEFAULT_NETWORK_CONFIG_MAP = {
   "mainnet-beta": {
     name: "Mainnet Beta",
-    endpoint: "https://solana-api.projectserum.com/",
+    endpoint: "https://api.mainnet-beta.solana.com/",
   },
   devnet: {
     name: "Devnet",
