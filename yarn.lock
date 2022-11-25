@@ -2366,7 +2366,7 @@ __metadata:
     "@solana/wallet-adapter-nightly": "npm:^0.1.9"
     "@solana/wallet-adapter-phantom": "npm:^0.9.16"
     "@solana/wallet-adapter-slope": "npm:^0.5.15"
-    "@solana/wallet-adapter-solflare": "npm:^0.6.16"
+    "@solana/wallet-adapter-solflare": "npm:^0.6.19"
     "@solana/wallet-adapter-sollet": "npm:^0.11.11"
     "@solana/wallet-adapter-solong": "npm:^0.9.12"
     "@solana/wallet-adapter-walletconnect": "npm:^0.1.6"
@@ -2504,6 +2504,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@solana/wallet-adapter-base@npm:^0.9.19":
+  version: 0.9.19
+  resolution: "@solana/wallet-adapter-base@npm:0.9.19"
+  dependencies:
+    eventemitter3: "npm:^4.0.0"
+  peerDependencies:
+    "@solana/web3.js": ^1.58.0
+  checksum: 2843a015edce3b12a27c387b70865af7110d3e6e124331753daf9a6230fe342adf760d7ed9ec1dd46f9f3c1ea03bf8841bfbb24ffd1f57c7ef3e4b07d7da7ded
+  languageName: node
+  linkType: hard
+
 "@solana/wallet-adapter-brave@npm:0.1.11":
   version: 0.1.11
   resolution: "@solana/wallet-adapter-brave@npm:0.1.11"
@@ -2627,15 +2638,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/wallet-adapter-solflare@npm:^0.6.16":
-  version: 0.6.16
-  resolution: "@solana/wallet-adapter-solflare@npm:0.6.16"
+"@solana/wallet-adapter-solflare@npm:^0.6.19":
+  version: 0.6.19
+  resolution: "@solana/wallet-adapter-solflare@npm:0.6.19"
   dependencies:
-    "@solana/wallet-adapter-base": "npm:^0.9.17"
-    "@solflare-wallet/sdk": "npm:^1.0.11"
+    "@solana/wallet-adapter-base": "npm:^0.9.19"
+    "@solflare-wallet/sdk": "npm:^1.1.0"
   peerDependencies:
-    "@solana/web3.js": ^1.61.0
-  checksum: 2ea829671643a70ade6d29c51645a3c64a1062c8e9d8b5fdfc77807123743ad9edeba55240435ff0c52239b4fb686a000590bcbdf8c7dcc57ddb1263589afcf5
+    "@solana/web3.js": ^1.58.0
+  checksum: 83c3d43f47ed1a74ed13f31b470c9b08028159e68ab3b9797eaae0c31ae526fe1f5a0fa66d96585229c8aa44356a5aceb353c267f630e5b6f1ba4f6678a31bf1
   languageName: node
   linkType: hard
 
@@ -2697,7 +2708,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solflare-wallet/sdk@npm:^1.0.11":
+"@solflare-wallet/sdk@npm:^1.1.0":
   version: 1.1.0
   resolution: "@solflare-wallet/sdk@npm:1.1.0"
   dependencies:
