@@ -31,7 +31,7 @@
   "dependencies": {
     "@ledgerhq/devices": "6.27.1",
     "@ledgerhq/hw-transport": "6.27.1",
-    "@ledgerhq/hw-transport-webusb": "6.27.1",
+    "@ledgerhq/hw-transport-webusb": "6.27.10",
     "@saberhq/solana-contrib": "workspace:^",
     "@saberhq/wallet-adapter-icons": "workspace:^",
     "@solana/wallet-adapter-base": "^0.9.17",
@@ -74,6 +74,6 @@
   "resolutions": {
     "@ledgerhq/devices": "6.27.1",
     "@ledgerhq/hw-transport": "6.27.1",
-    "@ledgerhq/hw-transport-webusb": "6.27.1"
+    "@ledgerhq/hw-transport-webusb": "6.27.10"
   }
 }
