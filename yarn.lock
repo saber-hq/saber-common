@@ -1905,7 +1905,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/devices@npm:6.27.1, @ledgerhq/devices@npm:^6.27.1":
+"@ledgerhq/devices@npm:8.0.4":
+  version: 8.0.4
+  resolution: "@ledgerhq/devices@npm:8.0.4"
+  dependencies:
+    "@ledgerhq/errors": "npm:^6.12.7"
+    "@ledgerhq/logs": "npm:^6.10.1"
+    rxjs: "npm:6"
+    semver: "npm:^7.3.5"
+  checksum: a21ab18d2760f8f64b08b7a9945a3eaa0a409e482887a49baef2f5cd672ceaa34b617a9dfab2326fbf585fa76a26209002be005b994452ff0a1d73f7206892b1
+  languageName: node
+  linkType: hard
+
+"@ledgerhq/devices@npm:^6.27.1":
   version: 6.27.1
   resolution: "@ledgerhq/devices@npm:6.27.1"
   dependencies:
@@ -1933,6 +1945,13 @@ __metadata:
   version: 6.11.0
   resolution: "@ledgerhq/errors@npm:6.11.0"
   checksum: 4477fb2c885345f8cb3c1bbafc7457a52d4bb8605e606155fa2d9e5da99997bc6bd19493a869490eb4884eeda40a3ec9c3a87b5b2e965daf8dfb749ebe6d2eed
+  languageName: node
+  linkType: hard
+
+"@ledgerhq/errors@npm:^6.12.7":
+  version: 6.12.7
+  resolution: "@ledgerhq/errors@npm:6.12.7"
+  checksum: e960b0bfb1e54fdb600132c00a4c13d313a39bada8121ab4a2b6e5c85c1117ebafdae39a3145c40d079a7b3b4f9682faecb74b80985a92507048c1a62044eb58
   languageName: node
   linkType: hard
 
@@ -1974,6 +1993,13 @@ __metadata:
   version: 6.10.0
   resolution: "@ledgerhq/logs@npm:6.10.0"
   checksum: 68701ae5b47978ca4c699d832b321ae5c86dbe4bc5a3c2506c30781d68910e935616ed96a747ff954c1b4f373ec044e460ded63c244e3509406223077e11a46e
+  languageName: node
+  linkType: hard
+
+"@ledgerhq/logs@npm:^6.10.1":
+  version: 6.10.1
+  resolution: "@ledgerhq/logs@npm:6.10.1"
+  checksum: ce98b751e0bb6c0fd213f691ea3914722cbf3292fffade423510601a38bfce59a7754f1247ff311845bf58de0c105a1b796742648ea40c2ec1f6bcda569b48e5
   languageName: node
   linkType: hard
 
@@ -2348,7 +2374,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@saberhq/use-solana@workspace:packages/use-solana"
   dependencies:
-    "@ledgerhq/devices": "npm:6.27.1"
+    "@ledgerhq/devices": "npm:8.0.4"
     "@ledgerhq/hw-transport": "npm:6.27.1"
     "@ledgerhq/hw-transport-webusb": "npm:6.27.1"
     "@saberhq/solana-contrib": "workspace:^"
