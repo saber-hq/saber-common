@@ -5,7 +5,7 @@ import type { StorageAdapter } from "../storage";
 export function usePersistedKVStore<T>(
   key: string,
   defaultState: T,
-  storageAdapter: StorageAdapter
+  storageAdapter: StorageAdapter,
 ): [T, (newState: T | null) => Promise<void>] {
   const [state, setState] = useState<T | null>(null);
 
@@ -33,7 +33,7 @@ export function usePersistedKVStore<T>(
         setState(newState);
       }
     },
-    [state, defaultState, storageAdapter, key]
+    [state, defaultState, storageAdapter, key],
   );
 
   return [state ?? defaultState, setLocalStorageState];

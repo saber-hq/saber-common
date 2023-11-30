@@ -22,12 +22,12 @@ export interface ConnectionContext {
   setNetwork: (val: Network) => void | Promise<void>;
   endpoint: string;
   setEndpoints: (
-    endpoints: Omit<NetworkConfig, "name">
+    endpoints: Omit<NetworkConfig, "name">,
   ) => void | Promise<void>;
 }
 
 const makeNetworkConfigMap = (
-  partial: PartialNetworkConfigMap
+  partial: PartialNetworkConfigMap,
 ): NetworkConfigMap =>
   Object.entries(DEFAULT_NETWORK_CONFIG_MAP).reduce(
     (acc, [k, v]) => ({
@@ -37,7 +37,7 @@ const makeNetworkConfigMap = (
         ...partial[k as Network],
       },
     }),
-    DEFAULT_NETWORK_CONFIG_MAP
+    DEFAULT_NETWORK_CONFIG_MAP,
   );
 
 export interface ConnectionArgs {
@@ -61,7 +61,7 @@ export const useConnectionInternal = ({
   const [network, setNetwork] = usePersistedKVStore<Network>(
     "use-solana/network",
     defaultNetwork,
-    storageAdapter
+    storageAdapter,
   );
   const configMap = makeNetworkConfigMap(networkConfigs);
   const config = configMap[network];
@@ -69,7 +69,7 @@ export const useConnectionInternal = ({
     usePersistedKVStore<Omit<NetworkConfig, "name">>(
       `use-solana/rpc-endpoint/${network}`,
       config,
-      storageAdapter
+      storageAdapter,
     );
 
   const connection = useMemo(
@@ -79,7 +79,7 @@ export const useConnectionInternal = ({
         commitment: connectionConfigArgs.commitment ?? commitment,
         wsEndpoint: endpointWs,
       }),
-    [commitment, connectionConfigArgs, endpoint, endpointWs]
+    [commitment, connectionConfigArgs, endpoint, endpointWs],
   );
   const sendConnection = useMemo(
     () =>
@@ -88,7 +88,7 @@ export const useConnectionInternal = ({
         commitment: connectionConfigArgs.commitment ?? commitment,
         wsEndpoint: endpointWs,
       }),
-    [commitment, connectionConfigArgs, endpoint, endpointWs]
+    [commitment, connectionConfigArgs, endpoint, endpointWs],
   );
 
   return {

@@ -28,7 +28,7 @@ import { usePersistedKVStore } from "./usePersistedKVStore";
  */
 export interface UseWallet<
   WalletType extends WalletTypeEnum<WalletType>,
-  Connected extends boolean = boolean
+  Connected extends boolean = boolean,
 > {
   /**
    * Wallet.
@@ -55,7 +55,7 @@ export interface UseWallet<
    */
   activate: (
     walletType: WalletType[keyof WalletType],
-    walletArgs?: Record<string, unknown>
+    walletArgs?: Record<string, unknown>,
   ) => Promise<void>;
   /**
    * Disconnects the wallet and prevents auto-reconnect.
@@ -66,11 +66,11 @@ export interface UseWallet<
 export interface UseWalletArgs<WalletType extends WalletTypeEnum<WalletType>> {
   onConnect: (
     wallet: WalletAdapter<true>,
-    provider: WalletProviderInfo
+    provider: WalletProviderInfo,
   ) => void;
   onDisconnect: (
     wallet: WalletAdapter<false>,
-    provider: WalletProviderInfo
+    provider: WalletProviderInfo,
   ) => void;
   onError: (err: UseSolanaError) => void;
   network: Network;
@@ -86,7 +86,7 @@ interface WalletConfig<WalletType extends WalletTypeEnum<WalletType>> {
 }
 
 export const useWalletInternal = <
-  WalletType extends WalletTypeEnum<WalletType>
+  WalletType extends WalletTypeEnum<WalletType>,
 >({
   onConnect,
   onDisconnect,
@@ -128,7 +128,7 @@ export const useWalletInternal = <
       const adapter = provider.makeAdapter(
         provider.url,
         endpoint,
-        walletOptions
+        walletOptions,
       );
       return [provider, new WrappedWalletAdapter(adapter)];
     }
@@ -161,7 +161,7 @@ export const useWalletInternal = <
                 }
               }
               onError(
-                new WalletAutomaticConnectionError(e, walletProviderInfo)
+                new WalletAutomaticConnectionError(e, walletProviderInfo),
               );
             }
             shouldTryConnect = false;
@@ -215,7 +215,7 @@ export const useWalletInternal = <
   const activate = useCallback(
     async (
       nextWalletType: WalletType[keyof WalletType],
-      nextWalletArgs?: Record<string, unknown>
+      nextWalletArgs?: Record<string, unknown>,
     ): Promise<void> => {
       setWalletActivating(true);
       const nextWalletConfigStr = stringify({
@@ -231,15 +231,15 @@ export const useWalletInternal = <
             new WalletActivateError<WalletType>(
               e,
               nextWalletType,
-              nextWalletArgs
-            )
+              nextWalletArgs,
+            ),
           );
         }
         setWalletActivating(false);
       }
       await setWalletConfigStr(nextWalletConfigStr);
     },
-    [onError, setWalletConfigStr, wallet, walletConfigStr]
+    [onError, setWalletConfigStr, wallet, walletConfigStr],
   );
 
   const disconnect = useCallback(async () => {

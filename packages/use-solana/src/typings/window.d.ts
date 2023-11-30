@@ -15,7 +15,7 @@ export interface CoinbaseWalletProvider {
   signAllTransactions(transactions: Transaction[]): Promise<Transaction[]>;
   signAndSendTransaction(
     transaction: Transaction,
-    options?: SendOptions
+    options?: SendOptions,
   ): Promise<{ signature: TransactionSignature }>;
   signMessage(message: Uint8Array): Promise<{ signature: Uint8Array }>;
   connect(): Promise<void>;
@@ -63,7 +63,7 @@ export interface PhantomProvider {
 
   signAndSendTransaction(
     transaction: Transaction,
-    options?: SendOptions
+    options?: SendOptions,
   ): Promise<{ signature: TransactionSignature }>;
   signMessage(message: Uint8Array): Promise<{ signature: Uint8Array }>;
 
@@ -118,7 +118,7 @@ declare global {
             toString(encoding: "base64"): string;
           };
         },
-        network?: "devnet" | "mainnet"
+        network?: "devnet" | "mainnet",
       ): Promise<{ signature: TransactionSignature }>;
     };
     solong?: {

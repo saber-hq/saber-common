@@ -18,7 +18,7 @@ export class Price extends UPrice<Token> {
     baseCurrency: Token,
     quoteCurrency: Token,
     denominator: BigintIsh,
-    numerator: BigintIsh
+    numerator: BigintIsh,
   ) {
     super(baseCurrency, quoteCurrency, denominator, numerator);
   }
@@ -27,13 +27,13 @@ export class Price extends UPrice<Token> {
     baseCurrency: Token,
     quoteCurrency: Token,
     denominator: BigintIsh,
-    numerator: BigintIsh
+    numerator: BigintIsh,
   ): this {
     return new Price(
       baseCurrency,
       quoteCurrency,
       denominator,
-      numerator
+      numerator,
     ) as this;
   }
 
@@ -42,7 +42,7 @@ export class Price extends UPrice<Token> {
       price.baseCurrency,
       price.quoteCurrency,
       price.denominator,
-      price.numerator
+      price.numerator,
     );
   }
 }

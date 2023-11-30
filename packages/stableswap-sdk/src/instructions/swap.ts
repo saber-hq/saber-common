@@ -223,7 +223,7 @@ export const initializeSwapInstructionRaw = ({
       ampFactor: ampFactor.toBuffer(),
       fees,
     },
-    data
+    data,
   );
   return buildInstruction({
     config,
@@ -257,7 +257,7 @@ export const swapInstruction = ({
       amountIn: amountIn.toBuffer(),
       minimumAmountOut: minimumAmountOut.toBuffer(),
     },
-    data
+    data,
   );
   const keys = [
     { pubkey: config.swapAccount, isSigner: false, isWritable: false },
@@ -298,7 +298,7 @@ export const depositInstruction = ({
       tokenAmountB: tokenAmountB.toBuffer(),
       minimumPoolTokenAmount: minimumPoolTokenAmount.toBuffer(),
     },
-    data
+    data,
   );
   const keys = [
     { pubkey: config.swapAccount, isSigner: false, isWritable: false },
@@ -342,7 +342,7 @@ export const withdrawInstruction = ({
       minimumTokenA: minimumTokenA.toBuffer(),
       minimumTokenB: minimumTokenB.toBuffer(),
     },
-    data
+    data,
   );
 
   const keys = [
@@ -385,7 +385,7 @@ export const withdrawOneInstruction = ({
       poolTokenAmount: poolTokenAmount.toBuffer(),
       minimumTokenAmount: minimumTokenAmount.toBuffer(),
     },
-    data
+    data,
   );
 
   const keys = [

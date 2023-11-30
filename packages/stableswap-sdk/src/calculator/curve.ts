@@ -23,7 +23,7 @@ const MAX_ITERS = 20;
 export const computeD = (
   ampFactor: JSBI,
   amountA: JSBI,
-  amountB: JSBI
+  amountB: JSBI,
 ): JSBI => {
   const Ann = JSBI.multiply(ampFactor, N_COINS); // A*n^n
   const S = JSBI.add(amountA, amountB); // sum(x_i), a.k.a S
@@ -46,11 +46,11 @@ export const computeD = (
 
     const dNumerator = JSBI.multiply(
       d,
-      JSBI.add(JSBI.multiply(Ann, S), JSBI.multiply(dP, N_COINS))
+      JSBI.add(JSBI.multiply(Ann, S), JSBI.multiply(dP, N_COINS)),
     );
     const dDenominator = JSBI.add(
       JSBI.multiply(d, JSBI.subtract(Ann, ONE)),
-      JSBI.multiply(dP, JSBI.add(N_COINS, ONE))
+      JSBI.multiply(dP, JSBI.add(N_COINS, ONE)),
     );
     d = JSBI.divide(dNumerator, dDenominator);
   }
@@ -73,11 +73,11 @@ export const computeY = (ampFactor: JSBI, x: JSBI, d: JSBI): JSBI => {
     JSBI.multiply(
       JSBI.multiply(
         d, // c =  D ** (n + 1) / (n ** (2 * n) * prod' * A)
-        d
+        d,
       ),
-      d
+      d,
     ),
-    JSBI.multiply(N_COINS, JSBI.multiply(N_COINS, JSBI.multiply(x, Ann)))
+    JSBI.multiply(N_COINS, JSBI.multiply(N_COINS, JSBI.multiply(x, Ann))),
   );
 
   let yPrev = ZERO;
@@ -90,7 +90,7 @@ export const computeY = (ampFactor: JSBI, x: JSBI, d: JSBI): JSBI => {
     yPrev = y;
     y = JSBI.divide(
       JSBI.add(JSBI.multiply(y, y), c),
-      JSBI.add(JSBI.multiply(N_COINS, y), b)
+      JSBI.add(JSBI.multiply(N_COINS, y), b),
     );
   }
 

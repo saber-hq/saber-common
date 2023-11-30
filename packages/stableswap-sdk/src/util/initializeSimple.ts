@@ -61,7 +61,7 @@ const initializeSwapTokenInfoSync = ({
       adminFeeAccount: adminFeeAccount,
     },
     instructions: createSwapTokenAccountInstructions.combine(
-      createAdminFeeAccountInstructions
+      createAdminFeeAccountInstructions,
     ),
   };
 };
@@ -134,7 +134,7 @@ export const createInitializeStableSwapInstructionsSimple = async ({
   const rentExemptTokenAccountBalance =
     await SPLToken.getMinBalanceRentForExemptAccount(provider.connection);
   const rentExemptMintBalance = await SPLToken.getMinBalanceRentForExemptMint(
-    provider.connection
+    provider.connection,
   );
 
   // Create swap account if not specified
@@ -204,7 +204,7 @@ export const createInitializeStableSwapInstructionsSimple = async ({
   const seedPoolAccountsTX = new TransactionEnvelope(
     provider,
     [...seedPoolAccountsResult.instructions],
-    [...seedPoolAccountsResult.signers]
+    [...seedPoolAccountsResult.signers],
   );
 
   const initializeSwapInstruction: InitializeSwapInstruction = {
@@ -235,7 +235,7 @@ export const createInitializeStableSwapInstructionsSimple = async ({
   const initializeSwap = new TransactionEnvelope(
     provider,
     [...initializeStableSwapInstructions],
-    [swapAccountSigner]
+    [swapAccountSigner],
   );
 
   const instructions = {

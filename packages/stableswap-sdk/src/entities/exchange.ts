@@ -69,7 +69,7 @@ export const calculateAmpFactor = (
     | "startRampTimestamp"
     | "stopRampTimestamp"
   >,
-  now = Date.now() / 1_000
+  now = Date.now() / 1_000,
 ): JSBI => {
   const {
     initialAmpFactor,
@@ -90,17 +90,17 @@ export const calculateAmpFactor = (
 
   invariant(
     stopRampTimestamp >= startRampTimestamp,
-    "stop must be after start"
+    "stop must be after start",
   );
   // Calculate how far we are along the ramp curve.
   const percent =
     now >= stopRampTimestamp
       ? 1
       : now <= startRampTimestamp
-      ? 0
-      : (now - startRampTimestamp) / (stopRampTimestamp - startRampTimestamp);
+        ? 0
+        : (now - startRampTimestamp) / (stopRampTimestamp - startRampTimestamp);
   const diff = Math.floor(
-    parseFloat(targetAmpFactor.sub(initialAmpFactor).toString()) * percent
+    parseFloat(targetAmpFactor.sub(initialAmpFactor).toString()) * percent,
   );
   return parseBigintIsh(initialAmpFactor.add(new BN(diff)));
 };
@@ -159,7 +159,7 @@ export const makeExchangeInfo = ({
 export const loadExchangeInfo = async (
   connection: Connection,
   exchange: IExchange,
-  swap: StableSwap
+  swap: StableSwap,
 ): Promise<IExchangeInfo> => {
   if (!exchange.programID.equals(swap.config.swapProgramID)) {
     throw new Error("Swap program id mismatch");
@@ -168,17 +168,17 @@ export const loadExchangeInfo = async (
   const reserveA = await loadProgramAccount(
     connection,
     swap.state.tokenA.reserve,
-    swap.config.tokenProgramID
+    swap.config.tokenProgramID,
   );
   const reserveB = await loadProgramAccount(
     connection,
     swap.state.tokenB.reserve,
-    swap.config.tokenProgramID
+    swap.config.tokenProgramID,
   );
   const poolMint = await loadProgramAccount(
     connection,
     swap.state.poolTokenMint,
-    swap.config.tokenProgramID
+    swap.config.tokenProgramID,
   );
   return makeExchangeInfo({
     swap,
@@ -254,7 +254,7 @@ export const loadExchangeInfoFromSwapAccount = async (
   connection: Connection,
   swapAccount: PublicKey,
   tokenA: Token | undefined = undefined,
-  tokenB: Token | undefined = undefined
+  tokenB: Token | undefined = undefined,
 ): Promise<IExchangeInfo | null> => {
   const stableSwap = await StableSwap.load(connection, swapAccount);
 
@@ -263,7 +263,7 @@ export const loadExchangeInfoFromSwapAccount = async (
     (await Token.load(connection, stableSwap.state.tokenA.mint))?.info;
   if (!theTokenA) {
     throw new Error(
-      `Token ${stableSwap.state.tokenA.mint.toString()} not found`
+      `Token ${stableSwap.state.tokenA.mint.toString()} not found`,
     );
   }
 
@@ -272,7 +272,7 @@ export const loadExchangeInfoFromSwapAccount = async (
     (await Token.load(connection, stableSwap.state.tokenB.mint))?.info;
   if (!theTokenB) {
     throw new Error(
-      `Token ${stableSwap.state.tokenB.mint.toString()} not found`
+      `Token ${stableSwap.state.tokenB.mint.toString()} not found`,
     );
   }
 

@@ -10,7 +10,7 @@ import type { ConnectionContext } from "./utils/useConnectionInternal";
  * Gets the current Solana wallet.
  */
 export function useWallet<
-  WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType
+  WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType,
 >(): UseSolana<WalletType> {
   const context = useSolana<WalletType>();
   if (!context) {

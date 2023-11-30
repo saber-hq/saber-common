@@ -67,7 +67,7 @@ export interface InstructionLogs {
  */
 export const parseTransactionLogs = (
   logs: string[] | null,
-  error: TransactionError | null
+  error: TransactionError | null,
 ): InstructionLogs[] => {
   let depth = 0;
   const prettyLogs: InstructionLogs[] = [];
@@ -201,7 +201,7 @@ const formatLogEntryString = (entry: InstructionLogEntry) => {
  */
 export const formatLogEntry = (
   entry: InstructionLogEntry,
-  prefix = false
+  prefix = false,
 ): string => {
   const prefixString = prefix ? buildPrefix(entry.depth) : "";
   return `${prefixString}${formatLogEntryString(entry)}`;
@@ -212,7 +212,7 @@ export const formatLogEntry = (
  * @param logs
  */
 export const formatInstructionLogs = (
-  logs: readonly InstructionLogs[]
+  logs: readonly InstructionLogs[],
 ): string =>
   logs
     .map((log, i) => {

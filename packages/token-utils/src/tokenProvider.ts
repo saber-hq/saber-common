@@ -46,7 +46,7 @@ export class TokenAugmentedProvider
       this.provider,
       authority,
       mintKP.publicKey,
-      decimals
+      decimals,
     );
     return {
       token: Token.fromMint(mintKP.publicKey, decimals),
@@ -81,8 +81,8 @@ export class TokenAugmentedProvider
         destination,
         this.walletKey,
         [],
-        amount.toU64()
-      )
+        amount.toU64(),
+      ),
     );
     return txEnv;
   }
@@ -203,7 +203,7 @@ export class TokenAugmentedProvider
    */
   async loadToken(
     mint: PublicKey,
-    info: Partial<Omit<TokenInfo, "address">> = {}
+    info: Partial<Omit<TokenInfo, "address">> = {},
   ): Promise<Token | null> {
     return Token.load(this.provider.connection, mint, info);
   }
@@ -227,7 +227,7 @@ export class TokenAugmentedProvider
         destination,
         this.walletKey,
         [],
-        amount.toU64()
+        amount.toU64(),
       ),
     ]);
   }
@@ -276,7 +276,7 @@ export class TokenAugmentedProvider
    * @returns
    */
   async fetchTokenAccount(
-    address: PublicKey
+    address: PublicKey,
   ): Promise<TokenAccountData | null> {
     const tokenAccountInfo = await this.getAccountInfo(address);
     if (tokenAccountInfo === null) {
@@ -293,7 +293,7 @@ export class TokenAugmentedProvider
    */
   async fetchATA(
     mint: PublicKey,
-    owner: PublicKey = this.walletKey
+    owner: PublicKey = this.walletKey,
   ): Promise<TokenAccountData | null> {
     const taAddress = await getATAAddress({ mint, owner });
     return await this.fetchTokenAccount(taAddress);

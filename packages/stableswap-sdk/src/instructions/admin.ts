@@ -56,7 +56,7 @@ export const createAdminRampAInstruction = ({
       targetAmp: targetAmp.toBuffer(),
       stopRampTS: Math.floor(stopRamp.getTime() / 1_000),
     },
-    data
+    data,
   );
   return buildInstruction({
     config,
@@ -84,7 +84,7 @@ export const createAdminStopRampAInstruction = ({
     {
       instruction: AdminInstruction.STOP_RAMP_A,
     },
-    data
+    data,
   );
   data = data.slice(0, encodeLength);
   return buildInstruction({
@@ -113,7 +113,7 @@ export const createAdminPauseInstruction = ({
     {
       instruction: AdminInstruction.PAUSE,
     },
-    data
+    data,
   );
   return buildInstruction({
     config,
@@ -141,7 +141,7 @@ export const createAdminUnpauseInstruction = ({
     {
       instruction: AdminInstruction.UNPAUSE,
     },
-    data
+    data,
   );
   return buildInstruction({
     config,
@@ -172,7 +172,7 @@ export const createAdminSetFeeAccountInstruction = ({
     {
       instruction: AdminInstruction.SET_FEE_ACCOUNT,
     },
-    data
+    data,
   );
   return buildInstruction({
     config,
@@ -200,7 +200,7 @@ export const createAdminApplyNewAdminInstruction = ({
     {
       instruction: AdminInstruction.APPLY_NEW_ADMIN,
     },
-    data
+    data,
   );
   return buildInstruction({
     config,
@@ -234,7 +234,7 @@ export const createAdminCommitNewAdminInstruction = ({
     {
       instruction: AdminInstruction.COMMIT_NEW_ADMIN,
     },
-    data
+    data,
   );
   return buildInstruction({
     config,
@@ -265,7 +265,7 @@ export const createAdminSetNewFeesInstruction = ({
       instruction: AdminInstruction.SET_NEW_FEES, // InitializeSwap instruction
       fees: encodeFees(fees),
     },
-    data
+    data,
   );
   return buildInstruction({
     config,

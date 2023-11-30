@@ -17,12 +17,12 @@ export type AccountParsers<M> = {
  * @param idl The IDL.
  */
 export const generateAccountParsers = <M extends Record<string, object>>(
-  idl: Idl
+  idl: Idl,
 ): AccountParsers<M> => {
   const coder = new BorshAccountsCoder(idl);
   return generateAccountParsersFromCoder(
     idl.accounts?.map((a) => a.name),
-    coder
+    coder,
   );
 };
 
@@ -35,7 +35,7 @@ export const generateAccountParsers = <M extends Record<string, object>>(
  */
 export const generateAccountParsersFromCoder = <M>(
   accountNames: string[] | undefined,
-  coder: AccountsCoder
+  coder: AccountsCoder,
 ): AccountParsers<M> => {
   return (accountNames ?? []).reduce((parsers, account) => {
     parsers[camelCase(account) as keyof M] = (data: Buffer) =>

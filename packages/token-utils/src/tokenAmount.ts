@@ -57,7 +57,7 @@ export class TokenAmount extends UTokenAmount<Token> {
   divideByInteger(other: BigintIsh): TokenAmount {
     return new TokenAmount(
       this.token,
-      this.toU64().div(new BN(parseBigintIsh(other).toString()))
+      this.toU64().div(new BN(parseBigintIsh(other).toString())),
     );
   }
 

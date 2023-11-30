@@ -8,7 +8,7 @@ import { default as colors } from "colors/safe.js";
  * @param logs
  */
 export const formatInstructionLogsForConsole = (
-  logs: readonly InstructionLogs[]
+  logs: readonly InstructionLogs[],
 ): string =>
   logs
     .map((log, i) => {
@@ -48,7 +48,7 @@ export const printSendTransactionError = (err: SendTransactionError) => {
   } catch (e) {
     console.warn(
       colors.yellow("Could not print logs due to error. Printing raw logs"),
-      e
+      e,
     );
     console.log(err.logs?.join("\n"));
   }

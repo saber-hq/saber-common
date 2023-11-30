@@ -79,10 +79,10 @@ export const buildCreateTokenAccountTX = ({
           TOKEN_PROGRAM_ID,
           mint,
           tokenAccount,
-          owner
+          owner,
         ),
       ],
-      [accountSigner]
+      [accountSigner],
     ),
   };
 };

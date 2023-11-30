@@ -30,16 +30,16 @@ export class SolanaWalletAdapter implements WalletAdapter {
       EventEmitter<WalletAdapterEvents> & {
         signTransaction: (transaction: Transaction) => Promise<Transaction>;
         signAllTransactions: (
-          transactions: Transaction[]
+          transactions: Transaction[],
         ) => Promise<Transaction[]>;
-      }
+      },
   ) {}
 
   async signAndBroadcastTransaction(
     transaction: Transaction,
     connection: Connection,
     broadcaster: Broadcaster,
-    opts?: SignAndBroadcastOptions
+    opts?: SignAndBroadcastOptions,
   ): Promise<PendingTransaction> {
     if (!transaction.feePayer) {
       transaction.feePayer = this.publicKey ?? undefined;
@@ -62,7 +62,7 @@ export class SolanaWalletAdapter implements WalletAdapter {
         }
         const { signature } = await window.solana.signAndSendTransaction(
           transaction,
-          opts
+          opts,
         );
         return new PendingTransaction(connection, signature);
       }
@@ -96,7 +96,7 @@ export class SolanaWalletAdapter implements WalletAdapter {
       const signature = await this.adapter.sendTransaction(
         transaction,
         connection,
-        opts
+        opts,
       );
       return new PendingTransaction(connection, signature);
     }
@@ -104,7 +104,7 @@ export class SolanaWalletAdapter implements WalletAdapter {
       this as ConnectedWallet,
       transaction,
       broadcaster,
-      opts
+      opts,
     );
   }
 
@@ -117,7 +117,7 @@ export class SolanaWalletAdapter implements WalletAdapter {
   }
 
   async signAllTransactions(
-    transactions: Transaction[]
+    transactions: Transaction[],
   ): Promise<Transaction[]> {
     return this.adapter.signAllTransactions(transactions);
   }

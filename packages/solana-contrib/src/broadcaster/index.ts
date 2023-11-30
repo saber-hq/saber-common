@@ -70,14 +70,14 @@ export interface BroadcastOptions
 export class SingleConnectionBroadcaster implements Broadcaster {
   constructor(
     readonly sendConnection: Connection,
-    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
+    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS,
   ) {}
 
   /**
    * @inheritdoc
    */
   async getLatestBlockhash(
-    commitment: Commitment = this.opts.commitment ?? "confirmed"
+    commitment: Commitment = this.opts.commitment ?? "confirmed",
   ): Promise<BlockhashWithExpiryBlockHeight> {
     return await this.sendConnection.getLatestBlockhash(commitment);
   }
@@ -86,7 +86,7 @@ export class SingleConnectionBroadcaster implements Broadcaster {
    * @inheritdoc
    */
   async getRecentBlockhash(
-    commitment: Commitment = this.opts.commitment ?? "confirmed"
+    commitment: Commitment = this.opts.commitment ?? "confirmed",
   ): Promise<Blockhash> {
     const result = await this.sendConnection.getLatestBlockhash(commitment);
     return result.blockhash;
@@ -97,7 +97,7 @@ export class SingleConnectionBroadcaster implements Broadcaster {
    */
   async broadcast(
     tx: Transaction,
-    { printLogs = true, ...opts }: BroadcastOptions = this.opts
+    { printLogs = true, ...opts }: BroadcastOptions = this.opts,
   ): Promise<PendingTransaction> {
     if (tx.signatures.length === 0) {
       throw new Error("Transaction must be signed before broadcasting.");
@@ -107,7 +107,7 @@ export class SingleConnectionBroadcaster implements Broadcaster {
     if (printLogs) {
       return new PendingTransaction(
         this.sendConnection,
-        await sendAndSpamRawTx(this.sendConnection, rawTx, opts, opts)
+        await sendAndSpamRawTx(this.sendConnection, rawTx, opts, opts),
       );
     }
 
@@ -115,7 +115,7 @@ export class SingleConnectionBroadcaster implements Broadcaster {
       // hide the logs of TX errors if printLogs = false
       return new PendingTransaction(
         this.sendConnection,
-        await sendAndSpamRawTx(this.sendConnection, rawTx, opts, opts)
+        await sendAndSpamRawTx(this.sendConnection, rawTx, opts, opts),
       );
     });
   }
@@ -134,7 +134,7 @@ export class SingleConnectionBroadcaster implements Broadcaster {
     } = {
       commitment: this.opts.preflightCommitment ?? "confirmed",
       verifySigners: true,
-    }
+    },
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     if (verifySigners && tx.signatures.length === 0) {
       throw new Error("Transaction must be signed before simulating.");
@@ -142,7 +142,7 @@ export class SingleConnectionBroadcaster implements Broadcaster {
     return await simulateTransactionWithCommitment(
       this.sendConnection,
       tx,
-      commitment
+      commitment,
     );
   }
 }
@@ -153,15 +153,15 @@ export class SingleConnectionBroadcaster implements Broadcaster {
 export class MultipleConnectionBroadcaster implements Broadcaster {
   constructor(
     readonly connections: readonly Connection[],
-    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
+    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS,
   ) {}
 
   async getLatestBlockhash(
-    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed"
+    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed",
   ): Promise<BlockhashWithExpiryBlockHeight> {
     try {
       const result = await Promise.any(
-        this.connections.map((conn) => conn.getLatestBlockhash(commitment))
+        this.connections.map((conn) => conn.getLatestBlockhash(commitment)),
       );
       return result;
     } catch (e) {
@@ -174,11 +174,11 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
   }
 
   async getRecentBlockhash(
-    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed"
+    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed",
   ): Promise<Blockhash> {
     try {
       const result = await Promise.any(
-        this.connections.map((conn) => conn.getLatestBlockhash(commitment))
+        this.connections.map((conn) => conn.getLatestBlockhash(commitment)),
       );
       return result.blockhash;
     } catch (e) {
@@ -192,16 +192,16 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
 
   private async _sendRawTransaction(
     encoded: Buffer,
-    options?: SendOptions & Pick<BroadcastOptions, "retryTimes">
+    options?: SendOptions & Pick<BroadcastOptions, "retryTimes">,
   ): Promise<PendingTransaction> {
     try {
       return await Promise.any(
         this.connections.map(async (connection) => {
           return new PendingTransaction(
             connection,
-            await sendAndSpamRawTx(connection, encoded, options ?? this.opts)
+            await sendAndSpamRawTx(connection, encoded, options ?? this.opts),
           );
-        })
+        }),
       );
     } catch (e) {
       if (e instanceof AggregateError) {
@@ -222,7 +222,7 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
    */
   async broadcast(
     tx: Transaction,
-    { printLogs = true, ...opts }: BroadcastOptions = this.opts
+    { printLogs = true, ...opts }: BroadcastOptions = this.opts,
   ): Promise<PendingTransaction> {
     if (tx.signatures.length === 0) {
       throw new Error("Transaction must be signed before broadcasting.");
@@ -259,7 +259,7 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
       commitment:
         this.opts.preflightCommitment ?? this.opts.commitment ?? "confirmed",
       verifySigners: true,
-    }
+    },
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     if (verifySigners && tx.signatures.length === 0) {
       throw new Error("Transaction must be signed before simulating.");
@@ -270,9 +270,9 @@ export class MultipleConnectionBroadcaster implements Broadcaster {
           return await simulateTransactionWithCommitment(
             connection,
             tx,
-            commitment
+            commitment,
           );
-        })
+        }),
       );
     } catch (e) {
       if (e instanceof AggregateError) {

@@ -30,7 +30,7 @@ export const createInitMintInstructions = async ({
     mintKP,
     decimals,
     rentExemptMintBalance: await SPLToken.getMinBalanceRentForExemptMint(
-      provider.connection
+      provider.connection,
     ),
     mintAuthority,
     freezeAuthority,
@@ -73,10 +73,10 @@ export const createInitMintTX = ({
         mintKP.publicKey,
         decimals,
         mintAuthority,
-        freezeAuthority
+        freezeAuthority,
       ),
     ],
-    [mintKP]
+    [mintKP],
   );
 };
 
@@ -102,9 +102,9 @@ export const createMintToInstruction = ({
         to,
         mintAuthorityKP.publicKey,
         [],
-        amount
+        amount,
       ),
     ],
-    [mintAuthorityKP]
+    [mintAuthorityKP],
   );
 };

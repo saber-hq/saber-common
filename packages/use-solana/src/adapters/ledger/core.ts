@@ -22,7 +22,7 @@ async function ledgerSend(
   transport: Transport,
   instruction: number,
   p1: number,
-  payload: Buffer
+  payload: Buffer,
 ) {
   let p2 = 0;
   let payloadOffset = 0;
@@ -36,7 +36,7 @@ async function ledgerSend(
         instruction,
         p1,
         p2 | P2_MORE,
-        chunk
+        chunk,
       );
       if (reply.length !== 2) {
         throw new Error("Received unexpected reply payload");
@@ -58,7 +58,7 @@ function harden(n = 0) {
 
 export function getSolanaDerivationPath(
   account?: number,
-  change?: number
+  change?: number,
 ): Buffer {
   let length;
   if (account !== undefined) {
@@ -93,7 +93,7 @@ export function getSolanaDerivationPath(
 export async function signTransaction(
   transport: Transport,
   transaction: Transaction,
-  derivationPath: Buffer = getSolanaDerivationPath()
+  derivationPath: Buffer = getSolanaDerivationPath(),
 ): Promise<Buffer> {
   const messageBytes = transaction.serializeMessage();
   return signBytes(transport, messageBytes, derivationPath);
@@ -102,7 +102,7 @@ export async function signTransaction(
 export async function signBytes(
   transport: Transport,
   bytes: Buffer,
-  derivationPath: Buffer = getSolanaDerivationPath()
+  derivationPath: Buffer = getSolanaDerivationPath(),
 ): Promise<Buffer> {
   const numPaths = Buffer.alloc(1);
   numPaths.writeUInt8(1, 0);
@@ -116,13 +116,13 @@ export async function signBytes(
 
 export async function getPublicKey(
   transport: Transport,
-  derivationPath: Buffer = getSolanaDerivationPath()
+  derivationPath: Buffer = getSolanaDerivationPath(),
 ): Promise<PublicKey> {
   const publicKeyBytes = await ledgerSend(
     transport,
     INS_GET_PUBKEY,
     P1_NON_CONFIRM,
-    derivationPath
+    derivationPath,
   );
 
   return new PublicKey(publicKeyBytes);

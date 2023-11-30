@@ -104,8 +104,8 @@ export const getOrCreateATAs = async <K extends string>({
           name,
           mintKey,
         };
-      }
-    )
+      },
+    ),
   );
 
   const deduped = result.reduce(
@@ -131,7 +131,7 @@ export const getOrCreateATAs = async <K extends string>({
       accounts: { [key in K]?: PublicKey };
       createAccountInstructions: { [key in K]?: TransactionInstruction | null };
       instructions: { [address: string]: TransactionInstruction };
-    }
+    },
   );
   return {
     accounts: deduped.accounts,
@@ -161,5 +161,5 @@ export const createATAInstruction = ({
     mint,
     address,
     owner,
-    payer
+    payer,
   );

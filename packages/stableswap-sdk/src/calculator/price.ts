@@ -21,24 +21,24 @@ export const calculateSwapPrice = (exchangeInfo: IExchangeInfo): Price => {
     10_000,
     Math.min(
       10 ** reserve0.token.decimals,
-      Math.floor(parseInt(reserve0.toU64().div(new BN(100)).toString()))
-    )
+      Math.floor(parseInt(reserve0.toU64().div(new BN(100)).toString())),
+    ),
   );
 
   const inputAmount = new TokenAmount(reserve0.token, inputAmountNum);
   const outputAmount = calculateEstimatedSwapOutputAmount(
     exchangeInfo,
-    inputAmount
+    inputAmount,
   );
 
   const frac = outputAmount.outputAmountBeforeFees.asFraction.divide(
-    inputAmount.asFraction
+    inputAmount.asFraction,
   );
 
   return new Price(
     reserve0.token,
     reserve1.token,
     frac.denominator,
-    frac.numerator
+    frac.numerator,
   );
 };

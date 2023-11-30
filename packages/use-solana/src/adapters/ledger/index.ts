@@ -52,18 +52,18 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
     transaction: Transaction,
     _connection: Connection,
     broadcaster: Broadcaster,
-    opts?: SignAndBroadcastOptions
+    opts?: SignAndBroadcastOptions,
   ): Promise<PendingTransaction> {
     return await doSignAndBroadcastTransaction(
       this as ConnectedWallet,
       transaction,
       broadcaster,
-      opts
+      opts,
     );
   }
 
   async signAllTransactions(
-    transactions: Transaction[]
+    transactions: Transaction[],
   ): Promise<Transaction[]> {
     const result: Transaction[] = [];
     for (let i = 0; i < transactions.length; i++) {
@@ -85,7 +85,7 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
     const signature = await signTransaction(
       this._transport,
       transaction,
-      this._derivationPath
+      this._derivationPath,
     );
 
     transaction.addSignature(this._publicKey, signature);
@@ -111,7 +111,7 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
         this._derivationPath = getSolanaDerivationPath(account, change);
         this._publicKey = await getPublicKey(
           this._transport,
-          this._derivationPath
+          this._derivationPath,
         );
       } else {
         this._publicKey = await getPublicKey(this._transport);
@@ -155,7 +155,7 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
    * @returns
    */
   static async fetchAccountsForPaths(
-    paths: LedgerHDWalletPath[]
+    paths: LedgerHDWalletPath[],
   ): Promise<LedgerHDWalletAccount[]> {
     let transport: Transport | null = null;
     try {
@@ -164,7 +164,7 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
       for (const path of paths) {
         const derivationPath = getSolanaDerivationPath(
           path.account,
-          path.change
+          path.change,
         );
         ret.push({
           ...path,

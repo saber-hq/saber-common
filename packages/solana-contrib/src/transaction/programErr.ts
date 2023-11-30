@@ -108,7 +108,7 @@ export type ProgramError = {
 };
 
 export function getTransactionInstructionError(
-  error?: TransactionError | null
+  error?: TransactionError | null,
 ): ProgramError | undefined {
   if (!error) {
     return;

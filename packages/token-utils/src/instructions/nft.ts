@@ -8,7 +8,7 @@ import { createInitMintInstructions } from "./mint.js";
 export const mintNFT = async (
   provider: Provider,
   mintKP: Signer,
-  owner: PublicKey = provider.wallet.publicKey
+  owner: PublicKey = provider.wallet.publicKey,
 ): Promise<TransactionEnvelope> => {
   // Temporary mint authority
   const tempMintAuthority = provider.wallet.publicKey;
@@ -37,8 +37,8 @@ export const mintNFT = async (
       address,
       tempMintAuthority,
       [],
-      new u64(1)
-    )
+      new u64(1),
+    ),
   );
   // Set mint authority of the NFT to NULL
   tx.instructions.push(
@@ -48,8 +48,8 @@ export const mintNFT = async (
       null,
       "MintTokens",
       tempMintAuthority,
-      []
-    )
+      [],
+    ),
   );
 
   return tx;

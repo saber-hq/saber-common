@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Release all packages
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           echo "Must be on master branch to publish packages."
           exit 1
@@ -36,7 +36,7 @@ jobs:
       - name: Install Yarn dependencies
         run: yarn install
       - run: yarn build
-      - run: yarn workspaces foreach -t version ${{ github.event.inputs.version }}
+      - run: yarn workspaces foreach --all -t version ${{ github.event.inputs.version }}
       - run: yarn docs:generate
       - uses: mikepenz/release-changelog-builder-action@v3
         env:

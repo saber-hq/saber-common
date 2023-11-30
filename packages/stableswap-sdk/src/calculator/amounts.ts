@@ -12,7 +12,7 @@ import { computeD, computeY } from "./curve.js";
  * @returns
  */
 export const calculateVirtualPrice = (
-  exchange: IExchangeInfo
+  exchange: IExchangeInfo,
 ): Fraction | null => {
   const amount = exchange.lpTotalSupply;
   if (amount === undefined || amount.equalTo(0)) {
@@ -23,9 +23,9 @@ export const calculateVirtualPrice = (
     computeD(
       exchange.ampFactor,
       exchange.reserves[0].amount.raw,
-      exchange.reserves[1].amount.raw
+      exchange.reserves[1].amount.raw,
     ),
-    amount.raw
+    amount.raw,
   );
   return price;
 };
@@ -38,7 +38,7 @@ export const calculateVirtualPrice = (
  */
 export const calculateEstimatedSwapOutputAmount = (
   exchange: IExchangeInfo,
-  fromAmount: TokenAmount
+  fromAmount: TokenAmount,
 ): {
   [K in
     | "outputAmountBeforeFees"
@@ -48,7 +48,7 @@ export const calculateEstimatedSwapOutputAmount = (
     | "adminFee"]: TokenAmount;
 } => {
   const [fromReserves, toReserves] = fromAmount.token.equals(
-    exchange.reserves[0].amount.token
+    exchange.reserves[0].amount.token,
   )
     ? [exchange.reserves[0], exchange.reserves[1]]
     : [exchange.reserves[1], exchange.reserves[0]];
@@ -71,29 +71,29 @@ export const calculateEstimatedSwapOutputAmount = (
     computeY(
       amp,
       JSBI.add(fromReserves.amount.raw, fromAmount.raw),
-      computeD(amp, fromReserves.amount.raw, toReserves.amount.raw)
-    )
+      computeD(amp, fromReserves.amount.raw, toReserves.amount.raw),
+    ),
   );
 
   const outputAmountBeforeFees = new TokenAmount(
     toReserves.amount.token,
-    amountBeforeFees
+    amountBeforeFees,
   );
 
   const fee = new TokenAmount(
     toReserves.amount.token,
-    exchange.fees.trade.asFraction.multiply(amountBeforeFees).toFixed(0)
+    exchange.fees.trade.asFraction.multiply(amountBeforeFees).toFixed(0),
   );
 
   const adminFee = new TokenAmount(
     toReserves.amount.token,
-    exchange.fees.adminTrade.asFraction.multiply(fee.raw).toFixed(0)
+    exchange.fees.adminTrade.asFraction.multiply(fee.raw).toFixed(0),
   );
   const lpFee = fee.subtract(adminFee);
 
   const outputAmount = new TokenAmount(
     toReserves.amount.token,
-    JSBI.subtract(amountBeforeFees, fee.raw)
+    JSBI.subtract(amountBeforeFees, fee.raw),
   );
 
   return {
@@ -160,8 +160,8 @@ export const calculateEstimatedWithdrawOneAmount = ({
     d_0,
     JSBI.divide(
       JSBI.multiply(poolTokenAmount.raw, d_0),
-      exchange.lpTotalSupply.raw
-    )
+      exchange.lpTotalSupply.raw,
+    ),
   );
 
   const new_y = computeY(ampFactor, quoteReserves, d_1);
@@ -169,27 +169,27 @@ export const calculateEstimatedWithdrawOneAmount = ({
   // expected_base_amount = swap_base_amount * d_1 / d_0 - new_y;
   const expected_base_amount = JSBI.subtract(
     JSBI.divide(JSBI.multiply(baseReserves, d_1), d_0),
-    new_y
+    new_y,
   );
   // expected_quote_amount = swap_quote_amount - swap_quote_amount * d_1 / d_0;
   const expected_quote_amount = JSBI.subtract(
     quoteReserves,
-    JSBI.divide(JSBI.multiply(quoteReserves, d_1), d_0)
+    JSBI.divide(JSBI.multiply(quoteReserves, d_1), d_0),
   );
   // new_base_amount = swap_base_amount - expected_base_amount * fee / fee_denominator;
   const new_base_amount = new Fraction(baseReserves.toString(), 1).subtract(
-    normalizedTradeFee(fees, N_COINS, expected_base_amount)
+    normalizedTradeFee(fees, N_COINS, expected_base_amount),
   );
   // new_quote_amount = swap_quote_amount - expected_quote_amount * fee / fee_denominator;
   const new_quote_amount = new Fraction(quoteReserves.toString(), 1).subtract(
-    normalizedTradeFee(fees, N_COINS, expected_quote_amount)
+    normalizedTradeFee(fees, N_COINS, expected_quote_amount),
   );
   const dy = new_base_amount.subtract(
     computeY(
       ampFactor,
       JSBI.BigInt(new_quote_amount.toFixed(0)),
-      d_1
-    ).toString()
+      d_1,
+    ).toString(),
   );
   const dy_0 = JSBI.subtract(baseReserves, new_y);
 
@@ -219,7 +219,7 @@ export const calculateEstimatedWithdrawOneAmount = ({
     adminSwapFee: new TokenAmount(withdrawToken, adminSwapFee.toFixed(0)),
     adminWithdrawFee: new TokenAmount(
       withdrawToken,
-      adminWithdrawFee.toFixed(0)
+      adminWithdrawFee.toFixed(0),
     ),
   };
 };
@@ -230,11 +230,11 @@ export const calculateEstimatedWithdrawOneAmount = ({
 export const normalizedTradeFee = (
   { trade }: Fees,
   n_coins: JSBI,
-  amount: JSBI
+  amount: JSBI,
 ): Fraction => {
   const adjustedTradeFee = new Fraction(
     n_coins,
-    JSBI.multiply(JSBI.subtract(n_coins, ONE), JSBI.BigInt(4))
+    JSBI.multiply(JSBI.subtract(n_coins, ONE), JSBI.BigInt(4)),
   );
   return new Fraction(amount, 1).multiply(trade).multiply(adjustedTradeFee);
 };
@@ -257,7 +257,7 @@ export const calculateEstimatedWithdrawAmount = ({
   if (lpTotalSupply.equalTo(0)) {
     const zero = reserves.map((r) => new TokenAmount(r.amount.token, ZERO)) as [
       TokenAmount,
-      TokenAmount
+      TokenAmount,
     ];
     return {
       withdrawAmounts: zero,
@@ -274,7 +274,7 @@ export const calculateEstimatedWithdrawAmount = ({
     return [
       new TokenAmount(
         amount.token,
-        JSBI.BigInt(baseAmount.subtract(fee).toFixed(0))
+        JSBI.BigInt(baseAmount.subtract(fee).toFixed(0)),
       ),
       {
         beforeFees: JSBI.BigInt(baseAmount.toFixed(0)),
@@ -283,16 +283,16 @@ export const calculateEstimatedWithdrawAmount = ({
     ];
   }) as [
     [TokenAmount, { beforeFees: JSBI; fee: JSBI }],
-    [TokenAmount, { beforeFees: JSBI; fee: JSBI }]
+    [TokenAmount, { beforeFees: JSBI; fee: JSBI }],
   ];
 
   return {
     withdrawAmountsBeforeFees: withdrawAmounts.map(
-      ([amt, { beforeFees }]) => new TokenAmount(amt.token, beforeFees)
+      ([amt, { beforeFees }]) => new TokenAmount(amt.token, beforeFees),
     ) as [TokenAmount, TokenAmount],
     withdrawAmounts: [withdrawAmounts[0][0], withdrawAmounts[1][0]],
     fees: withdrawAmounts.map(
-      ([amt, { fee }]) => new TokenAmount(amt.token, fee)
+      ([amt, { fee }]) => new TokenAmount(amt.token, fee),
     ) as [TokenAmount, TokenAmount],
   };
 };
@@ -307,7 +307,7 @@ export const calculateEstimatedWithdrawAmount = ({
 export const calculateEstimatedMintAmount = (
   exchange: IExchangeInfo,
   depositAmountA: JSBI,
-  depositAmountB: JSBI
+  depositAmountB: JSBI,
 ): {
   mintAmountBeforeFees: TokenAmount;
   mintAmount: TokenAmount;
@@ -329,7 +329,7 @@ export const calculateEstimatedMintAmount = (
   const d1 = computeD(
     amp,
     JSBI.add(reserveA.amount.raw, depositAmountA),
-    JSBI.add(reserveB.amount.raw, depositAmountB)
+    JSBI.add(reserveB.amount.raw, depositAmountB),
   );
   if (JSBI.lessThan(d1, d0)) {
     throw new Error("New D cannot be less than previous D");
@@ -337,7 +337,7 @@ export const calculateEstimatedMintAmount = (
 
   const oldBalances = exchange.reserves.map((r) => r.amount.raw) as [
     JSBI,
-    JSBI
+    JSBI,
   ];
   const newBalances = [
     JSBI.add(reserveA.amount.raw, depositAmountA),
@@ -353,7 +353,7 @@ export const calculateEstimatedMintAmount = (
     const fee = normalizedTradeFee(
       exchange.fees,
       N_COINS,
-      JSBI.BigInt(diffAbs.toFixed(0))
+      JSBI.BigInt(diffAbs.toFixed(0)),
     );
     return JSBI.subtract(newBalance, JSBI.BigInt(fee.toFixed(0)));
   }) as [JSBI, JSBI];
@@ -362,26 +362,26 @@ export const calculateEstimatedMintAmount = (
   const lpSupply = exchange.lpTotalSupply;
   const mintAmountRaw = JSBI.divide(
     JSBI.multiply(lpSupply.raw, JSBI.subtract(d2, d0)),
-    d0
+    d0,
   );
 
   const mintAmount = new TokenAmount(
     exchange.lpTotalSupply.token,
-    mintAmountRaw
+    mintAmountRaw,
   );
 
   const mintAmountRawBeforeFees = JSBI.divide(
     JSBI.multiply(lpSupply.raw, JSBI.subtract(d1, d0)),
-    d0
+    d0,
   );
 
   const fees = new TokenAmount(
     exchange.lpTotalSupply.token,
-    JSBI.subtract(mintAmountRawBeforeFees, mintAmountRaw)
+    JSBI.subtract(mintAmountRawBeforeFees, mintAmountRaw),
   );
   const mintAmountBeforeFees = new TokenAmount(
     exchange.lpTotalSupply.token,
-    mintAmountRawBeforeFees
+    mintAmountRawBeforeFees,
   );
 
   return {

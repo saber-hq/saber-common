@@ -11,7 +11,7 @@ import type { TokenInfo } from "./tokenList.js";
  * Magic value representing the raw, underlying Solana native asset.
  */
 export const RAW_SOL_MINT = new PublicKey(
-  "RawSo11111111111111111111111111111111111112"
+  "RawSo11111111111111111111111111111111111112",
 );
 
 /**
@@ -123,7 +123,7 @@ export class Token implements UToken<Token> {
   static fromMint = (
     mint: PublicKey | string,
     decimals: number,
-    opts: Partial<Omit<TokenInfo, "address" | "decimals">> = {}
+    opts: Partial<Omit<TokenInfo, "address" | "decimals">> = {},
   ): Token =>
     new Token({
       ...opts,
@@ -148,7 +148,7 @@ export class Token implements UToken<Token> {
   static load = async (
     connection: Connection,
     mint: PublicKey,
-    info: Partial<Omit<TokenInfo, "address">> = {}
+    info: Partial<Omit<TokenInfo, "address">> = {},
   ): Promise<Token | null> => {
     if (typeof info.decimals === "number") {
       return Token.fromMint(mint, info.decimals, info);
@@ -170,7 +170,7 @@ export class Token implements UToken<Token> {
  */
 export const tokensEqual = (
   a: Token | undefined,
-  b: Token | undefined
+  b: Token | undefined,
 ): boolean =>
   a !== undefined &&
   b !== undefined &&
@@ -204,7 +204,7 @@ const wrappedSol = {
  * Creates a Token for all networks.
  */
 export const makeTokenForAllNetworks = (
-  token: Omit<TokenInfo, "chainId">
+  token: Omit<TokenInfo, "chainId">,
 ): TokenMap => ({
   "mainnet-beta": new Token({ ...token, chainId: ChainId.MainnetBeta }),
   devnet: new Token({ ...token, chainId: ChainId.Devnet }),
@@ -228,7 +228,7 @@ export const NETWORK_TO_CHAIN_ID = {
 };
 
 export const CHAIN_ID_TO_NETWORK: { [E in ChainId]: Network } = Object.entries(
-  NETWORK_TO_CHAIN_ID
+  NETWORK_TO_CHAIN_ID,
 ).reduce((acc, [network, env]) => ({ ...acc, [env]: network }), {}) as {
   [E in ChainId]: Network;
 };

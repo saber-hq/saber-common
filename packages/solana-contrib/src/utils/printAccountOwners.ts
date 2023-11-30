@@ -37,7 +37,7 @@ import { PublicKey } from "@solana/web3.js";
  */
 export async function printAccountOwners(
   connection: Connection,
-  plainObj: object
+  plainObj: object,
 ): Promise<void> {
   try {
     if (typeof plainObj !== "object") {
@@ -47,13 +47,13 @@ export async function printAccountOwners(
       const callStack = new Error().stack?.split("\n");
       if (callStack) {
         let expectIndex = callStack.findIndex((l) =>
-          l.includes(`at ${printAccountOwners.name}`)
+          l.includes(`at ${printAccountOwners.name}`),
         );
 
         // debugAccountOwners in chai-solana wraps printAccountOwners
         // We need to get the caller of debugAccountOwners instead
         const debugAccountOwnersIndex = callStack.findIndex((l) =>
-          l.includes(`at debugAccountOwners`)
+          l.includes(`at debugAccountOwners`),
         );
         if (debugAccountOwnersIndex > expectIndex) {
           expectIndex = debugAccountOwnersIndex;
@@ -72,7 +72,7 @@ export async function printAccountOwners(
             const cwd = maybeProcess.cwd?.() || "/";
             // get the part of targetLine after cwd
             const targetLineAfterCwd = targetLine.substring(
-              targetLine.indexOf(cwd) + cwd.length
+              targetLine.indexOf(cwd) + cwd.length,
             );
             if (targetLineAfterCwd.length > 0) {
               relativePath = targetLineAfterCwd.substring(1).replace(/\)$/, "");
@@ -88,7 +88,7 @@ export async function printAccountOwners(
       if (relativePath) {
         console.log(
           relativePath,
-          await _transformAccountOwners(plainObj, connection)
+          await _transformAccountOwners(plainObj, connection),
         );
       } else {
         console.log(await _transformAccountOwners(plainObj, connection));
@@ -117,7 +117,7 @@ type MaybeProcess = {
  */
 async function gracefulGetMultipleAccountsInfo(
   connection: Connection,
-  publicKeys: PublicKey[]
+  publicKeys: PublicKey[],
 ): ReturnType<Connection["getMultipleAccountsInfo"]> {
   try {
     // To be honest, the web3 internals aren't going to change that much. And if
@@ -148,13 +148,13 @@ async function gracefulGetMultipleAccountsInfo(
 type PublicKeyBase58 = string;
 type GetMultipleAccountsArgs = [
   PublicKeyBase58[],
-  { encoding: "base64"; commitment: "confirmed" }
+  { encoding: "base64"; commitment: "confirmed" },
 ];
 
 interface ConnectionWithGetMultipleAccounts {
   _rpcRequest?: (
     method: "getMultipleAccounts",
-    args: GetMultipleAccountsArgs
+    args: GetMultipleAccountsArgs,
   ) => Promise<
     | undefined
     | {
@@ -172,7 +172,7 @@ interface ConnectionWithGetMultipleAccounts {
  */
 const _transformAccountOwners = async (
   plainObjWithAddressesAndBignums: object,
-  connection: Connection
+  connection: Connection,
 ): Promise<unknown> => {
   /* eslint-disable */
   const result: any = {};

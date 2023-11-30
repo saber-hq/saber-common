@@ -52,7 +52,7 @@ export const executeTxInstructions = async (
     provider: Provider;
     payerSigner: Signer;
     options?: ConfirmOptions;
-  }
+  },
 ): Promise<string> => {
   console.log(`Running tx ${title}`);
   const txEnv = new TransactionEnvelope(provider, instructions.slice(), [
@@ -69,7 +69,7 @@ export const executeTxInstructions = async (
 
 export const mergeInstructions = (
   mut: MutableTransactionInstructions,
-  inst: TransactionInstructions
+  inst: TransactionInstructions,
 ): void => {
   mut.instructions.push(...inst.instructions);
   mut.signers.push(...inst.signers);

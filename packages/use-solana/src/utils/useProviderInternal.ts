@@ -67,7 +67,7 @@ export const useProviderInternal = ({
       new SolanaReadonlyProvider(connection, {
         commitment,
       }),
-    [commitment, connection]
+    [commitment, connection],
   );
 
   const connected = wallet?.connected;
@@ -81,7 +81,7 @@ export const useProviderInternal = ({
               broadcastConnections,
               wallet: wallet as ConnectedWallet,
               opts: confirmOptions,
-            })
+            }),
           )
         : null,
     [
@@ -91,7 +91,7 @@ export const useProviderInternal = ({
       connection,
       broadcastConnections,
       confirmOptions,
-    ]
+    ],
   );
 
   return {

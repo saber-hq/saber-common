@@ -32,7 +32,7 @@ export const getATAAddressSync = ({
 }): PublicKey => {
   return getProgramAddress(
     [owner.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), mint.toBuffer()],
-    ASSOCIATED_TOKEN_PROGRAM_ID
+    ASSOCIATED_TOKEN_PROGRAM_ID,
   );
 };
 
@@ -84,7 +84,7 @@ export const getATAAddressesSync = <K extends string>({
 } => {
   const result = Object.entries(mints).map(
     (
-      args
+      args,
     ): {
       address: PublicKey;
       name: string;
@@ -100,7 +100,7 @@ export const getATAAddressesSync = <K extends string>({
         name,
         mint,
       };
-    }
+    },
   );
   const deduped = result.reduce(
     (acc, { address, name, mint }) => {
@@ -113,7 +113,7 @@ export const getATAAddressesSync = <K extends string>({
     },
     { accounts: {} } as {
       accounts: ATAMap<K>;
-    }
+    },
   );
   return {
     accounts: deduped.accounts,

@@ -34,29 +34,29 @@ export class TieredBroadcaster implements Broadcaster {
      * Connections to send to in addition to the primary.
      */
     readonly fallbackConnections: readonly Connection[],
-    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
+    readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS,
   ) {
     this.premiumBroadcaster = new SingleConnectionBroadcaster(
       primaryConnection,
-      opts
+      opts,
     );
   }
 
   async getLatestBlockhash(
-    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed"
+    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed",
   ): Promise<BlockhashWithExpiryBlockHeight> {
     return await this.premiumBroadcaster.getLatestBlockhash(commitment);
   }
 
   async getRecentBlockhash(
-    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed"
+    commitment: Commitment = this.opts.preflightCommitment ?? "confirmed",
   ): Promise<Blockhash> {
     return await this.premiumBroadcaster.getRecentBlockhash(commitment);
   }
 
   private async _sendRawTransaction(
     encoded: Buffer,
-    options?: SendOptions & Omit<BroadcastOptions, "printLogs">
+    options?: SendOptions & Omit<BroadcastOptions, "printLogs">,
   ): Promise<PendingTransaction> {
     const pending = new PendingTransaction(
       this.primaryConnection,
@@ -64,8 +64,8 @@ export class TieredBroadcaster implements Broadcaster {
         this.primaryConnection,
         encoded,
         options ?? this.opts,
-        options ?? DEFAULT_RETRY_OPTIONS
-      )
+        options ?? DEFAULT_RETRY_OPTIONS,
+      ),
     );
     void (async () => {
       await Promise.all(
@@ -75,12 +75,12 @@ export class TieredBroadcaster implements Broadcaster {
               fc,
               encoded,
               options ?? this.opts,
-              options?.fallbackRetryOptions ?? DEFAULT_FALLBACK_RETRY_OPTIONS
+              options?.fallbackRetryOptions ?? DEFAULT_FALLBACK_RETRY_OPTIONS,
             );
           } catch (e) {
             console.warn(`[Broadcaster] _sendRawTransaction error`, e);
           }
-        })
+        }),
       );
     })();
     return pending;
@@ -96,7 +96,7 @@ export class TieredBroadcaster implements Broadcaster {
    */
   async broadcast(
     tx: Transaction,
-    { printLogs = true, ...opts }: BroadcastOptions = this.opts
+    { printLogs = true, ...opts }: BroadcastOptions = this.opts,
   ): Promise<PendingTransaction> {
     if (tx.signatures.length === 0) {
       throw new Error("Transaction must be signed before broadcasting.");
@@ -130,7 +130,7 @@ export class TieredBroadcaster implements Broadcaster {
     } = {
       commitment: this.opts.preflightCommitment ?? "confirmed",
       verifySigners: true,
-    }
+    },
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     if (verifySigners && tx.signatures.length === 0) {
       throw new Error("Transaction must be signed before simulating.");

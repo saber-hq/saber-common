@@ -13,7 +13,7 @@ import { SendTransactionError } from "@solana/web3.js";
 export async function simulateTransactionWithCommitment(
   connection: Connection,
   transaction: Transaction,
-  commitment: Commitment = "confirmed"
+  commitment: Commitment = "confirmed",
 ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
   const connectionInner = connection as Connection & {
     _rpcRequest: (
@@ -23,8 +23,8 @@ export async function simulateTransactionWithCommitment(
         {
           encoding: string;
           commitment: Commitment;
-        }
-      ]
+        },
+      ],
     ) => Promise<{
       error: Error;
       result: RpcResponseAndContext<SimulatedTransactionResponse>;
@@ -50,7 +50,7 @@ export async function simulateTransactionWithCommitment(
   if (res.error) {
     throw new SendTransactionError(
       "failed to simulate transaction: " + res.error.message,
-      res.result.value.logs ?? undefined
+      res.result.value.logs ?? undefined,
     );
   }
   return res.result;

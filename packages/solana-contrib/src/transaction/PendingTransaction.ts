@@ -40,7 +40,7 @@ export class PendingTransaction {
 
   constructor(
     readonly connection: Connection,
-    readonly signature: TransactionSignature
+    readonly signature: TransactionSignature,
   ) {}
 
   /**
@@ -107,7 +107,7 @@ export class PendingTransaction {
         retries: 5,
         minTimeout: 500,
         ...retryOpts,
-      }
+      },
     );
     if (!receipt) {
       throw new Error("transaction could not be confirmed");
@@ -123,11 +123,11 @@ export class PendingTransaction {
    * @returns
    */
   async awaitSignatureConfirmation(
-    commitment: Finality = "confirmed"
+    commitment: Finality = "confirmed",
   ): Promise<TransactionSignature> {
     const { value } = await this.connection.confirmTransaction(
       this.signature,
-      commitment
+      commitment,
     );
     if (value.err) {
       throw value.err;
@@ -156,7 +156,7 @@ export class PendingTransaction {
             blockhash,
             lastValidBlockHeight,
           },
-          commitment
+          commitment,
         )
       ).value;
     } else {
@@ -167,7 +167,7 @@ export class PendingTransaction {
 
     if (value.err) {
       throw new Error(
-        `Transaction ${this.signature} failed (${JSON.stringify(value)})`
+        `Transaction ${this.signature} failed (${JSON.stringify(value)})`,
       );
     }
 

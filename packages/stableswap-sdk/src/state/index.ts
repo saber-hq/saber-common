@@ -96,10 +96,10 @@ export const decodeSwap = (data: Buffer): StableSwapState => {
   const mintA = new PublicKey(stableSwapData.mintA);
   const mintB = new PublicKey(stableSwapData.mintB);
   const initialAmpFactor = u64.fromBuffer(
-    Buffer.from(stableSwapData.initialAmpFactor)
+    Buffer.from(stableSwapData.initialAmpFactor),
   );
   const targetAmpFactor = u64.fromBuffer(
-    Buffer.from(stableSwapData.targetAmpFactor)
+    Buffer.from(stableSwapData.targetAmpFactor),
   );
   const startRampTimestamp = stableSwapData.startRampTs;
   const stopRampTimestamp = stableSwapData.stopRampTs;

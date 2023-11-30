@@ -10,7 +10,7 @@ import type { Connection, PublicKey } from "@solana/web3.js";
 export const loadProgramAccount = async (
   connection: Connection,
   address: PublicKey,
-  programId: PublicKey
+  programId: PublicKey,
 ): Promise<Buffer> => {
   const accountInfo = await connection.getAccountInfo(address);
   if (accountInfo === null) {
@@ -19,7 +19,7 @@ export const loadProgramAccount = async (
 
   if (!accountInfo.owner.equals(programId)) {
     throw new Error(
-      `Invalid owner: expected ${programId.toBase58()}, found ${accountInfo.owner.toBase58()}`
+      `Invalid owner: expected ${programId.toBase58()}, found ${accountInfo.owner.toBase58()}`,
     );
   }
 

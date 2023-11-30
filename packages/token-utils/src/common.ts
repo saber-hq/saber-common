@@ -31,13 +31,13 @@ export type { ProgramAccount } from "@saberhq/solana-contrib";
 export const DEFAULT_TOKEN_DECIMALS = 6;
 
 export const SPL_SHARED_MEMORY_ID = new PublicKey(
-  "shmem4EWT2sPdVGvTZCzXXRAURL9G5vpPxNwSeKhHUL"
+  "shmem4EWT2sPdVGvTZCzXXRAURL9G5vpPxNwSeKhHUL",
 );
 
 export async function createMint(
   provider: Provider,
   authority?: PublicKey,
-  decimals?: number
+  decimals?: number,
 ): Promise<PublicKey> {
   if (authority === undefined) {
     authority = provider.wallet.publicKey;
@@ -47,7 +47,7 @@ export async function createMint(
     provider,
     authority,
     mint.publicKey,
-    decimals
+    decimals,
   );
 
   const tx = new Transaction();
@@ -69,11 +69,11 @@ export async function createMint(
 export async function createToken(
   provider: Provider,
   authority?: PublicKey,
-  decimals = 6
+  decimals = 6,
 ): Promise<Token> {
   return Token.fromMint(
     await createMint(provider, authority, decimals),
-    decimals
+    decimals,
   );
 }
 
@@ -81,7 +81,7 @@ export async function createMintInstructions(
   provider: Provider,
   authority: PublicKey,
   mint: PublicKey,
-  decimals = 6
+  decimals = 6,
 ): Promise<TransactionInstruction[]> {
   const instructions = [
     SystemProgram.createAccount({
@@ -89,7 +89,7 @@ export async function createMintInstructions(
       newAccountPubkey: mint,
       space: MintLayout.span,
       lamports: await provider.connection.getMinimumBalanceForRentExemption(
-        MintLayout.span
+        MintLayout.span,
       ),
       programId: TOKEN_PROGRAM_ID,
     }),
@@ -98,7 +98,7 @@ export async function createMintInstructions(
       mint,
       decimals,
       authority,
-      null
+      null,
     ),
   ];
   return instructions;
@@ -108,7 +108,7 @@ export async function createMintAndVault(
   provider: Provider,
   amount: BN,
   owner?: PublicKey,
-  decimals?: number
+  decimals?: number,
 ): Promise<[PublicKey, PublicKey]> {
   if (owner === undefined) {
     owner = provider.wallet.publicKey;
@@ -121,22 +121,21 @@ export async function createMintAndVault(
       provider,
       provider.wallet.publicKey,
       mint.publicKey,
-      decimals
+      decimals,
     )),
     SystemProgram.createAccount({
       fromPubkey: provider.wallet.publicKey,
       newAccountPubkey: vault.publicKey,
       space: 165,
-      lamports: await provider.connection.getMinimumBalanceForRentExemption(
-        165
-      ),
+      lamports:
+        await provider.connection.getMinimumBalanceForRentExemption(165),
       programId: TOKEN_PROGRAM_ID,
     }),
     SPLToken.createInitAccountInstruction(
       TOKEN_PROGRAM_ID,
       mint.publicKey,
       vault.publicKey,
-      owner
+      owner,
     ),
     SPLToken.createMintToInstruction(
       TOKEN_PROGRAM_ID,
@@ -144,8 +143,8 @@ export async function createMintAndVault(
       vault.publicKey,
       provider.wallet.publicKey,
       [],
-      amount
-    )
+      amount,
+    ),
   );
   await provider.send(tx, [mint, vault]);
   return [mint.publicKey, vault.publicKey];
@@ -156,7 +155,7 @@ export async function createTokenAccountInstrs(
   newAccountPubkey: PublicKey,
   mint: PublicKey,
   owner: PublicKey,
-  lamports?: number
+  lamports?: number,
 ): Promise<TransactionInstruction[]> {
   if (lamports === undefined) {
     lamports = await provider.connection.getMinimumBalanceForRentExemption(165);
@@ -173,7 +172,7 @@ export async function createTokenAccountInstrs(
       TOKEN_PROGRAM_ID,
       mint,
       newAccountPubkey,
-      owner
+      owner,
     ),
   ];
 }
@@ -181,7 +180,7 @@ export async function createTokenAccountInstrs(
 export async function createAccountRentExempt(
   provider: Provider,
   programId: PublicKey,
-  size: number
+  size: number,
 ): Promise<Keypair> {
   const acc = Keypair.generate();
   const tx = new Transaction();
@@ -190,11 +189,10 @@ export async function createAccountRentExempt(
       fromPubkey: provider.wallet.publicKey,
       newAccountPubkey: acc.publicKey,
       space: size,
-      lamports: await provider.connection.getMinimumBalanceForRentExemption(
-        size
-      ),
+      lamports:
+        await provider.connection.getMinimumBalanceForRentExemption(size),
       programId,
-    })
+    }),
   );
   await provider.send(tx, [acc]);
   return acc;
@@ -202,7 +200,7 @@ export async function createAccountRentExempt(
 
 export async function getMintInfo(
   provider: Provider,
-  addr: PublicKey
+  addr: PublicKey,
 ): Promise<MintInfo> {
   const depositorAccInfo = await provider.getAccountInfo(addr);
   if (depositorAccInfo === null) {
@@ -213,7 +211,7 @@ export async function getMintInfo(
 
 export async function getTokenAccount(
   provider: Provider,
-  addr: PublicKey
+  addr: PublicKey,
 ): Promise<TokenAccountData> {
   const depositorAccInfo = await provider.getAccountInfo(addr);
   if (depositorAccInfo === null) {

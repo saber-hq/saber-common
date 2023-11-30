@@ -34,7 +34,7 @@ import { TransactionEnvelope } from "../index.js";
 export const printTXTable = (
   tx: TransactionEnvelope,
   transactionLogs: string[],
-  message: string
+  message: string,
 ) => {
   if (message && message !== "") {
     console.log(estimateTransactionSize(tx), message);
@@ -90,7 +90,7 @@ export const printTXTable = (
       mar: marginalInstructionSize(
         tx.provider,
         tx.instructions.slice(0, i),
-        instruction
+        instruction,
       ),
       cum: instructionsSize(tx.provider, tx.instructions.slice(0, i + 1)),
       programId: instruction.programId.toBase58(),
@@ -112,7 +112,10 @@ export class TXSizeEstimationError extends Error {
 }
 
 export class EstimatedTXTooBigError extends Error {
-  constructor(readonly tx: Transaction, readonly size: number) {
+  constructor(
+    readonly tx: Transaction,
+    readonly size: number,
+  ) {
     super(`Transaction too large`);
     this.name = "EstimatedTXTooBigError";
   }
@@ -133,7 +136,7 @@ export class EstimatedTXTooBigError extends Error {
  * Returns 9999 if the transaction was unable to be built.
  */
 export const estimateTransactionSize = (
-  txEnvelope: TransactionEnvelope
+  txEnvelope: TransactionEnvelope,
 ): number => {
   const result = txEnvelope.estimateSize();
   if ("size" in result) {
@@ -142,7 +145,7 @@ export const estimateTransactionSize = (
   if (result.error instanceof TXSizeEstimationError) {
     console.error(
       "Unknown error estimating transaction size",
-      result.error.underlyingError
+      result.error.underlyingError,
     );
     return 9999;
   }
@@ -164,22 +167,22 @@ const simpleInstruction = () => {
 
 const isolatedInstructionSize = (
   randomProvider: Provider,
-  instruction: TransactionInstruction
+  instruction: TransactionInstruction,
 ): number => {
   return marginalInstructionSize(
     randomProvider,
     [simpleInstruction()],
-    instruction
+    instruction,
   );
 };
 const marginalInstructionSize = (
   randomProvider: Provider,
   previousInstructions: TransactionInstruction[],
-  instruction: TransactionInstruction
+  instruction: TransactionInstruction,
 ): number => {
   const previousTxSize = instructionsSize(
     randomProvider,
-    previousInstructions.length ? previousInstructions : [simpleInstruction()]
+    previousInstructions.length ? previousInstructions : [simpleInstruction()],
   );
 
   const biggerTxSize = instructionsSize(randomProvider, [
@@ -191,7 +194,7 @@ const marginalInstructionSize = (
 };
 const instructionsSize = (
   randomProvider: Provider,
-  instructions: TransactionInstruction[]
+  instructions: TransactionInstruction[],
 ): number => {
   const instructionedTx = new TransactionEnvelope(randomProvider, [
     ...instructions,

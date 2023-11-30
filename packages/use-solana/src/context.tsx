@@ -25,13 +25,13 @@ import { useWalletInternal } from "./utils/useWalletInternal";
 
 export interface UseSolana<
   WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType,
-  Connected extends boolean = boolean
+  Connected extends boolean = boolean,
 > extends ConnectionContext,
     UseWallet<WalletType, Connected>,
     UseProvider {}
 
 export interface UseSolanaArgs<
-  WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType
+  WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType,
 > extends Omit<ConnectionArgs, "storageAdapter">,
     Partial<
       Pick<
@@ -52,16 +52,16 @@ export interface UseSolanaArgs<
 
 const defaultOnConnect = (
   wallet: WalletAdapter<true>,
-  provider: WalletProviderInfo
+  provider: WalletProviderInfo,
 ) => {
   console.log(
-    `Connected to ${provider.name} wallet: ${wallet.publicKey.toString()}`
+    `Connected to ${provider.name} wallet: ${wallet.publicKey.toString()}`,
   );
 };
 
 const defaultOnDisconnect = (
   _wallet: WalletAdapter<false>,
-  provider: WalletProviderInfo
+  provider: WalletProviderInfo,
 ) => {
   console.log(`Disconnected from ${provider.name} wallet`);
 };
@@ -140,7 +140,7 @@ type ProviderProps<WalletType extends WalletTypeEnum<WalletType>> =
  * @returns
  */
 export const SolanaProvider = <
-  WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType
+  WalletType extends WalletTypeEnum<WalletType> = typeof DefaultWalletType,
 >({
   children,
   ...args
@@ -156,5 +156,5 @@ export const useSolana = <WalletType extends WalletTypeEnum<WalletType>>() =>
     Solana as unknown as Container<
       UseSolana<WalletType>,
       UseSolanaArgs<WalletType>
-    >
+    >,
   );

@@ -84,11 +84,11 @@ export interface InitializeNewStableSwapArgs
 export const initializeStableSwap = async (
   provider: Provider,
   stableSwapAccount: Signer,
-  initializeSwapInstruction: InitializeSwapInstruction
+  initializeSwapInstruction: InitializeSwapInstruction,
 ): Promise<StableSwap> => {
   if (
     !stableSwapAccount.publicKey.equals(
-      initializeSwapInstruction.config.swapAccount
+      initializeSwapInstruction.config.swapAccount,
     )
   ) {
     throw new Error("stable swap public key");
@@ -114,7 +114,7 @@ export const initializeStableSwap = async (
  * @returns
  */
 export const loadSwapFromInitializeArgs = (
-  initializeArgs: InitializeSwapInstruction
+  initializeArgs: InitializeSwapInstruction,
 ): StableSwap =>
   new StableSwap(initializeArgs.config, {
     isInitialized: true,
@@ -207,7 +207,7 @@ export const createInitializeStableSwapInstructions = async ({
   // Create authority and nonce
   const [authority, nonce] = await findSwapAuthorityKey(
     swapAccount,
-    swapProgramID
+    swapProgramID,
   );
 
   // Create LP token mint
@@ -215,10 +215,10 @@ export const createInitializeStableSwapInstructions = async ({
     provider.connection,
     tokenAMint,
     TOKEN_PROGRAM_ID,
-    Keypair.generate()
+    Keypair.generate(),
   ).getMintInfo();
   const mintBalanceNeeded = await SPLToken.getMinBalanceRentForExemptMint(
-    provider.connection
+    provider.connection,
   );
   instructions.createLPTokenMint = await createInitMintInstructions({
     provider,
@@ -242,7 +242,7 @@ export const createInitializeStableSwapInstructions = async ({
     if (lpAccount.instruction) {
       instructions.createInitialLPTokenAccount = new TransactionEnvelope(
         provider,
-        [lpAccount.instruction]
+        [lpAccount.instruction],
       );
     }
   } else {
@@ -362,7 +362,7 @@ const initializeSwapTokenInfo = async ({
       adminFeeAccount: adminFeeAccount,
     },
     instructions: createSwapTokenAccountInstructions.combine(
-      createAdminFeeAccountInstructions
+      createAdminFeeAccountInstructions,
     ),
   };
 };
@@ -386,7 +386,7 @@ export const createInitializeStableSwapInstructionsRaw = async ({
 }> => {
   // Allocate memory for the account
   const balanceNeeded = await StableSwap.getMinBalanceRentForExemptStableSwap(
-    provider.connection
+    provider.connection,
   );
   return {
     balanceNeeded,
@@ -453,7 +453,7 @@ export const deployNewSwap = async ({
  * This is split into two transactions: setup and initialize, to ensure we are under the size limit.
  */
 export const createInitializeNewSwapTx = async (
-  args: InitializeNewStableSwapArgs
+  args: InitializeNewStableSwapArgs,
 ): Promise<{
   swap: StableSwap;
   initializeArgs: InitializeSwapInstruction;
@@ -480,7 +480,7 @@ export const createInitializeNewSwapTx = async (
       return new TransactionEnvelope(
         provider,
         instructions[method].instructions.slice(),
-        instructions[method].signers.slice()
+        instructions[method].signers.slice(),
       );
     })
     .reduce((acc, tx) => acc.combine(tx));
@@ -492,7 +492,7 @@ export const createInitializeNewSwapTx = async (
       return new TransactionEnvelope(
         provider,
         instructions[method].instructions.slice(),
-        instructions[method].signers.slice()
+        instructions[method].signers.slice(),
       );
     })
     .reduce((acc, tx) => acc.combine(tx));
@@ -500,7 +500,7 @@ export const createInitializeNewSwapTx = async (
   const initializeSwap = new TransactionEnvelope(
     provider,
     instructions.initializeSwap.instructions.slice(),
-    instructions.initializeSwap.signers.slice()
+    instructions.initializeSwap.signers.slice(),
   );
 
   const newSwap = loadSwapFromInitializeArgs(initializeArgs);
