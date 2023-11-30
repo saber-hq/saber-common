@@ -11,7 +11,7 @@ const noop = () => {
  * side effect.
  */
 export const suppressConsoleErrorAsync = async <T>(
-  fn: () => Promise<T>
+  fn: () => Promise<T>,
 ): Promise<T> => {
   const oldConsoleError = console.error;
   console.error = noop;
@@ -54,8 +54,8 @@ export type PromiseOrValue<T> = Promise<T> | T;
 /**
  * Awaits for a promise or value.
  */
-export const valueAsPromise = async <T>(
-  awaitable: PromiseOrValue<T>
+export const valueAsPromise = async <T extends object>(
+  awaitable: PromiseOrValue<T>,
 ): Promise<T> => {
   if ("then" in awaitable) {
     return await awaitable;
@@ -71,13 +71,13 @@ export const valueAsPromise = async <T>(
 export const formatPubkeyShort = (
   pubkey: PublicKey,
   leading = 7,
-  trailing = 7
+  trailing = 7,
 ): string => {
   const str = pubkey.toString();
   return str.length > 20
     ? `${str.substring(0, leading)}.....${str.substring(
         str.length - trailing,
-        str.length
+        str.length,
       )}`
     : str;
 };
