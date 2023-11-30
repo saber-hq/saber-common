@@ -28,21 +28,21 @@
   "dependencies": {
     "@saberhq/option-utils": "workspace:^",
     "@solana/buffer-layout": "^4.0.0",
-    "@types/promise-retry": "^1.1.3",
-    "@types/retry": "^0.12.2",
+    "@types/promise-retry": "^1.1.6",
+    "@types/retry": "^0.12.5",
     "promise-retry": "^2.0.1",
     "retry": "^0.13.1",
     "tiny-invariant": "^1.3.1",
-    "tslib": "^2.4.0"
+    "tslib": "^2.6.2"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "^2.1.0",
-    "@solana/web3.js": "^1.63.1",
-    "@types/bn.js": "^5.1.1",
-    "@types/jest": "^29.0.3",
-    "@types/node": "^18.7.23",
+    "@saberhq/tsconfig": "^3.1.1",
+    "@solana/web3.js": "^1.87.6",
+    "@types/bn.js": "^5.1.5",
+    "@types/jest": "^29.5.10",
+    "@types/node": "^18.18.14",
     "bn.js": "^5.2.1",
-    "typescript": "^4.8.4"
+    "typescript": "^5.3.2"
   },
   "peerDependencies": {
     "@solana/web3.js": "^1.42",
