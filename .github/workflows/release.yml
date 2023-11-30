@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Release all packages
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           echo "Must be on master branch to publish packages."
           exit 1
