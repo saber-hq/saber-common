@@ -84,7 +84,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
         new SolletWalletAdapter({
           provider,
           network: network as WalletAdapterNetwork,
-        })
+        }),
       ),
     isMobile: true,
   },
@@ -96,7 +96,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
       new SolanaWalletAdapter(
         new SolletExtensionWalletAdapter({
           network: network as WalletAdapterNetwork,
-        })
+        }),
       ),
 
     isInstalled: () => window.sollet !== undefined,
@@ -108,7 +108,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
     makeAdapter: (
       _provider: string,
       network: string,
-      options?: WalletOptions
+      options?: WalletOptions,
     ) => {
       if (!options) {
         throw new Error("WalletConnect options not provided");
@@ -119,7 +119,7 @@ export const DEFAULT_WALLET_PROVIDERS: WalletProviderMap<
             | WalletAdapterNetwork.Mainnet
             | WalletAdapterNetwork.Devnet,
           options: options["options"] as unknown,
-        })
+        }),
       );
     },
   },

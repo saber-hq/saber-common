@@ -61,7 +61,7 @@ export class ReadonlyAdapter extends EventEmitter implements WalletAdapter {
     _transaction: Transaction,
     _connection: Connection,
     _broadcaster: Broadcaster,
-    _opts?: BroadcastOptions
+    _opts?: BroadcastOptions,
   ): Promise<PendingTransaction> {
     throw new Error("readonly adapter cannot sign transactions");
   }

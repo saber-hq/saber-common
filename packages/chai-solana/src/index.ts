@@ -30,7 +30,7 @@ export const chaiSolana: Chai.ChaiPlugin = (chai) => {
         const obj = this._obj as unknown;
         const equal: Chai.TokenAmountAssertion["equal"] = function (
           value,
-          message
+          message,
         ) {
           const amount = value instanceof TokenAmount ? value.toU64() : value;
           const msgPrefix = message ? `${message}: ` : "";
@@ -50,7 +50,7 @@ export const chaiSolana: Chai.ChaiPlugin = (chai) => {
                 address: myAmount.token.address,
                 decimals: myAmount.token.decimals,
                 network: myAmount.token.network,
-              }
+              },
             );
           }
 
@@ -60,7 +60,7 @@ export const chaiSolana: Chai.ChaiPlugin = (chai) => {
             `${msgPrefix}expected #{this} to equal #{exp} but got #{act}`,
             `${msgPrefix}expected #{this} to not equal #{exp} but got #{act}`,
             otherAmt.format(),
-            myAmount.format()
+            myAmount.format(),
           );
         };
         return {
@@ -71,7 +71,7 @@ export const chaiSolana: Chai.ChaiPlugin = (chai) => {
             equal(0);
           },
         };
-      }
+      },
     );
 
     chai.Assertion.addMethod(
@@ -86,7 +86,7 @@ export const chaiSolana: Chai.ChaiPlugin = (chai) => {
           "expected #{this} to be a PublicKey or address string",
           "expected #{this} to not be a PublicKey or address string",
           true,
-          obj
+          obj,
         );
         const key = obj as Address;
 
@@ -101,9 +101,9 @@ export const chaiSolana: Chai.ChaiPlugin = (chai) => {
           `${msgPrefix}expected #{this} to equal #{exp} but got #{act}`,
           `${msgPrefix}expected #{this} to not equal #{act}`,
           otherKey.toString(),
-          myKey.toString()
+          myKey.toString(),
         );
-      }
+      },
     );
 
     chai.Assertion.addMethod(
@@ -118,7 +118,7 @@ export const chaiSolana: Chai.ChaiPlugin = (chai) => {
           `${msgPrefix}token mismatch: #{this} to equal #{exp} but got #{act}`,
           `${msgPrefix}token mismatch: expected #{this} to not equal #{act}`,
           myAmount.token,
-          other.token
+          other.token,
         );
 
         this.assert(
@@ -126,9 +126,9 @@ export const chaiSolana: Chai.ChaiPlugin = (chai) => {
           `${msgPrefix}expected #{this} to equal #{exp} but got #{act}`,
           `${msgPrefix}expected #{this} to not equal #{act}`,
           myAmount.toString(),
-          other.toString()
+          other.toString(),
         );
-      }
+      },
     );
   });
 };

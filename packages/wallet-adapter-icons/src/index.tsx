@@ -202,7 +202,7 @@ export const PHANTOM: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 );
 
 export const COINBASE_WALLET: React.FC<React.SVGProps<SVGSVGElement>> = (
-  props
+  props,
 ) => (
   <svg
     width="1024"
@@ -336,7 +336,7 @@ export const SOLFLARE: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 
 // https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg
 export const MAGNIFYING_GLASS: React.FC<React.SVGProps<SVGSVGElement>> = (
-  props
+  props,
 ) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="490" height="490" {...props}>
     <path
@@ -400,7 +400,7 @@ export const HUOBI: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 );
 
 export const WALLETCONNECT: React.FC<React.SVGProps<SVGSVGElement>> = (
-  props
+  props,
 ) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

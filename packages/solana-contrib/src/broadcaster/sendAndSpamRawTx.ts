@@ -17,7 +17,7 @@ export const sendAndSpamRawTx = async (
   {
     retryTimes = DEFAULT_RETRY_OPTIONS.retryTimes,
     retryInterval = DEFAULT_RETRY_OPTIONS.retryInterval,
-  }: TransactionRetryOptions = DEFAULT_RETRY_OPTIONS
+  }: TransactionRetryOptions = DEFAULT_RETRY_OPTIONS,
 ) => {
   const result = await connection.sendRawTransaction(rawTx, sendOptions);
   // if we could send the TX with preflight, let's spam it.

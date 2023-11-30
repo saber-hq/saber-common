@@ -24,7 +24,7 @@ export const ORIGIN_CHAINS = [
 /**
  * Known origin chains.
  */
-export type OriginChain = typeof ORIGIN_CHAINS[number];
+export type OriginChain = (typeof ORIGIN_CHAINS)[number];
 
 /**
  * Token extensions with additional information.

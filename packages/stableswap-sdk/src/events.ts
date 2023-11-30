@@ -30,7 +30,7 @@ const parseEventRaw = (type: string, msg: string): StableSwapEvent => {
  * @returns
  */
 export const parseEventLogs = (
-  logMessages?: string[] | null
+  logMessages?: string[] | null,
 ): readonly StableSwapEvent[] => {
   if (!logMessages) {
     return [];
@@ -42,7 +42,7 @@ export const parseEventLogs = (
           ...acc,
           parseEventRaw(
             logMessage.slice("Program log: Event: ".length),
-            nextLog
+            nextLog,
           ),
         ]
       : acc;

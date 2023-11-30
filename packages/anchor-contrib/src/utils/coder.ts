@@ -110,20 +110,20 @@ export class SuperCoder<T extends CoderAnchorTypes> {
     /**
      * Program IDL.
      */
-    readonly idl: T["IDL"]
+    readonly idl: T["IDL"],
   ) {
     this.coder = new BorshCoder<IDLAccountName<T["IDL"]>>(idl);
     this.eventParser = new EventParser(address, this.coder);
     this.accounts = generateAnchorAccounts(
       address,
       idl.accounts ?? [],
-      this.coder.accounts
+      this.coder.accounts,
     );
 
     this.errorMap = generateErrorMap<T["IDL"]>(idl);
 
     const accountsList = Object.values(
-      this.accounts
+      this.accounts,
     ) as AnchorAccount<unknown>[];
     const accountTypeDefs: Partial<AccountTypeDefMap<T["IDL"]>> = {};
     accountsList.forEach((account) => {
@@ -132,16 +132,18 @@ export class SuperCoder<T extends CoderAnchorTypes> {
 
     this.accountParsers = generateAccountParsersFromCoder(
       idl.accounts?.map((acc) => acc.name),
-      this.coder.accounts
+      this.coder.accounts,
     );
     this.accountTypeDefs = accountTypeDefs as AccountTypeDefMap<T["IDL"]>;
     this.discriminators = accountsList.reduce(
       (acc, el) => ({ ...acc, [el.discriminator.toString("hex")]: el.name }),
-      {}
+      {},
     );
     this.discriminatorsByAccount = accountsList.reduce(
       (acc, el) => ({ ...acc, [el.name]: el.discriminator }),
-      {} as { [K in NonNullable<T["IDL"]["accounts"]>[number]["name"]]: Buffer }
+      {} as {
+        [K in NonNullable<T["IDL"]["accounts"]>[number]["name"]]: Buffer;
+      },
     );
   }
 
@@ -169,7 +171,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
    * @returns
    */
   parseProgramLogEvents<
-    E extends T["Events"][keyof T["Events"]] = T["Events"][keyof T["Events"]]
+    E extends T["Events"][keyof T["Events"]] = T["Events"][keyof T["Events"]],
   >(logs?: string[]): readonly E[] {
     if (!logs) {
       return [];
@@ -191,11 +193,11 @@ export class SuperCoder<T extends CoderAnchorTypes> {
   encodeIX<
     K extends keyof T["Instructions"] & string = keyof T["Instructions"] &
       string,
-    I extends T["Instructions"][K] = T["Instructions"][K]
+    I extends T["Instructions"][K] = T["Instructions"][K],
   >(
     name: K,
     args: I["namedArgs"],
-    accounts: Accounts<I["accounts"][number]>
+    accounts: Accounts<I["accounts"][number]>,
   ): TransactionInstruction {
     const idlIx = this.idl.instructions.find((ix) => ix.name === name);
     if (!idlIx) {
@@ -205,7 +207,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
     const keys = InstructionNamespaceFactory.accountsArray(
       accounts,
       idlIx.accounts,
-      name
+      name,
     );
     return new TransactionInstruction({
       programId: this.address,
@@ -250,21 +252,21 @@ export class SuperCoder<T extends CoderAnchorTypes> {
 export const buildCoderMap = <
   P extends {
     [K in keyof P]: CoderAnchorTypes;
-  }
+  },
 >(
   idls: {
     [K in keyof P]: Idl;
   },
   addresses: {
     [K in keyof P]: PublicKey;
-  }
+  },
 ): {
   [K in keyof P]: SuperCoder<P[K]>;
 } => {
   return mapValues(
     idls,
     <K extends keyof P>(idl: P[K]["IDL"], k: K) =>
-      new SuperCoder<P[K]>(addresses[k], idl)
+      new SuperCoder<P[K]>(addresses[k], idl),
   ) as unknown as {
     [K in keyof P]: SuperCoder<P[K]>;
   };

@@ -48,7 +48,7 @@ export class SolanaReadonlyProvider implements ReadonlyProvider {
   constructor(
     readonly connection: Connection,
     readonly opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS,
-    readonly publicKey: PublicKey = DEFAULT_READONLY_PUBLIC_KEY
+    readonly publicKey: PublicKey = DEFAULT_READONLY_PUBLIC_KEY,
   ) {
     this.wallet = {
       ...this.wallet,
@@ -70,7 +70,7 @@ export class SolanaReadonlyProvider implements ReadonlyProvider {
   async getAccountInfo(accountId: PublicKey): Promise<KeyedAccountInfo | null> {
     const accountInfo = await this.connection.getAccountInfo(
       accountId,
-      this.opts.commitment
+      this.opts.commitment,
     );
     if (!accountInfo) {
       return null;
@@ -86,7 +86,7 @@ export const doSignAndBroadcastTransaction = async (
   wallet: Pick<Wallet, "signTransaction">,
   transaction: Transaction,
   broadcaster: Broadcaster,
-  opts?: SignAndBroadcastOptions
+  opts?: SignAndBroadcastOptions,
 ): Promise<PendingTransaction> => {
   const tx = await wallet.signTransaction(transaction);
   if (opts?.signers && opts.signers.length > 0) {
@@ -102,7 +102,7 @@ export class SolanaTransactionSigner implements TransactionSigner {
   constructor(
     readonly wallet: Wallet,
     readonly broadcaster: Broadcaster,
-    readonly preflightCommitment: Commitment = "confirmed"
+    readonly preflightCommitment: Commitment = "confirmed",
   ) {}
 
   get publicKey(): PublicKey {
@@ -111,13 +111,13 @@ export class SolanaTransactionSigner implements TransactionSigner {
 
   async signAndBroadcastTransaction(
     transaction: Transaction,
-    opts?: SignAndBroadcastOptions | undefined
+    opts?: SignAndBroadcastOptions | undefined,
   ): Promise<PendingTransaction> {
     return await doSignAndBroadcastTransaction(
       this.wallet,
       transaction,
       this.broadcaster,
-      opts
+      opts,
     );
   }
 
@@ -134,7 +134,7 @@ export class SolanaTransactionSigner implements TransactionSigner {
     signers: readonly (Signer | undefined)[] = [],
     opts: ConfirmOptions = {
       preflightCommitment: this.preflightCommitment,
-    }
+    },
   ): Promise<Transaction> {
     const { blockhash, lastValidBlockHeight } =
       await this.broadcaster.getLatestBlockhash(opts.preflightCommitment);
@@ -159,7 +159,7 @@ export class SolanaTransactionSigner implements TransactionSigner {
     reqs: readonly SendTxRequest[],
     opts: ConfirmOptions = {
       preflightCommitment: this.preflightCommitment,
-    }
+    },
   ): Promise<Transaction[]> {
     const { blockhash, lastValidBlockHeight } =
       await this.broadcaster.getLatestBlockhash(opts.preflightCommitment);
@@ -204,15 +204,15 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     readonly signer: TransactionSigner = new SolanaTransactionSigner(
       wallet,
       broadcaster,
-      opts.preflightCommitment
-    )
+      opts.preflightCommitment,
+    ),
   ) {
     super(connection, opts);
   }
 
   async signAndBroadcastTransaction(
     transaction: Transaction,
-    opts?: SignAndBroadcastOptions
+    opts?: SignAndBroadcastOptions,
   ): Promise<PendingTransaction> {
     return await this.signer.signAndBroadcastTransaction(transaction, opts);
   }
@@ -248,7 +248,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
       connection,
       new SingleConnectionBroadcaster(sendConnection, opts),
       wallet,
-      opts
+      opts,
     );
   }
 
@@ -281,7 +281,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
     const firstBroadcastConnection = broadcastConnections[0];
     invariant(
       firstBroadcastConnection,
-      "must have at least one broadcast connection"
+      "must have at least one broadcast connection",
     );
     return new SolanaProvider(
       connection,
@@ -289,7 +289,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
         ? new TieredBroadcaster(connection, broadcastConnections, opts)
         : new SingleConnectionBroadcaster(firstBroadcastConnection, opts),
       wallet,
-      opts
+      opts,
     );
   }
 
@@ -304,7 +304,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
   async send(
     tx: Transaction,
     signers: (Signer | undefined)[] = [],
-    opts: ConfirmOptions = this.opts
+    opts: ConfirmOptions = this.opts,
   ): Promise<PendingTransaction> {
     const theTx = await this.signer.sign(tx, signers, opts);
     const pending = await this.broadcaster.broadcast(theTx, opts);
@@ -317,7 +317,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
    */
   async sendAll(
     reqs: readonly SendTxRequest[],
-    opts: ConfirmOptions = this.opts
+    opts: ConfirmOptions = this.opts,
   ): Promise<PendingTransaction[]> {
     const txs = await this.signer.signAll(reqs, opts);
     return await Promise.all(
@@ -325,7 +325,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
         const pending = await this.broadcaster.broadcast(tx, opts);
         await pending.wait();
         return pending;
-      })
+      }),
     );
   }
 
@@ -341,7 +341,7 @@ export class SolanaProvider extends SolanaReadonlyProvider implements Provider {
   async simulate(
     tx: Transaction,
     signers: (Signer | undefined)[] | undefined,
-    opts: ConfirmOptions = this.opts
+    opts: ConfirmOptions = this.opts,
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     let simTX = tx;
     if (signers !== undefined) {
@@ -371,7 +371,7 @@ export interface AugmentedProvider extends Provider {
    */
   newTX: (
     instructions?: (TransactionInstruction | null | undefined | boolean)[],
-    signers?: Signer[]
+    signers?: Signer[],
   ) => TransactionEnvelope;
 
   /**
@@ -421,7 +421,7 @@ export class SolanaAugmentedProvider implements AugmentedProvider {
 
   signAndBroadcastTransaction(
     transaction: Transaction,
-    opts?: SignAndBroadcastOptions
+    opts?: SignAndBroadcastOptions,
   ): Promise<PendingTransaction> {
     return this.provider.signAndBroadcastTransaction(transaction, opts);
   }
@@ -429,14 +429,14 @@ export class SolanaAugmentedProvider implements AugmentedProvider {
   send(
     tx: Transaction,
     signers?: (Signer | undefined)[] | undefined,
-    opts?: ConfirmOptions | undefined
+    opts?: ConfirmOptions | undefined,
   ): Promise<PendingTransaction> {
     return this.provider.send(tx, signers, opts);
   }
 
   sendAll(
     reqs: readonly SendTxRequest[],
-    opts?: ConfirmOptions | undefined
+    opts?: ConfirmOptions | undefined,
   ): Promise<PendingTransaction[]> {
     return this.provider.sendAll(reqs, opts);
   }
@@ -444,7 +444,7 @@ export class SolanaAugmentedProvider implements AugmentedProvider {
   simulate(
     tx: Transaction,
     signers?: (Signer | undefined)[] | undefined,
-    opts?: ConfirmOptions | undefined
+    opts?: ConfirmOptions | undefined,
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     return this.provider.simulate(tx, signers, opts);
   }
@@ -461,7 +461,7 @@ export class SolanaAugmentedProvider implements AugmentedProvider {
    */
   newTX(
     instructions: (TransactionInstruction | null | undefined | boolean)[] = [],
-    signers: Signer[] = []
+    signers: Signer[] = [],
   ): TransactionEnvelope {
     return TransactionEnvelope.create(this, instructions, signers);
   }
@@ -473,11 +473,11 @@ export class SolanaAugmentedProvider implements AugmentedProvider {
    */
   async requestAirdrop(
     lamports: number,
-    to: PublicKey = this.wallet.publicKey
+    to: PublicKey = this.wallet.publicKey,
   ): Promise<PendingTransaction> {
     return new PendingTransaction(
       this.connection,
-      await this.connection.requestAirdrop(to, lamports)
+      await this.connection.requestAirdrop(to, lamports),
     );
   }
 
@@ -492,8 +492,8 @@ export class SolanaAugmentedProvider implements AugmentedProvider {
         this.connection,
         this.broadcaster,
         new SignerWallet(signer),
-        this.opts
-      )
+        this.opts,
+      ),
     );
   }
 }

@@ -23,7 +23,7 @@ export {
 export const structLayout = <T>(
   fields: Layout<T[keyof T]>[],
   property?: string | undefined,
-  decodePrefixes?: boolean | undefined
+  decodePrefixes?: boolean | undefined,
 ): BufferLayout.Structure<T> =>
   BufferLayout.struct<T>(fields, property, decodePrefixes);
 

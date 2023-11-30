@@ -42,7 +42,7 @@ export class TokenOwner {
    */
   async transfer(
     amount: TokenAmount,
-    to: PublicKey
+    to: PublicKey,
   ): Promise<TransactionInstruction> {
     return SPLToken.createTransferInstruction(
       TOKEN_PROGRAM_ID,
@@ -50,7 +50,7 @@ export class TokenOwner {
       to,
       this.owner,
       [],
-      amount.toU64()
+      amount.toU64(),
     );
   }
 
@@ -62,7 +62,7 @@ export class TokenOwner {
    */
   async transferChecked(
     amount: TokenAmount,
-    to: PublicKey
+    to: PublicKey,
   ): Promise<TransactionInstruction> {
     return SPLToken.createTransferCheckedInstruction(
       TOKEN_PROGRAM_ID,
@@ -72,7 +72,7 @@ export class TokenOwner {
       this.owner,
       [],
       amount.toU64(),
-      amount.token.decimals
+      amount.token.decimals,
     );
   }
 
@@ -89,7 +89,7 @@ export class TokenOwner {
       to,
       this.owner,
       [],
-      amount.toU64()
+      amount.toU64(),
     );
   }
 
@@ -101,7 +101,7 @@ export class TokenOwner {
    */
   async createATA(
     mint: PublicKey,
-    payer: PublicKey = this.owner
+    payer: PublicKey = this.owner,
   ): Promise<TransactionInstruction> {
     return SPLToken.createAssociatedTokenAccountInstruction(
       ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -109,7 +109,7 @@ export class TokenOwner {
       mint,
       await this.getATA(mint),
       this.owner,
-      payer
+      payer,
     );
   }
 }

@@ -4,7 +4,7 @@ import { PublicKey, TransactionInstruction } from "@solana/web3.js";
  * ID of the memo program.
  */
 export const MEMO_PROGRAM_ID = new PublicKey(
-  "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"
+  "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",
 );
 
 /**
@@ -18,7 +18,7 @@ export const MEMO_PROGRAM_ID = new PublicKey(
  */
 export const createMemoInstruction = (
   text: string,
-  signers: readonly PublicKey[] = []
+  signers: readonly PublicKey[] = [],
 ): TransactionInstruction => {
   return new TransactionInstruction({
     programId: MEMO_PROGRAM_ID,

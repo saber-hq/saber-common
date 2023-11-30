@@ -8,7 +8,7 @@ import type { Tuple } from "./tuple.js";
  */
 export const tupleMapInner = <T, U, N extends number>(
   mapFn: (v: T) => U,
-  tuple: Tuple<Maybe<T>, N>
+  tuple: Tuple<Maybe<T>, N>,
 ): Tuple<Maybe<U>, N> => {
   return tuple.map((v) => mapN(mapFn, v)) as Tuple<Maybe<U>, N>;
 };

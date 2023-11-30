@@ -40,7 +40,7 @@ export type AnchorAccountMap<M> = {
 export const generateAnchorAccounts = <M>(
   programID: PublicKey,
   accounts: IdlTypeDef[],
-  coder: AccountsCoder
+  coder: AccountsCoder,
 ): AnchorAccountMap<M> => {
   const parsers: Partial<AnchorAccountMap<M>> = {};
   accounts.forEach((account) => {

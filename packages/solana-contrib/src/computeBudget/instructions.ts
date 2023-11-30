@@ -9,7 +9,7 @@ import { RequestHeapFrameLayout, RequestUnitsLayout } from "./layouts.js";
  */
 export const requestComputeUnitsInstruction = (
   units: number,
-  additionalFee: number
+  additionalFee: number,
 ): TransactionInstruction => {
   const data = Buffer.alloc(RequestUnitsLayout.span);
   RequestUnitsLayout.encode({ instruction: 0, units, additionalFee }, data);
@@ -26,7 +26,7 @@ export const requestComputeUnitsInstruction = (
  * size applies to each program executed, including all calls to CPIs.
  */
 export const requestHeapFrameInstruction = (
-  bytes: number
+  bytes: number,
 ): TransactionInstruction => {
   const data = Buffer.alloc(RequestHeapFrameLayout.span);
   RequestHeapFrameLayout.encode({ instruction: 1, bytes }, data);

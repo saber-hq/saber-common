@@ -25,20 +25,20 @@ export class WalletAdapterTransactionSigner extends SolanaTransactionSigner {
     readonly connection: Connection,
     override readonly wallet: ConnectedWallet,
     broadcaster: Broadcaster,
-    preflightCommitment: Commitment = "confirmed"
+    preflightCommitment: Commitment = "confirmed",
   ) {
     super(wallet, broadcaster, preflightCommitment);
   }
 
   override async signAndBroadcastTransaction(
     transaction: Transaction,
-    opts?: SignAndBroadcastOptions
+    opts?: SignAndBroadcastOptions,
   ): Promise<PendingTransaction> {
     return await this.wallet.signAndBroadcastTransaction(
       transaction,
       this.connection,
       this.broadcaster,
-      opts
+      opts,
     );
   }
 }
@@ -54,7 +54,7 @@ export class WalletAdapterProvider extends SolanaProvider {
     connection: Connection,
     broadcaster: Broadcaster,
     override readonly wallet: ConnectedWallet,
-    opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS
+    opts: ConfirmOptions = DEFAULT_PROVIDER_OPTIONS,
   ) {
     super(
       connection,
@@ -65,8 +65,8 @@ export class WalletAdapterProvider extends SolanaProvider {
         connection,
         wallet,
         broadcaster,
-        opts.preflightCommitment
-      )
+        opts.preflightCommitment,
+      ),
     );
   }
 
@@ -99,7 +99,7 @@ export class WalletAdapterProvider extends SolanaProvider {
     const firstBroadcastConnection = broadcastConnections[0];
     invariant(
       firstBroadcastConnection,
-      "must have at least one broadcast connection"
+      "must have at least one broadcast connection",
     );
     return new WalletAdapterProvider(
       connection,
@@ -107,7 +107,7 @@ export class WalletAdapterProvider extends SolanaProvider {
         ? new TieredBroadcaster(connection, broadcastConnections, opts)
         : new SingleConnectionBroadcaster(firstBroadcastConnection, opts),
       wallet,
-      opts
+      opts,
     );
   }
 }

@@ -50,7 +50,7 @@ export const expectTXTable = (
   } = {
     verbosity: null,
     formatLogs: true,
-  }
+  },
 ): Chai.PromisedAssertion => {
   if (tx === null) {
     throw new Error();
@@ -60,7 +60,7 @@ export const expectTXTable = (
   const callStack = new Error().stack?.split("\n");
   if (callStack) {
     const expectIndex = callStack.findIndex((l) =>
-      l.includes(`at ${expectTXTable.name}`)
+      l.includes(`at ${expectTXTable.name}`),
     );
     if (expectIndex > 0) {
       const targetLine = callStack[expectIndex + 1];
@@ -68,7 +68,7 @@ export const expectTXTable = (
         const cwd = process.cwd();
         // get the part of targetLine after cwd
         const targetLineAfterCwd = targetLine.substring(
-          targetLine.indexOf(cwd) + cwd.length
+          targetLine.indexOf(cwd) + cwd.length,
         );
         if (targetLineAfterCwd.length > 0) {
           relativePath = targetLineAfterCwd.substring(1);
@@ -85,7 +85,7 @@ export const expectTXTable = (
         printTXTable(
           tx,
           simulation.value.logs,
-          `${msg ? msg + " " : ""}${relativePath ? `(${relativePath})` : ""}`
+          `${msg ? msg + " " : ""}${relativePath ? `(${relativePath})` : ""}`,
         );
       }
 
@@ -110,7 +110,7 @@ export const expectTXTable = (
             const curLine = logs[i];
             if (curLine) {
               const errorCode = curLine.match(
-                /Program log: Custom program error: (0x[0-9a-f]*)/
+                /Program log: Custom program error: (0x[0-9a-f]*)/,
               );
               if (errorCode && errorCode[1]) {
                 const programIdMatch = lastLine.split(" ");
@@ -118,7 +118,7 @@ export const expectTXTable = (
                 if (programIdMatch && programIdMatch[1]) {
                   console.log(
                     `    Program ${programIdMatch[1]} error:`,
-                    Number(errorCode[1])
+                    Number(errorCode[1]),
                   );
                 }
               }
@@ -146,7 +146,7 @@ export const expectTXTable = (
  */
 export const assertTXSuccess = (
   tx: TransactionEnvelope,
-  msg?: string
+  msg?: string,
 ): Chai.PromisedAssertion => {
   return expectTX(tx, msg).to.be.fulfilled;
 };
@@ -160,7 +160,7 @@ export const assertTXSuccess = (
 export const assertTXThrows = (
   tx: TransactionEnvelope,
   err: IdlErrorCode,
-  msg?: string
+  msg?: string,
 ): Chai.PromisedAssertion => {
   return expectTX(tx, msg).to.be.rejectedWith(matchError(err));
 };
@@ -174,7 +174,7 @@ export const assertTXThrows = (
 export const assertTXThrowsCode = (
   tx: TransactionEnvelope,
   code: number,
-  msg?: string
+  msg?: string,
 ): Chai.PromisedAssertion => {
   return expectTX(tx, msg).to.be.rejectedWith(matchErrorCode(code));
 };

@@ -33,7 +33,7 @@ export interface WalletAdapter<Connected extends boolean = boolean>
     transaction: Transaction,
     connection: Connection,
     broadcaster: Broadcaster,
-    opts?: SignAndBroadcastOptions
+    opts?: SignAndBroadcastOptions,
   ): Promise<PendingTransaction>;
 }
 
@@ -44,7 +44,7 @@ export type WalletOptions = WalletConnectWalletAdapterConfig;
 export type WalletAdapterBuilder = (
   providerUrl: string,
   endpoint: string,
-  options?: WalletOptions
+  options?: WalletOptions,
 ) => WalletAdapter;
 
 /**
@@ -93,13 +93,13 @@ export class WrappedWalletAdapter<Connected extends boolean = boolean>
     transaction: Transaction,
     connection: Connection,
     broadcaster: Broadcaster,
-    opts?: SignAndBroadcastOptions
+    opts?: SignAndBroadcastOptions,
   ): Promise<PendingTransaction> {
     return this.adapter.signAndBroadcastTransaction(
       transaction,
       connection,
       broadcaster,
-      opts
+      opts,
     );
   }
 

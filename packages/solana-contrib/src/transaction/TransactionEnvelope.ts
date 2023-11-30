@@ -34,7 +34,7 @@ import {
 export const PACKET_DATA_SIZE = 1280 - 40 - 8;
 
 const ASSOCIATED_TOKEN_PROGRAM_ID = new PublicKey(
-  "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+  "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
 );
 
 /**
@@ -44,14 +44,14 @@ const ASSOCIATED_TOKEN_PROGRAM_ID = new PublicKey(
  */
 const filterRequiredSigners = (
   ixs: TransactionInstruction[],
-  signers: Signer[]
+  signers: Signer[],
 ): Signer[] => {
   // filter out the signers required for the transaction
   const requiredSigners = ixs.flatMap((ix) =>
-    ix.keys.filter((k) => k.isSigner).map((k) => k.pubkey)
+    ix.keys.filter((k) => k.isSigner).map((k) => k.pubkey),
   );
   return signers.filter((s) =>
-    requiredSigners.find((rs) => rs.equals(s.publicKey))
+    requiredSigners.find((rs) => rs.equals(s.publicKey)),
   );
 };
 
@@ -81,7 +81,7 @@ export class TransactionEnvelope {
     /**
      * Optional signers of the transaction.
      */
-    readonly signers: Signer[] = []
+    readonly signers: Signer[] = [],
   ) {}
 
   /**
@@ -93,7 +93,7 @@ export class TransactionEnvelope {
     ...instructions: (TransactionInstruction | null | undefined | boolean)[]
   ): TransactionEnvelope {
     this.instructions.unshift(
-      ...instructions.filter((ix): ix is TransactionInstruction => !!ix)
+      ...instructions.filter((ix): ix is TransactionInstruction => !!ix),
     );
     return this;
   }
@@ -107,7 +107,7 @@ export class TransactionEnvelope {
     ...instructions: (TransactionInstruction | null | undefined | boolean)[]
   ): TransactionEnvelope {
     this.instructions.push(
-      ...instructions.filter((ix): ix is TransactionInstruction => !!ix)
+      ...instructions.filter((ix): ix is TransactionInstruction => !!ix),
     );
     return this;
   }
@@ -199,7 +199,7 @@ export class TransactionEnvelope {
    * @returns A list of {@link Transaction}s.
    */
   buildPartition(
-    feePayer: PublicKey = this.provider.wallet.publicKey
+    feePayer: PublicKey = this.provider.wallet.publicKey,
   ): Transaction[] {
     const partition = this.partition();
     return partition.map((env) => env.build(feePayer));
@@ -225,14 +225,14 @@ export class TransactionEnvelope {
     let lastTXEnv: TransactionEnvelope = new TransactionEnvelope(
       this.provider,
       this.instructions.slice(0, 1),
-      this._filterRequiredSigners(this.instructions.slice(0, 1))
+      this._filterRequiredSigners(this.instructions.slice(0, 1)),
     );
     let lastEstimation: number = lastTXEnv.estimateSizeUnsafe();
     const txs: TransactionEnvelope[] = [];
     this.instructions.slice(1).forEach((ix, i) => {
       if (lastEstimation > PACKET_DATA_SIZE) {
         throw new Error(
-          `cannot construct a valid partition: instruction ${i} is too large (${lastEstimation} > ${PACKET_DATA_SIZE})`
+          `cannot construct a valid partition: instruction ${i} is too large (${lastEstimation} > ${PACKET_DATA_SIZE})`,
         );
       }
       const nextIXs = [...lastTXEnv.instructions, ix];
@@ -240,7 +240,7 @@ export class TransactionEnvelope {
       const nextTXEnv = new TransactionEnvelope(
         this.provider,
         nextIXs,
-        nextSigners
+        nextSigners,
       );
       const nextEstimation = nextTXEnv.estimateSizeUnsafe();
 
@@ -251,7 +251,7 @@ export class TransactionEnvelope {
         lastTXEnv = new TransactionEnvelope(
           this.provider,
           nextIXs,
-          this._filterRequiredSigners(nextIXs)
+          this._filterRequiredSigners(nextIXs),
         );
         lastEstimation = lastTXEnv.estimateSizeUnsafe();
       } else {
@@ -293,12 +293,12 @@ export class TransactionEnvelope {
   simulate(
     opts: TXEnvelopeSimulateOptions = {
       verifySigners: true,
-    }
+    },
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     return this.provider.simulate(
       this.build(),
       opts.verifySigners ? this.signers : undefined,
-      opts
+      opts,
     );
   }
 
@@ -310,7 +310,7 @@ export class TransactionEnvelope {
    * @returns
    */
   simulateUnchecked(
-    opts: ConfirmOptions
+    opts: ConfirmOptions,
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     return this.simulate({ ...opts, verifySigners: false });
   }
@@ -340,7 +340,7 @@ export class TransactionEnvelope {
    * @returns
    */
   simulateTable(
-    opts?: TXEnvelopeSimulateOptions
+    opts?: TXEnvelopeSimulateOptions,
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     return this.simulate(opts).then((simulation) => {
       if (simulation?.value?.logs) {
@@ -359,7 +359,7 @@ export class TransactionEnvelope {
     const signed = await this.provider.signer.sign(
       this.build(),
       this.signers,
-      opts
+      opts,
     );
     return this.provider.broadcaster.broadcast(signed, opts);
   }
@@ -379,7 +379,7 @@ export class TransactionEnvelope {
     return new TransactionEnvelope(
       this.provider,
       [...this.instructions, ...other.instructions],
-      [...this.signers, ...other.signers]
+      [...this.signers, ...other.signers],
     );
   }
 
@@ -392,7 +392,7 @@ export class TransactionEnvelope {
       ...new Set([
         ...this.instructions
           .map((inst) =>
-            inst.keys.filter((key) => key.isWritable).map((k) => k.pubkey)
+            inst.keys.filter((key) => key.isWritable).map((k) => k.pubkey),
           )
           .reduce((acc, el) => acc.concat(el)),
       ]).values(),
@@ -428,7 +428,7 @@ export class TransactionEnvelope {
               (k, i) =>
                 `  [${i}] ${k.pubkey.toString()} ${
                   k.isWritable ? "(mut)" : ""
-                } ${k.isSigner ? "(signer)" : ""}`
+                } ${k.isSigner ? "(signer)" : ""}`,
             ),
             `  Data (base64): ${ser.data.toString("base64")}`,
           ].join("\n");
@@ -449,7 +449,7 @@ export class TransactionEnvelope {
   static create(
     provider: Provider,
     instructions: (TransactionInstruction | null | undefined | boolean)[],
-    signers: Signer[] = []
+    signers: Signer[] = [],
   ): TransactionEnvelope {
     const ixs = instructions.filter((ix): ix is TransactionInstruction => !!ix);
     return new TransactionEnvelope(provider, ixs, signers);
@@ -495,7 +495,7 @@ export class TransactionEnvelope {
     rest.forEach((addedTX, i) => {
       if (lastEstimation > PACKET_DATA_SIZE) {
         throw new Error(
-          `cannot construct a valid partition: instruction ${i} is too large (${lastEstimation} > ${PACKET_DATA_SIZE})`
+          `cannot construct a valid partition: instruction ${i} is too large (${lastEstimation} > ${PACKET_DATA_SIZE})`,
         );
       }
       const nextIXs = [...lastTXEnv.instructions, ...addedTX.instructions];
@@ -541,7 +541,7 @@ export class TransactionEnvelope {
    */
   static async sendAll(
     txs: TransactionEnvelope[],
-    opts?: ConfirmOptions
+    opts?: ConfirmOptions,
   ): Promise<PendingTransaction[]> {
     const firstTX = txs[0];
     if (!firstTX) {
@@ -550,7 +550,7 @@ export class TransactionEnvelope {
     const provider = firstTX.provider;
     return await provider.sendAll(
       txs.map((tx) => ({ tx: tx.build(), signers: tx.signers })),
-      opts
+      opts,
     );
   }
 
@@ -630,10 +630,10 @@ export class TransactionEnvelope {
    */
   addAdditionalComputeBudget(
     units: number,
-    additionalFee: number
+    additionalFee: number,
   ): TransactionEnvelope {
     this.instructions.unshift(
-      requestComputeUnitsInstruction(units, additionalFee)
+      requestComputeUnitsInstruction(units, additionalFee),
     );
     return this;
   }

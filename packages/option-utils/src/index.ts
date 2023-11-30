@@ -28,7 +28,7 @@ export const mapN = <T extends unknown[], U>(
   return fn(
     ...(args as {
       [K in keyof T]: NonNullable<T[K]>;
-    })
+    }),
   );
 };
 
@@ -45,7 +45,7 @@ export const mapN = <T extends unknown[], U>(
  */
 export const mapSome = <T, U>(
   obj: NonNullable<T> | null | undefined,
-  fn: (obj: NonNullable<T>) => U
+  fn: (obj: NonNullable<T>) => U,
 ): U | null | undefined => (exists(obj) ? fn(obj) : obj);
 
 /**
@@ -67,7 +67,7 @@ export const isNotNull = <TValue>(value: TValue | null): value is TValue => {
  * @returns
  */
 export const isNotUndefined = <TValue>(
-  value: TValue | undefined
+  value: TValue | undefined,
 ): value is TValue => {
   return value !== undefined;
 };
@@ -79,7 +79,7 @@ export const isNotUndefined = <TValue>(
  * @returns
  */
 export const exists = <TValue>(
-  value: TValue | null | undefined
+  value: TValue | null | undefined,
 ): value is TValue => {
   return value !== null && value !== undefined;
 };

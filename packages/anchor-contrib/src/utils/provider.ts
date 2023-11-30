@@ -43,7 +43,7 @@ export const AnchorProviderClass: AnchorProviderCtor &
 export type AnchorProviderCtor = new (
   connection: Connection,
   wallet: Wallet,
-  opts: ConfirmOptions
+  opts: ConfirmOptions,
 ) => AnchorProvider;
 
 /**
@@ -57,7 +57,7 @@ export type AnchorProviderCtor = new (
 export const buildAnchorProvider = (
   connection: Connection,
   wallet: Wallet,
-  opts: ConfirmOptions
+  opts: ConfirmOptions,
 ) => {
   return new AnchorProviderClass(connection, wallet, opts);
 };
@@ -68,7 +68,7 @@ export const buildAnchorProvider = (
  * @returns
  */
 export const makeReadonlySaberProvider = (
-  anchorProvider: IAnchorProvider
+  anchorProvider: IAnchorProvider,
 ): ReadonlySaberProvider => {
   return new SolanaReadonlyProvider(anchorProvider.connection);
 };
@@ -79,7 +79,7 @@ export const makeReadonlySaberProvider = (
  * @returns
  */
 export const makeSaberProvider = (
-  anchorProvider: AnchorProvider
+  anchorProvider: AnchorProvider,
 ): SaberProvider => {
   return SolanaProvider.init({
     connection: anchorProvider.connection,
@@ -94,11 +94,11 @@ export const makeSaberProvider = (
  * @returns
  */
 export const makeAnchorProvider = (
-  saberProvider: ReadonlySaberProvider
+  saberProvider: ReadonlySaberProvider,
 ): AnchorProvider => {
   return buildAnchorProvider(
     saberProvider.connection,
     saberProvider.wallet,
-    saberProvider.opts
+    saberProvider.opts,
   );
 };

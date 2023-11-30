@@ -29,7 +29,7 @@ export const FeesLayout = BufferLayout.struct<RawFees>(
     Uint64Layout("withdrawFeeNumerator"),
     Uint64Layout("withdrawFeeDenominator"),
   ],
-  "fees"
+  "fees",
 );
 
 /**

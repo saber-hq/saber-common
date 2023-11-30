@@ -86,7 +86,7 @@ export interface Broadcaster {
    * @param commitment
    */
   getLatestBlockhash(
-    commitment?: Commitment
+    commitment?: Commitment,
   ): Promise<BlockhashWithExpiryBlockHeight>;
 
   /**
@@ -103,7 +103,7 @@ export interface Broadcaster {
    */
   broadcast: (
     tx: Transaction,
-    opts?: BroadcastOptions
+    opts?: BroadcastOptions,
   ) => Promise<PendingTransaction>;
 
   /**
@@ -117,7 +117,7 @@ export interface Broadcaster {
     opts: {
       commitment?: Commitment;
       verifySigners?: boolean;
-    }
+    },
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>>;
 }
 
@@ -146,7 +146,7 @@ export interface TransactionSigner {
    */
   signAndBroadcastTransaction(
     transaction: Transaction,
-    opts?: SignAndBroadcastOptions
+    opts?: SignAndBroadcastOptions,
   ): Promise<PendingTransaction>;
 
   /**
@@ -160,7 +160,7 @@ export interface TransactionSigner {
   sign: (
     tx: Transaction,
     signers?: readonly (Signer | undefined)[],
-    opts?: ConfirmOptions
+    opts?: ConfirmOptions,
   ) => Promise<Transaction>;
 
   /**
@@ -168,7 +168,7 @@ export interface TransactionSigner {
    */
   signAll: (
     reqs: readonly SendTxRequest[],
-    opts?: ConfirmOptions
+    opts?: ConfirmOptions,
   ) => Promise<Transaction[]>;
 }
 
@@ -215,7 +215,7 @@ export interface Provider extends ReadonlyProvider {
   send: (
     tx: Transaction,
     signers?: (Signer | undefined)[],
-    opts?: ConfirmOptions
+    opts?: ConfirmOptions,
   ) => Promise<PendingTransaction>;
 
   /**
@@ -223,7 +223,7 @@ export interface Provider extends ReadonlyProvider {
    */
   sendAll: (
     reqs: readonly SendTxRequest[],
-    opts?: ConfirmOptions
+    opts?: ConfirmOptions,
   ) => Promise<PendingTransaction[]>;
 
   /**
@@ -235,7 +235,7 @@ export interface Provider extends ReadonlyProvider {
    */
   signAndBroadcastTransaction(
     transaction: Transaction,
-    opts?: SignAndBroadcastOptions
+    opts?: SignAndBroadcastOptions,
   ): Promise<PendingTransaction>;
 
   /**
@@ -249,7 +249,7 @@ export interface Provider extends ReadonlyProvider {
   simulate: (
     tx: Transaction,
     signers?: (Signer | undefined)[],
-    opts?: ConfirmOptions
+    opts?: ConfirmOptions,
   ) => Promise<RpcResponseAndContext<SimulatedTransactionResponse>>;
 }
 

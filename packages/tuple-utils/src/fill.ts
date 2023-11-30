@@ -5,7 +5,7 @@ import type { Tuple } from "./tuple.js";
  */
 export const tupleFill = <V, N extends number, T>(
   value: V,
-  tuple: Tuple<T, N>
+  tuple: Tuple<T, N>,
 ): Tuple<V, N> => {
   return tuple.map(() => value) as Tuple<V, N>;
 };

@@ -28,7 +28,7 @@ export type TransactionLike =
  * @returns
  */
 export const confirmTransactionLike = async (
-  tx: PromiseOrValue<TransactionLike>
+  tx: PromiseOrValue<TransactionLike>,
 ): Promise<TransactionReceipt> => {
   const ish = await valueAsPromise(tx);
   if (ish instanceof TransactionReceipt) {
@@ -58,7 +58,7 @@ export class TransactionReceipt {
     /**
      * Raw response from web3.js
      */
-    readonly response: TransactionResponse | VersionedTransactionResponse
+    readonly response: TransactionResponse | VersionedTransactionResponse,
   ) {}
 
   /**

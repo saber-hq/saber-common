@@ -24,7 +24,7 @@ export class SignerWallet implements Wallet {
       transactions.map((tx) => {
         tx.partialSign(this.signer);
         return tx;
-      })
+      }),
     );
   }
 
@@ -41,7 +41,7 @@ export class SignerWallet implements Wallet {
   createProvider(
     connection: Connection,
     sendConnection?: Connection,
-    opts?: ConfirmOptions
+    opts?: ConfirmOptions,
   ): Provider {
     return SolanaProvider.load({
       connection,

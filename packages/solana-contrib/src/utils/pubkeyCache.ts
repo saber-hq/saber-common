@@ -44,7 +44,7 @@ const getOrCreatePublicKey = (pk: string): PublicKey => {
  * @returns
  */
 export const getPublicKey = (
-  pk: string | PublicKey | PublicKeyInitData
+  pk: string | PublicKey | PublicKeyInitData,
 ): PublicKey => {
   if (typeof pk === "string") {
     return getOrCreatePublicKey(pk);
@@ -64,7 +64,7 @@ const gpaCache: Record<string, PublicKey> = {};
  */
 const concatSeeds = (seeds: Array<Buffer | Uint8Array>): Uint8Array => {
   return Uint8Array.from(
-    seeds.reduce((acc: number[], seed) => [...acc, ...seed], [])
+    seeds.reduce((acc: number[], seed) => [...acc, ...seed], []),
   );
 };
 
@@ -76,7 +76,7 @@ const concatSeeds = (seeds: Array<Buffer | Uint8Array>): Uint8Array => {
  */
 export const getProgramAddress = (
   seeds: Array<Buffer | Uint8Array>,
-  programId: PublicKey
+  programId: PublicKey,
 ) => {
   const normalizedSeeds = concatSeeds(seeds);
   const cacheKey = `${normalizedSeeds.toString()}_${programId.toString()}`;

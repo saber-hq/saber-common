@@ -39,13 +39,13 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
     transaction: Transaction,
     _connection: Connection,
     broadcaster: Broadcaster,
-    opts?: SignAndBroadcastOptions
+    opts?: SignAndBroadcastOptions,
   ): Promise<PendingTransaction> {
     return await doSignAndBroadcastTransaction(
       this as ConnectedWallet,
       transaction,
       broadcaster,
-      opts
+      opts,
     );
   }
 
@@ -80,7 +80,7 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
       throw new Error("Secret key missing.");
     }
     this._wallet = new SignerWallet(
-      Keypair.fromSecretKey(Uint8Array.from(secretKey))
+      Keypair.fromSecretKey(Uint8Array.from(secretKey)),
     );
     this._publicKey = this._wallet.publicKey;
     this._connected = true;

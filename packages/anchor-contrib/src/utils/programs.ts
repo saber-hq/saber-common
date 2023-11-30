@@ -20,12 +20,12 @@ import { makeAnchorProvider } from "./provider.js";
 export const newProgram = <P>(
   idl: Idl,
   address: PublicKey,
-  provider: SaberProvider | ReadonlySaberProvider
+  provider: SaberProvider | ReadonlySaberProvider,
 ) => {
   return new Program(
     idl,
     address.toString(),
-    makeAnchorProvider(provider)
+    makeAnchorProvider(provider),
   ) as unknown as P;
 };
 
@@ -43,12 +43,12 @@ export const newProgramMap = <P>(
   },
   addresses: {
     [K in keyof P]: PublicKey;
-  }
+  },
 ): {
   [K in keyof P]: P[K];
 } => {
   return mapValues(idls, (idl, k: keyof P) =>
-    newProgram(idl, addresses[k], provider)
+    newProgram(idl, addresses[k], provider),
   ) as unknown as {
     [K in keyof P]: P[K];
   };

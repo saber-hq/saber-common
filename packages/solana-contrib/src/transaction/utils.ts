@@ -30,7 +30,7 @@ export const RECENT_BLOCKHASH_STUB =
  */
 export const buildStubbedTransaction = (
   cluster: Cluster,
-  ixs: TransactionInstruction[]
+  ixs: TransactionInstruction[],
 ): Transaction => {
   const tx = new Transaction();
   tx.recentBlockhash = RECENT_BLOCKHASH_STUB;
@@ -64,7 +64,7 @@ export const serializeToBase64Unchecked = (tx: Transaction): string =>
  */
 export const generateInspectLinkFromBase64 = (
   cluster: Cluster,
-  base64TX: string
+  base64TX: string,
 ): string => {
   return `https://${
     cluster === "mainnet-beta" ? "" : `${cluster}.`
@@ -79,7 +79,7 @@ export const generateInspectLinkFromBase64 = (
  */
 export const generateUncheckedInspectLink = (
   cluster: Cluster,
-  tx: Transaction
+  tx: Transaction,
 ): string => {
   return generateInspectLinkFromBase64(cluster, serializeToBase64Unchecked(tx));
 };

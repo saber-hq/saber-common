@@ -20,7 +20,7 @@ import { assert, expect } from "chai";
 export const expectTX = (
   tx: PromiseOrValue<TransactionLike | null>,
   msg?: string,
-  cb?: (receipt: TransactionReceipt) => Promise<void>
+  cb?: (receipt: TransactionReceipt) => Promise<void>,
 ): Chai.PromisedAssertion => {
   const handleReceipt = async (receipt: TransactionReceipt) => {
     await cb?.(receipt);
@@ -37,7 +37,7 @@ export const expectTX = (
           return await confirmTransactionLike(v);
         })
         .then(handleReceipt),
-      msg
+      msg,
     ).eventually;
   } else if (tx) {
     return expect(confirmTransactionLike(tx).then(handleReceipt), msg)

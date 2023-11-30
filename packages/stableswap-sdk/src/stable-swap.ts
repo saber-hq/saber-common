@@ -38,7 +38,7 @@ export function createSaberSwapInstruction(
     | "poolDestination"
     | "amountIn"
     | "minimumAmountOut"
-  >
+  >,
 ): TransactionInstruction {
   const adminDestination = args.poolDestination.equals(state.tokenA.reserve)
     ? state.tokenA.adminFeeAccount
@@ -64,7 +64,7 @@ export function createSaberDepositInstruction(
     | "tokenAmountA"
     | "tokenAmountB"
     | "minimumPoolTokenAmount"
-  >
+  >,
 ): TransactionInstruction {
   return instructions.depositInstruction({
     config: config,
@@ -89,7 +89,7 @@ export function createSaberWithdrawInstruction(
     | "poolTokenAmount"
     | "minimumTokenA"
     | "minimumTokenB"
-  >
+  >,
 ): TransactionInstruction {
   return instructions.withdrawInstruction({
     config: config,
@@ -115,7 +115,7 @@ export function createSaberWithdrawOneInstruction(
     | "sourceAccount"
     | "poolTokenAmount"
     | "minimumTokenAmount"
-  >
+  >,
 ): TransactionInstruction {
   const [quoteTokenAccount, adminDestinationAccount] =
     args.baseTokenAccount.equals(state.tokenA.reserve)
@@ -139,7 +139,7 @@ export class StableSwap implements StableSwapInfo {
    */
   constructor(
     readonly config: StableSwapConfig,
-    readonly state: StableSwapState
+    readonly state: StableSwapState,
   ) {}
 
   /**
@@ -148,10 +148,10 @@ export class StableSwap implements StableSwapInfo {
    * @return Number of lamports required
    */
   static async getMinBalanceRentForExemptStableSwap(
-    connection: Connection
+    connection: Connection,
   ): Promise<number> {
     return await connection.getMinimumBalanceForRentExemption(
-      StableSwapLayout.span
+      StableSwapLayout.span,
     );
   }
 
@@ -165,7 +165,7 @@ export class StableSwap implements StableSwapInfo {
   static async load(
     connection: Connection,
     swapAccount: PublicKey,
-    programID: PublicKey = SWAP_PROGRAM_ID
+    programID: PublicKey = SWAP_PROGRAM_ID,
   ): Promise<StableSwap> {
     const data = await loadProgramAccount(connection, swapAccount, programID);
     const authority = getSwapAuthorityKey(swapAccount, programID);
@@ -181,12 +181,12 @@ export class StableSwap implements StableSwapInfo {
    */
   static async loadFromExchange(
     connection: Connection,
-    exchange: IExchange
+    exchange: IExchange,
   ): Promise<StableSwap> {
     return StableSwap.load(
       connection,
       exchange.swapAccount,
-      exchange.programID
+      exchange.programID,
     );
   }
 
@@ -196,7 +196,7 @@ export class StableSwap implements StableSwapInfo {
    * @returns
    */
   static async fromProgramAccount(
-    data: ProgramAccount<StableSwapState>
+    data: ProgramAccount<StableSwapState>,
   ): Promise<StableSwap> {
     const [authority] = await findSwapAuthorityKey(data.publicKey);
     return StableSwap.fromProgramAccountWithAuthority(data, authority);
@@ -219,7 +219,7 @@ export class StableSwap implements StableSwapInfo {
    */
   static fromProgramAccountWithAuthority(
     data: ProgramAccount<StableSwapState>,
-    authority: PublicKey
+    authority: PublicKey,
   ): StableSwap {
     return new StableSwap(
       {
@@ -228,7 +228,7 @@ export class StableSwap implements StableSwapInfo {
         tokenProgramID: TOKEN_PROGRAM_ID,
         authority,
       },
-      data.account
+      data.account,
     );
   }
 
@@ -245,7 +245,7 @@ export class StableSwap implements StableSwapInfo {
     swapAccount: PublicKey,
     swapAccountData: Buffer,
     authority: PublicKey,
-    programID: PublicKey = SWAP_PROGRAM_ID
+    programID: PublicKey = SWAP_PROGRAM_ID,
   ): StableSwap {
     try {
       const state = decodeSwap(swapAccountData);
@@ -259,7 +259,7 @@ export class StableSwap implements StableSwapInfo {
           tokenProgramID: TOKEN_PROGRAM_ID,
           authority,
         },
-        state
+        state,
       );
     } catch (e) {
       throw Error(e as string);
@@ -285,7 +285,7 @@ export class StableSwap implements StableSwapInfo {
       | "poolDestination"
       | "amountIn"
       | "minimumAmountOut"
-    >
+    >,
   ): TransactionInstruction {
     return createSaberSwapInstruction(this, args);
   }
@@ -303,7 +303,7 @@ export class StableSwap implements StableSwapInfo {
       | "tokenAmountA"
       | "tokenAmountB"
       | "minimumPoolTokenAmount"
-    >
+    >,
   ): TransactionInstruction {
     return createSaberDepositInstruction(this, args);
   }
@@ -321,7 +321,7 @@ export class StableSwap implements StableSwapInfo {
       | "poolTokenAmount"
       | "minimumTokenA"
       | "minimumTokenB"
-    >
+    >,
   ): TransactionInstruction {
     return createSaberWithdrawInstruction(this, args);
   }
@@ -338,7 +338,7 @@ export class StableSwap implements StableSwapInfo {
       | "sourceAccount"
       | "poolTokenAmount"
       | "minimumTokenAmount"
-    >
+    >,
   ): TransactionInstruction {
     return createSaberWithdrawOneInstruction(this, args);
   }
@@ -353,7 +353,7 @@ export class StableSwap implements StableSwapInfo {
  */
 export const findSwapAuthorityKey = (
   swapAccount: PublicKey,
-  swapProgramID: PublicKey = SWAP_PROGRAM_ID
+  swapProgramID: PublicKey = SWAP_PROGRAM_ID,
 ): Promise<[PublicKey, number]> =>
   PublicKey.findProgramAddress([swapAccount.toBuffer()], swapProgramID);
 
@@ -366,7 +366,7 @@ export const findSwapAuthorityKey = (
  */
 export const findSwapAuthorityKeySync = (
   swapAccount: PublicKey,
-  swapProgramID: PublicKey = SWAP_PROGRAM_ID
+  swapProgramID: PublicKey = SWAP_PROGRAM_ID,
 ): [PublicKey, number] =>
   PublicKey.findProgramAddressSync([swapAccount.toBuffer()], swapProgramID);
 
@@ -379,5 +379,5 @@ export const findSwapAuthorityKeySync = (
  */
 export const getSwapAuthorityKey = (
   swapAccount: PublicKey,
-  swapProgramID: PublicKey = SWAP_PROGRAM_ID
+  swapProgramID: PublicKey = SWAP_PROGRAM_ID,
 ): PublicKey => getProgramAddress([swapAccount.toBuffer()], swapProgramID);
