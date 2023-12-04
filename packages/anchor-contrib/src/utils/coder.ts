@@ -207,6 +207,7 @@ export class SuperCoder<T extends CoderAnchorTypes> {
     const keys = InstructionNamespaceFactory.accountsArray(
       accounts,
       idlIx.accounts,
+      this.address,
       name,
     );
     return new TransactionInstruction({
