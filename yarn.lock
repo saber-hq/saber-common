@@ -1725,21 +1725,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.10.5, @babel/runtime@npm:^7.23.2":
+  version: 7.23.5
+  resolution: "@babel/runtime@npm:7.23.5"
+  dependencies:
+    regenerator-runtime: "npm:^0.14.0"
+  checksum: 0f1669f639af30a0a2948ffcefa2c61935f337b0777bd94f8d7bc66bba8e7d4499e725caeb0449540d9c6d67399b733c4e719babb43ce9a0f33095aa01b42b37
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.8.4":
   version: 7.19.0
   resolution: "@babel/runtime@npm:7.19.0"
   dependencies:
     regenerator-runtime: "npm:^0.13.4"
   checksum: 07860a15b0baf9814cb0c94af2eecfe02827a14dbec7d4a321d804d14a252bfcd621bf2d031020336d8c65e13fb7bb12356a91dfea15bdae81b0b0e13d803b6d
-  languageName: node
-  linkType: hard
-
-"@babel/runtime@npm:^7.23.2":
-  version: 7.23.5
-  resolution: "@babel/runtime@npm:7.23.5"
-  dependencies:
-    regenerator-runtime: "npm:^0.14.0"
-  checksum: 0f1669f639af30a0a2948ffcefa2c61935f337b0777bd94f8d7bc66bba8e7d4499e725caeb0449540d9c6d67399b733c4e719babb43ce9a0f33095aa01b42b37
   languageName: node
   linkType: hard
 
@@ -2852,7 +2852,7 @@ __metadata:
     "@saberhq/solana-contrib": "workspace:^"
     "@saberhq/tsconfig": "npm:^3.2.1"
     "@solana/buffer-layout": "npm:^4.0.1"
-    "@solana/spl-token": "npm:^0.3.9"
+    "@solana/spl-token": "npm:^0.1"
     "@solana/web3.js": "npm:^1.87.6"
     "@types/bn.js": "npm:^5.1.5"
     "@ubeswap/token-math": "npm:^5.2.1"
@@ -3023,18 +3023,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/buffer-layout-utils@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "@solana/buffer-layout-utils@npm:0.2.0"
-  dependencies:
-    "@solana/buffer-layout": "npm:^4.0.0"
-    "@solana/web3.js": "npm:^1.32.0"
-    bigint-buffer: "npm:^1.1.5"
-    bignumber.js: "npm:^9.0.1"
-  checksum: 720779f45843ef1947b735a8c3e7f948574f569d5359178d877d08178baa2878de799081c3922892194293f1cf26f205208e5fb20d3e0621f09b9e740f34ef72
-  languageName: node
-  linkType: hard
-
 "@solana/buffer-layout@npm:^4.0.0":
   version: 4.0.0
   resolution: "@solana/buffer-layout@npm:4.0.0"
@@ -3053,16 +3041,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/spl-token@npm:^0.3.9":
-  version: 0.3.9
-  resolution: "@solana/spl-token@npm:0.3.9"
+"@solana/spl-token@npm:^0.1":
+  version: 0.1.8
+  resolution: "@solana/spl-token@npm:0.1.8"
   dependencies:
-    "@solana/buffer-layout": "npm:^4.0.0"
-    "@solana/buffer-layout-utils": "npm:^0.2.0"
-    buffer: "npm:^6.0.3"
-  peerDependencies:
-    "@solana/web3.js": ^1.47.4
-  checksum: 26d8466e2f4cc4c64023c820f1a315ad28105a4781bcf83c364b90894679c0fbbd8e1fda777512bdfb2d34199bcd399879fb614e546b903beb29f6709b363191
+    "@babel/runtime": "npm:^7.10.5"
+    "@solana/web3.js": "npm:^1.21.0"
+    bn.js: "npm:^5.1.0"
+    buffer: "npm:6.0.3"
+    buffer-layout: "npm:^1.2.0"
+    dotenv: "npm:10.0.0"
+  checksum: 2db5f894ae7209b611525574c7c9003696f03274c90340fc263cb348f5ae2f22fe66e22c6b86e63a96d1a0cf8273cad8c3586e8f3fe5f5131fe4f1d0136e691b
   languageName: node
   linkType: hard
 
@@ -3272,7 +3261,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/web3.js@npm:^1.32.0, @solana/web3.js@npm:^1.68.0, @solana/web3.js@npm:^1.87.6":
+"@solana/web3.js@npm:^1.21.0, @solana/web3.js@npm:^1.68.0, @solana/web3.js@npm:^1.87.6":
   version: 1.87.6
   resolution: "@solana/web3.js@npm:1.87.6"
   dependencies:
@@ -6057,13 +6046,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bignumber.js@npm:^9.0.1":
-  version: 9.1.2
-  resolution: "bignumber.js@npm:9.1.2"
-  checksum: d89b8800a987225d2c00dcbf8a69dc08e92aa0880157c851c287b307d31ceb2fc2acb0c62c3e3a3d42b6c5fcae9b004035f13eb4386e56d529d7edac18d5c9d8
-  languageName: node
-  linkType: hard
-
 "binary-extensions@npm:^2.0.0":
   version: 2.2.0
   resolution: "binary-extensions@npm:2.2.0"
@@ -6091,7 +6073,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bn.js@npm:^5.1.2, bn.js@npm:^5.2.0, bn.js@npm:^5.2.1":
+"bn.js@npm:^5.1.0, bn.js@npm:^5.1.2, bn.js@npm:^5.2.0, bn.js@npm:^5.2.1":
   version: 5.2.1
   resolution: "bn.js@npm:5.2.1"
   checksum: 7a7e8764d7a6e9708b8b9841b2b3d6019cc154d2fc23716d0efecfe1e16921b7533c6f7361fb05471eab47986c4aa310c270f88e3507172104632ac8df2cfd84
@@ -7223,6 +7205,13 @@ __metadata:
     no-case: "npm:^3.0.4"
     tslib: "npm:^2.0.3"
   checksum: a65e3519414856df0228b9f645332f974f2bf5433370f544a681122eab59e66038fc3349b4be1cdc47152779dac71a5864f1ccda2f745e767c46e9c6543b1169
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:10.0.0":
+  version: 10.0.0
+  resolution: "dotenv@npm:10.0.0"
+  checksum: 55f701ae213e3afe3f4232fae5edfb6e0c49f061a363ff9f1c5a0c2bf3fb990a6e49aeada11b2a116efb5fdc3bc3f1ef55ab330be43033410b267f7c0809a9dc
   languageName: node
   linkType: hard
 
