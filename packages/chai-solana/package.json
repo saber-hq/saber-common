@@ -49,8 +49,8 @@
   },
   "devDependencies": {
     "@coral-xyz/anchor": "^0.29.0",
-    "@saberhq/tsconfig": "^3.1.1",
-    "@solana/web3.js": "^1.87.6",
+    "@saberhq/tsconfig": "^3.2.1",
+    "@solana/web3.js": "^1.91.1",
     "bn.js": "^5.2.1",
     "jsbi": "^4.3.0",
     "typescript": "^5.3.2"
