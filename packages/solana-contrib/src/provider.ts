@@ -16,6 +16,7 @@ import { default as invariant } from "tiny-invariant";
 import { SingleConnectionBroadcaster } from "./broadcaster/index.js";
 import type { Broadcaster, ReadonlyProvider } from "./index.js";
 import {
+  ALL_TRANSACTION_VERSIONS,
   PendingTransaction,
   SignerWallet,
   TieredBroadcaster,
@@ -57,6 +58,7 @@ export class SolanaReadonlyProvider implements ReadonlyProvider {
   }
 
   wallet: Wallet = {
+    supportedTransactionVersions: ALL_TRANSACTION_VERSIONS,
     signTransaction: Promise.resolve.bind(Promise),
     signAllTransactions: Promise.resolve.bind(Promise),
     publicKey: DEFAULT_READONLY_PUBLIC_KEY,

@@ -10,28 +10,56 @@ import type {
   Signer,
   SimulatedTransactionResponse,
   Transaction,
+  TransactionVersion,
 } from "@solana/web3.js";
+import { VersionedTransaction } from "@solana/web3.js";
 
 import type { BroadcastOptions, PendingTransaction } from "./index.js";
+
+export type SupportedTransactionVersions = Set<TransactionVersion> | null;
+
+export const isVersionedTransaction = (
+  tx: Transaction | VersionedTransaction,
+): tx is VersionedTransaction => {
+  return "version" in tx || tx instanceof VersionedTransaction;
+};
+
+export const ALL_TRANSACTION_VERSIONS: Set<TransactionVersion> =
+  new Set<TransactionVersion>(["legacy", 0]);
+
+export type TransactionOrVersionedTransaction<
+  S extends SupportedTransactionVersions,
+> = S extends null ? Transaction : Transaction | VersionedTransaction;
+
+export interface MultiVersionWalletAdapter<
+  V extends SupportedTransactionVersions,
+> {
+  readonly supportedTransactionVersions: V;
+  /**
+   * Signs a transaction with the wallet.
+   * @param tx
+   */
+  signTransaction<T extends TransactionOrVersionedTransaction<V>>(
+    tx: T,
+  ): Promise<T>;
+
+  /**
+   * Signs all transactions with the wallet.
+   * @param txs
+   */
+  signAllTransactions<T extends TransactionOrVersionedTransaction<V>>(
+    txs: T[],
+  ): Promise<T[]>;
+}
 
 /**
  * Wallet interface for objects that can be used to sign provider transactions.
  *
  * This interface comes from Anchor.
  */
-export interface Wallet {
-  /**
-   * Signs a transaction with the wallet.
-   * @param tx
-   */
-  signTransaction(tx: Transaction): Promise<Transaction>;
-
-  /**
-   * Signs all transactions with the wallet.
-   * @param txs
-   */
-  signAllTransactions(txs: Transaction[]): Promise<Transaction[]>;
-
+export interface Wallet<
+  V extends SupportedTransactionVersions = SupportedTransactionVersions,
+> extends MultiVersionWalletAdapter<V> {
   /**
    * The PublicKey of the wallet.
    */

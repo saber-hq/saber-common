@@ -3,33 +3,53 @@ import type {
   Connection,
   PublicKey,
   Signer,
-  Transaction,
 } from "@solana/web3.js";
 
-import type { Provider, Wallet } from "./interfaces.js";
+import {
+  ALL_TRANSACTION_VERSIONS,
+  isVersionedTransaction,
+  type Provider,
+  type SupportedTransactionVersions,
+  type TransactionOrVersionedTransaction,
+  type Wallet,
+} from "./interfaces.js";
 import { SolanaProvider } from "./provider.js";
 
 /**
  * Wallet based on a Signer.
  */
-export class SignerWallet implements Wallet {
+export class SignerWallet implements Wallet<SupportedTransactionVersions> {
   constructor(readonly signer: Signer) {}
 
   get publicKey(): PublicKey {
     return this.signer.publicKey;
   }
 
-  signAllTransactions(transactions: Transaction[]): Promise<Transaction[]> {
+  readonly supportedTransactionVersions = ALL_TRANSACTION_VERSIONS;
+
+  signAllTransactions<
+    T extends TransactionOrVersionedTransaction<SupportedTransactionVersions>,
+  >(txs: T[]): Promise<T[]> {
     return Promise.resolve(
-      transactions.map((tx) => {
-        tx.partialSign(this.signer);
+      txs.map((tx) => {
+        if (isVersionedTransaction(tx)) {
+          tx.sign([this.signer]);
+        } else {
+          tx.partialSign(this.signer);
+        }
         return tx;
       }),
     );
   }
 
-  signTransaction(transaction: Transaction): Promise<Transaction> {
-    transaction.partialSign(this.signer);
+  signTransaction<
+    T extends TransactionOrVersionedTransaction<SupportedTransactionVersions>,
+  >(transaction: T): Promise<T> {
+    if (isVersionedTransaction(transaction)) {
+      transaction.sign([this.signer]);
+    } else {
+      transaction.partialSign(this.signer);
+    }
     return Promise.resolve(transaction);
   }
 

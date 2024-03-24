@@ -1,5 +1,6 @@
 import type {
   Broadcaster,
+  MultiVersionWalletAdapter,
   SignAndBroadcastOptions,
 } from "@saberhq/solana-contrib";
 import {
@@ -9,6 +10,8 @@ import {
 import type {
   EventEmitter,
   SignerWalletAdapter,
+  SupportedTransactionVersions,
+  TransactionOrVersionedTransaction,
   WalletAdapterEvents,
 } from "@solana/wallet-adapter-base";
 import { BaseSignerWalletAdapter } from "@solana/wallet-adapter-base";
@@ -18,7 +21,11 @@ import type { Connection, PublicKey, Transaction } from "@solana/web3.js";
 
 import type { ConnectedWallet, WalletAdapter } from "./types";
 
-export class SolanaWalletAdapter implements WalletAdapter {
+export class SolanaWalletAdapter<V extends SupportedTransactionVersions>
+  implements WalletAdapter<boolean, V>
+{
+  readonly supportedTransactionVersions: V;
+
   constructor(
     readonly adapter: Omit<
       SignerWalletAdapter,
@@ -27,13 +34,11 @@ export class SolanaWalletAdapter implements WalletAdapter {
       | "signTransaction"
       | "signAllTransactions"
     > &
-      EventEmitter<WalletAdapterEvents> & {
-        signTransaction: (transaction: Transaction) => Promise<Transaction>;
-        signAllTransactions: (
-          transactions: Transaction[],
-        ) => Promise<Transaction[]>;
-      },
-  ) {}
+      EventEmitter<WalletAdapterEvents> &
+      MultiVersionWalletAdapter<V>,
+  ) {
+    this.supportedTransactionVersions = adapter.supportedTransactionVersions;
+  }
 
   async signAndBroadcastTransaction(
     transaction: Transaction,
@@ -116,9 +121,9 @@ export class SolanaWalletAdapter implements WalletAdapter {
     return false;
   }
 
-  async signAllTransactions(
-    transactions: Transaction[],
-  ): Promise<Transaction[]> {
+  async signAllTransactions<T extends TransactionOrVersionedTransaction<V>>(
+    transactions: T[],
+  ): Promise<T[]> {
     return this.adapter.signAllTransactions(transactions);
   }
 
@@ -126,7 +131,9 @@ export class SolanaWalletAdapter implements WalletAdapter {
     return this.adapter.publicKey;
   }
 
-  async signTransaction(transaction: Transaction): Promise<Transaction> {
+  async signTransaction<T extends TransactionOrVersionedTransaction<V>>(
+    transaction: T,
+  ): Promise<T> {
     if (!this.adapter) {
       return transaction;
     }

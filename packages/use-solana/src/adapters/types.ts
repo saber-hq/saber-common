@@ -5,6 +5,10 @@ import type {
   Wallet,
 } from "@saberhq/solana-contrib";
 import { PublicKey } from "@saberhq/solana-contrib";
+import type {
+  SupportedTransactionVersions,
+  TransactionOrVersionedTransaction,
+} from "@solana/wallet-adapter-base";
 import type { WalletConnectWalletAdapterConfig } from "@solana/wallet-adapter-walletconnect";
 import type {
   Connection,
@@ -12,8 +16,10 @@ import type {
   Transaction,
 } from "@solana/web3.js";
 
-export interface WalletAdapter<Connected extends boolean = boolean>
-  extends Omit<Wallet, "publicKey"> {
+export interface WalletAdapter<
+  Connected extends boolean = boolean,
+  V extends SupportedTransactionVersions = SupportedTransactionVersions,
+> extends Omit<Wallet<V>, "publicKey"> {
   publicKey: Connected extends true ? SolanaPublicKey : null;
   autoApprove: boolean;
   connected: Connected;
@@ -50,10 +56,16 @@ export type WalletAdapterBuilder = (
 /**
  * Wallet adapter wrapper with caching of the PublicKey built-in.
  */
-export class WrappedWalletAdapter<Connected extends boolean = boolean>
-  implements Omit<WalletAdapter<Connected>, "publicKey">
+export class WrappedWalletAdapter<
+  Connected extends boolean = boolean,
+  V extends SupportedTransactionVersions = SupportedTransactionVersions,
+> implements Omit<WalletAdapter<Connected, V>, "publicKey">
 {
-  constructor(readonly adapter: WalletAdapter<Connected>) {}
+  readonly supportedTransactionVersions: V;
+
+  constructor(readonly adapter: WalletAdapter<Connected, V>) {
+    this.supportedTransactionVersions = adapter.supportedTransactionVersions;
+  }
 
   private _prevPubkey: SolanaPublicKey | null = null;
   private _publicKeyCached: PublicKey | null = null;
@@ -103,11 +115,15 @@ export class WrappedWalletAdapter<Connected extends boolean = boolean>
     );
   }
 
-  signTransaction(transaction: Transaction): Promise<Transaction> {
-    return this.adapter.signTransaction(transaction);
+  signTransaction<T extends TransactionOrVersionedTransaction<V>>(
+    tx: T,
+  ): Promise<T> {
+    return this.adapter.signTransaction(tx);
   }
 
-  signAllTransactions(transaction: Transaction[]): Promise<Transaction[]> {
+  signAllTransactions<T extends TransactionOrVersionedTransaction<V>>(
+    transaction: T[],
+  ): Promise<T[]> {
     return this.adapter.signAllTransactions(transaction);
   }
 
