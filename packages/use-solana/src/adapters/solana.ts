@@ -10,7 +10,6 @@ import {
 import type {
   EventEmitter,
   SignerWalletAdapter,
-  SupportedTransactionVersions,
   WalletAdapterEvents,
 } from "@solana/wallet-adapter-base";
 import { BaseSignerWalletAdapter } from "@solana/wallet-adapter-base";
@@ -20,6 +19,7 @@ import type {
   Connection,
   PublicKey,
   Transaction,
+  TransactionVersion,
   VersionedTransaction,
 } from "@solana/web3.js";
 
@@ -27,13 +27,14 @@ import type { ConnectedWallet, WalletAdapter } from "./types";
 
 type SolanaWalletAdapterInterface = Omit<
   SignerWalletAdapter,
+  | "supportedTransactionVersions"
   | "sendTransaction"
   | "signTransaction"
   | "signAllTransactions"
   | keyof EventEmitter
 > &
   EventEmitter<WalletAdapterEvents> & {
-    supportedTransactionVersions: Set<"legacy"> | null;
+    supportedTransactionVersions: ReadonlySet<"legacy"> | null;
     signTransaction: <T extends Transaction>(transaction: T) => Promise<T>;
     signAllTransactions: <T extends Transaction>(
       transactions: T[],
@@ -42,9 +43,12 @@ type SolanaWalletAdapterInterface = Omit<
 
 type SolanaWalletAdapterSupportingVersioned = Omit<
   SolanaWalletAdapterInterface,
-  "sendTransaction" | "signTransaction" | "signAllTransactions"
+  | "supportedTransactionVersions"
+  | "sendTransaction"
+  | "signTransaction"
+  | "signAllTransactions"
 > & {
-  supportedTransactionVersions: Set<SupportedTransactionVersions>;
+  supportedTransactionVersions: ReadonlySet<TransactionVersion>;
   signTransaction: <T extends Transaction | VersionedTransaction>(
     transaction: T,
   ) => Promise<T>;
