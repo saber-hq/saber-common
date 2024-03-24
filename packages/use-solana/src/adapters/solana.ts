@@ -4,11 +4,13 @@ import type {
 } from "@saberhq/solana-contrib";
 import {
   doSignAndBroadcastTransaction,
+  isVersionedTransaction,
   PendingTransaction,
 } from "@saberhq/solana-contrib";
 import type {
   EventEmitter,
   SignerWalletAdapter,
+  SupportedTransactionVersions,
   WalletAdapterEvents,
 } from "@solana/wallet-adapter-base";
 import { BaseSignerWalletAdapter } from "@solana/wallet-adapter-base";
@@ -23,18 +25,39 @@ import type {
 
 import type { ConnectedWallet, WalletAdapter } from "./types";
 
+type SolanaWalletAdapterInterface = Omit<
+  SignerWalletAdapter,
+  | "sendTransaction"
+  | "signTransaction"
+  | "signAllTransactions"
+  | keyof EventEmitter
+> &
+  EventEmitter<WalletAdapterEvents> & {
+    supportedTransactionVersions: Set<"legacy"> | null;
+    signTransaction: <T extends Transaction>(transaction: T) => Promise<T>;
+    signAllTransactions: <T extends Transaction>(
+      transactions: T[],
+    ) => Promise<T[]>;
+  };
+
+type SolanaWalletAdapterSupportingVersioned = Omit<
+  SolanaWalletAdapterInterface,
+  "sendTransaction" | "signTransaction" | "signAllTransactions"
+> & {
+  supportedTransactionVersions: Set<SupportedTransactionVersions>;
+  signTransaction: <T extends Transaction | VersionedTransaction>(
+    transaction: T,
+  ) => Promise<T>;
+  signAllTransactions: <T extends Transaction | VersionedTransaction>(
+    transactions: T[],
+  ) => Promise<T[]>;
+};
+
 export class SolanaWalletAdapter implements WalletAdapter<boolean> {
   constructor(
-    readonly adapter: Omit<
-      SignerWalletAdapter,
-      "sendTransaction" | keyof EventEmitter
-    > &
-      EventEmitter<WalletAdapterEvents> & {
-        signTransaction: <T extends Transaction>(transaction: T) => Promise<T>;
-        signAllTransactions: <T extends Transaction>(
-          transactions: T[],
-        ) => Promise<T[]>;
-      },
+    readonly adapter:
+      | SolanaWalletAdapterInterface
+      | SolanaWalletAdapterSupportingVersioned,
   ) {}
 
   async signAndBroadcastTransaction(
@@ -121,7 +144,17 @@ export class SolanaWalletAdapter implements WalletAdapter<boolean> {
   async signAllTransactions<T extends Transaction | VersionedTransaction>(
     transactions: T[],
   ): Promise<T[]> {
-    return this.adapter.signAllTransactions(transactions);
+    transactions.forEach((tx) => {
+      if (
+        isVersionedTransaction(tx) &&
+        !this.adapter.supportedTransactionVersions?.has(0)
+      ) {
+        throw new Error("Adapter does not support versioned transactions");
+      }
+    });
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return (await this.adapter.signAllTransactions(transactions)) as T[];
   }
 
   get publicKey(): PublicKey | null {
@@ -134,8 +167,15 @@ export class SolanaWalletAdapter implements WalletAdapter<boolean> {
     if (!this.adapter) {
       return transaction;
     }
-
-    return this.adapter.signTransaction(transaction);
+    if (
+      isVersionedTransaction(transaction) &&
+      !this.adapter.supportedTransactionVersions?.has(0)
+    ) {
+      throw new Error("Adapter does not support versioned transactions");
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return (await this.adapter.signTransaction(transaction)) as T;
   }
 
   connect = async (): Promise<void> => {
