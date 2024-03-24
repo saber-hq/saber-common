@@ -1,6 +1,6 @@
-import type { AccountsCoder } from "@project-serum/anchor";
-import { BorshAccountsCoder } from "@project-serum/anchor";
-import type { IdlTypeDef } from "@project-serum/anchor/dist/esm/idl.js";
+import type { AccountsCoder } from "@coral-xyz/anchor";
+import { BorshAccountsCoder } from "@coral-xyz/anchor";
+import type { IdlTypeDef } from "@coral-xyz/anchor/dist/esm/idl.js";
 import type { ProgramAccountParser, PublicKey } from "@saberhq/solana-contrib";
 import camelCase from "lodash.camelcase";
 

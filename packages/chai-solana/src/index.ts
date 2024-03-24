@@ -5,8 +5,8 @@
 
 import "./types.js";
 
-import type { Address } from "@project-serum/anchor";
-import { BN } from "@project-serum/anchor";
+import type { Address } from "@coral-xyz/anchor";
+import { BN } from "@coral-xyz/anchor";
 import { TokenAmount } from "@saberhq/token-utils";
 import { PublicKey } from "@solana/web3.js";
 import chaiAsPromised from "chai-as-promised";

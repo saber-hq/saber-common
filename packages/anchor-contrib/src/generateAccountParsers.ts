@@ -1,5 +1,5 @@
-import type { AccountsCoder, Idl } from "@project-serum/anchor";
-import { BorshAccountsCoder } from "@project-serum/anchor";
+import type { AccountsCoder, Idl } from "@coral-xyz/anchor";
+import { BorshAccountsCoder } from "@coral-xyz/anchor";
 import camelCase from "lodash.camelcase";
 
 /**

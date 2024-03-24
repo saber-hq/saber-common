@@ -3,7 +3,7 @@
 import "chai-bn";
 import "chai-as-promised";
 
-import type { Address } from "@project-serum/anchor";
+import type { Address } from "@coral-xyz/anchor";
 import type { BigintIsh, TokenAmount } from "@saberhq/token-utils";
 
 declare global {

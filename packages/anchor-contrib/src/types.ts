@@ -6,7 +6,7 @@ import type {
   Program as AProgram,
   ProgramAccount,
   StateClient,
-} from "@project-serum/anchor";
+} from "@coral-xyz/anchor";
 import type {
   Idl,
   IdlAccountItem,
@@ -18,7 +18,7 @@ import type {
   IdlType,
   IdlTypeDef,
   IdlTypeDefTyStruct,
-} from "@project-serum/anchor/dist/esm/idl.js";
+} from "@coral-xyz/anchor/dist/esm/idl.js";
 import type {
   AccountMeta,
   PublicKey,
