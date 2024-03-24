@@ -10,6 +10,7 @@ import {
 import type {
   EventEmitter,
   SignerWalletAdapter,
+  SupportedTransactionVersions,
   WalletAdapterEvents,
 } from "@solana/wallet-adapter-base";
 import { BaseSignerWalletAdapter } from "@solana/wallet-adapter-base";
@@ -34,7 +35,7 @@ type SolanaWalletAdapterInterface = Omit<
   | keyof EventEmitter
 > &
   EventEmitter<WalletAdapterEvents> & {
-    supportedTransactionVersions: ReadonlySet<"legacy"> | null;
+    supportedTransactionVersions: SupportedTransactionVersions;
     signTransaction: <T extends Transaction>(transaction: T) => Promise<T>;
     signAllTransactions: <T extends Transaction>(
       transactions: T[],
