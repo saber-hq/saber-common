@@ -1,6 +1,5 @@
 import type {
   Broadcaster,
-  MultiVersionWalletAdapter,
   SignAndBroadcastOptions,
 } from "@saberhq/solana-contrib";
 import {
@@ -10,35 +9,33 @@ import {
 import type {
   EventEmitter,
   SignerWalletAdapter,
-  SupportedTransactionVersions,
-  TransactionOrVersionedTransaction,
   WalletAdapterEvents,
 } from "@solana/wallet-adapter-base";
 import { BaseSignerWalletAdapter } from "@solana/wallet-adapter-base";
 import { GlowWalletName } from "@solana/wallet-adapter-glow";
 import { PhantomWalletName } from "@solana/wallet-adapter-phantom";
-import type { Connection, PublicKey, Transaction } from "@solana/web3.js";
+import type {
+  Connection,
+  PublicKey,
+  Transaction,
+  VersionedTransaction,
+} from "@solana/web3.js";
 
 import type { ConnectedWallet, WalletAdapter } from "./types";
 
-export class SolanaWalletAdapter<V extends SupportedTransactionVersions>
-  implements WalletAdapter<boolean, V>
-{
-  readonly supportedTransactionVersions: V;
-
+export class SolanaWalletAdapter implements WalletAdapter<boolean> {
   constructor(
     readonly adapter: Omit<
       SignerWalletAdapter,
-      | "sendTransaction"
-      | keyof EventEmitter
-      | "signTransaction"
-      | "signAllTransactions"
+      "sendTransaction" | keyof EventEmitter
     > &
-      EventEmitter<WalletAdapterEvents> &
-      MultiVersionWalletAdapter<V>,
-  ) {
-    this.supportedTransactionVersions = adapter.supportedTransactionVersions;
-  }
+      EventEmitter<WalletAdapterEvents> & {
+        signTransaction: <T extends Transaction>(transaction: T) => Promise<T>;
+        signAllTransactions: <T extends Transaction>(
+          transactions: T[],
+        ) => Promise<T[]>;
+      },
+  ) {}
 
   async signAndBroadcastTransaction(
     transaction: Transaction,
@@ -121,7 +118,7 @@ export class SolanaWalletAdapter<V extends SupportedTransactionVersions>
     return false;
   }
 
-  async signAllTransactions<T extends TransactionOrVersionedTransaction<V>>(
+  async signAllTransactions<T extends Transaction | VersionedTransaction>(
     transactions: T[],
   ): Promise<T[]> {
     return this.adapter.signAllTransactions(transactions);
@@ -131,7 +128,7 @@ export class SolanaWalletAdapter<V extends SupportedTransactionVersions>
     return this.adapter.publicKey;
   }
 
-  async signTransaction<T extends TransactionOrVersionedTransaction<V>>(
+  async signTransaction<T extends Transaction | VersionedTransaction>(
     transaction: T,
   ): Promise<T> {
     if (!this.adapter) {

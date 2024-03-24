@@ -10,13 +10,10 @@ import type {
   Signer,
   SimulatedTransactionResponse,
   Transaction,
-  TransactionVersion,
 } from "@solana/web3.js";
 import { VersionedTransaction } from "@solana/web3.js";
 
 import type { BroadcastOptions, PendingTransaction } from "./index.js";
-
-export type SupportedTransactionVersions = Set<TransactionVersion> | null;
 
 export const isVersionedTransaction = (
   tx: Transaction | VersionedTransaction,
@@ -24,22 +21,22 @@ export const isVersionedTransaction = (
   return "version" in tx || tx instanceof VersionedTransaction;
 };
 
-export const ALL_TRANSACTION_VERSIONS: Set<TransactionVersion> =
-  new Set<TransactionVersion>(["legacy", 0]);
+/**
+ * Wallet interface for objects that can be used to sign provider transactions.
+ *
+ * This interface comes from Anchor.
+ */
+export interface Wallet {
+  /**
+   * The PublicKey of the wallet.
+   */
+  publicKey: PublicKey;
 
-export type TransactionOrVersionedTransaction<
-  S extends SupportedTransactionVersions,
-> = S extends null ? Transaction : Transaction | VersionedTransaction;
-
-export interface MultiVersionWalletAdapter<
-  V extends SupportedTransactionVersions,
-> {
-  readonly supportedTransactionVersions: V;
   /**
    * Signs a transaction with the wallet.
    * @param tx
    */
-  signTransaction<T extends TransactionOrVersionedTransaction<V>>(
+  signTransaction<T extends Transaction | VersionedTransaction>(
     tx: T,
   ): Promise<T>;
 
@@ -47,23 +44,9 @@ export interface MultiVersionWalletAdapter<
    * Signs all transactions with the wallet.
    * @param txs
    */
-  signAllTransactions<T extends TransactionOrVersionedTransaction<V>>(
+  signAllTransactions<T extends Transaction | VersionedTransaction>(
     txs: T[],
   ): Promise<T[]>;
-}
-
-/**
- * Wallet interface for objects that can be used to sign provider transactions.
- *
- * This interface comes from Anchor.
- */
-export interface Wallet<
-  V extends SupportedTransactionVersions = SupportedTransactionVersions,
-> extends MultiVersionWalletAdapter<V> {
-  /**
-   * The PublicKey of the wallet.
-   */
-  publicKey: PublicKey;
 }
 
 /**

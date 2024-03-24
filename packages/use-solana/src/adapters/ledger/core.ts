@@ -1,5 +1,6 @@
 import type Transport from "@ledgerhq/hw-transport";
-import type { Transaction } from "@solana/web3.js";
+import { isVersionedTransaction } from "@saberhq/solana-contrib";
+import type { Transaction, VersionedTransaction } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
 
 const INS_GET_PUBKEY = 0x05;
@@ -90,18 +91,22 @@ export function getSolanaDerivationPath(
   return derivationPath;
 }
 
-export async function signTransaction(
+export async function signTransaction<
+  T extends Transaction | VersionedTransaction,
+>(
   transport: Transport,
-  transaction: Transaction,
+  transaction: T,
   derivationPath: Buffer = getSolanaDerivationPath(),
 ): Promise<Buffer> {
-  const messageBytes = transaction.serializeMessage();
-  return signBytes(transport, messageBytes, derivationPath);
+  const message = isVersionedTransaction(transaction)
+    ? transaction.message.serialize()
+    : transaction.serializeMessage();
+  return signBytes(transport, message, derivationPath);
 }
 
 export async function signBytes(
   transport: Transport,
-  bytes: Buffer,
+  bytes: Uint8Array,
   derivationPath: Buffer = getSolanaDerivationPath(),
 ): Promise<Buffer> {
   const numPaths = Buffer.alloc(1);

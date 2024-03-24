@@ -1,4 +1,4 @@
-// import { Provider as AnchorProvider } from "@project-serum/anchor";
+// import { Provider as AnchorProvider } from "@coral-xyz/anchor";
 import type { AccountInfo, Connection } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
 
@@ -213,12 +213,12 @@ const _transformAccountOwners = async (
   if (Object.keys(base58ToResultKey).length > 0) {
     const accountInfos = await gracefulGetMultipleAccountsInfo(
       connection,
-      base58ToLookup
+      base58ToLookup,
     );
 
     for (const [base58, resultKey] of Object.entries(base58ToResultKey)) {
       const lookupIndex = base58ToLookup.findIndex(
-        (p) => p.toBase58() === base58
+        (p) => p.toBase58() === base58,
       );
       if (lookupIndex >= 0) {
         const accountInfo = accountInfos[lookupIndex];

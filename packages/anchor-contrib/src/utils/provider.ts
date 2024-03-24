@@ -1,8 +1,8 @@
 import type {
   AnchorProvider as AnchorProviderImpl,
   Provider as IAnchorProvider,
-} from "@project-serum/anchor";
-import * as anchor from "@project-serum/anchor";
+} from "@coral-xyz/anchor";
+import * as anchor from "@coral-xyz/anchor";
 import type {
   Provider as SaberProvider,
   ReadonlyProvider as ReadonlySaberProvider,

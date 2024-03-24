@@ -3,14 +3,13 @@ import type {
   Connection,
   PublicKey,
   Signer,
+  Transaction,
+  VersionedTransaction,
 } from "@solana/web3.js";
 
 import {
-  ALL_TRANSACTION_VERSIONS,
   isVersionedTransaction,
   type Provider,
-  type SupportedTransactionVersions,
-  type TransactionOrVersionedTransaction,
   type Wallet,
 } from "./interfaces.js";
 import { SolanaProvider } from "./provider.js";
@@ -18,18 +17,16 @@ import { SolanaProvider } from "./provider.js";
 /**
  * Wallet based on a Signer.
  */
-export class SignerWallet implements Wallet<SupportedTransactionVersions> {
+export class SignerWallet implements Wallet {
   constructor(readonly signer: Signer) {}
 
   get publicKey(): PublicKey {
     return this.signer.publicKey;
   }
 
-  readonly supportedTransactionVersions = ALL_TRANSACTION_VERSIONS;
-
-  signAllTransactions<
-    T extends TransactionOrVersionedTransaction<SupportedTransactionVersions>,
-  >(txs: T[]): Promise<T[]> {
+  signAllTransactions<T extends Transaction | VersionedTransaction>(
+    txs: T[],
+  ): Promise<T[]> {
     return Promise.resolve(
       txs.map((tx) => {
         if (isVersionedTransaction(tx)) {
@@ -42,9 +39,9 @@ export class SignerWallet implements Wallet<SupportedTransactionVersions> {
     );
   }
 
-  signTransaction<
-    T extends TransactionOrVersionedTransaction<SupportedTransactionVersions>,
-  >(transaction: T): Promise<T> {
+  signTransaction<T extends Transaction | VersionedTransaction>(
+    transaction: T,
+  ): Promise<T> {
     if (isVersionedTransaction(transaction)) {
       transaction.sign([this.signer]);
     } else {
