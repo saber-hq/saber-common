@@ -3,10 +3,10 @@ import type {
   Address,
   BN,
   Context as AnchorContext,
+  MethodsNamespace,
   Program as AProgram,
   ProgramAccount,
-  StateClient,
-} from "@project-serum/anchor";
+} from "@coral-xyz/anchor";
 import type {
   Idl,
   IdlAccountItem,
@@ -18,7 +18,7 @@ import type {
   IdlType,
   IdlTypeDef,
   IdlTypeDefTyStruct,
-} from "@project-serum/anchor/dist/esm/idl.js";
+} from "@coral-xyz/anchor/dist/esm/idl.js";
 import type {
   AccountMeta,
   PublicKey,
@@ -26,6 +26,13 @@ import type {
   TransactionInstruction,
   TransactionSignature,
 } from "@solana/web3.js";
+
+export type IdlWithState = Idl & {
+  state?: {
+    methods: IdlInstruction[];
+    struct: IdlTypeDef;
+  };
+};
 
 type InstructionsParsed = Record<
   string,
@@ -159,7 +166,7 @@ type MakeInstructions<I extends IdlInstruction[], Defined> = {
 };
 
 export type AnchorProgram<
-  IDL extends Idl,
+  IDL extends IdlWithState,
   A,
   Defined = AnchorDefined<IDL>,
   RPCInstructions extends MakeInstructions<
@@ -175,7 +182,7 @@ export type AnchorProgram<
   "rpc" | "state" | "account" | "transaction" | "instruction"
 > & {
   rpc: RpcNamespace<RPCInstructions>;
-  state: StateClient<IDL>;
+  state: MethodsNamespace<IDL>;
   account: AccountsNamespace<A>;
   transaction: TransactionNamespace<RPCInstructions & Methods>;
   instruction: InstructionNamespace<RPCInstructions & Methods>;
@@ -210,13 +217,13 @@ export type AnchorAccounts<T extends Idl, Defined> = AnchorTypeDefs<
   Defined
 >;
 
-export type AnchorState<T extends Idl, Defined> = AnchorTypeDef<
+export type AnchorState<T extends IdlWithState, Defined> = AnchorTypeDef<
   NonNullable<T["state"]>["struct"],
   Defined
 >;
 
 export type AnchorTypes<
-  T extends Idl,
+  T extends IdlWithState,
   AccountMap = Record<string, never>,
   D = Record<string, never>,
   DEF = AnchorDefined<T, D>,

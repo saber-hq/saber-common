@@ -6,7 +6,12 @@ import type {
   SignAndBroadcastOptions,
 } from "@saberhq/solana-contrib";
 import { doSignAndBroadcastTransaction } from "@saberhq/solana-contrib";
-import type { Connection, PublicKey, Transaction } from "@solana/web3.js";
+import type {
+  Connection,
+  PublicKey,
+  Transaction,
+  VersionedTransaction,
+} from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
 import type { ConnectedWallet, WalletAdapter } from "../types";
@@ -62,10 +67,10 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
     );
   }
 
-  async signAllTransactions(
-    transactions: Transaction[],
-  ): Promise<Transaction[]> {
-    const result: Transaction[] = [];
+  async signAllTransactions<T extends Transaction | VersionedTransaction>(
+    transactions: T[],
+  ): Promise<T[]> {
+    const result: T[] = [];
     for (let i = 0; i < transactions.length; i++) {
       const transaction = transactions[i];
       if (transaction) {
@@ -77,7 +82,9 @@ export class LedgerWalletAdapter extends EventEmitter implements WalletAdapter {
     return result;
   }
 
-  async signTransaction(transaction: Transaction): Promise<Transaction> {
+  async signTransaction<T extends Transaction | VersionedTransaction>(
+    transaction: T,
+  ): Promise<T> {
     if (!this._transport || !this._publicKey) {
       throw new Error("Not connected to Ledger");
     }

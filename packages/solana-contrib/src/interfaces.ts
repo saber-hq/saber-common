@@ -11,8 +11,15 @@ import type {
   SimulatedTransactionResponse,
   Transaction,
 } from "@solana/web3.js";
+import { VersionedTransaction } from "@solana/web3.js";
 
 import type { BroadcastOptions, PendingTransaction } from "./index.js";
+
+export const isVersionedTransaction = (
+  tx: Transaction | VersionedTransaction,
+): tx is VersionedTransaction => {
+  return "version" in tx || tx instanceof VersionedTransaction;
+};
 
 /**
  * Wallet interface for objects that can be used to sign provider transactions.
@@ -21,21 +28,25 @@ import type { BroadcastOptions, PendingTransaction } from "./index.js";
  */
 export interface Wallet {
   /**
+   * The PublicKey of the wallet.
+   */
+  publicKey: PublicKey;
+
+  /**
    * Signs a transaction with the wallet.
    * @param tx
    */
-  signTransaction(tx: Transaction): Promise<Transaction>;
+  signTransaction<T extends Transaction | VersionedTransaction>(
+    tx: T,
+  ): Promise<T>;
 
   /**
    * Signs all transactions with the wallet.
    * @param txs
    */
-  signAllTransactions(txs: Transaction[]): Promise<Transaction[]>;
-
-  /**
-   * The PublicKey of the wallet.
-   */
-  publicKey: PublicKey;
+  signAllTransactions<T extends Transaction | VersionedTransaction>(
+    txs: T[],
+  ): Promise<T[]>;
 }
 
 /**

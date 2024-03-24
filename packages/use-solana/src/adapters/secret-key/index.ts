@@ -7,7 +7,12 @@ import {
   doSignAndBroadcastTransaction,
   SignerWallet,
 } from "@saberhq/solana-contrib";
-import type { Connection, PublicKey, Transaction } from "@solana/web3.js";
+import type {
+  Connection,
+  PublicKey,
+  Transaction,
+  VersionedTransaction,
+} from "@solana/web3.js";
 import { Keypair } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
@@ -49,7 +54,9 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
     );
   }
 
-  signAllTransactions(transactions: Transaction[]): Promise<Transaction[]> {
+  signAllTransactions<T extends Transaction | VersionedTransaction>(
+    transactions: T[],
+  ): Promise<T[]> {
     const wallet = this._wallet;
     if (!wallet) {
       return Promise.resolve(transactions);
@@ -61,7 +68,9 @@ export class SecretKeyAdapter extends EventEmitter implements WalletAdapter {
     return this._publicKey ?? null;
   }
 
-  async signTransaction(transaction: Transaction): Promise<Transaction> {
+  async signTransaction<T extends Transaction | VersionedTransaction>(
+    transaction: T,
+  ): Promise<T> {
     const wallet = this._wallet;
     if (!wallet) {
       return Promise.resolve(transaction);

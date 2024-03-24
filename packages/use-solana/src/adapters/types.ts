@@ -10,6 +10,7 @@ import type {
   Connection,
   PublicKey as SolanaPublicKey,
   Transaction,
+  VersionedTransaction,
 } from "@solana/web3.js";
 
 export interface WalletAdapter<Connected extends boolean = boolean>
@@ -103,11 +104,15 @@ export class WrappedWalletAdapter<Connected extends boolean = boolean>
     );
   }
 
-  signTransaction(transaction: Transaction): Promise<Transaction> {
-    return this.adapter.signTransaction(transaction);
+  signTransaction<T extends Transaction | VersionedTransaction>(
+    tx: T,
+  ): Promise<T> {
+    return this.adapter.signTransaction(tx);
   }
 
-  signAllTransactions(transaction: Transaction[]): Promise<Transaction[]> {
+  signAllTransactions<T extends Transaction | VersionedTransaction>(
+    transaction: T[],
+  ): Promise<T[]> {
     return this.adapter.signAllTransactions(transaction);
   }
 
