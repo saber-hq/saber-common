@@ -1,5 +1,5 @@
-import type { Idl } from "@project-serum/anchor";
-import type { IdlErrorCode } from "@project-serum/anchor/dist/esm/idl.js";
+import type { Idl } from "@coral-xyz/anchor";
+import type { IdlErrorCode } from "@coral-xyz/anchor/dist/esm/idl.js";
 
 import type { AnchorError } from "./index.js";
 

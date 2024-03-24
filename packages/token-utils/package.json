@@ -27,8 +27,8 @@
   },
   "dependencies": {
     "@saberhq/solana-contrib": "workspace:^",
-    "@solana/buffer-layout": "^4.0.0",
-    "@solana/spl-token": "^0.1.8",
+    "@solana/buffer-layout": "^4.0.1",
+    "@solana/spl-token": "^0.1",
     "@ubeswap/token-math": "^5.2.1",
     "tiny-invariant": "^1.3.1",
     "tslib": "^2.6.2"
@@ -38,7 +38,7 @@
     "src/"
   ],
   "devDependencies": {
-    "@saberhq/tsconfig": "^3.1.1",
+    "@saberhq/tsconfig": "^3.2.1",
     "@solana/web3.js": "^1.87.6",
     "@types/bn.js": "^5.1.5",
     "jsbi": "^4.3.0",

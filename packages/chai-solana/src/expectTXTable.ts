@@ -1,4 +1,4 @@
-import type { IdlErrorCode } from "@project-serum/anchor/dist/esm/idl.js";
+import type { IdlErrorCode } from "@coral-xyz/anchor/dist/esm/idl.js";
 import { matchError, matchErrorCode } from "@saberhq/anchor-contrib";
 import type { TransactionEnvelope } from "@saberhq/solana-contrib";
 import { parseTransactionLogs, printTXTable } from "@saberhq/solana-contrib";

@@ -1,5 +1,5 @@
-import type { Idl } from "@project-serum/anchor";
-import { Program } from "@project-serum/anchor";
+import type { Idl } from "@coral-xyz/anchor";
+import { Program } from "@coral-xyz/anchor";
 import type {
   Provider as SaberProvider,
   ReadonlyProvider as ReadonlySaberProvider,

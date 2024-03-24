@@ -27,7 +27,7 @@
   ],
   "dependencies": {
     "@saberhq/option-utils": "workspace:^",
-    "@solana/buffer-layout": "^4.0.0",
+    "@solana/buffer-layout": "^4.0.1",
     "@types/promise-retry": "^1.1.6",
     "@types/retry": "^0.12.5",
     "promise-retry": "^2.0.1",
@@ -36,11 +36,11 @@
     "tslib": "^2.6.2"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "^3.1.1",
+    "@saberhq/tsconfig": "^3.2.1",
     "@solana/web3.js": "^1.87.6",
     "@types/bn.js": "^5.1.5",
     "@types/jest": "^29.5.10",
-    "@types/node": "^18.18.14",
+    "@types/node": "^18.19.2",
     "bn.js": "^5.2.1",
     "typescript": "^5.3.2"
   },

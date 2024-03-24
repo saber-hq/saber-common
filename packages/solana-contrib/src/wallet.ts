@@ -4,6 +4,7 @@ import type {
   PublicKey,
   Signer,
   Transaction,
+  VersionedTransaction,
 } from "@solana/web3.js";
 
 import type { Provider, Wallet } from "./interfaces.js";
@@ -19,18 +20,30 @@ export class SignerWallet implements Wallet {
     return this.signer.publicKey;
   }
 
-  signAllTransactions(transactions: Transaction[]): Promise<Transaction[]> {
+  signAllTransactions<T extends Transaction | VersionedTransaction>(
+    transactions: T[],
+  ): Promise<T[]> {
     return Promise.resolve(
       transactions.map((tx) => {
-        tx.partialSign(this.signer);
+        if ("version" in tx) {
+          tx.sign([this.signer]);
+        } else {
+          tx.partialSign(this.signer);
+        }
         return tx;
       }),
     );
   }
 
-  signTransaction(transaction: Transaction): Promise<Transaction> {
-    transaction.partialSign(this.signer);
-    return Promise.resolve(transaction);
+  signTransaction<T extends Transaction | VersionedTransaction>(
+    tx: T,
+  ): Promise<T> {
+    if ("version" in tx) {
+      tx.sign([this.signer]);
+    } else {
+      tx.partialSign(this.signer);
+    }
+    return Promise.resolve(tx);
   }
 
   /**
