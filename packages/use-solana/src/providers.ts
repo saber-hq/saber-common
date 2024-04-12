@@ -38,10 +38,10 @@ import { SolongWalletAdapter } from "@solana/wallet-adapter-solong";
 import { WalletConnectWalletAdapter } from "@solana/wallet-adapter-walletconnect";
 import type * as React from "react";
 
-import type { WalletAdapterBuilder, WalletOptions } from "./adapters";
-import { LedgerWalletAdapter, SolanaWalletAdapter } from "./adapters";
-import { ReadonlyAdapter } from "./adapters/readonly";
-import { SecretKeyAdapter } from "./adapters/secret-key";
+import type { WalletAdapterBuilder, WalletOptions } from "./adapters/index.js";
+import { LedgerWalletAdapter, SolanaWalletAdapter } from "./adapters/index.js";
+import { ReadonlyAdapter } from "./adapters/readonly/index.js";
+import { SecretKeyAdapter } from "./adapters/secret-key/index.js";
 
 export enum DefaultWalletType {
   BraveWallet = "BraveWallet",

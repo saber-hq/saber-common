@@ -30,7 +30,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@ledgerhq/devices": "6.27.1",
+    "@ledgerhq/devices": "8.2.2",
     "@ledgerhq/hw-transport": "6.30.5",
     "@ledgerhq/hw-transport-webusb": "6.28.5",
     "@saberhq/solana-contrib": "workspace:^",

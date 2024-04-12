@@ -18,7 +18,7 @@ import type {
 } from "@solana/web3.js";
 import invariant from "tiny-invariant";
 
-import type { ConnectedWallet } from "../adapters";
+import type { ConnectedWallet } from "../adapters/index.js";
 
 export class WalletAdapterTransactionSigner extends SolanaTransactionSigner {
   constructor(

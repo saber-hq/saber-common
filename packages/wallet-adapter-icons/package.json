@@ -9,6 +9,7 @@
   "author": "Saber Team <team@saber.so>",
   "license": "Apache-2.0",
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/esm/index.js",
