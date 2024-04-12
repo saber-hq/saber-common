@@ -2,7 +2,6 @@ import type { BigintIsh } from "@saberhq/token-utils";
 import { Percent, Token as SToken, TokenAmount } from "@saberhq/token-utils";
 import { PublicKey } from "@solana/web3.js";
 import { BN } from "bn.js";
-import { default as JSBI } from "jsbi";
 import { mapValues } from "lodash";
 
 import { SWAP_PROGRAM_ID } from "../constants.js";
@@ -46,20 +45,20 @@ const exchange = {
 
 const makeExchangeInfo = (
   {
-    lpTotalSupply = JSBI.BigInt(200_000_000),
-    tokenAAmount = JSBI.BigInt(100_000_000),
-    tokenBAmount = JSBI.BigInt(100_000_000),
+    lpTotalSupply = BigInt(200_000_000),
+    tokenAAmount = BigInt(100_000_000),
+    tokenBAmount = BigInt(100_000_000),
   }: {
-    lpTotalSupply?: JSBI;
-    tokenAAmount?: JSBI;
-    tokenBAmount?: JSBI;
+    lpTotalSupply?: bigint;
+    tokenAAmount?: bigint;
+    tokenBAmount?: bigint;
   } = {
-    lpTotalSupply: JSBI.BigInt(200_000_000),
-    tokenAAmount: JSBI.BigInt(100_000_000),
-    tokenBAmount: JSBI.BigInt(100_000_000),
+    lpTotalSupply: BigInt(200_000_000),
+    tokenAAmount: BigInt(100_000_000),
+    tokenBAmount: BigInt(100_000_000),
   },
 ): IExchangeInfo => ({
-  ampFactor: JSBI.BigInt(100),
+  ampFactor: BigInt(100),
   fees: ZERO_FEES,
   lpTotalSupply: new TokenAmount(exchange.lpToken, lpTotalSupply),
   reserves: [
@@ -111,18 +110,18 @@ describe("Calculated amounts", () => {
     it("is symmetric", () => {
       const result = calculateVirtualPrice(
         makeExchangeInfo({
-          lpTotalSupply: JSBI.BigInt(200_000_000),
-          tokenAAmount: JSBI.BigInt(10_000_000),
-          tokenBAmount: JSBI.BigInt(190_000_000),
+          lpTotalSupply: BigInt("200000000"),
+          tokenAAmount: BigInt("10000000"),
+          tokenBAmount: BigInt("190000000"),
         }),
       );
       expect(result?.toFixed(4)).toBe("0.9801");
 
       const result2 = calculateVirtualPrice(
         makeExchangeInfo({
-          lpTotalSupply: JSBI.BigInt(200_000_000),
-          tokenAAmount: JSBI.BigInt(190_000_000),
-          tokenBAmount: JSBI.BigInt(10_000_000),
+          lpTotalSupply: BigInt(200_000_000),
+          tokenAAmount: BigInt(190_000_000),
+          tokenBAmount: BigInt(10_000_000),
         }),
       );
       expect(result2?.toFixed(4)).toBe("0.9801");
@@ -130,9 +129,9 @@ describe("Calculated amounts", () => {
 
     it("can quote both prices", () => {
       const exchange = makeExchangeInfo({
-        lpTotalSupply: JSBI.BigInt(200_000_000),
-        tokenAAmount: JSBI.BigInt(10_000_000),
-        tokenBAmount: JSBI.BigInt(190_000_000),
+        lpTotalSupply: BigInt(200_000_000),
+        tokenAAmount: BigInt(10_000_000),
+        tokenBAmount: BigInt(190_000_000),
       });
 
       const result = calculateVirtualPrice(exchange);
@@ -144,7 +143,7 @@ describe("Calculated amounts", () => {
     it("no fees", () => {
       const result = calculateEstimatedSwapOutputAmount(
         exchangeInfo,
-        new TokenAmount(exchange.tokens[0], JSBI.BigInt(10_000_000)),
+        new TokenAmount(exchange.tokens[0], BigInt(10_000_000)),
       );
 
       assertTokenAmounts(result.outputAmount, result.outputAmountBeforeFees);
@@ -159,12 +158,12 @@ describe("Calculated amounts", () => {
             trade: new Percent(50, 100),
           },
         },
-        new TokenAmount(exchange.tokens[0], JSBI.BigInt(100)),
+        new TokenAmount(exchange.tokens[0], BigInt(100)),
       );
 
       // 50 percent fee
-      assertTokenAmount(result.outputAmountBeforeFees, JSBI.BigInt(100));
-      assertTokenAmount(result.outputAmount, JSBI.BigInt(50));
+      assertTokenAmount(result.outputAmountBeforeFees, BigInt(100));
+      assertTokenAmount(result.outputAmount, BigInt(50));
     });
   });
 
@@ -178,8 +177,8 @@ describe("Calculated amounts", () => {
             trade: new Percent(50, 100),
           },
         },
-        JSBI.BigInt(100),
-        JSBI.BigInt(100),
+        BigInt(100),
+        BigInt(100),
       );
 
       assertTokenAmounts(result.mintAmount, result.mintAmountBeforeFees);
@@ -194,21 +193,19 @@ describe("Calculated amounts", () => {
             trade: new Percent(50, 100),
           },
         },
-        JSBI.BigInt(100_000),
-        JSBI.BigInt(0),
+        BigInt(100_000),
+        BigInt(0),
       );
 
       assertTokenAmount(result.mintAmountBeforeFees, new BN(99_999));
       // 3/4 because only half of the swapped amount (100 tokens) should have fees on it (so 1/4)
-      const expectedMintAmount = JSBI.divide(
-        JSBI.multiply(result.mintAmountBeforeFees.raw, JSBI.BigInt(3)),
-        JSBI.BigInt(4),
-      );
+      const expectedMintAmount =
+        (result.mintAmountBeforeFees.raw * BigInt(3)) / BigInt(4);
       assertTokenAmount(result.mintAmount, expectedMintAmount);
 
       assertTokenAmount(
         result.fees,
-        JSBI.subtract(result.mintAmountBeforeFees.raw, expectedMintAmount),
+        result.mintAmountBeforeFees.raw - expectedMintAmount,
       );
     });
   });

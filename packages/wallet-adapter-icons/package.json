@@ -41,9 +41,9 @@
     "react": "^17.0.2 || ^18"
   },
   "devDependencies": {
-    "@saberhq/tsconfig": "^3.2.1",
-    "@types/react": "^18.2.39",
+    "@saberhq/tsconfig": "^3.3.1",
+    "@types/react": "^18.2.77",
     "react": "^18.2.0",
-    "typescript": "^5.3.2"
+    "typescript": "^5.4.5"
   }
 }
