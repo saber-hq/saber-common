@@ -28,12 +28,12 @@
   },
   "devDependencies": {
     "@coral-xyz/anchor": "^0.29.0",
-    "@saberhq/tsconfig": "^3.2.1",
+    "@saberhq/tsconfig": "^3.3.1",
     "@solana/web3.js": "^1.91.1",
     "@types/lodash.camelcase": "^4.3.9",
     "@types/lodash.mapvalues": "^4.6.9",
     "bn.js": "^5.2.1",
-    "typescript": "^5.3.2"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@saberhq/solana-contrib": "workspace:^",

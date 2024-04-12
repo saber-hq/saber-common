@@ -9,7 +9,7 @@ import type { Address } from "@coral-xyz/anchor";
 import { BN } from "@coral-xyz/anchor";
 import { TokenAmount } from "@saberhq/token-utils";
 import { PublicKey } from "@solana/web3.js";
-import chaiAsPromised from "chai-as-promised";
+import { default as chaiAsPromised } from "chai-as-promised";
 import { default as chaiBN } from "chai-bn";
 
 export * from "./debugAccountOwners.js";
@@ -18,7 +18,11 @@ export * from "./printInstructionLogs.js";
 export * from "./utils.js";
 
 export const chaiSolana: Chai.ChaiPlugin = (chai) => {
-  chai.use(chaiBN(BN) as Chai.ChaiPlugin);
+  chai.use(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    chaiBN(BN) as Chai.ChaiPlugin,
+  );
   chai.use(chaiAsPromised);
   chai.config.includeStack = true;
 

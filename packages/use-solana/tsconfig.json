@@ -4,7 +4,7 @@
     "rootDir": "src/",
     "composite": true,
     "jsxImportSource": "react",
-    "lib": ["ES2015", "DOM"],
+    "lib": ["ES2022", "DOM"],
     "outDir": "dist/esm/",
     "types": []
   },

@@ -1,4 +1,4 @@
-import type Transport from "@ledgerhq/hw-transport";
+import type { default as Transport } from "@ledgerhq/hw-transport";
 import { isVersionedTransaction } from "@saberhq/solana-contrib";
 import type { Transaction, VersionedTransaction } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";

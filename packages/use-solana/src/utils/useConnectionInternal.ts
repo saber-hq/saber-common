@@ -8,8 +8,8 @@ import type { Commitment } from "@solana/web3.js";
 import { Connection } from "@solana/web3.js";
 import { useMemo } from "react";
 
-import type { StorageAdapter } from "../storage";
-import { usePersistedKVStore } from "./usePersistedKVStore";
+import type { StorageAdapter } from "../storage.js";
+import { usePersistedKVStore } from "./usePersistedKVStore.js";
 
 export type PartialNetworkConfigMap = {
   [N in Network]?: Partial<NetworkConfig>;

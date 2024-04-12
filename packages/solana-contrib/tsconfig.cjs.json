@@ -1,8 +1,7 @@
 {
   "extends": "@saberhq/tsconfig/tsconfig.cjs.json",
   "compilerOptions": {
-    "outDir": "dist/cjs/",
-    "lib": ["ES2021.Promise", "ES2019"]
+    "outDir": "dist/cjs/"
   },
   "include": ["src/"]
 }

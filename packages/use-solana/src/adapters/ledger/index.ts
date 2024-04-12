@@ -1,5 +1,5 @@
-import type Transport from "@ledgerhq/hw-transport";
-import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
+import type { default as Transport } from "@ledgerhq/hw-transport";
+import { default as TransportWebUSB } from "@ledgerhq/hw-transport-webusb";
 import type {
   Broadcaster,
   PendingTransaction,
@@ -14,8 +14,12 @@ import type {
 } from "@solana/web3.js";
 import EventEmitter from "eventemitter3";
 
-import type { ConnectedWallet, WalletAdapter } from "../types";
-import { getPublicKey, getSolanaDerivationPath, signTransaction } from "./core";
+import type { ConnectedWallet, WalletAdapter } from "../types.js";
+import {
+  getPublicKey,
+  getSolanaDerivationPath,
+  signTransaction,
+} from "./core.js";
 
 const DEFAULT_DERIVATION_PATH = getSolanaDerivationPath();
 

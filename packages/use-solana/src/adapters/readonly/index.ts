@@ -11,7 +11,7 @@ import type {
 import { PublicKey } from "@solana/web3.js";
 import { EventEmitter } from "eventemitter3";
 
-import type { WalletAdapter } from "../types";
+import type { WalletAdapter } from "../types.js";
 
 declare global {
   interface Window {

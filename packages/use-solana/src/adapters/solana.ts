@@ -24,7 +24,7 @@ import type {
   VersionedTransaction,
 } from "@solana/web3.js";
 
-import type { ConnectedWallet, WalletAdapter } from "./types";
+import type { ConnectedWallet, WalletAdapter } from "./types.js";
 
 type SolanaWalletAdapterInterface = Omit<
   SignerWalletAdapter,

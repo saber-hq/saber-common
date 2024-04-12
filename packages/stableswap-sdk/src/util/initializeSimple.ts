@@ -12,11 +12,11 @@ import {
 import type { PublicKey } from "@solana/web3.js";
 import { Keypair } from "@solana/web3.js";
 
-import type { InitializeSwapInstruction } from "../index";
-import { findSwapAuthorityKeySync, SWAP_PROGRAM_ID } from "../index";
+import type { InitializeSwapInstruction } from "../index.js";
+import { findSwapAuthorityKeySync, SWAP_PROGRAM_ID } from "../index.js";
 import type { SwapTokenInfo } from "../instructions/swap.js";
-import type { InitializeNewStableSwapArgs } from "./initialize";
-import { createInitializeStableSwapInstructionsRaw } from "./initialize";
+import type { InitializeNewStableSwapArgs } from "./initialize.js";
+import { createInitializeStableSwapInstructionsRaw } from "./initialize.js";
 
 const initializeSwapTokenInfoSync = ({
   provider,

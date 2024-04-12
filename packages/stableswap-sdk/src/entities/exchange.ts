@@ -8,7 +8,6 @@ import {
 } from "@saberhq/token-utils";
 import type { Connection, PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
-import type { default as JSBI } from "jsbi";
 import { default as invariant } from "tiny-invariant";
 
 import { SWAP_PROGRAM_ID } from "../constants.js";
@@ -49,7 +48,7 @@ export interface IExchange {
  * Info loaded from the exchange. This is used by the calculator.
  */
 export interface IExchangeInfo {
-  ampFactor: JSBI;
+  ampFactor: bigint;
   fees: Fees;
   lpTotalSupply: TokenAmount;
   reserves: readonly [IReserve, IReserve];
@@ -70,7 +69,7 @@ export const calculateAmpFactor = (
     | "stopRampTimestamp"
   >,
   now = Date.now() / 1_000,
-): JSBI => {
+): bigint => {
   const {
     initialAmpFactor,
     targetAmpFactor,

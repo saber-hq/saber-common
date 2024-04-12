@@ -3,6 +3,7 @@
   "compilerOptions": {
     "allowJs": true,
     "noEmit": true,
+    "target": "ES2022",
     "jsxImportSource": "react",
     "types": ["jest"]
   },

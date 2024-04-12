@@ -2,8 +2,7 @@
   "extends": "@saberhq/tsconfig/tsconfig.mono.json",
   "compilerOptions": {
     "rootDir": "src/",
-    "outDir": "dist/esm/",
-    "lib": ["ES2021.Promise", "ES2019"]
+    "outDir": "dist/esm/"
   },
   "include": ["src/"]
 }

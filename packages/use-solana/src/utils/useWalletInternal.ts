@@ -7,21 +7,21 @@ import type {
   ConnectedWallet,
   WalletAdapter,
   WalletOptions,
-} from "../adapters/types";
-import { WrappedWalletAdapter } from "../adapters/types";
-import type { UseSolanaError } from "../error";
+} from "../adapters/types.js";
+import { WrappedWalletAdapter } from "../adapters/types.js";
+import type { UseSolanaError } from "../error.js";
 import {
   WalletActivateError,
   WalletAutomaticConnectionError,
   WalletDisconnectError,
-} from "../error";
+} from "../error.js";
 import type {
   WalletProviderInfo,
   WalletProviderMap,
   WalletTypeEnum,
-} from "../providers";
-import type { StorageAdapter } from "../storage";
-import { usePersistedKVStore } from "./usePersistedKVStore";
+} from "../providers.js";
+import type { StorageAdapter } from "../storage.js";
+import { usePersistedKVStore } from "./usePersistedKVStore.js";
 
 /**
  * Wallet-related information.

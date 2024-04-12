@@ -1,6 +1,5 @@
 import type { Token } from "@saberhq/token-utils";
 import { Fraction, ONE, TokenAmount, ZERO } from "@saberhq/token-utils";
-import { default as JSBI } from "jsbi";
 
 import type { IExchangeInfo } from "../entities/exchange.js";
 import type { Fees } from "../state/fees.js";
@@ -66,14 +65,13 @@ export const calculateEstimatedSwapOutputAmount = (
 
   const amp = exchange.ampFactor;
 
-  const amountBeforeFees = JSBI.subtract(
-    toReserves.amount.raw,
+  const amountBeforeFees =
+    toReserves.amount.raw -
     computeY(
       amp,
-      JSBI.add(fromReserves.amount.raw, fromAmount.raw),
+      fromReserves.amount.raw + fromAmount.raw,
       computeD(amp, fromReserves.amount.raw, toReserves.amount.raw),
-    ),
-  );
+    );
 
   const outputAmountBeforeFees = new TokenAmount(
     toReserves.amount.token,
@@ -93,7 +91,7 @@ export const calculateEstimatedSwapOutputAmount = (
 
   const outputAmount = new TokenAmount(
     toReserves.amount.token,
-    JSBI.subtract(amountBeforeFees, fee.raw),
+    amountBeforeFees - fee.raw,
   );
 
   return {
@@ -105,7 +103,7 @@ export const calculateEstimatedSwapOutputAmount = (
   };
 };
 
-const N_COINS = JSBI.BigInt(2);
+const N_COINS = 2n;
 
 export interface IWithdrawOneResult {
   withdrawAmount: TokenAmount;
@@ -156,26 +154,14 @@ export const calculateEstimatedWithdrawOneAmount = ({
   ];
 
   const d_0 = computeD(ampFactor, baseReserves, quoteReserves);
-  const d_1 = JSBI.subtract(
-    d_0,
-    JSBI.divide(
-      JSBI.multiply(poolTokenAmount.raw, d_0),
-      exchange.lpTotalSupply.raw,
-    ),
-  );
+  const d_1 = d_0 - (poolTokenAmount.raw * d_0) / exchange.lpTotalSupply.raw;
 
   const new_y = computeY(ampFactor, quoteReserves, d_1);
 
   // expected_base_amount = swap_base_amount * d_1 / d_0 - new_y;
-  const expected_base_amount = JSBI.subtract(
-    JSBI.divide(JSBI.multiply(baseReserves, d_1), d_0),
-    new_y,
-  );
+  const expected_base_amount = (baseReserves * d_1) / d_0 - new_y;
   // expected_quote_amount = swap_quote_amount - swap_quote_amount * d_1 / d_0;
-  const expected_quote_amount = JSBI.subtract(
-    quoteReserves,
-    JSBI.divide(JSBI.multiply(quoteReserves, d_1), d_0),
-  );
+  const expected_quote_amount = quoteReserves - (quoteReserves * d_1) / d_0;
   // new_base_amount = swap_base_amount - expected_base_amount * fee / fee_denominator;
   const new_base_amount = new Fraction(baseReserves.toString(), 1).subtract(
     normalizedTradeFee(fees, N_COINS, expected_base_amount),
@@ -185,13 +171,9 @@ export const calculateEstimatedWithdrawOneAmount = ({
     normalizedTradeFee(fees, N_COINS, expected_quote_amount),
   );
   const dy = new_base_amount.subtract(
-    computeY(
-      ampFactor,
-      JSBI.BigInt(new_quote_amount.toFixed(0)),
-      d_1,
-    ).toString(),
+    computeY(ampFactor, BigInt(new_quote_amount.toFixed(0)), d_1).toString(),
   );
-  const dy_0 = JSBI.subtract(baseReserves, new_y);
+  const dy_0 = baseReserves - new_y;
 
   // lp fees
   const swapFee = new Fraction(dy_0.toString(), 1).subtract(dy);
@@ -229,13 +211,10 @@ export const calculateEstimatedWithdrawOneAmount = ({
  */
 export const normalizedTradeFee = (
   { trade }: Fees,
-  n_coins: JSBI,
-  amount: JSBI,
+  n_coins: bigint,
+  amount: bigint,
 ): Fraction => {
-  const adjustedTradeFee = new Fraction(
-    n_coins,
-    JSBI.multiply(JSBI.subtract(n_coins, ONE), JSBI.BigInt(4)),
-  );
+  const adjustedTradeFee = new Fraction(n_coins, (n_coins - ONE) * 4n);
   return new Fraction(amount, 1).multiply(trade).multiply(adjustedTradeFee);
 };
 
@@ -274,16 +253,16 @@ export const calculateEstimatedWithdrawAmount = ({
     return [
       new TokenAmount(
         amount.token,
-        JSBI.BigInt(baseAmount.subtract(fee).toFixed(0)),
+        BigInt(baseAmount.subtract(fee).toFixed(0)),
       ),
       {
-        beforeFees: JSBI.BigInt(baseAmount.toFixed(0)),
-        fee: JSBI.BigInt(fee.toFixed(0)),
+        beforeFees: BigInt(baseAmount.toFixed(0)),
+        fee: BigInt(fee.toFixed(0)),
       },
     ];
   }) as [
-    [TokenAmount, { beforeFees: JSBI; fee: JSBI }],
-    [TokenAmount, { beforeFees: JSBI; fee: JSBI }],
+    [TokenAmount, { beforeFees: bigint; fee: bigint }],
+    [TokenAmount, { beforeFees: bigint; fee: bigint }],
   ];
 
   return {
@@ -306,14 +285,14 @@ export const calculateEstimatedWithdrawAmount = ({
  */
 export const calculateEstimatedMintAmount = (
   exchange: IExchangeInfo,
-  depositAmountA: JSBI,
-  depositAmountB: JSBI,
+  depositAmountA: bigint,
+  depositAmountB: bigint,
 ): {
   mintAmountBeforeFees: TokenAmount;
   mintAmount: TokenAmount;
   fees: TokenAmount;
 } => {
-  if (JSBI.equal(depositAmountA, ZERO) && JSBI.equal(depositAmountB, ZERO)) {
+  if (depositAmountA === ZERO && depositAmountB === ZERO) {
     const zero = new TokenAmount(exchange.lpTotalSupply.token, ZERO);
     return {
       mintAmountBeforeFees: zero,
@@ -328,23 +307,23 @@ export const calculateEstimatedMintAmount = (
 
   const d1 = computeD(
     amp,
-    JSBI.add(reserveA.amount.raw, depositAmountA),
-    JSBI.add(reserveB.amount.raw, depositAmountB),
+    reserveA.amount.raw + depositAmountA,
+    reserveB.amount.raw + depositAmountB,
   );
-  if (JSBI.lessThan(d1, d0)) {
+  if (d1 < d0) {
     throw new Error("New D cannot be less than previous D");
   }
 
   const oldBalances = exchange.reserves.map((r) => r.amount.raw) as [
-    JSBI,
-    JSBI,
+    bigint,
+    bigint,
   ];
   const newBalances = [
-    JSBI.add(reserveA.amount.raw, depositAmountA),
-    JSBI.add(reserveB.amount.raw, depositAmountB),
+    reserveA.amount.raw + depositAmountA,
+    reserveB.amount.raw + depositAmountB,
   ] as const;
   const adjustedBalances = newBalances.map((newBalance, i) => {
-    const oldBalance = oldBalances[i] as JSBI;
+    const oldBalance = oldBalances[i] as bigint;
     const idealBalance = new Fraction(d1, d0).multiply(oldBalance);
     const difference = idealBalance.subtract(newBalance);
     const diffAbs = difference.greaterThan(0)
@@ -353,31 +332,25 @@ export const calculateEstimatedMintAmount = (
     const fee = normalizedTradeFee(
       exchange.fees,
       N_COINS,
-      JSBI.BigInt(diffAbs.toFixed(0)),
+      BigInt(diffAbs.toFixed(0)),
     );
-    return JSBI.subtract(newBalance, JSBI.BigInt(fee.toFixed(0)));
-  }) as [JSBI, JSBI];
+    return newBalance - BigInt(fee.toFixed(0));
+  }) as [bigint, bigint];
   const d2 = computeD(amp, adjustedBalances[0], adjustedBalances[1]);
 
   const lpSupply = exchange.lpTotalSupply;
-  const mintAmountRaw = JSBI.divide(
-    JSBI.multiply(lpSupply.raw, JSBI.subtract(d2, d0)),
-    d0,
-  );
+  const mintAmountRaw = (lpSupply.raw * (d2 - d0)) / d0;
 
   const mintAmount = new TokenAmount(
     exchange.lpTotalSupply.token,
     mintAmountRaw,
   );
 
-  const mintAmountRawBeforeFees = JSBI.divide(
-    JSBI.multiply(lpSupply.raw, JSBI.subtract(d1, d0)),
-    d0,
-  );
+  const mintAmountRawBeforeFees = (lpSupply.raw * (d1 - d0)) / d0;
 
   const fees = new TokenAmount(
     exchange.lpTotalSupply.token,
-    JSBI.subtract(mintAmountRawBeforeFees, mintAmountRaw),
+    mintAmountRawBeforeFees - mintAmountRaw,
   );
   const mintAmountBeforeFees = new TokenAmount(
     exchange.lpTotalSupply.token,
