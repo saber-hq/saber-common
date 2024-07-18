@@ -51,12 +51,13 @@
     "source-map-support": "^0.5.21",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
+    "turbo": "^2.0.7",
     "typedoc": "^0.25.13",
     "typescript": "^5.4.5"
   },
   "scripts": {
-    "build": "yarn workspaces foreach --all --exclude @saberhq/saber-common -ptv run build",
-    "clean": "yarn workspaces foreach --all --exclude @saberhq/saber-common -ptv run clean",
+    "build": "turbo build",
+    "clean": "turbo clean",
     "publish:all": "yarn workspaces foreach --all --exclude @saberhq/saber-common -ptv npm publish",
     "typecheck": "tsc --build",
     "lint": "eslint . --cache",
